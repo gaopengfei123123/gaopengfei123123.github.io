@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>&lt;Hello World/&gt;</title>
+  <subtitle>Here</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.justwe.site/"/>
+  <updated>2017-04-06T04:17:40.000Z</updated>
+  <id>http://blog.justwe.site/</id>
+  
+  <author>
+    <name>GPF</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://blog.justwe.site/2017/04/06/hello-world/"/>
+    <id>http://blog.justwe.site/2017/04/06/hello-world/</id>
+    <published>2017-04-06T04:17:40.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<a id="more"></a>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a><br>add git</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Laravel-Auth</title>
+    <link href="http://blog.justwe.site/2017/04/01/laravel-auth/"/>
+    <id>http://blog.justwe.site/2017/04/01/laravel-auth/</id>
+    <published>2017-04-01T12:57:12.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://laravel-china.org/topics/2777" target="_blank" rel="external">原文出处</a></p>
+<p>auth提供了很方便的登录体系，已经做到了开箱即用的便捷，但是任何方便的工具都是需要花费学习成本的，了解的过程就由些痛苦了：）</p>
+<p>本着松鼠过冬的原则，自己是能写一点是一点，以后忘记的话也能立即捡起来</p>
+<a id="more"></a>
+<p>安装auth系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:auth</div></pre></td></tr></table></figure></p>
+<p>默认会安装基于user表的登录验证，现在我们需要增加另一个表的登录验证（比如后台的数据表）<br>编辑<code>config/auth.php</code>,我们需要指定的就是<code>guards</code>和<code>providers</code>这两个数组，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">return [</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Authentication Defaults</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | This option controls the default authentication &quot;guard&quot; and password</div><div class="line">   | reset options for your application. You may change these defaults</div><div class="line">   | as required, but they&apos;re a perfect start for most applications.</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;defaults&apos; =&gt; [</div><div class="line">       &apos;guard&apos; =&gt; &apos;web&apos;,</div><div class="line">       &apos;passwords&apos; =&gt; &apos;users&apos;,</div><div class="line">   ],</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Authentication Guards</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | Next, you may define every authentication guard for your application.</div><div class="line">   | Of course, a great default configuration has been defined for you</div><div class="line">   | here which uses session storage and the Eloquent user provider.</div><div class="line">   |</div><div class="line">   | All authentication drivers have a user provider. This defines how the</div><div class="line">   | users are actually retrieved out of your database or other storage</div><div class="line">   | mechanisms used by this application to persist your user&apos;s data.</div><div class="line">   |</div><div class="line">   | Supported: &quot;session&quot;, &quot;token&quot;</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;guards&apos; =&gt; [</div><div class="line">       //......//</div><div class="line">       //这里新加的一组配置，provider的配置在下面有</div><div class="line">       &apos;admin&apos; =&gt; [</div><div class="line">           &apos;driver&apos; =&gt; &apos;session&apos;,</div><div class="line">           &apos;provider&apos; =&gt; &apos;admin&apos;,</div><div class="line">       ],</div><div class="line">       //.......//</div><div class="line">   ],</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | User Providers</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | All authentication drivers have a user provider. This defines how the</div><div class="line">   | users are actually retrieved out of your database or other storage</div><div class="line">   | mechanisms used by this application to persist your user&apos;s data.</div><div class="line">   |</div><div class="line">   | If you have multiple user tables or models you may configure multiple</div><div class="line">   | sources which represent each model / table. These sources may then</div><div class="line">   | be assigned to any extra authentication guards you have defined.</div><div class="line">   |</div><div class="line">   | Supported: &quot;database&quot;, &quot;eloquent&quot;</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;providers&apos; =&gt; [</div><div class="line">       //.............//</div><div class="line"></div><div class="line">       //这就是新加的配置，我们指定了 Admin 这个模型</div><div class="line">       &apos;admin&apos; =&gt; [</div><div class="line">           &apos;driver&apos; =&gt; &apos;eloquent&apos;,</div><div class="line">           &apos;model&apos; =&gt; App\Models\Admin::class,</div><div class="line">       ],</div><div class="line"></div><div class="line">       //.............//</div><div class="line">   ],</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Resetting Passwords</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | You may specify multiple password reset configurations if you have more</div><div class="line">   | than one user table or model in the application and you want to have</div><div class="line">   | separate password reset settings based on the specific user types.</div><div class="line">   |</div><div class="line">   | The expire time is the number of minutes that the reset token should be</div><div class="line">   | considered valid. This security feature keeps tokens short-lived so</div><div class="line">   | they have less time to be guessed. You may change this as needed.</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;passwords&apos; =&gt; [</div><div class="line">       &apos;users&apos; =&gt; [</div><div class="line">           &apos;provider&apos; =&gt; &apos;users&apos;,</div><div class="line">           &apos;table&apos; =&gt; &apos;password_resets&apos;,</div><div class="line">           &apos;expire&apos; =&gt; 60,</div><div class="line">       ],</div><div class="line">   ],</div><div class="line"></div><div class="line">];</div></pre></td></tr></table></figure></p>
+<p>新建模型 <code>App/Models/Admin</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:model Models/Admin -m</div></pre></td></tr></table></figure></p>
+<p>编辑模型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">namespace App\Models;</div><div class="line"></div><div class="line">use Illuminate\Notifications\Notifiable;</div><div class="line">use Illuminate\Foundation\Auth\User as Authenticatable;</div><div class="line"></div><div class="line"></div><div class="line">//这里继承了auth的验证模型 其实和User的一样</div><div class="line">class Admin extends Authenticatable</div><div class="line">&#123;</div><div class="line">   use Notifiable;</div><div class="line">   protected $table=&apos;admin&apos;;</div><div class="line">   public $timestamps = false;</div><div class="line">   protected $primaryKey = &apos;id&apos;;</div><div class="line"></div><div class="line">   protected $fillable = [</div><div class="line">       &apos;name&apos;, &apos;email&apos;, &apos;password&apos;,</div><div class="line">   ];</div><div class="line"></div><div class="line">   protected $hidden = [</div><div class="line">       &apos;password&apos;, &apos;remember_token&apos;,</div><div class="line">   ];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编辑数据迁移文件 <code>database/migrations/xxxx_admin_table.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">use Illuminate\Support\Facades\Schema;</div><div class="line">use Illuminate\Database\Schema\Blueprint;</div><div class="line">use Illuminate\Database\Migrations\Migration;</div><div class="line"></div><div class="line">/**</div><div class="line">* Migration auto-generated by Sequel Pro Laravel Export</div><div class="line">* @see https://github.com/cviebrock/sequel-pro-laravel-export</div><div class="line">*/</div><div class="line">class CreateAdminTable extends Migration</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Run the migrations.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function up()</div><div class="line">   &#123;</div><div class="line">       Schema::create(&apos;admin&apos;, function (Blueprint $table) &#123;</div><div class="line">           $table-&gt;increments(&apos;id&apos;);</div><div class="line">           $table-&gt;string(&apos;name&apos;);</div><div class="line">           $table-&gt;string(&apos;email&apos;)-&gt;unique();</div><div class="line">           $table-&gt;string(&apos;password&apos;);</div><div class="line">           $table-&gt;rememberToken();</div><div class="line">           $table-&gt;timestamps();</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Reverse the migrations.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function down()</div><div class="line">   &#123;</div><div class="line">       Schema::dropIfExists(&apos;admin&apos;);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编辑数据填充文件，这一步懒得折腾可以直接手动添加数据</p>
+<p>编辑 <code>Faker</code> 这个数据模拟的类 <code>database/factories/ModelFactory.php</code> 添加一下内容,是根据我们刚创建的<code>Models/Admin</code>模型而填充的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//other code...........</div><div class="line"></div><div class="line">$factory-&gt;define(App\Models\Admin::class, function (Faker\Generator $faker) &#123;</div><div class="line">   static $password;</div><div class="line"></div><div class="line">   return [</div><div class="line">       &apos;name&apos; =&gt; $faker-&gt;name,</div><div class="line">       &apos;email&apos; =&gt; $faker-&gt;safeEmail,</div><div class="line">       &apos;password&apos; =&gt; $password ?: $password = bcrypt(&apos;secret&apos;),</div><div class="line">       &apos;remember_token&apos; =&gt; str_random(10),</div><div class="line">   ];</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>编辑<code>database/seeds/AdminTableSeeder.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">use Illuminate\Database\Seeder;</div><div class="line"></div><div class="line">class AdminsTableSeeder extends Seeder</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Run the database seeds.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function run()</div><div class="line">   &#123;</div><div class="line">       factory(&apos;App\Models\Admin&apos;,3)-&gt;create([</div><div class="line">           &apos;password&apos; =&gt; bcrypt(&apos;123456&apos;)</div><div class="line">       ]);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>将自动填充文件写入总的Seeder文件当中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//in database/seeds/DatabaseSeeder.php</div><div class="line"></div><div class="line">class DatabaseSeeder extends Seeder</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Run the database seeds.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function run()</div><div class="line">   &#123;</div><div class="line">       // $this-&gt;call(UsersTableSeeder::class);</div><div class="line">       $this-&gt;call(AdminsTableSeeder::class);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>执行数据库迁移操作 <code>--seed</code> 顺便执行数据填充操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan migrate --seed</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>好了,到这一步数据库就已经有了<code>admin</code> 这个表,而且里面出现了三条测试数据,我们接着看看控制器里是怎么操作的:</p>
+</blockquote>
+<p>首先创建相应的控制器:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">php artisan make:controller Admin/LoginController</div><div class="line">php artisan make:controller Admin/HomeController</div></pre></td></tr></table></figure></p>
+<p>Admin/LoginController.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">namespace App\Http\Controllers\Admin;</div><div class="line">use App\Http\Controllers\Controller;</div><div class="line">use Illuminate\Http\Request;</div><div class="line">use Illuminate\Foundation\Auth\AuthenticatesUsers;</div><div class="line">class LoginController extends Controller</div><div class="line">&#123;</div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Login Controller</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | This controller handles authenticating users for the application and</div><div class="line">   | redirecting them to your home screen. The controller uses a trait</div><div class="line">   | to conveniently provide its functionality to your applications.</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   use AuthenticatesUsers;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Where to redirect users after login / registration.</div><div class="line">    *</div><div class="line">    * @var string</div><div class="line">    */</div><div class="line">   protected $redirectTo = &apos;/admin/dash&apos;;</div><div class="line">   protected $username;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Create a new controller instance.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function __construct()</div><div class="line">   &#123;</div><div class="line">       $this-&gt;middleware(&apos;guest:admin&apos;, [&apos;except&apos; =&gt; &apos;logout&apos;]);</div><div class="line">       $this-&gt;username = config(&apos;admin.global.username&apos;);</div><div class="line">   &#125;</div><div class="line">   /**</div><div class="line">    * 重写登录视图页面</div><div class="line">    */</div><div class="line">   public function showLoginForm()</div><div class="line">   &#123;</div><div class="line">       return view(&apos;admin.login.index&apos;);</div><div class="line">   &#125;</div><div class="line">   /**</div><div class="line">    * 自定义认证驱动</div><div class="line">    */</div><div class="line">   protected function guard()</div><div class="line">   &#123;</div><div class="line">       return auth()-&gt;guard(&apos;admin&apos;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * 重写方法，让验证字段改成name 而不是默认的email</div><div class="line">    */</div><div class="line">//    protected function username()&#123;</div><div class="line">//        return &apos;name&apos;;</div><div class="line">//    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Admin/HomeController.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">namespace App\Http\Controllers\Admin;</div><div class="line"></div><div class="line">use Illuminate\Http\Request;</div><div class="line"></div><div class="line">use App\Http\Requests;</div><div class="line">use App\Http\Controllers\Controller;</div><div class="line">use Auth;</div><div class="line"></div><div class="line">class HomeController extends Controller</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Create a new controller instance.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function __construct()</div><div class="line">   &#123;</div><div class="line">       $this-&gt;middleware(&apos;auth.admin:admin&apos;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Show the application dashboard.</div><div class="line">    *</div><div class="line">    * @return \Illuminate\Http\Response</div><div class="line">    */</div><div class="line">   public function index()</div><div class="line">   &#123;</div><div class="line">       dd(&apos;后台首页，当前用户名：&apos;.auth(&apos;admin&apos;)-&gt;user()-&gt;name);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>因为在LoginController中也使用了 <code>guest</code>这个中间件,而系统自带的那个也使用了它,因此需要在这个中间件里面做一下区分</p>
+<p>编辑 <code>app/Http/Kernel.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public function handle($request, Closure $next, $guard = null)</div><div class="line">   &#123;</div><div class="line">       if (Auth::guard($guard)-&gt;check()) &#123;</div><div class="line">//            return redirect(&apos;/home&apos;);</div><div class="line">           $url = $guard ? &apos;admin/dash&apos;:&apos;/home&apos;;</div><div class="line">           return redirect($url);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       return $next($request);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>而在 <code>Admin/HomeController</code>这里,因为验证需要登录才能进入,我们给他也加了一个验证中间件 <code>AdminAuthMiddlware</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:middleware AdminAuthMiddlware</div></pre></td></tr></table></figure></p>
+<p>编辑<code>AdminAuthMiddlware</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">namespace App\Http\Middleware;</div><div class="line">use Closure;</div><div class="line">use Illuminate\Support\Facades\Auth;</div><div class="line">class AdminAuthMiddleware</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Handle an incoming request.</div><div class="line">    *</div><div class="line">    * @param  \Illuminate\Http\Request  $request</div><div class="line">    * @param  \Closure  $next</div><div class="line">    * @return mixed</div><div class="line">    */</div><div class="line">   public function handle($request, Closure $next,$guard = null)</div><div class="line">   &#123;</div><div class="line">       //判定是否已经登录，如果没由登录则跳转到登录界面</div><div class="line">       if (Auth::guard($guard)-&gt;guest()) &#123;</div><div class="line">           if ($request-&gt;ajax() || $request-&gt;wantsJson()) &#123;</div><div class="line">               return response(&apos;Unauthorized.&apos;, 401);</div><div class="line">           &#125; else &#123;</div><div class="line">               return redirect()-&gt;guest(&apos;admin/login&apos;);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       return $next($request);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在路由文件里添加对应的路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// in routes/web.php</div><div class="line">//后台登录部分</div><div class="line">Route::group([&apos;prefix&apos; =&gt; &apos;admin&apos;,&apos;namespace&apos; =&gt; &apos;Admin&apos;],function ($router)</div><div class="line">&#123;</div><div class="line">   $router-&gt;get(&apos;login&apos;, &apos;LoginController@showLoginForm&apos;)-&gt;name(&apos;admin.login&apos;);</div><div class="line">   $router-&gt;post(&apos;login&apos;, &apos;LoginController@login&apos;);</div><div class="line">   $router-&gt;any(&apos;logout&apos;, &apos;LoginController@logout&apos;);</div><div class="line"></div><div class="line">   $router-&gt;get(&apos;dash&apos;, &apos;HomeController@index&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>做到这一步其实就已经算是完成了,剩下的视图部分可以按照<code>resources/views/auth</code>中的内容创建一个<code>resource/views/admin</code>目录,<code>resource/views/admin/login/index.blade.php</code>就是后台登录界面,注意这里的表单提交地址要按刚才路由文件中写的指向后台的登录控制器中,<code>route(&#39;admin.login&#39;)</code></p>
+</blockquote>
+<p>这一段是我按照原文操作一遍后自己写了一遍,算是了解了auth的大致运行过程,其后就是翻一下源码进行解析了,为了controller中的代码好看一点其后的运作并不少,但是解耦做的非常不错</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://laravel-china.org/topics/2777&quot;&gt;原文出处&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;auth提供了很方便的登录体系，已经做到了开箱即用的便捷，但是任何方便的工具都是需要花费学习成本的，了解的过程就由些痛苦了：）&lt;/p&gt;
+&lt;p&gt;本着松鼠过冬的原则，自己是能写一点是一点，以后忘记的话也能立即捡起来&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="laravel" scheme="http://blog.justwe.site/categories/laravel/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Laravel-Error-Log</title>
+    <link href="http://blog.justwe.site/2017/04/01/laravel-error-log/"/>
+    <id>http://blog.justwe.site/2017/04/01/laravel-error-log/</id>
+    <published>2017-04-01T12:51:06.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>laravel有一套方便的错误采集和报错机制，如果是开发api的时候我们不需要报错页面显示的那么详细，只想返回一些错误信息，而不用把所有的响应信息都返回到 controller 当中才行</p>
+<a id="more"></a>
+<p>之前的步骤是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">router-&gt;beforeMiddlware-&gt;controller-&gt;someService-&gt;controller-&gt;afterMiddleware-&gt; yourInfo</div></pre></td></tr></table></figure>
+<p>我们想在这任何一个环节报错的时候都能停止掉运行流程直接返回信息 就需要接下来要说的一个类 <code>Exception</code>。</p>
+<p>我们自定义的错误文件也是都放在 <code>app/Exception</code> 当中，比如我自定义一个 <code>TestException</code><br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Exceptions</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestException</span> <span class="keyword">extends</span> \<span class="title">Exception</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">responseJson</span><span class="params">()</span></span>&#123;</div><div class="line">        $msg = config(<span class="string">'errors.user.'</span>.<span class="keyword">$this</span>-&gt;getMessage());</div><div class="line">        <span class="keyword">return</span> \ApiResponse::error($msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里面我自定义了一个<code>responseJson()</code>的方法，为了处理我返回的信息</p>
+<p>然后我在同文件夹下的 <code>Handler.php</code> 我们返回的错误在这里集中处理</p>
+<p>这里的两个方法<code>report()</code>和<code>render()</code></p>
+<p><code>report()</code>会优先执行，用于将错误发送到第三方服务中去，<code>render()</code>就是最终要返回的结果，我们的目标就是这个函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * Render an exception into an HTTP response.</div><div class="line">     *</div><div class="line">     * @param  \Illuminate\Http\Request  $request</div><div class="line">     * @param  \Exception  $e</div><div class="line">     * @return \Illuminate\Http\Response</div><div class="line">     */</div><div class="line">    public function render($request, Exception $e)</div><div class="line">    &#123;</div><div class="line">        if($e instanceof TestException)&#123;</div><div class="line">            return $e-&gt;responseJson();</div><div class="line">        &#125;</div><div class="line">        return parent::render($request, $e);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这里用了<code>instanceof</code>进行比较，如果是来自<code>TestException</code>的报错就会执行我们刚才自定义好的方法，内容当然也可以随便定义了</p>
+<p>怎么使用呢？</p>
+<p>只需要在控制器中任何你需要报错的地方<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">throw new TestException(&apos;system_busy&apos;);</div></pre></td></tr></table></figure></p>
+<p>括号内的内容可以通过它的<code>getMessage()</code>方法获得</p>
+<p><a href="http://laravelacademy.org/post/465.html" target="_blank" rel="external">参考文档</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;laravel有一套方便的错误采集和报错机制，如果是开发api的时候我们不需要报错页面显示的那么详细，只想返回一些错误信息，而不用把所有的响应信息都返回到 controller 当中才行&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="laravel" scheme="http://blog.justwe.site/categories/laravel/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Pip</title>
+    <link href="http://blog.justwe.site/2017/04/01/pip/"/>
+    <id>http://blog.justwe.site/2017/04/01/pip/</id>
+    <published>2017-04-01T12:32:13.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>pip语言环境配置出错<br><a id="more"></a><br>root@ubuntu:~# locale<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">locale: Cannot set LC_ALL to default locale: No such file or directory</div><div class="line">LANG=en_US.UTF-8</div><div class="line">LANGUAGE=</div><div class="line">LC_CTYPE=&quot;en_US.UTF-8&quot;</div><div class="line">LC_NUMERIC=zh_CN.UTF-8</div><div class="line">LC_TIME=zh_CN.UTF-8</div><div class="line">LC_COLLATE=&quot;en_US.UTF-8&quot;</div><div class="line">LC_MONETARY=zh_CN.UTF-8</div><div class="line">LC_MESSAGES=&quot;en_US.UTF-8&quot;</div><div class="line">LC_PAPER=zh_CN.UTF-8</div><div class="line">LC_NAME=zh_CN.UTF-8</div><div class="line">LC_ADDRESS=zh_CN.UTF-8</div><div class="line">LC_TELEPHONE=zh_CN.UTF-8</div><div class="line">LC_MEASUREMENT=zh_CN.UTF-8</div><div class="line">LC_IDENTIFICATION=zh_CN.UTF-8</div><div class="line">LC_ALL=</div></pre></td></tr></table></figure></p>
+<!-- more -->
+<p>root@ubuntu:~# export LC_ALL=C<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">root@ubuntu:~# locale</div><div class="line">LANG=en_US.UTF-8</div><div class="line">LANGUAGE=</div><div class="line">LC_CTYPE=&quot;C&quot;</div><div class="line">LC_NUMERIC=&quot;C&quot;</div><div class="line">LC_TIME=&quot;C&quot;</div><div class="line">LC_COLLATE=&quot;C&quot;</div><div class="line">LC_MONETARY=&quot;C&quot;</div><div class="line">LC_MESSAGES=&quot;C&quot;</div><div class="line">LC_PAPER=&quot;C&quot;</div><div class="line">LC_NAME=&quot;C&quot;</div><div class="line">LC_ADDRESS=&quot;C&quot;</div><div class="line">LC_TELEPHONE=&quot;C&quot;</div><div class="line">LC_MEASUREMENT=&quot;C&quot;</div><div class="line">LC_IDENTIFICATION=&quot;C&quot;</div><div class="line">LC_ALL=C</div></pre></td></tr></table></figure></p>
+<p>DONE!</p>
+<p><a href="http://blog.csdn.net/qq_33232071/article/details/51108062" target="_blank" rel="external">原文</a><br>[另一个参</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;pip语言环境配置出错&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Brew权限问题</title>
+    <link href="http://blog.justwe.site/2017/03/31/brew-install/"/>
+    <id>http://blog.justwe.site/2017/03/31/brew-install/</id>
+    <published>2017-03-31T06:38:36.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在一个新的环境下安装 <a href="https://brew.sh" target="_blank" rel="external">homebrew</a></p>
+<a id="more"></a>
+<p>新装系统时难免会遇到权限的问题，在老版系统下（osx 10.10.* )需要一些权限设置，方式如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo chown -R $(whoami):admin /usr/local</div><div class="line">sudo chown -R $(whoami) /Library/Caches/Homebrew</div><div class="line">brew doctor</div><div class="line">brew prune</div><div class="line">brew update</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在一个新的环境下安装 &lt;a href=&quot;https://brew.sh&quot;&gt;homebrew&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工具" scheme="http://blog.justwe.site/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="homebrew" scheme="http://blog.justwe.site/tags/homebrew/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo-Next 的一些配置</title>
+    <link href="http://blog.justwe.site/2017/03/30/webconfig/"/>
+    <id>http://blog.justwe.site/2017/03/30/webconfig/</id>
+    <published>2017-03-30T13:06:50.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>目前对 hexo-next 添加的功能</p>
+<a id="more"></a>
+<h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-generator-searchdb --save</div></pre></td></tr></table></figure>
+<p>站点配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">search:</div><div class="line">  path: search.xml</div><div class="line">  field: post</div><div class="line">  format: html</div><div class="line">  limit: 10000</div></pre></td></tr></table></figure></p>
+<p>next主题配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># Local search</div><div class="line">local_search:</div><div class="line">  enable: true</div></pre></td></tr></table></figure></p>
+<h2 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-generator-sitemap --save</div><div class="line">$ npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure>
+<h2 id="支持-hexo-deploy"><a href="#支持-hexo-deploy" class="headerlink" title="支持 hexo deploy"></a>支持 hexo deploy</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<h2 id="将-next-主题的依赖包由-bootcdn-提供"><a href="#将-next-主题的依赖包由-bootcdn-提供" class="headerlink" title="将 next 主题的依赖包由 bootcdn 提供"></a>将 next 主题的依赖包由 bootcdn 提供</h2><p>在主题配置文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">vendors:</div><div class="line">  # Internal path prefix. Please do not edit it.</div><div class="line">  _internal: lib</div><div class="line"></div><div class="line">  # Internal version: 2.1.3</div><div class="line">  jquery: //cdn.bootcss.com/jquery/2.1.3/jquery.min.js</div><div class="line"></div><div class="line">  # Internal version: 2.1.5</div><div class="line">  # See: http://fancyapps.com/fancybox/</div><div class="line">  fancybox: //cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js</div><div class="line">  fancybox_css: //cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css</div><div class="line"></div><div class="line">  # Internal version: 1.0.6</div><div class="line">  # See: https://github.com/ftlabs/fastclick</div><div class="line">  fastclick: //cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js</div><div class="line"></div><div class="line">  # Internal version: 1.9.7</div><div class="line">  # See: https://github.com/tuupola/jquery_lazyload</div><div class="line">  lazyload: //cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js</div><div class="line"></div><div class="line">  # Internal version: 1.2.1</div><div class="line">  # See: http://VelocityJS.org</div><div class="line">  velocity: //cdn.bootcss.com/velocity/1.2.1/velocity.min.js</div><div class="line"></div><div class="line">  # Internal version: 1.2.1</div><div class="line">  # See: http://VelocityJS.org</div><div class="line">  velocity_ui: //cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js</div><div class="line"></div><div class="line">  # Internal version: 0.7.9</div><div class="line">  # See: https://faisalman.github.io/ua-parser-js/</div><div class="line">  ua_parser: //cdn.bootcss.com/UAParser.js/0.7.9/ua-parser.min.js</div><div class="line"></div><div class="line">  # Internal version: 4.6.2</div><div class="line">  # See: http://fontawesome.io/</div><div class="line">  fontawesome: //cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css</div><div class="line"></div><div class="line">  # Internal version: 1</div><div class="line">  # https://www.algolia.com</div><div class="line">  algolia_instant_js:</div><div class="line">  algolia_instant_css:</div><div class="line"></div><div class="line">  # Internal version: 1.0.0</div><div class="line">  # https://github.com/hustcc/canvas-nest.js</div><div class="line">  canvas_nest: //cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js</div></pre></td></tr></table></figure></p>
+<h2 id="谷歌字体"><a href="#谷歌字体" class="headerlink" title="谷歌字体"></a>谷歌字体</h2><p>主题配置文件，换成国内的一个cdn<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"># ---------------------------------------------------------------</div><div class="line"># Font Settings</div><div class="line"># - Find fonts on Google Fonts (https://www.google.com/fonts)</div><div class="line"># - All fonts set here will have the following styles:</div><div class="line">#     light, light italic, normal, normal italic, bold, bold italic</div><div class="line"># - Be aware that setting too much fonts will cause site running slowly</div><div class="line"># - Introduce in 5.0.1</div><div class="line"># ---------------------------------------------------------------</div><div class="line">font:</div><div class="line">  enable: true</div><div class="line"></div><div class="line">  # Uri of fonts host. E.g. //fonts.googleapis.com (Default)</div><div class="line">  host: //fonts.css.network/icon?family=Lato:300,300italic,400,400italic,700,700italic&amp;subset=latin,latin-ext</div><div class="line"></div><div class="line">  # Global font settings used on &lt;body&gt; element.</div><div class="line">  global:</div><div class="line">    # external: true will load this font family from host.</div><div class="line">    external: true</div><div class="line">    family: Lato</div><div class="line"></div><div class="line">  # Font settings for Headlines (h1, h2, h3, h4, h5, h6)</div><div class="line">  # Fallback to `global` font settings.</div><div class="line">  headings:</div><div class="line">    external: true</div><div class="line">    family:</div><div class="line"></div><div class="line">  # Font settings for posts</div><div class="line">  # Fallback to `global` font settings.</div><div class="line">  posts:</div><div class="line">    external: true</div><div class="line">    family:</div><div class="line"></div><div class="line">  # Font settings for Logo</div><div class="line">  # Fallback to `global` font settings.</div><div class="line">  # The `size` option use `px` as unit</div><div class="line">  logo:</div><div class="line">    external: true</div><div class="line">    family:</div><div class="line">    size:</div><div class="line"></div><div class="line">  # Font settings for &lt;code&gt; and code blocks.</div><div class="line">  codes:</div><div class="line">    external: true</div><div class="line">    family:</div><div class="line">    size:</div></pre></td></tr></table></figure></p>
+<h2 id="添加rss"><a href="#添加rss" class="headerlink" title="添加rss"></a>添加rss</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-generator-feed --save</div></pre></td></tr></table></figure>
+<p>主题配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rss: /atom.xml</div></pre></td></tr></table></figure></p>
+<h2 id="代码中使用js"><a href="#代码中使用js" class="headerlink" title="代码中使用js"></a>代码中使用js</h2><p>使用 raw 标签包裹住就能让内容内容略过 markdown 解析<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;% raw %&#125;</div><div class="line">&lt;script&gt;</div><div class="line">  alert(12312)</div><div class="line">&lt;/script&gt;</div><div class="line">&#123;% endraw %&#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;目前对 hexo-next 添加的功能&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="config" scheme="http://blog.justwe.site/tags/config/"/>
+    
+      <category term="hexo-next" scheme="http://blog.justwe.site/tags/hexo-next/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>震惊！彩票的随机机制竟然是这样的...</title>
+    <link href="http://blog.justwe.site/2017/03/24/caipiao/"/>
+    <id>http://blog.justwe.site/2017/03/24/caipiao/</id>
+    <published>2017-03-23T22:01:17.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line">$lanList = [];</div><div class="line">$hongList = [];</div><div class="line"></div><div class="line"><span class="keyword">for</span>($i=<span class="number">1</span>;$i&lt;<span class="number">34</span>;$i++)&#123;</div><div class="line">  <span class="keyword">if</span>($i&lt;<span class="number">16</span>)&#123;</div><div class="line">    array_push($lanList,$i);</div><div class="line">  &#125;</div><div class="line">  array_push($hongList, $i);</div><div class="line">&#125;</div><div class="line"></div><div class="line">$res = [</div><div class="line">  <span class="string">'red'</span> =&gt; [],</div><div class="line">  <span class="string">'blue'</span> =&gt; []</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=<span class="number">6</span>;$i++)&#123;</div><div class="line">  <span class="keyword">if</span>($i==<span class="number">0</span>)&#123;</div><div class="line">    $res[<span class="string">'blue'</span>] = array_slice($lanList, mt_rand( <span class="number">0</span>,count($lanList)<span class="number">-1</span>) ,<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  $res[<span class="string">'red'</span>][] = array_splice($hongList, mt_rand( <span class="number">0</span>,count($hongList)<span class="number">-1</span>),<span class="number">1</span>)[<span class="number">0</span>];</div><div class="line"></div><div class="line">&#125;</div><div class="line">sort($res[<span class="string">'red'</span>]);</div><div class="line"><span class="keyword">echo</span> <span class="string">'red:'</span>.implode(<span class="string">','</span>,$res[<span class="string">'red'</span>]).<span class="string">' blue:'</span>.implode(<span class="string">','</span>,$res[<span class="string">'blue'</span>]).PHP_EOL;</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div cl
+    
+    </summary>
+    
+      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Symfony-路由</title>
+    <link href="http://blog.justwe.site/2017/03/23/symfony-router/"/>
+    <id>http://blog.justwe.site/2017/03/23/symfony-router/</id>
+    <published>2017-03-23T03:25:49.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>laravel的路由模块就是从这里封装起来的，咱们先了解下symfony的路由机制</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="使用注释定义一个路由"><a href="#使用注释定义一个路由" class="headerlink" title="使用注释定义一个路由"></a>使用注释定义一个路由</h2><p>symfony 的强大之处在于代码中的注释都参与到程序运行当中，这样强制的规范了注释排版，比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LuckyController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@Route</span>("/lucky/number")</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">numberAction</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        $numbers = mt_rand(<span class="number">1</span>,<span class="number">999</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Response($numbers);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当输入 <code>http://domain/app_dev.php/lucky/number</code> 将会返回方法中的随机数</p>
+<h2 id="使用配置文件定义一个路由推荐这种写法，方便他人维护"><a href="#使用配置文件定义一个路由推荐这种写法，方便他人维护" class="headerlink" title="使用配置文件定义一个路由推荐这种写法，方便他人维护"></a>使用配置文件定义一个路由推荐这种写法，方便他人维护</h2><p>在 <code>@app/config/routing.yml</code>文件中，定义一个blog_show路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">blog_show:</div><div class="line">    path:      /blog/&#123;slug&#125;</div><div class="line">    defaults:  &#123; _controller: AppBundle:Lucky:show ,slug:2333&#125;</div></pre></td></tr></table></figure></p>
+<p>这里还有 <code>{slug}</code> 奇怪的写法，这代表着路由中传入 <code>slug</code>的自定义参数，从laravel过来的同学一定不会陌生</p>
+<p><code>defaults</code> 下指定了该路由指向哪个控制器，同时 slug 也有了默认值，在控制器中就是这样写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// src: @src/AppBundle/LuckyController</div><div class="line">public function showAction($slug)&#123;</div><div class="line">        $str = &apos;this is blog-&apos;.$slug;</div><div class="line"></div><div class="line">        return new Response($str);</div><div class="line">&#125;</div><div class="line"></div><div class="line">#注释的写法就是</div><div class="line">/**</div><div class="line"> * @Route(&quot;/blog/&#123;slug&#125;&quot;, defaults=&#123;&quot;slug&quot; = 1&#125;)</div><div class="line"> */</div></pre></td></tr></table></figure></p>
+<h2 id="高级路由示例"><a href="#高级路由示例" class="headerlink" title="高级路由示例"></a>高级路由示例</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># in Controller</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@Route</span>(</div><div class="line"> *     "/articles/&#123;_locale&#125;/&#123;year&#125;/&#123;title&#125;.&#123;_format&#125;",</div><div class="line"> *     defaults=&#123;"_format": "html"&#125;,</div><div class="line"> *     requirements=&#123;</div><div class="line"> *         "_locale": "en|fr",</div><div class="line"> *         "_format": "html|rss",</div><div class="line"> *         "year": "\d+"</div><div class="line"> *     &#125;</div><div class="line"> * )</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">showAction</span><span class="params">($_locale, $year, $title)</span></span></div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># in yaml</span></div><div class="line"><span class="comment"># app/config/routing.yml</span></div><div class="line">article_show:</div><div class="line">  path:     /articles/&#123;_locale&#125;/&#123;year&#125;/&#123;title&#125;.&#123;_format&#125;</div><div class="line">  defaults: &#123; _controller: AppBundle:Article:show, _format: html &#125;</div><div class="line">  requirements:</div><div class="line">      _locale:  en|fr</div><div class="line">      _format:  html|rss</div><div class="line">      year:     \d+</div></pre></td></tr></table></figure>
+<p>这里对参数进行了正则筛选，如果不复合条件的也将报 404 错误</p>
+<p>新出现的 <code>requirements</code> 部分就是对指定的参数筛分，使用的是正则的格式</p>
+<h2 id="在程序中生成路由和解析路由"><a href="#在程序中生成路由和解析路由" class="headerlink" title="在程序中生成路由和解析路由"></a>在程序中生成路由和解析路由</h2><p>路由在系统中是双向映射，既能生成带参数的路由，又能反向解析成运行的函数<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$params = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;match(<span class="string">'/blog/my-blog-post'</span>);</div><div class="line">dump($params);</div><div class="line"><span class="comment">// array(</span></div><div class="line"><span class="comment">//     'slug'        =&gt; 'my-blog-post',</span></div><div class="line"><span class="comment">//     '_controller' =&gt; 'AppBundle:Blog:show',</span></div><div class="line"><span class="comment">// )</span></div><div class="line"></div><div class="line">$uri = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;generate(<span class="string">'blog_show'</span>, <span class="keyword">array</span>(</div><div class="line">    <span class="string">'slug'</span> =&gt; <span class="string">'my-blog-post'</span></div><div class="line">));</div><div class="line">dump($uri);</div><div class="line"><span class="comment">// /blog/my-blog-post</span></div></pre></td></tr></table></figure></p>
+<p>在 <code>generate</code> 方法中，如果添加了路由中没设置的参数比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$uri = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;generate(<span class="string">'blog_show'</span>, <span class="keyword">array</span>(</div><div class="line">    <span class="string">'slug'</span> =&gt; <span class="string">'my-blog-post'</span>,</div><div class="line">    <span class="string">'author'</span> =&gt; <span class="string">'jack'</span>,</div><div class="line">    <span class="string">'type'</span> =&gt; <span class="string">'markdown'</span></div><div class="line">));</div><div class="line"><span class="comment">// /blog/my-blog-post?author=jack&amp;type=markdown</span></div></pre></td></tr></table></figure></p>
+<p>会以 Query Strings 的形式添加到地址中</p>
+<p>现在生成的是相对路径，如果是全路径的话需要加一个参数<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$uri = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;generate(<span class="string">'blog_show'</span>, <span class="keyword">array</span>(</div><div class="line">    <span class="string">'slug'</span> =&gt; <span class="string">'my-blog-post'</span>,</div><div class="line">    <span class="string">'author'</span> =&gt; <span class="string">'jack'</span>,</div><div class="line">    <span class="string">'type'</span> =&gt; <span class="string">'markdown'</span></div><div class="line">),UrlGenerator::ABSOLUTE_URL);</div></pre></td></tr></table></figure></p>
+<p><code>UrlGenerator::ABSOLUTE_URL</code> 这个参数也可以替换成 <code>0</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;laravel的路由模块就是从这里封装起来的，咱们先了解下symfony的路由机制&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用Hexo构建博客</title>
+    <link href="http://blog.justwe.site/2017/03/22/install/"/>
+    <id>http://blog.justwe.site/2017/03/22/install/</id>
+    <published>2017-03-22T07:31:55.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="本地搭建-hexo"><a href="#本地搭建-hexo" class="headerlink" title="本地搭建 hexo"></a>本地搭建 <code>hexo</code></h2><a id="more"></a>
+<ul>
+<li>构建hexo需要在本地安装<code>node.js</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install node</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当前版本的node版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">node -v</div><div class="line">v7.7.3</div></pre></td></tr></table></figure></p>
+<!-- more -->
+<ul>
+<li>全局安装 <code>hexo</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>国外镜像慢的话可以搜索找下淘宝的 <code>cnmp</code></p>
+</blockquote>
+<ul>
+<li><p>创建一个目录并且安装 <code>hexo</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir hexo_blog</div><div class="line">cd hexo_blog</div><div class="line">hexo init</div><div class="line">npm install</div></pre></td></tr></table></figure>
+</li>
+<li><p>新建一个文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;your-first-page&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>文件在 <code>hexo_blog/source/_post/</code>下进行编辑啊</p>
+<ul>
+<li>然后就是生成静态文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate</div><div class="line">hexo server</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这时就可以访问 <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> 来查看效果，这个时候hexo已经搭建成功了，<br>但是我们需要外网能够访问，这就用到了今天的另一个主角：<code>github page</code></p>
+<h2 id="将-hexo-放到github上"><a href="#将-hexo-放到github上" class="headerlink" title="将 hexo 放到github上"></a>将 <code>hexo</code> 放到github上</h2><ul>
+<li>需要一个github账号，具体申请登录看 <a href="https://github.com" target="_blank" rel="external">https://github.com</a> 上的引导就行</li>
+<li>创建一个新的 repository 名字格式是固定的，比如我的账户名是 gaopengfei123123 那么这个库的名字就是 gaopengfei123123.github.io 不能改的哦</li>
+<li>为了可以直接提交远程文件需要添加 ssh 密匙<br>本地操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;5173180@qq.com” -f ~/.ssh/github-rsa</div><div class="line">cat ~/.ssh/github_rsa.pub</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3K5mcQxH9mu1cUIu2+byK1iksES/7Tnfh23l2U6y1fOKO4XFhPLdAoMQdePnI51PAF4faXxucOYsiDb6IpQimWPwORKTkEkcglOiZ414eZZ829gY98RAldbFQeT2L9A0l2APfcan1fH4HvrCmZKlY8CNDQDDfRzXub9hfSX3LS5mQlgS9PHiFoXRfrS10hYweere9Cb9OFiEdkdCfMKUBr25ImGahqbaHxE8Vb3QzMT8Q5PBITaqFwYnIE/z6HU6Lok92EZ/uVG81SMJb9A5SQCZdsjWmyDqXj1eDZ1A2YyUlA+/6QM7JjCrLoZAAtZHTH+ylNAG79w9WG0eYAuL GaoPengFeiFiy@github.com</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>把这一段完整的复制到 <a href="https://github.com/settings/keys" target="_blank" rel="external">https://github.com/settings/keys</a> 这个地址下，添加一条新的ssh-key，这样就能免登录提交版本文件</p>
+<ul>
+<li>现在编辑本地hexo根目录下的站点配置文件 <code>path/to/hexo_blog/_config.yml</code><br>查找字段 <code>deploy</code> 编辑成这样<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:gaopengfei123123/gaopengfei123123.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>设置好后，就将本地生成的静态文件发到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo deploy</div><div class="line"></div><div class="line">#如果报错就可能是少个插件</div><div class="line">npm install hexo-deployer-git</div></pre></td></tr></table></figure></p>
+<ul>
+<li>进入 你的版本库地址/settings 比如我的就是 <code>https://github.com/gaopengfei123123/gaopengfei123123.github.io/settings</code><br>找到 <code>github pages</code> 设置块按照你的需求调整，这时访问 <code>https://gaopengfei123123.github.io</code>就能访问 hexo 上传的内容了</li>
+</ul>
+<h2 id="绑定一个自己的域名，通过它来访问github-pages"><a href="#绑定一个自己的域名，通过它来访问github-pages" class="headerlink" title="绑定一个自己的域名，通过它来访问github pages"></a>绑定一个自己的域名，通过它来访问github pages</h2><blockquote>
+<p>我用的是阿里云的万网来举例</p>
+</blockquote>
+<ul>
+<li><p>首先进入到万网云解析的页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">记录类型：A</div><div class="line">主机记录：blog</div><div class="line">记录值：xxx.xxx.xxx  #这里需要 ping -c 3 https://gaopengfei123123.github.io 获取ip地址</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后返回到 你的版本库地址/settings 这里，将 <code>Custom domain</code> 设置成你刚才解析的名字，<br>与此同时在github上版本的根目录下添加一个文件 <code>CNAME</code> 内容是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#in CNAME</div><div class="line">blog.justwe.site</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这时再返回settings中就能看的 github pages 部分的域名绑定的是你的域名了，到这里博客算是搭建成功了</p>
+<p><a href="https://hexo.io" target="_blank" rel="external">hexo官网</a></p>
+<p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">hexo的next模版官网</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;本地搭建-hexo&quot;&gt;&lt;a href=&quot;#本地搭建-hexo&quot; class=&quot;headerlink&quot; title=&quot;本地搭建 hexo&quot;&gt;&lt;/a&gt;本地搭建 &lt;code&gt;hexo&lt;/code&gt;&lt;/h2&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用Hexo和github-Pages发布博客</title>
+    <link href="http://blog.justwe.site/2017/03/22/hexo-blog/"/>
+    <id>http://blog.justwe.site/2017/03/22/hexo-blog/</id>
+    <published>2017-03-22T02:18:00.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="本地搭建-hexo"><a href="#本地搭建-hexo" class="headerlink" title="本地搭建 hexo"></a>本地搭建 <code>hexo</code></h2><a id="more"></a>
+<ul>
+<li>构建hexo需要在本地安装<code>node.js</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install node</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当前版本的node版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">node -v</div><div class="line">v7.7.3</div></pre></td></tr></table></figure></p>
+<ul>
+<li>全局安装 <code>hexo</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>国外镜像慢的话可以搜索找下淘宝的 <code>cnmp</code></p>
+</blockquote>
+<ul>
+<li><p>创建一个目录并且安装 <code>hexo</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir hexo_blog</div><div class="line">cd hexo_blog</div><div class="line">hexo init</div><div class="line">npm install</div></pre></td></tr></table></figure>
+</li>
+<li><p>新建一个文章</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;your-first-page&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>文件在 <code>hexo_blog/source/_post/</code>下进行编辑啊</p>
+<ul>
+<li>然后就是生成静态文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate</div><div class="line">hexo server</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这时就可以访问 <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> 来查看效果，这个时候hexo已经搭建成功了，<br>但是我们需要外网能够访问，这就用到了今天的另一个主角：<code>github page</code></p>
+<h2 id="将-hexo-放到github上"><a href="#将-hexo-放到github上" class="headerlink" title="将 hexo 放到github上"></a>将 <code>hexo</code> 放到github上</h2><ul>
+<li>需要一个github账号，具体申请登录看 <a href="https://github.com" target="_blank" rel="external">https://github.com</a> 上的引导就行</li>
+<li>创建一个新的 repository 名字格式是固定的，比如我的账户名是 gaopengfei123123 那么这个库的名字就是 gaopengfei123123.github.io 不能改的哦</li>
+<li>为了可以直接提交远程文件需要添加 ssh 密匙<br>本地操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;5173180@qq.com” -f ~/.ssh/github-rsa</div><div class="line">cat ~/.ssh/github_rsa.pub</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3K5mcQxH9mu1cUIu2+byK1iksES/7Tnfh23l2U6y1fOKO4XFhPLdAoMQdePnI51PAF4faXxucOYsiDb6IpQimWPwORKTkEkcglOiZ414eZZ829gY98RAldbFQeT2L9A0l2APfcan1fH4HvrCmZKlY8CNDQDDfRzXub9hfSX3LS5mQlgS9PHiFoXRfrS10hYweere9Cb9OFiEdkdCfMKUBr25ImGahqbaHxE8Vb3QzMT8Q5PBITaqFwYnIE/z6HU6Lok92EZ/uVG81SMJb9A5SQCZdsjWmyDqXj1eDZ1A2YyUlA+/6QM7JjCrLoZAAtZHTH+ylNAG79w9WG0eYAuL GaoPengFeiFiy@github.com</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>把这一段完整的复制到 <a href="https://github.com/settings/keys" target="_blank" rel="external">https://github.com/settings/keys</a> 这个地址下，添加一条新的ssh-key，这样就能免登录提交版本文件</p>
+<ul>
+<li>现在编辑本地hexo根目录下的站点配置文件 <code>path/to/hexo_blog/_config.yml</code><br>查找字段 <code>deploy</code> 编辑成这样<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:gaopengfei123123/gaopengfei123123.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>设置好后，就将本地生成的静态文件发到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo deploy</div><div class="line"></div><div class="line">#如果报错就可能是少个插件</div><div class="line">npm install hexo-deployer-git</div></pre></td></tr></table></figure></p>
+<ul>
+<li>进入 你的版本库地址/settings 比如我的就是 <code>https://github.com/gaopengfei123123/gaopengfei123123.github.io/settings</code><br>找到 <code>github pages</code> 设置块按照你的需求调整，这时访问 <code>https://gaopengfei123123.github.io</code>就能访问 hexo 上传的内容了</li>
+</ul>
+<h2 id="绑定一个自己的域名，通过它来访问github-pages"><a href="#绑定一个自己的域名，通过它来访问github-pages" class="headerlink" title="绑定一个自己的域名，通过它来访问github pages"></a>绑定一个自己的域名，通过它来访问github pages</h2><blockquote>
+<p>我用的是阿里云的万网来举例</p>
+</blockquote>
+<ul>
+<li><p>首先进入到万网云解析的页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">记录类型：A</div><div class="line">主机记录：blog</div><div class="line">记录值：xxx.xxx.xxx  #这里需要 ping -c 3 https://gaopengfei123123.github.io 获取ip地址</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后返回到 你的版本库地址/settings 这里，将 <code>Custom domain</code> 设置成你刚才解析的名字，<br>与此同时在github上版本的根目录下添加一个文件 <code>CNAME</code> 内容是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#in CNAME</div><div class="line">blog.justwe.site</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这时再返回settings中就能看的 github pages 部分的域名绑定的是你的域名了，到这里博客算是搭建成功了</p>
+<p><a href="https://hexo.io" target="_blank" rel="external">hexo官网</a></p>
+<p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">hexo的next模版官网</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;本地搭建-hexo&quot;&gt;&lt;a href=&quot;#本地搭建-hexo&quot; class=&quot;headerlink&quot; title=&quot;本地搭建 hexo&quot;&gt;&lt;/a&gt;本地搭建 &lt;code&gt;hexo&lt;/code&gt;&lt;/h2&gt;
+    
+    </summary>
+    
+      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Laravel事物</title>
+    <link href="http://blog.justwe.site/2017/03/21/laravel-trancate/"/>
+    <id>http://blog.justwe.site/2017/03/21/laravel-trancate/</id>
+    <published>2017-03-21T01:01:02.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>laravel 事务的使用会忽略的地方<br><a id="more"></a></p>
+<p>laravel开启事物有两种方法：</p>
+<ul>
+<li>一种是闭包<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">DB::transaction(<span class="function"><span class="keyword">function</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    DB::table(<span class="string">'user'</span>)-&gt;insert([<span class="string">'username'</span>=&gt;<span class="string">'xxx'</span>]);</div><div class="line">    DB::table(<span class="string">'comment'</span>)-&gt;insert([<span class="string">'content'</span>=&gt;<span class="string">'zzz'</span>]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当闭包内发生错误就会自动回滚</p>
+<ul>
+<li>另一种比较灵活<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">DB::beginTransaction();</div><div class="line"><span class="comment">//这里执行一些数据库操作，包括 eloquent 的</span></div><div class="line"><span class="keyword">if</span>(condition)&#123;</div><div class="line">    DB::commit();</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    DB::rollback();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>但是我有一次发现两种方法的事物都不起作用，在想掉几根头发之后想到了可能是不同数据库的原因！</p>
+<p>如果你采用的是分库存储不同逻辑的方式，执行事物的时候<strong>一定要加上连接信息</strong> 上面的就要这样写了：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">DB::connection(<span class="string">'admin_database'</span>)-&gt;beginTransaction();</div><div class="line"><span class="comment">//这里执行一些数据库操作，包括 eloquent 的</span></div><div class="line"><span class="keyword">if</span>(condition)&#123;</div><div class="line">    DB::connection(<span class="string">'admin_database'</span>)-&gt;commit();</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">    DB::connection(<span class="string">'admin_database'</span>)-&gt;rollback();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果逻辑中的 eloquent 连接的数据库和开启事物的数据库不是一个库一样是不起作用的</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;laravel 事务的使用会忽略的地方&lt;br&gt;
+    
+    </summary>
+    
+      <category term="laravel" scheme="http://blog.justwe.site/categories/laravel/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言了解(3) 工作流程</title>
+    <link href="http://blog.justwe.site/2017/03/19/go-workflow/"/>
+    <id>http://blog.justwe.site/2017/03/19/go-workflow/</id>
+    <published>2017-03-19T07:58:05.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本章将的关键字有 <code>defer</code>,<code>panic</code>,<code>recover</code>,<code>main</code>,<code>init</code>,<code>import</code></p>
+<a id="more"></a>
+<h2 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h2><p>go语言中有一个不错的设计，就是<code>defer</code>。尤其是调用资源时需要打开和关闭两个选项的时候就能凸显出来</p>
+<p>它的作用是将指定的语句在函数结束时执行，没明白？咱们举个例子啊<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">main () &#123;</div><div class="line">  for i :=0;i &lt; 5 ; i++&#123;</div><div class="line">    defer fmt.Println(&apos;输出：&apos;,i)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出的结果不是01234而是相反的43210，这样就明白它的功能了吧？再举一个常用的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">func OpenFile() bool&#123;</div><div class="line">  file.Open(&quot;file/path&quot;)</div><div class="line"></div><div class="line">  if condition1 &#123;</div><div class="line">    file.Close()</div><div class="line">    return false</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  if condition2 &#123;</div><div class="line">    file.Close()</div><div class="line">    return false</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  file.Close()</div><div class="line">  return true</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在别的语言中我们打开文件的逻辑大体是这样的，你会发现打开一个文件需要在每个条件结束的时候去再声明关闭它，<br>这显得语句很臃肿，而且如果我们哪个地方给忘了很可能就造成内存泄漏，但在go中它变的很简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">func OpenFile() bool&#123;</div><div class="line">  file.Open(&quot;file/path&quot;)</div><div class="line">  defer file.Close()</div><div class="line">  if condition1 &#123;</div><div class="line">    return false</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  if condition2 &#123;</div><div class="line">    return false</div><div class="line">  &#125;</div><div class="line">  return true</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当函数按照从上往下执行的时，执行到最下面准备结束这个函数，go将会再从下往上执行一下标明的defer的命令</p>
+<h2 id="panic-和-recover"><a href="#panic-和-recover" class="headerlink" title="panic 和 recover"></a>panic 和 recover</h2><p>这两个函数放在一起说，因为他们的作用是相对的</p>
+<p><code>panic</code>会中断控制流程的命令，是go语言的报错机制，一旦执行<code>panic</code>那么当前进程就会终止，<br>但是我们刚才讲的defer命令还是会执行，等defer执行完了就会结束这个goroutine</p>
+<p><code>recover</code>会恢复panic造成的中断，从而让进程继续进行，而且<code>recover</code>只能在defer中执行，同时在正常进程中执行的<code>recover()</code>将返回false</p>
+<p>由于没想到十分合适的场景就先不举例了:p</p>
+<h2 id="main-和-init"><a href="#main-和-init" class="headerlink" title="main 和 init"></a>main 和 init</h2><p>这两个也能放在一起说</p>
+<p><code>main</code>只能有一个，而且只能在<code>main package</code>当中，而<code>init()</code>每个包里都可以有多个，也可以没有，为了方便维护，建议包里不超过一个<code>init</code></p>
+<p>这两个都是系统自动执行的函数，不用在文件中执行</p>
+<p>在平时构建项目的时候我们会导入很多的包(package)，多个包中肯定会有重复的，但是不用担心，<em>重复导入的包只会生效一次</em></p>
+<p>从<code>main package</code>导入外界的包会优先执行外界包的init和变量初始化，如果外界的包也导入了第三方的包，那么优先执行外界包的第三方包的初始化，再执行外界包的初始化最后执行mian package的初始化</p>
+<p>这也很好理解，我们引入包的时候这个包肯定要是完整的形态，为了让他完整就要优先满足它的条件，这也层层向外翻到了最边缘初始化完毕再一层层的向内完成初始化</p>
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><p><code>import</code>有几个很方便的特性比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import(</div><div class="line">  f &quot;fmt&quot;</div><div class="line">  . &quot;fmt&quot;</div><div class="line">  _ &quot;fmt&quot;</div><div class="line">  )</div></pre></td></tr></table></figure></p>
+<p>这三种写法</p>
+<ol>
+<li>第一种是引入别名  <code>fmt.Println</code> 就可以简写成 <code>f.Println</code></li>
+<li>第二种更厉害了，直接就可以把包名给省去 可以当成自己的方法写成 <code>Println</code></li>
+<li>第三种其实是引入该包，不直接使用包里的函数，而是调用了该包的init函数</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本章将的关键字有 &lt;code&gt;defer&lt;/code&gt;,&lt;code&gt;panic&lt;/code&gt;,&lt;code&gt;recover&lt;/code&gt;,&lt;code&gt;main&lt;/code&gt;,&lt;code&gt;init&lt;/code&gt;,&lt;code&gt;import&lt;/code&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言了解(2)--切片</title>
+    <link href="http://blog.justwe.site/2017/03/14/go-slice/"/>
+    <id>http://blog.justwe.site/2017/03/14/go-slice/</id>
+    <published>2017-03-14T02:12:03.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>切片是一种复合类型，可以是数组也可以是字符串</p>
+<a id="more"></a>
+<p>接下来是一个简单切片使用示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">func slienceInfo(slience []int, str string) &#123;</div><div class="line">	fmt.Println(&quot;\n&quot;, str, &quot;的长度是:&quot;, len(slience))</div><div class="line">	fmt.Println(str, &quot;的大小是:&quot;, cap(slience), &quot;\n&quot;)</div><div class="line">	for i, v := range slience &#123;</div><div class="line">		fmt.Println(str, &quot;下标&quot;, i, &quot;是&quot;, v)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">	//定义一个数组</div><div class="line">	var arr [10]int = [10]int&#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&#125;</div><div class="line"></div><div class="line">	//打印一下</div><div class="line">	for _, v := range arr &#123;</div><div class="line">		fmt.Println(&quot;arr element is&quot;, v)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//获取数组 arr 从0 到下标为5（不包含下标5) 的一个切片</div><div class="line">	mySlice := arr[:5]</div><div class="line">	slienceInfo(mySlice, &quot;mySlice&quot;)</div><div class="line"></div><div class="line">	//声明一个包含5个元素的数组切片 此时会创建一个匿名数组</div><div class="line">	elementSlience := []int&#123;1, 2, 2, 3, 4&#125;</div><div class="line">	slienceInfo(elementSlience, &quot;elementSlience&quot;)</div><div class="line"></div><div class="line">	//声明一个默认值0，长度5，预留长度10的切片</div><div class="line">	emptySlience := make([]int, 5, 10)</div><div class="line">	slienceInfo(emptySlience, &quot;emptySlience&quot;)</div><div class="line"></div><div class="line">	//向切片中添加元素 这时数组的长度和占用内存是一致的</div><div class="line">	emptySlience = append(emptySlience, 1, 2, 3, 4, 5)</div><div class="line">	//如果超过分配的内存，会动态分配足够的内存空间</div><div class="line">	//	emptySlience = append(emptySlience, 1, 2, 3, 4, 5)</div><div class="line">	slienceInfo(emptySlience, &quot;emptySlience2&quot;)</div><div class="line"></div><div class="line">	mySlice = append(mySlice, emptySlience...)</div><div class="line">	slienceInfo(mySlice, &quot;mySlice2&quot;)</div><div class="line"></div><div class="line">  //内容复制  </div><div class="line">	slice1 := []int&#123;1, 2, 3, 4, 5&#125;</div><div class="line">	slice2 := []int&#123;6, 6, 6&#125;</div><div class="line">	//从slice2复制前三个元素到slice1当中，不同长度的按照较小的来</div><div class="line">	copy(slice1, slice2)</div><div class="line">	slienceInfo(slice2, &quot;slice&quot;)</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>从示例中可以看出切片是动态分配内存大小的，我总结了一下几条规律</p>
+<ol>
+<li>当切片源于一个已有的数组时，切片长度取决于截取的长度，切片分配的内存大小和源数组占用的内存大小一样</li>
+<li>当直接生成一个切片数组时，可以定义长度和预留内存</li>
+<li>当切片超出分配内存大小时，系统将会再分配一块足够大的内存</li>
+</ol>
+<p>通常如果直到业务中明确的数组极限长度的时候，就分配足够大的内存，以缓解系统不断计算分配内存的压力，典型的空间换时间</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;切片是一种复合类型，可以是数组也可以是字符串&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Git标签操作</title>
+    <link href="http://blog.justwe.site/2017/03/13/git-tag/"/>
+    <id>http://blog.justwe.site/2017/03/13/git-tag/</id>
+    <published>2017-03-12T23:30:00.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="列出所有标签"><a href="#列出所有标签" class="headerlink" title="列出所有标签"></a>列出所有标签</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git tag</div></pre></td></tr></table></figure>
+<h2 id="添加标签-同时生成独立的版本库"><a href="#添加标签-同时生成独立的版本库" class="headerlink" title="添加标签(同时生成独立的版本库)"></a>添加标签(同时生成独立的版本库)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 给当前commit打标签</div><div class="line">git tag -a v0.0.1 -m &apos;第一次添加标签&apos;</div><div class="line"></div><div class="line"># 给指定的commit打标签，需要commit的head</div><div class="line">git tag -a v0.0.1 0ed1dd07d324cb5aece243a95312187955619fcf</div></pre></td></tr></table></figure>
+<p>不加 <code>-a</code> 参数相当于是一个commit的引用</p>
+<h2 id="将标签推送到远程库"><a href="#将标签推送到远程库" class="headerlink" title="将标签推送到远程库"></a>将标签推送到远程库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 推送本地所有标签</div><div class="line">git push origin --tags</div><div class="line"># 推送指定标签</div><div class="line">git push origin v0.0.1</div></pre></td></tr></table></figure>
+<h2 id="跳转到指定标签"><a href="#跳转到指定标签" class="headerlink" title="跳转到指定标签"></a>跳转到指定标签</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout v0.0.1</div></pre></td></tr></table></figure>
+<p>和跳转到branch操作一样，但是因为是独立的版本库上，你在独立标签中的<code>git branch</code>和在主线中包含的branch显示的是不同的，<strong>独立版本库和分支的性质是不一样的</strong></p>
+<h2 id="删除指定标签"><a href="#删除指定标签" class="headerlink" title="删除指定标签"></a>删除指定标签</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git tag -d v0.0.1</div></pre></td></tr></table></figure>
+<h2 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin -d tag &lt;tagname&gt;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;列出所有标签&quot;&gt;&lt;a href=&quot;#列出所有标签&quot; class=&quot;headerlink&quot; title=&quot;列出所有标签&quot;&gt;&lt;/a&gt;列出所有标签&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gut
+    
+    </summary>
+    
+      <category term="git" scheme="http://blog.justwe.site/categories/git/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用Redis—geo Api实现搜索附近的人，自己写的一个composer包</title>
+    <link href="http://blog.justwe.site/2017/03/11/composer-redis-lbs/"/>
+    <id>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</id>
+    <published>2017-03-11T04:11:00.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://github.com/gaopengfei123123/redis_lbs" target="_blank" rel="external">git地址</a></p>
+<a id="more"></a>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>需要使用composer，<a href="https://getcomposer.org/download/" target="_blank" rel="external">安装composer</a>, <a href="http://www.phpcomposer.com/" target="_blank" rel="external">composer中国镜像</a></p>
+<p>如果是应用在项目当中的话找到根目录，需要和 <code>composer.json</code>同级</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require gaopengfei/redis_lbs</div></pre></td></tr></table></figure>
+<p>#基本操作</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">require_once</span> <span class="keyword">__DIR__</span>.<span class="string">'/vendor/autoload.php'</span>;</div><div class="line">$lbs = <span class="keyword">new</span> \LBS\Services\LBSService();</div></pre></td></tr></table></figure>
+<h2 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">$add_params = [</div><div class="line">    [</div><div class="line">        <span class="string">'name'</span> =&gt; <span class="string">'yabao_road'</span>,</div><div class="line">        <span class="string">'long'</span> =&gt; <span class="string">'116.43620200729366'</span>,</div><div class="line">        <span class="string">'lat'</span> =&gt; <span class="string">'39.916880160714435'</span></div><div class="line">    ],</div><div class="line">    [</div><div class="line">        <span class="string">'name'</span> =&gt; <span class="string">'jianguomen'</span>,</div><div class="line">        <span class="string">'long'</span> =&gt; <span class="string">'116.4356870231628'</span>,</div><div class="line">        <span class="string">'lat'</span> =&gt; <span class="string">'39.908560377800676'</span></div><div class="line">    ],</div><div class="line">    [</div><div class="line">        <span class="string">'name'</span> =&gt; <span class="string">'chaoyangmen'</span>,</div><div class="line">        <span class="string">'long'</span> =&gt; <span class="string">'116.4345336732864'</span>,</div><div class="line">        <span class="string">'lat'</span> =&gt; <span class="string">'39.924466658329585'</span></div><div class="line">    ],</div><div class="line">    [</div><div class="line">        <span class="string">'name'</span> =&gt; <span class="string">'galaxy_soho'</span>,</div><div class="line">        <span class="string">'long'</span> =&gt; <span class="string">'116.4335788068771'</span>,</div><div class="line">        <span class="string">'lat'</span> =&gt; <span class="string">'39.921372916981106'</span></div><div class="line">    ],</div><div class="line">    [</div><div class="line">        <span class="string">'name'</span> =&gt; <span class="string">'cofco'</span>,</div><div class="line">        <span class="string">'long'</span> =&gt; <span class="string">'116.43564410781856'</span>,</div><div class="line">        <span class="string">'lat'</span> =&gt; <span class="string">'39.92024564137184'</span></div><div class="line">    ],</div><div class="line">    [</div><div class="line">        <span class="string">'name'</span> =&gt; <span class="string">'fesco'</span>,</div><div class="line">        <span class="string">'long'</span> =&gt; <span class="string">'116.435182767868'</span>,</div><div class="line">        <span class="string">'lat'</span> =&gt; <span class="string">'39.91811857809279'</span></div><div class="line">    ],</div><div class="line"></div><div class="line"></div><div class="line">];</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 在集合中新加一个坐标</div><div class="line"> * <span class="doctag">@param</span> array $params</div><div class="line"> *  结构是 ['name'=&gt;'xxx','long'=&gt;'1.2321','lat'=&gt;'1.3112']或者[['name'=&gt;'xxx','long'=&gt;'1.2321','lat'=&gt;'1.3112']]</div><div class="line"> * <span class="doctag">@param</span> null $key</div><div class="line"> * <span class="doctag">@return</span> int</div><div class="line"> */</div><div class="line">$res = $lbs-&gt;add($add_params);</div><div class="line"></div><div class="line">返回</div><div class="line">int <span class="number">6</span></div></pre></td></tr></table></figure>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 删除集合中指定元素</div><div class="line"> * <span class="doctag">@param</span> $name</div><div class="line"> * <span class="doctag">@param</span> null $key  默认存在集合，可以指定</div><div class="line"> * <span class="doctag">@return</span> int</div><div class="line"> */</div><div class="line">$res = $lbs-&gt;del(<span class="string">'gao1'</span>);</div><div class="line"></div><div class="line">返回</div><div class="line">int <span class="number">0</span> 或 <span class="number">1</span></div><div class="line"></div><div class="line"></div><div class="line">如果是指定的集合名就</div><div class="line">$res = $lbs-&gt;del(<span class="string">'gao1'</span>,<span class="string">'set-name'</span>);</div></pre></td></tr></table></figure>
+<h2 id="用坐标查询附近的单位"><a href="#用坐标查询附近的单位" class="headerlink" title="用坐标查询附近的单位"></a>用坐标查询附近的单位</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 查询范围内元素，如果不转 key就用默认的</div><div class="line"> * <span class="doctag">@param</span> $long     经度</div><div class="line"> * <span class="doctag">@param</span> $lat      纬度</div><div class="line"> * <span class="doctag">@param</span> $radius   范围</div><div class="line"> * <span class="doctag">@param</span> $unit     单位  (仅支持 m,km,ft,mi)</div><div class="line"> * <span class="doctag">@param</span> null $key 集合名</div><div class="line"> * <span class="doctag">@return</span> mixed</div><div class="line"> */</div><div class="line">$search = $lbs-&gt;search(<span class="string">'116.435182767868'</span>,<span class="string">'39.91811857809279'</span>,<span class="number">500</span>,<span class="string">'m'</span>);</div><div class="line"></div><div class="line">返回数组</div><div class="line"><span class="keyword">array</span>:<span class="number">4</span> [▼</div><div class="line">  <span class="number">0</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"fesco"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"0.1250"</span></div><div class="line">  ]</div><div class="line">  <span class="number">1</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"yabao_road"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"162.8454"</span></div><div class="line">  ]</div><div class="line">  <span class="number">2</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"cofco"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"239.7758"</span></div><div class="line">  ]</div><div class="line">  <span class="number">3</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"galaxy_soho"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"386.9165"</span></div><div class="line">  ]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="根据已有的位置查询"><a href="#根据已有的位置查询" class="headerlink" title="根据已有的位置查询"></a>根据已有的位置查询</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 根据集合中的元素查询范围内元素，如果不转 key就用默认的</div><div class="line"> * <span class="doctag">@param</span> $name         集合中的元素名</div><div class="line"> * <span class="doctag">@param</span> $radius       范围</div><div class="line"> * <span class="doctag">@param</span> $unit         单位</div><div class="line"> * <span class="doctag">@param</span> null $key     集合名</div><div class="line"> * <span class="doctag">@return</span> mixed</div><div class="line"> */</div><div class="line">$search = $lbs-&gt;-&gt;searchByMembers(<span class="string">'fesco'</span>,<span class="number">500</span>,<span class="string">'m'</span>);</div><div class="line"></div><div class="line">返回数组</div><div class="line"><span class="keyword">array</span>:<span class="number">4</span> [▼</div><div class="line">  <span class="number">0</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"fesco"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"0.1250"</span></div><div class="line">  ]</div><div class="line">  <span class="number">1</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"yabao_road"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"162.8454"</span></div><div class="line">  ]</div><div class="line">  <span class="number">2</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"cofco"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"239.7758"</span></div><div class="line">  ]</div><div class="line">  <span class="number">3</span> =&gt; <span class="keyword">array</span>:<span class="number">2</span> [▼</div><div class="line">    <span class="string">"name"</span> =&gt; <span class="string">"galaxy_soho"</span></div><div class="line">    <span class="string">"dist"</span> =&gt; <span class="string">"386.9165"</span></div><div class="line">  ]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="列出集合的所有值（其实就是-zrange"><a href="#列出集合的所有值（其实就是-zrange" class="headerlink" title="列出集合的所有值（其实就是 zrange)"></a>列出集合的所有值（其实就是 zrange)</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 列出集合中的内容</div><div class="line"> * <span class="doctag">@param</span> $key          集合的key</div><div class="line"> * <span class="doctag">@param</span> int $start    起始位置</div><div class="line"> * <span class="doctag">@param</span> int $end      结束位置 -1 为直到末尾</div><div class="line"> * <span class="doctag">@return</span> array</div><div class="line"> */</div><div class="line">$list = $lbs-&gt;list($test-&gt;geoset_name,<span class="number">2</span>,<span class="number">-1</span>);</div><div class="line"></div><div class="line">返回数组</div><div class="line"><span class="keyword">array</span>:<span class="number">6</span> [▼</div><div class="line">  <span class="number">0</span> =&gt; <span class="string">"jianguomen"</span></div><div class="line">  <span class="number">1</span> =&gt; <span class="string">"yabao_road"</span></div><div class="line">  <span class="number">2</span> =&gt; <span class="string">"fesco"</span></div><div class="line">  <span class="number">3</span> =&gt; <span class="string">"cofco"</span></div><div class="line">  <span class="number">4</span> =&gt; <span class="string">"galaxy_soho"</span></div><div class="line">  <span class="number">5</span> =&gt; <span class="string">"chaoyangmen"</span></div><div class="line">]</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://github.com/gaopengfei123123/redis_lbs&quot;&gt;git地址&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>LBS使用redis的解决方案--GEOHASH</title>
+    <link href="http://blog.justwe.site/2017/03/10/redis-geohash-lbs/"/>
+    <id>http://blog.justwe.site/2017/03/10/redis-geohash-lbs/</id>
+    <published>2017-03-10T02:53:00.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p> 最近需要用到LBS距离测绘方面的东西，用于搜索附近的人，<br>在网上搜了一下有一个比较通用的方案，就是采用 GEOHASH 算法</p>
+<a id="more"></a>
+<p><a href="http://blog.jobbole.com/80633/" target="_blank" rel="external">相关的参考资料</a></p>
+<p>这套算法在 mongoDB 当中已经集成了，但是公司的业务中没有用到 mongodb 而是用了redis，<br>本来打算自己造个轮子去实现，但是万幸翻看了一下redis的文档，它也在 3.* 版本后提供了GEO相关的api</p>
+<p><a href="http://cristian.regolo.cc/2015/07/07/introducing-the-geo-api-in-redis.html" target="_blank" rel="external">相关文章</a></p>
+<p>首先是添加命令 <code>GEOADD</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GEOADD key long lat name [long lat name1,long lat name2,long lat name3...]</div></pre></td></tr></table></figure></p>
+<ol>
+<li>key  <code>GEOSET</code>的名字</li>
+<li>long 地点的经度</li>
+<li>lat  地点的纬度</li>
+<li>name <code>GEOSET</code>内的值的名字<br>可以批量输入</li>
+</ol>
+<p>举个栗子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GEOADD chaoyangqu 116.43620200729366 39.916880160714435 &quot;yabaolu&quot; 116.4356870231628 39.908560377800676 &quot;jianguomen&quot; 116.4345336732864 39.924466658329585 &quot;chaoyangmen&quot; 116.4335788068771 39.921372916981106 &quot;yinhesoho&quot; 116.43564410781856 39.92024564137184 &quot;zhongliang&quot;</div><div class="line">(integer) 5</div></pre></td></tr></table></figure></p>
+<p>返回值为1 说明是新添，返回0 说明是更新 错误的话就报错了</p>
+<p>查看当前插入的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">zrange chaoyangqu 0 -1</div><div class="line">1) &quot;jianguomen&quot;</div><div class="line">2) &quot;yabaolu&quot;</div><div class="line">3) &quot;zhongliang&quot;</div><div class="line">4) &quot;yinhesoho&quot;</div><div class="line">5) &quot;chaoyangmen&quot;</div></pre></td></tr></table></figure></p>
+<p>从这条命令也可以看出来 geoset 是属于有序集合</p>
+<p>命令 <code>GEORADIUS</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GEORADIUS key long lat radius unit [WITHDIST] [WITHHASH] [WITHCOORD] [ASC|DESC] [COUNT count]</div></pre></td></tr></table></figure></p>
+<ol>
+<li>key 集合的名字</li>
+<li>long 指定的经度</li>
+<li>lat  指定的纬度</li>
+<li>radius 半径范围</li>
+<li>unit 单位 可以说 m km ft(英尺) mi(英里)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GEORADIUS chaoyangqu 116.435182767868 39.91811857809279 300 m</div><div class="line">1) &quot;zhongliang&quot;</div><div class="line">2) &quot;yabaolu&quot;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>带上参数可以显示更多位置信息，通常业务需要显示下距离和进行排序，添加 <code>WITHDIST</code> <code>ASC</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GEORADIUS chaoyangqu 116.435182767868 39.91811857809279 300 m WITHDIST ASC</div><div class="line">1) 1) &quot;yabaolu&quot;</div><div class="line">   2) &quot;162.8454&quot;</div><div class="line">2) 1) &quot;zhongliang&quot;</div><div class="line">   2) &quot;239.7758&quot;</div></pre></td></tr></table></figure></p>
+<p>命令<code>GEORADIUSBYMEMBER</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GEORADIUSBYMEMBER key member radius unit [WITHDIST] [WITHHASH] [WITHCOORD] [ASC|DESC] [COUNT count]</div></pre></td></tr></table></figure></p>
+<ol>
+<li>key 集合的名字</li>
+<li>long 指定的经度</li>
+<li>lat  指定的纬度</li>
+<li>radius 半径范围</li>
+<li>unit 单位 可以说 m km ft(英尺) mi(英里)</li>
+</ol>
+<p>这个和 <code>GEORADIUS</code> 的区别就是 前者是指定坐标，后者是可以直接从集合中指定一个name做计算<br>栗子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GEORADIUSBYMEMBER chaoyangqu yinhesoho 300 m WITHDIST ASC</div><div class="line">GEORADIUSBYMEMBER chaoyangqu yinhesoho 300 m WITHDIST ASC</div><div class="line">1) 1) &quot;yinhesoho&quot;</div><div class="line">   2) &quot;0.0000&quot;</div><div class="line">2) 1) &quot;zhongliang&quot;</div><div class="line">   2) &quot;216.2817&quot;</div></pre></td></tr></table></figure></p>
+<p>排在第一位的肯定是自己啊，而且需要确定你要搜寻的名字已经存在集合中，否则会报错</p>
+<p>命令<code>GEOPOS</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GEOPOS key elem1 elem2 ... elemN</div></pre></td></tr></table></figure></p>
+<p>列出集合中指定name的坐标<br>栗子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GEOPOS chaoyangqu yabaolu yinhesoho xxx</div><div class="line">1) 1) &quot;116.43620342016220093&quot;</div><div class="line">   2) &quot;39.9168813345921123&quot;</div><div class="line">2) 1) &quot;116.43358021974563599&quot;</div><div class="line">   2) &quot;39.92137286048646416&quot;</div><div class="line">3) (nil)</div></pre></td></tr></table></figure></p>
+<p>说明如果 name 不存在set中就会返回nil</p>
+<p>命令<code>GEODIST</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GEODIST key elem1 elem2 [unit]</div><div class="line">1. unit 单位可以说m lm ft mi</div></pre></td></tr></table></figure></p>
+<p>只能是两个元素之间的啊，不然三个元素就是语法错误，两个元素中有一个不存在则返回 <code>nil</code><br>栗子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GEODIST chaoyangqu yabaolu yinhesoho m</div><div class="line">&quot;547.4030&quot;</div></pre></td></tr></table></figure></p>
+<p>下面的几个命令做个了解，平时不常用到</p>
+<ul>
+<li>GEOHASH key elem1 elem2 … elemN   //获取指定name的hash值</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt; 最近需要用到LBS距离测绘方面的东西，用于搜索附近的人，&lt;br&gt;在网上搜了一下有一个比较通用的方案，就是采用 GEOHASH 算法&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Docker(3) 构建Dockerfile</title>
+    <link href="http://blog.justwe.site/2017/03/08/docker-dockerfile/"/>
+    <id>http://blog.justwe.site/2017/03/08/docker-dockerfile/</id>
+    <published>2017-03-07T22:48:00.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一章我们用的是 <code>docker commit</code> 命令创建的自己的库，虽然简单但是定制性比较差，因此我们采用另一种且更广泛的做法就是 <code>docker build</code>命令，先上手做个demo</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd $HOME/document/www</div><div class="line">mkdir build_demo</div><div class="line">cd build_demo</div><div class="line">vi Dockerfile</div></pre></td></tr></table></figure>
+<p>下面是 <code>Dockerfile</code> 中的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Version 0.0.1</div><div class="line">FROM gaofeifiy/ubuntu-last</div><div class="line">MAINTAINER GPF “5173180@qq.com”</div><div class="line">RUN touch /ReadMe.txt</div><div class="line">RUN echo &apos;hey your contain build success!&apos; &gt; /ReadMe.txt</div><div class="line">EXPOSE 80</div></pre></td></tr></table></figure></p>
+<p>然后在 <code>$HOME/document/www/build_demo</code> 目录下运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">➜  lnmp_docker docker build -t=&quot;gaofeifiy/lnmp_server&quot; .</div><div class="line"># 下面是显示的</div><div class="line">Sending build context to Docker daemon 2.048 kB</div><div class="line">Step 1 : FROM gaofeifiy/ubuntu-last</div><div class="line"> ---&gt; 6f8cfa1871b0</div><div class="line">Step 2 : MAINTAINER GPF</div><div class="line"> ---&gt; Running in 3e442a5807f3</div><div class="line"> ---&gt; 8d0efc1cf9f7</div><div class="line">Removing intermediate container 3e442a5807f3</div><div class="line">Step 3 : RUN touch /ReadMe.txt</div><div class="line"> ---&gt; Running in 91a7a049d18c</div><div class="line"> ---&gt; b98309a7d5a4</div><div class="line">Removing intermediate container 91a7a049d18c</div><div class="line">Step 4 : RUN echo &apos;hey your contain build success!&apos; &gt; /ReadMe.txt</div><div class="line"> ---&gt; Running in 0158f49fef8f</div><div class="line"> ---&gt; 6416fe72ff4c</div><div class="line">Removing intermediate container 0158f49fef8f</div><div class="line">Step 5 : EXPOSE 80</div><div class="line"> ---&gt; Running in 26e1d7df6ab7</div><div class="line"> ---&gt; c994cb02df6e</div><div class="line">Removing intermediate container 26e1d7df6ab7</div><div class="line">Successfully built c994cb02df6e</div></pre></td></tr></table></figure></p>
+<p>-t 就是我们新建镜像的标签</p>
+<p>接下来我们查看一下本地的镜像列表里出现了什么<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜  lnmp_docker docker images</div><div class="line">REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">gaofeifiy/lnmp_server   latest              c994cb02df6e        40 hours ago        227 MB</div><div class="line">gaofeifiy/ubuntu-last   latest              6f8cfa1871b0        2 days ago          227 MB</div></pre></td></tr></table></figure></p>
+<p>我们刚刚创建的镜像已经出现到本地的列表里面了 输入 <code>docker history c994cb02df6e</code> 查看镜像的构建流程</p>
+<p>我们回顾一下整个流程：刚才所有的操作都是在 <code>Dockerfile</code> 这个文件中进行的，我们用到以下命令</p>
+<p>. FROM gaofeifiy/ubuntu-last 新建的库采用 gaofeifiy/ubuntu-last 这个镜像构建的(就是上一章我们建的那个，因为写这个的时候电脑没网… 其实应该是 ubuntu:16.04 这类的基础镜像)<br>. MAINTAINER GPF “5173180@qq.com”   指定了该镜像的作者和邮箱<br>. RUN touch /ReadMe.txt 运行系统命令，创建一个ReadMe.txt 文件 其他的RUN命令欧式同样的道理<br>. EXPOSE 80 指定镜像对外端口是80</p>
+<p>下面介绍一下更多的Dockerfile相关的指令</p>
+<p>. ENV 设置镜像中的环境变量 比如 <code>ENV REFRESHED_AT 2017-02-22</code> 设置缓存更新时间<br>. CMD  和<code>docker run</code> 命令类似，是等容器启动后执行的命令，会被<code>docker run</code>指令干扰 例<code>CMD [&quot;/bin/bash&quot;,&quot;-l&quot;]</code> 这里推荐使用数组形式，防止出现-c参数的干扰<br>. ENTRYPOINT  和CMD命令类似，但是不会被<code>docker run</code>的命令干扰，而且会把<code>docker run</code>后的指令当作 <code>ENTRYPOINT</code>的参数来用 例如：<code>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;,&quot;-g&quot;,&quot;demon off&quot;]</code> 这条命令和 <code>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;]</code> 加上 <code>docker run -t -i xxx镜像 -g &quot;demon off&quot;</code> 两条语句产生的作用相同<br>. USER 指定镜像以什么用户去运行，默认是root 也可以<code>docker run -u</code> 来指定用户<br>. VOLUME 创建一个容器的共享卷，这样的话多个镜像容器公用一套内容，相当于类中的静态变量<br>. ADD   将本地文件添加到镜像当中，会解压 <em>仅限在以Dockerfile文件为根目录的目录下</em><br>. COPY 将本地文件拷贝到镜像当中，不会解压 <em>仅限在以Dockerfile文件为根目录的目录下</em><br>. ONBUILD 当其他镜像使用本镜像的时候触发的命令 例如<code>ONBUILD RUN echo &#39;hello world&#39;</code> 当别的镜像引用到这个镜像的时候就会执行这条命令</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一章我们用的是 &lt;code&gt;docker commit&lt;/code&gt; 命令创建的自己的库，虽然简单但是定制性比较差，因此我们采用另一种且更广泛的做法就是 &lt;code&gt;docker build&lt;/code&gt;命令，先上手做个demo&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言了解(1)</title>
+    <link href="http://blog.justwe.site/2017/03/08/go-info/"/>
+    <id>http://blog.justwe.site/2017/03/08/go-info/</id>
+    <published>2017-03-07T22:42:24.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p> 有人说go和php有很多相似的地方，用惯了弱语言的php是时候换换口味了</p>
+<a id="more"></a>
+<h2 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h2><p>go的声明变量的方式四种（茴香的茴有四种写法），开个玩笑，但是以下几种形式还是可以的</p>
+<ol>
+<li>var ValueName type   //直接声明一个，<em>声明了就要用啊，不然编译的时候就会报错</em></li>
+<li>var name1,name2,name3 type  //类型就近原则，直接声明三个相同类型的变量</li>
+<li>var ValueName type = value   //声明了变量顺便赋值</li>
+<li>var name1,name2,name3 type = value1,value2,value3   //批量赋值也可以，注意他们的类型是一样的</li>
+<li>name1,name2,name3  := value1,value2,value3   //这才是常用的写法，用 <code>:</code> 来自动判断类型，单个的也是这个用法<br>还有个特殊的变量名， <code>_</code> 这代表占个位置但是赋给他的值会被丢弃，比如  <code>_,a := 1,2</code> a的值为2 但是1就给丢了 这时的使用情景碰到再说</li>
+</ol>
+<h2 id="声明常量"><a href="#声明常量" class="headerlink" title="声明常量"></a>声明常量</h2><p>常量的关键词就不是 <code>var</code> 了 而是 <code>const</code>，和变量的区别是一旦定义就不能改了</p>
+<ol>
+<li>const ValueName = value  //直接赋值</li>
+<li>const Pi float32 = 3.1415926  //也可以声明常量的类型</li>
+</ol>
+<p>###分组赋值<br>在多个包里用到再赋值有的时候不利于debug，可以直接把要赋值的都放到一起 比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">const&#123;</div><div class="line">      ENV := true</div><div class="line">      LOCAL := &apos;dev&apos;</div><div class="line">      DATE := 20170307</div><div class="line">&#125;</div><div class="line"></div><div class="line">var&#123;</div><div class="line">    i int</div><div class="line">    pi float32</div><div class="line">    name string</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>##boolean类型<br><code>true</code> or <code>false</code> 默认为false</p>
+<p>##数值类型<br>go支持 <code>int</code>,<code>uint</code>可以定义的类型有<code>rune,int8,int16,int32,int64,byte,uint8,uint16,uint16,uint32,uint64</code></p>
+<p>其中 rune是int32的别称，byte是uint8的别称</p>
+<p>不同类型的数不能相互赋值和操作  二进制的数不能和八进制的相加减</p>
+<p>浮点型也有<code>float32,float64</code>两种，没有 <code>float</code>这个类型，默认 <code>float64</code></p>
+<p>##字符串<br>字符串的赋值方式遵循着上面的 声明变量 那一块说的。</p>
+<p>Value1 := ‘string’    和    Value1 := “string” 一个效果  <code>&quot;&quot;</code>代表的是一个空字符串也是占着内存的</p>
+<p>字符串之间的拼接用 <code>+</code> 比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a,b :=&quot;hello&quot;,&quot;world&quot;  </div><div class="line"></div><div class="line">c := a + b</div><div class="line"></div><div class="line">Printf(&quot;%s\n&quot;,c)  //输出 helloworld</div></pre></td></tr></table></figure></p>
+<p>字符串的修改不能直接修改，可以用切片的方式实现例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a := &apos;hello&apos;</div><div class="line">b := &apos;w&apos; + a[1:]</div><div class="line">//b 的值为 wello</div></pre></td></tr></table></figure></p>
+<p>什么是切片我们一会儿就会说到</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt; 有人说go和php有很多相似的地方，用惯了弱语言的php是时候换换口味了&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Go安装godoc</title>
+    <link href="http://blog.justwe.site/2017/03/07/go-doc/"/>
+    <id>http://blog.justwe.site/2017/03/07/go-doc/</id>
+    <published>2017-03-07T03:07:54.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>现在的版本(go version 1.8)下，go的开发工具已经都在git上上线了，可以直接安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/golang/tools $GOPATH/src/golang.org/x/tools</div><div class="line"></div><div class="line">go build golang.org/x/tools</div></pre></td></tr></table></figure>
+<p>就能生成 <code>godoc</code> 的二进制包了，注意需要把第三方的包放到 <code>$GOPATH/src</code> 目录下，这样才能让go能找到并构建</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现在的版本(go version 1.8)下，go的开发工具已经都在git上上线了，可以直接安装&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>安装LiteIde配置</title>
+    <link href="http://blog.justwe.site/2017/03/07/go-liteide/"/>
+    <id>http://blog.justwe.site/2017/03/07/go-liteide/</id>
+    <published>2017-03-06T21:49:56.000Z</published>
+    <updated>2017-04-06T04:17:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里设置 Liteide 的配置(环境macOS)</p>
+<blockquote>
+<p>Liteide 是一款专门为go开发的一款ide，省去了类似atom编辑器的一些麻烦的环境配置导致atom越来越臃肿，是不少go的开发者在推荐的一款ide</p>
+</blockquote>
+<a id="more"></a>
+<p>1.安装go<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install go</div></pre></td></tr></table></figure></p>
+<ol>
+<li>下载Liteide<blockquote>
+<p><a href="http://golangtc.com/download/liteide" target="_blank" rel="external">下载地址</a></p>
+</blockquote>
+</li>
+</ol>
+<p>选择一个适合系统的版本，推荐qt5的，版本高的不容易过时</p>
+<ol>
+<li>打开编辑器 <code>查看-&gt;编辑当前环境</code></li>
+</ol>
+<p>列出我现在的环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># native compiler darwin amd64</div><div class="line"></div><div class="line">GOROOT=/usr/local/Cellar/go/1.8/libexec</div><div class="line">GOPATH=$HOME/Documents/go</div><div class="line">GOBIN=</div><div class="line">GOARCH=amd64</div><div class="line">GOOS=darwin</div><div class="line">CGO_ENABLED=1</div><div class="line"></div><div class="line">PATH=$GOROOT/bin:$PATH</div><div class="line"></div><div class="line">LITEIDE_GDB=/usr/local/bin/gdb</div><div class="line">LITEIDE_MAKE=make</div><div class="line">LITEIDE_TERM=/usr/bin/open</div><div class="line">LITEIDE_TERMARGS=-a Terminal</div><div class="line">LITEIDE_EXEC=/usr/X11R6/bin/xterm</div><div class="line">LITEIDE_EXECOPT=-e</div></pre></td></tr></table></figure></p>
+<p>上面这一块刚开始是注释掉的，需要我们自己填写，这个是每次运行编辑器的适合才会用到的配置，和安装时的系统配置不冲突</p>
+<p>需要注意区分的就是 <code>GOROOT</code> 和 <code>GOPATH</code> 这两个变量</p>
+<p><code>GOROOT</code> 是go的执行目录，说白了就是go源码的安装目录，<br>比如 <code>import “fmt”</code>这条命令就是从 <code>GOROOT</code> 给的路径中找加载的包</p>
+<p><code>GOPATH</code> 是工作目录，类似apache的www目录，你的项目代码都是放到 <code>$GOPATH/src</code> 目录下的<br>同时我们通过 <code>go get</code> 获取的第三方package也是放在这里的为了能执行package里的文件也是需要把这个路径添加到环境变量当中，<br>因此才会出现 <code>PATH=$GOROOT/bin:$PATH</code> 这样的配置</p>
+<ol>
+<li>配置完成后运行个文件试一下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd $HOME/Documents/go/src</div><div class="line">mkdir hello &amp;&amp; cd hello</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>通过liteide编辑器打开目录，创建一个文件  main.go</p>
+<p>文件内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">func main()&#123;</div><div class="line">    fmt.Println(&quot;Hello world!&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后点击编辑器右上角的 <code>BR(build and run)</code> 就能在编辑器下面的信息框中看到输出内容了</p>
+<p>ready go！</p>
+<p><a href="https://segmentfault.com/a/1190000004008942" target="_blank" rel="external">参考1</a></p>
+<p><a href="http://www.jianshu.com/p/4e699ff478a5" target="_blank" rel="external">参考2</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里设置 Liteide 的配置(环境macOS)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Liteide 是一款专门为go开发的一款ide，省去了类似atom编辑器的一些麻烦的环境配置导致atom越来越臃肿，是不少go的开发者在推荐的一款ide&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="liteide" scheme="http://blog.justwe.site/tags/liteide/"/>
+    
+  </entry>
+  
+</feed>

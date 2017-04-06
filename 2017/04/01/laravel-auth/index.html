@@ -1,0 +1,1037 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VvMRi2mvr2-coUGzBvV70mi473YMTjSnsTdBaMjUnCA" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="等一个人, blog, laravel, php, js, vuejs, yii2.0" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="<Hello World/>" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文出处 auth提供了很方便的登录体系，已经做到了开箱即用的便捷，但是任何方便的工具都是需要花费学习成本的，了解的过程就由些痛苦了：） 本着松鼠过冬的原则，自己是能写一点是一点，以后忘记的话也能立即捡起来">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel-Auth">
+<meta property="og:url" content="http://blog.justwe.site/2017/04/01/laravel-auth/index.html">
+<meta property="og:site_name" content="<Hello World/>">
+<meta property="og:description" content="原文出处 auth提供了很方便的登录体系，已经做到了开箱即用的便捷，但是任何方便的工具都是需要花费学习成本的，了解的过程就由些痛苦了：） 本着松鼠过冬的原则，自己是能写一点是一点，以后忘记的话也能立即捡起来">
+<meta property="og:updated_time" content="2017-04-06T04:17:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Laravel-Auth">
+<meta name="twitter:description" content="原文出处 auth提供了很方便的登录体系，已经做到了开箱即用的便捷，但是任何方便的工具都是需要花费学习成本的，了解的过程就由些痛苦了：） 本着松鼠过冬的原则，自己是能写一点是一点，以后忘记的话也能立即捡起来">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justwe.site/2017/04/01/laravel-auth/"/>
+
+
+
+
+
+  <title> Laravel-Auth | <Hello World/> </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-92777740-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title"><Hello World/></span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Here</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/04/01/laravel-auth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GPF">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<Hello World/>">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Laravel-Auth
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-01T20:57:12+08:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/laravel/" itemprop="url" rel="index">
+                    <span itemprop="name">laravel</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/01/laravel-auth/" class="leancloud_visitors" data-flag-title="Laravel-Auth">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://laravel-china.org/topics/2777" target="_blank" rel="external">原文出处</a></p>
+<p>auth提供了很方便的登录体系，已经做到了开箱即用的便捷，但是任何方便的工具都是需要花费学习成本的，了解的过程就由些痛苦了：）</p>
+<p>本着松鼠过冬的原则，自己是能写一点是一点，以后忘记的话也能立即捡起来</p>
+<a id="more"></a>
+<p>安装auth系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:auth</div></pre></td></tr></table></figure></p>
+<p>默认会安装基于user表的登录验证，现在我们需要增加另一个表的登录验证（比如后台的数据表）<br>编辑<code>config/auth.php</code>,我们需要指定的就是<code>guards</code>和<code>providers</code>这两个数组，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">return [</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Authentication Defaults</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | This option controls the default authentication &quot;guard&quot; and password</div><div class="line">   | reset options for your application. You may change these defaults</div><div class="line">   | as required, but they&apos;re a perfect start for most applications.</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;defaults&apos; =&gt; [</div><div class="line">       &apos;guard&apos; =&gt; &apos;web&apos;,</div><div class="line">       &apos;passwords&apos; =&gt; &apos;users&apos;,</div><div class="line">   ],</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Authentication Guards</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | Next, you may define every authentication guard for your application.</div><div class="line">   | Of course, a great default configuration has been defined for you</div><div class="line">   | here which uses session storage and the Eloquent user provider.</div><div class="line">   |</div><div class="line">   | All authentication drivers have a user provider. This defines how the</div><div class="line">   | users are actually retrieved out of your database or other storage</div><div class="line">   | mechanisms used by this application to persist your user&apos;s data.</div><div class="line">   |</div><div class="line">   | Supported: &quot;session&quot;, &quot;token&quot;</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;guards&apos; =&gt; [</div><div class="line">       //......//</div><div class="line">       //这里新加的一组配置，provider的配置在下面有</div><div class="line">       &apos;admin&apos; =&gt; [</div><div class="line">           &apos;driver&apos; =&gt; &apos;session&apos;,</div><div class="line">           &apos;provider&apos; =&gt; &apos;admin&apos;,</div><div class="line">       ],</div><div class="line">       //.......//</div><div class="line">   ],</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | User Providers</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | All authentication drivers have a user provider. This defines how the</div><div class="line">   | users are actually retrieved out of your database or other storage</div><div class="line">   | mechanisms used by this application to persist your user&apos;s data.</div><div class="line">   |</div><div class="line">   | If you have multiple user tables or models you may configure multiple</div><div class="line">   | sources which represent each model / table. These sources may then</div><div class="line">   | be assigned to any extra authentication guards you have defined.</div><div class="line">   |</div><div class="line">   | Supported: &quot;database&quot;, &quot;eloquent&quot;</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;providers&apos; =&gt; [</div><div class="line">       //.............//</div><div class="line"></div><div class="line">       //这就是新加的配置，我们指定了 Admin 这个模型</div><div class="line">       &apos;admin&apos; =&gt; [</div><div class="line">           &apos;driver&apos; =&gt; &apos;eloquent&apos;,</div><div class="line">           &apos;model&apos; =&gt; App\Models\Admin::class,</div><div class="line">       ],</div><div class="line"></div><div class="line">       //.............//</div><div class="line">   ],</div><div class="line"></div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Resetting Passwords</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | You may specify multiple password reset configurations if you have more</div><div class="line">   | than one user table or model in the application and you want to have</div><div class="line">   | separate password reset settings based on the specific user types.</div><div class="line">   |</div><div class="line">   | The expire time is the number of minutes that the reset token should be</div><div class="line">   | considered valid. This security feature keeps tokens short-lived so</div><div class="line">   | they have less time to be guessed. You may change this as needed.</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   &apos;passwords&apos; =&gt; [</div><div class="line">       &apos;users&apos; =&gt; [</div><div class="line">           &apos;provider&apos; =&gt; &apos;users&apos;,</div><div class="line">           &apos;table&apos; =&gt; &apos;password_resets&apos;,</div><div class="line">           &apos;expire&apos; =&gt; 60,</div><div class="line">       ],</div><div class="line">   ],</div><div class="line"></div><div class="line">];</div></pre></td></tr></table></figure></p>
+<p>新建模型 <code>App/Models/Admin</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:model Models/Admin -m</div></pre></td></tr></table></figure></p>
+<p>编辑模型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">namespace App\Models;</div><div class="line"></div><div class="line">use Illuminate\Notifications\Notifiable;</div><div class="line">use Illuminate\Foundation\Auth\User as Authenticatable;</div><div class="line"></div><div class="line"></div><div class="line">//这里继承了auth的验证模型 其实和User的一样</div><div class="line">class Admin extends Authenticatable</div><div class="line">&#123;</div><div class="line">   use Notifiable;</div><div class="line">   protected $table=&apos;admin&apos;;</div><div class="line">   public $timestamps = false;</div><div class="line">   protected $primaryKey = &apos;id&apos;;</div><div class="line"></div><div class="line">   protected $fillable = [</div><div class="line">       &apos;name&apos;, &apos;email&apos;, &apos;password&apos;,</div><div class="line">   ];</div><div class="line"></div><div class="line">   protected $hidden = [</div><div class="line">       &apos;password&apos;, &apos;remember_token&apos;,</div><div class="line">   ];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编辑数据迁移文件 <code>database/migrations/xxxx_admin_table.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">use Illuminate\Support\Facades\Schema;</div><div class="line">use Illuminate\Database\Schema\Blueprint;</div><div class="line">use Illuminate\Database\Migrations\Migration;</div><div class="line"></div><div class="line">/**</div><div class="line">* Migration auto-generated by Sequel Pro Laravel Export</div><div class="line">* @see https://github.com/cviebrock/sequel-pro-laravel-export</div><div class="line">*/</div><div class="line">class CreateAdminTable extends Migration</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Run the migrations.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function up()</div><div class="line">   &#123;</div><div class="line">       Schema::create(&apos;admin&apos;, function (Blueprint $table) &#123;</div><div class="line">           $table-&gt;increments(&apos;id&apos;);</div><div class="line">           $table-&gt;string(&apos;name&apos;);</div><div class="line">           $table-&gt;string(&apos;email&apos;)-&gt;unique();</div><div class="line">           $table-&gt;string(&apos;password&apos;);</div><div class="line">           $table-&gt;rememberToken();</div><div class="line">           $table-&gt;timestamps();</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Reverse the migrations.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function down()</div><div class="line">   &#123;</div><div class="line">       Schema::dropIfExists(&apos;admin&apos;);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编辑数据填充文件，这一步懒得折腾可以直接手动添加数据</p>
+<p>编辑 <code>Faker</code> 这个数据模拟的类 <code>database/factories/ModelFactory.php</code> 添加一下内容,是根据我们刚创建的<code>Models/Admin</code>模型而填充的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//other code...........</div><div class="line"></div><div class="line">$factory-&gt;define(App\Models\Admin::class, function (Faker\Generator $faker) &#123;</div><div class="line">   static $password;</div><div class="line"></div><div class="line">   return [</div><div class="line">       &apos;name&apos; =&gt; $faker-&gt;name,</div><div class="line">       &apos;email&apos; =&gt; $faker-&gt;safeEmail,</div><div class="line">       &apos;password&apos; =&gt; $password ?: $password = bcrypt(&apos;secret&apos;),</div><div class="line">       &apos;remember_token&apos; =&gt; str_random(10),</div><div class="line">   ];</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>编辑<code>database/seeds/AdminTableSeeder.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">use Illuminate\Database\Seeder;</div><div class="line"></div><div class="line">class AdminsTableSeeder extends Seeder</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Run the database seeds.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function run()</div><div class="line">   &#123;</div><div class="line">       factory(&apos;App\Models\Admin&apos;,3)-&gt;create([</div><div class="line">           &apos;password&apos; =&gt; bcrypt(&apos;123456&apos;)</div><div class="line">       ]);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>将自动填充文件写入总的Seeder文件当中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//in database/seeds/DatabaseSeeder.php</div><div class="line"></div><div class="line">class DatabaseSeeder extends Seeder</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Run the database seeds.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function run()</div><div class="line">   &#123;</div><div class="line">       // $this-&gt;call(UsersTableSeeder::class);</div><div class="line">       $this-&gt;call(AdminsTableSeeder::class);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>执行数据库迁移操作 <code>--seed</code> 顺便执行数据填充操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan migrate --seed</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>好了,到这一步数据库就已经有了<code>admin</code> 这个表,而且里面出现了三条测试数据,我们接着看看控制器里是怎么操作的:</p>
+</blockquote>
+<p>首先创建相应的控制器:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">php artisan make:controller Admin/LoginController</div><div class="line">php artisan make:controller Admin/HomeController</div></pre></td></tr></table></figure></p>
+<p>Admin/LoginController.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">namespace App\Http\Controllers\Admin;</div><div class="line">use App\Http\Controllers\Controller;</div><div class="line">use Illuminate\Http\Request;</div><div class="line">use Illuminate\Foundation\Auth\AuthenticatesUsers;</div><div class="line">class LoginController extends Controller</div><div class="line">&#123;</div><div class="line">   /*</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   | Login Controller</div><div class="line">   |--------------------------------------------------------------------------</div><div class="line">   |</div><div class="line">   | This controller handles authenticating users for the application and</div><div class="line">   | redirecting them to your home screen. The controller uses a trait</div><div class="line">   | to conveniently provide its functionality to your applications.</div><div class="line">   |</div><div class="line">   */</div><div class="line"></div><div class="line">   use AuthenticatesUsers;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Where to redirect users after login / registration.</div><div class="line">    *</div><div class="line">    * @var string</div><div class="line">    */</div><div class="line">   protected $redirectTo = &apos;/admin/dash&apos;;</div><div class="line">   protected $username;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Create a new controller instance.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function __construct()</div><div class="line">   &#123;</div><div class="line">       $this-&gt;middleware(&apos;guest:admin&apos;, [&apos;except&apos; =&gt; &apos;logout&apos;]);</div><div class="line">       $this-&gt;username = config(&apos;admin.global.username&apos;);</div><div class="line">   &#125;</div><div class="line">   /**</div><div class="line">    * 重写登录视图页面</div><div class="line">    */</div><div class="line">   public function showLoginForm()</div><div class="line">   &#123;</div><div class="line">       return view(&apos;admin.login.index&apos;);</div><div class="line">   &#125;</div><div class="line">   /**</div><div class="line">    * 自定义认证驱动</div><div class="line">    */</div><div class="line">   protected function guard()</div><div class="line">   &#123;</div><div class="line">       return auth()-&gt;guard(&apos;admin&apos;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * 重写方法，让验证字段改成name 而不是默认的email</div><div class="line">    */</div><div class="line">//    protected function username()&#123;</div><div class="line">//        return &apos;name&apos;;</div><div class="line">//    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Admin/HomeController.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">namespace App\Http\Controllers\Admin;</div><div class="line"></div><div class="line">use Illuminate\Http\Request;</div><div class="line"></div><div class="line">use App\Http\Requests;</div><div class="line">use App\Http\Controllers\Controller;</div><div class="line">use Auth;</div><div class="line"></div><div class="line">class HomeController extends Controller</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Create a new controller instance.</div><div class="line">    *</div><div class="line">    * @return void</div><div class="line">    */</div><div class="line">   public function __construct()</div><div class="line">   &#123;</div><div class="line">       $this-&gt;middleware(&apos;auth.admin:admin&apos;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * Show the application dashboard.</div><div class="line">    *</div><div class="line">    * @return \Illuminate\Http\Response</div><div class="line">    */</div><div class="line">   public function index()</div><div class="line">   &#123;</div><div class="line">       dd(&apos;后台首页，当前用户名：&apos;.auth(&apos;admin&apos;)-&gt;user()-&gt;name);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>因为在LoginController中也使用了 <code>guest</code>这个中间件,而系统自带的那个也使用了它,因此需要在这个中间件里面做一下区分</p>
+<p>编辑 <code>app/Http/Kernel.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public function handle($request, Closure $next, $guard = null)</div><div class="line">   &#123;</div><div class="line">       if (Auth::guard($guard)-&gt;check()) &#123;</div><div class="line">//            return redirect(&apos;/home&apos;);</div><div class="line">           $url = $guard ? &apos;admin/dash&apos;:&apos;/home&apos;;</div><div class="line">           return redirect($url);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       return $next($request);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>而在 <code>Admin/HomeController</code>这里,因为验证需要登录才能进入,我们给他也加了一个验证中间件 <code>AdminAuthMiddlware</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php artisan make:middleware AdminAuthMiddlware</div></pre></td></tr></table></figure></p>
+<p>编辑<code>AdminAuthMiddlware</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line"></div><div class="line">namespace App\Http\Middleware;</div><div class="line">use Closure;</div><div class="line">use Illuminate\Support\Facades\Auth;</div><div class="line">class AdminAuthMiddleware</div><div class="line">&#123;</div><div class="line">   /**</div><div class="line">    * Handle an incoming request.</div><div class="line">    *</div><div class="line">    * @param  \Illuminate\Http\Request  $request</div><div class="line">    * @param  \Closure  $next</div><div class="line">    * @return mixed</div><div class="line">    */</div><div class="line">   public function handle($request, Closure $next,$guard = null)</div><div class="line">   &#123;</div><div class="line">       //判定是否已经登录，如果没由登录则跳转到登录界面</div><div class="line">       if (Auth::guard($guard)-&gt;guest()) &#123;</div><div class="line">           if ($request-&gt;ajax() || $request-&gt;wantsJson()) &#123;</div><div class="line">               return response(&apos;Unauthorized.&apos;, 401);</div><div class="line">           &#125; else &#123;</div><div class="line">               return redirect()-&gt;guest(&apos;admin/login&apos;);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       return $next($request);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在路由文件里添加对应的路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// in routes/web.php</div><div class="line">//后台登录部分</div><div class="line">Route::group([&apos;prefix&apos; =&gt; &apos;admin&apos;,&apos;namespace&apos; =&gt; &apos;Admin&apos;],function ($router)</div><div class="line">&#123;</div><div class="line">   $router-&gt;get(&apos;login&apos;, &apos;LoginController@showLoginForm&apos;)-&gt;name(&apos;admin.login&apos;);</div><div class="line">   $router-&gt;post(&apos;login&apos;, &apos;LoginController@login&apos;);</div><div class="line">   $router-&gt;any(&apos;logout&apos;, &apos;LoginController@logout&apos;);</div><div class="line"></div><div class="line">   $router-&gt;get(&apos;dash&apos;, &apos;HomeController@index&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>做到这一步其实就已经算是完成了,剩下的视图部分可以按照<code>resources/views/auth</code>中的内容创建一个<code>resource/views/admin</code>目录,<code>resource/views/admin/login/index.blade.php</code>就是后台登录界面,注意这里的表单提交地址要按刚才路由文件中写的指向后台的登录控制器中,<code>route(&#39;admin.login&#39;)</code></p>
+</blockquote>
+<p>这一段是我按照原文操作一遍后自己写了一遍,算是了解了auth的大致运行过程,其后就是翻一下源码进行解析了,为了controller中的代码好看一点其后的运作并不少,但是解耦做的非常不错</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>这个博客有个赞赏功能，不试一下吗？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinpay.png" alt="GPF WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/01/laravel-error-log/" rel="prev" title="Laravel-Error-Log">
+                Laravel-Error-Log <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.jpeg"
+               alt="GPF" />
+          <p class="site-author-name" itemprop="name">GPF</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gaopengfei123123" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.onlyoneip.com" title="等一个人" target="_blank">等一个人</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GPF</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("mzMO8q019pF781zrR1LLJbxK-gzGzoHsz", "oz8n0eDpPQJrcD8KD4FHf9Xd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
