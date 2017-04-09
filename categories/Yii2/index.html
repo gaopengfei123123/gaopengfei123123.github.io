@@ -83,7 +83,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="<Hello World/>" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="<hello-world/>" type="application/atom+xml" />
 
 
 
@@ -97,12 +97,12 @@
 
 <meta name="description" content="hey">
 <meta property="og:type" content="website">
-<meta property="og:title" content="<Hello World/>">
-<meta property="og:url" content="http://blog.justwe.site/categories/Yii2/index.html">
-<meta property="og:site_name" content="<Hello World/>">
+<meta property="og:title" content="<hello-world/>">
+<meta property="og:url" content="http://blog.justwe.site/categories/yii2/index.html">
+<meta property="og:site_name" content="<hello-world/>">
 <meta property="og:description" content="hey">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="<Hello World/>">
+<meta name="twitter:title" content="<hello-world/>">
 <meta name="twitter:description" content="hey">
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/categories/Yii2/"/>
+  <link rel="canonical" href="http://blog.justwe.site/categories/yii2/"/>
 
 
 
 
 
-  <title> 分类: Yii2 | <Hello World/> </title>
+  <title> 分类: yii2 | <hello-world/> </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -182,12 +182,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title"><Hello World/></span>
+        <span class="site-title">&lt;hello-world/&gt;</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <h1 class="site-subtitle" itemprop="description">Here</h1>
+        <h1 class="site-subtitle" itemprop="description">代码改变世界</h1>
       
   </div>
 
@@ -300,7 +300,7 @@
   <section id="posts" class="posts-collapse">
     <div class="collection-title">
       <h2 >
-        Yii2
+        yii2
         <small>分类</small>
       </h2>
     </div>
@@ -313,37 +313,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2017/02/28/yii-beforeaction/" itemprop="url">
+            <a class="post-title-link" href="/2017/04/08/yii-multi-database/" itemprop="url">
               
-                <span itemprop="name">beforeAction的一个示例</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-28T07:42:34+08:00"
-              content="2017-02-28" >
-          02-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/02/28/yii-csrf/" itemprop="url">
-              
-                <span itemprop="name">局部关闭Csrf验证</span>
+                <span itemprop="name">Yii-Multi-Database</span>
               
             </a>
         
@@ -351,9 +323,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-28T07:40:44+08:00"
-              content="2017-02-28" >
-          02-28
+              datetime="2017-04-08T17:31:31+08:00"
+              content="2017-04-08" >
+          04-08
         </time>
       </div>
 
@@ -408,7 +380,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -417,7 +389,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -426,7 +398,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -840,6 +812,41 @@
               success: function(newcounter) {
                 var $element = $(document.getElementById(url));
                 $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
+t.find('.leancloud-visitors-count').text(newcounter.get('time'));
               },
               error: function(newcounter, error) {
                 console.log('Failed to create');

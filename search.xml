@@ -3,6 +3,34 @@
   
     
     <entry>
+      <title><![CDATA[Brew-Update]]></title>
+      <url>%2F2017%2F04%2F09%2Fbrew-update%2F</url>
+      <content type="text"><![CDATA[brew更新软件时常用的操作 安装 brewruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/Go/install)&quot; 搜索brew search MySQL 查看程序具体信息brew info mysql 更新 brewbrew update 更新软件brew upgrade mysql如果不指定更新哪个则会更新所有可以更新的软件 清理缓存(更新完后的操作)brew cleanup 查看本地所有可更新的工具brew outdated]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Yii-Multi-Database]]></title>
+      <url>%2F2017%2F04%2F08%2Fyii-multi-database%2F</url>
+      <content type="text"><![CDATA[在项目中经常会碰到多个数据库的情况,在 yii 中也是可以快速设置的演示的版本是 basic 版,但是原理很好理解 编辑配置文件 @app/config/web.php1234......'db' =&gt; require(__DIR__ . '/db.php'), //框架提供的一个默认连接'localDb' =&gt; require(__DIR__ . '/db2.php'), //这个是我们新加的一个连接配置...... 在同目录下的 db2.php 内容格式和 db.php 格式一样,只是连接不同 修改 model 中需要使用的 connection id这时再在想改的 model 中复写 getDb() 方法1234567891011121314151617181920class Members extends \yii\db\ActiveRecord&#123; /** * @inheritdoc */ public static function tableName() &#123; return 'members'; &#125; /** * @return \yii\db\Connection the database connection used by this AR class. */ public static function getDb() &#123; return Yii::$app-&gt;get('localDb'); &#125; ......some functions.................&#125; 这个 model 中我们使用了 localDb 的链接配置,可以追踪代码 \yii\db\ActiveRecord中的 getDb() 方法,123456789101112//in \yii\db\ActiveRecord/** * Returns the database connection used by this AR class. * By default, the "db" application component is used as the database connection. * You may override this method if you want to use a different database connection. * @return Connection the database connection used by this AR class. */ public static function getDb() &#123; return Yii::$app-&gt;getDb(); &#125; 有这么一段,既然已经显示出来 Yii::$app 这种核心的东西了,说明已经离那个connection容器已经不远了再追踪到getDb() 显示的是 $this-&gt;get(&#39;db&#39;) 转换一下不就是默认使用的 Yii::$app-&gt;get(&#39;db&#39;) 吗? 于是回到最开始的 model 中,将其重写为 Yii::$app-&gt;get(&#39;localDb&#39;),之后我们再使用这个 model 的时候就是使用的id 为localDb的 connection 单例了]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Json-Format]]></title>
+      <url>%2F2017%2F04%2F08%2Fjson-format%2F</url>
+      <content type="text"><![CDATA[如何将 json 格式化打印出来 想练手的可以手写一个出来,比如12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970&lt;?phpclass Helper&#123; public static function jsonFormat($data, $indent=null)&#123; // 对数组中每个元素递归进行urlencode操作，保护中文字符 array_walk_recursive($data, [self::class,'jsonFormatProtect']); // json encode $data = json_encode($data); // 将urlencode的内容进行urldecode $data = urldecode($data); // 缩进处理 $ret = ''; $pos = 0; $length = strlen($data); $indent = isset($indent)? $indent : ' '; $newline = PHP_EOL; $prevchar = ''; $outofquotes = true; for($i=0; $i&lt;=$length; $i++)&#123; $char = substr($data, $i, 1); if($char=='"' &amp;&amp; $prevchar!='\\')&#123; $outofquotes = !$outofquotes; &#125;elseif(($char=='&#125;' || $char==']') &amp;&amp; $outofquotes)&#123; $ret .= $newline; $pos --; for($j=0; $j&lt;$pos; $j++)&#123; $ret .= $indent; &#125; &#125; $ret .= $char; if(($char==',' || $char=='&#123;' || $char=='[') &amp;&amp; $outofquotes)&#123; $ret .= $newline; if($char=='&#123;' || $char=='[')&#123; $pos ++; &#125; for($j=0; $j&lt;$pos; $j++)&#123; $ret .= $indent; &#125; &#125; $prevchar = $char; &#125; return $ret; &#125; public static function jsonFormatProtect(&amp;$val)&#123; if($val!==true &amp;&amp; $val!==false &amp;&amp; $val!==null)&#123; $val = urlencode($val); &#125; &#125;&#125;$array = [ 'key1' =&gt; 123, 'key2' =&gt; 'abc', 'key3' =&gt; '中文测试'];$json = Helper::jsonFormat($array);echo '&lt;/pre&gt;';print_r($json); 转自博客 原文 还有一种方法就是使用 json_encode() 函数,它再不断的添加参数来丰富它的功能,上面同样的操作可以简化成这样:12345678910&lt;?php$array = [ 'key1' =&gt; 123, 'key2' =&gt; 'abc', 'key3' =&gt; '中文测试'];$json = json_encode($$array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);echo '&lt;/pre&gt;';print_r($json); 想知道 json_encode更多的参数可以看文档 文档地址]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Hexo-Next-Title]]></title>
+      <url>%2F2017%2F04%2F07%2Fhexo-next-title%2F</url>
+      <content type="text"><![CDATA[hexo-next 是一个很完美的组合,这次我碰到的问题就是 title 不能显示&lt;hello-world/&gt; 这样的文本 比如你的网站配置文件_config.yml的内容是这样的123456# Sitetitle: &lt;hello-world/&gt;subtitle: 代码改变世界description: heyauthor: GPFlanguage: zh-Hans 如果这么写的话是根本不会正常输出出来的,于是我转换成实体格式12# Sitetitle: &amp;lt;hello-world/&amp;gt; 这里出现的问题是左边的不能正常显示出 &lt;而右边的可以正常显示&gt;,发现 title: 后不能出现&amp;特殊字符,看的比较匆暂时没理解是什么原因,但是这样写对于自己的感官上也不怎么好,于是就看了下模板的代码,原来是 swig 的模板引擎,虽然我擅长的是 php,但是我也是用过模板引擎的人! 这样就可以做很多事情了,再说 symfony 也是用的 swig. 于是乎进行一下操作: 打开@app/themes/next/layout/_partials/header.swig,找到 class=&quot;site-title&quot;,把这个标签改成这样:1&lt;span class=&quot;site-title&quot;&gt;&#123;&#123; config.title | escape &#125;&#125;&lt;/span&gt; 这样就行了 注意,如果是本地修改的 _config.yml文件需要重启 hexo server 才能显示效果]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Hello World]]></title>
       <url>%2F2017%2F04%2F06%2Fhello-world%2F</url>
       <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deploymentadd git]]></content>

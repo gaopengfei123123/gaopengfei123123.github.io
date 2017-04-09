@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>&lt;Hello World/&gt;</title>
-  <subtitle>Here</subtitle>
+  <title>&lt;hello-world/&gt;</title>
+  <subtitle>代码改变世界</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-04-06T04:17:40.000Z</updated>
+  <updated>2017-04-09T15:47:22.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,123 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Brew-Update</title>
+    <link href="http://blog.justwe.site/2017/04/09/brew-update/"/>
+    <id>http://blog.justwe.site/2017/04/09/brew-update/</id>
+    <published>2017-04-09T15:36:54.000Z</published>
+    <updated>2017-04-09T15:47:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>brew更新软件时常用的操作<br><a id="more"></a></p>
+<h2 id="安装-brew"><a href="#安装-brew" class="headerlink" title="安装 brew"></a>安装 brew</h2><p><code>ruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/Go/install)&quot;</code></p>
+<h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p><code>brew search MySQL</code></p>
+<h2 id="查看程序具体信息"><a href="#查看程序具体信息" class="headerlink" title="查看程序具体信息"></a>查看程序具体信息</h2><p><code>brew info mysql</code></p>
+<h2 id="更新-brew"><a href="#更新-brew" class="headerlink" title="更新 brew"></a>更新 brew</h2><p><code>brew update</code></p>
+<h2 id="更新软件"><a href="#更新软件" class="headerlink" title="更新软件"></a>更新软件</h2><p><code>brew upgrade mysql</code><br>如果不指定更新哪个则会更新所有可以更新的软件</p>
+<h2 id="清理缓存-更新完后的操作"><a href="#清理缓存-更新完后的操作" class="headerlink" title="清理缓存(更新完后的操作)"></a>清理缓存(更新完后的操作)</h2><p><code>brew cleanup</code></p>
+<h2 id="查看本地所有可更新的工具"><a href="#查看本地所有可更新的工具" class="headerlink" title="查看本地所有可更新的工具"></a>查看本地所有可更新的工具</h2><p><code>brew outdated</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;brew更新软件时常用的操作&lt;br&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="brew" scheme="http://blog.justwe.site/tags/brew/"/>
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Yii-Multi-Database</title>
+    <link href="http://blog.justwe.site/2017/04/08/yii-multi-database/"/>
+    <id>http://blog.justwe.site/2017/04/08/yii-multi-database/</id>
+    <published>2017-04-08T09:31:31.000Z</published>
+    <updated>2017-04-09T13:46:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在项目中经常会碰到多个数据库的情况,在 yii 中也是可以快速设置的<br><a id="more"></a><br>演示的版本是 basic 版,但是原理很好理解</p>
+<h2 id="编辑配置文件-app-config-web-php"><a href="#编辑配置文件-app-config-web-php" class="headerlink" title="编辑配置文件 @app/config/web.php"></a>编辑配置文件 <code>@app/config/web.php</code></h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">......</div><div class="line"><span class="string">'db'</span> =&gt; <span class="keyword">require</span>(<span class="keyword">__DIR__</span> . <span class="string">'/db.php'</span>), <span class="comment">//框架提供的一个默认连接</span></div><div class="line"><span class="string">'localDb'</span> =&gt; <span class="keyword">require</span>(<span class="keyword">__DIR__</span> . <span class="string">'/db2.php'</span>), <span class="comment">//这个是我们新加的一个连接配置</span></div><div class="line">......</div></pre></td></tr></table></figure>
+<p>在同目录下的 <code>db2.php</code> 内容格式和 <code>db.php</code> 格式一样,只是连接不同</p>
+<h2 id="修改-model-中需要使用的-connection-id"><a href="#修改-model-中需要使用的-connection-id" class="headerlink" title="修改 model 中需要使用的 connection id"></a>修改 model 中需要使用的 connection id</h2><p>这时再在想改的 model 中复写 <code>getDb()</code> 方法<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Members</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@inheritdoc</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">tableName</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'members'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@return</span> \yii\db\Connection the database connection used by this AR class.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getDb</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> Yii::$app-&gt;get(<span class="string">'localDb'</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ......some functions.................</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个 model 中我们使用了 <code>localDb</code> 的链接配置,可以追踪代码 <code>\yii\db\ActiveRecord</code>中的 <code>getDb()</code> 方法,<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//in \yii\db\ActiveRecord</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * Returns the database connection used by this AR class.</div><div class="line">    * By default, the "db" application component is used as the database connection.</div><div class="line">    * You may override this method if you want to use a different database connection.</div><div class="line">    * <span class="doctag">@return</span> Connection the database connection used by this AR class.</div><div class="line">    */</div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getDb</span><span class="params">()</span></span></div><div class="line">   &#123;</div><div class="line">       <span class="keyword">return</span> Yii::$app-&gt;getDb();</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>有这么一段,既然已经显示出来 <code>Yii::$app</code> 这种核心的东西了,说明已经离那个<code>connection</code>容器已经不远了<br>再追踪到<code>getDb()</code> 显示的是 <code>$this-&gt;get(&#39;db&#39;)</code> 转换一下不就是默认使用的 <code>Yii::$app-&gt;get(&#39;db&#39;)</code> 吗? 于是回到最开始的 model 中,将其重写为 <code>Yii::$app-&gt;get(&#39;localDb&#39;)</code>,之后我们再使用这个 model 的时候就是使用的id 为<code>localDb</code>的 connection 单例了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在项目中经常会碰到多个数据库的情况,在 yii 中也是可以快速设置的&lt;br&gt;
+    
+    </summary>
+    
+      <category term="yii2" scheme="http://blog.justwe.site/categories/yii2/"/>
+    
+    
+      <category term="yii2" scheme="http://blog.justwe.site/tags/yii2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Json-Format</title>
+    <link href="http://blog.justwe.site/2017/04/08/json-format/"/>
+    <id>http://blog.justwe.site/2017/04/08/json-format/</id>
+    <published>2017-04-08T03:01:00.000Z</published>
+    <updated>2017-04-09T13:46:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>如何将 json 格式化打印出来</p>
+<a id="more"></a>
+<p>想练手的可以手写一个出来,比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Helper</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">jsonFormat</span><span class="params">($data, $indent=null)</span></span>&#123;</div><div class="line">        <span class="comment">// 对数组中每个元素递归进行urlencode操作，保护中文字符</span></div><div class="line">        array_walk_recursive($data, [<span class="keyword">self</span>::class,<span class="string">'jsonFormatProtect'</span>]);</div><div class="line"></div><div class="line">        <span class="comment">// json encode</span></div><div class="line">        $data = json_encode($data);</div><div class="line"></div><div class="line">        <span class="comment">// 将urlencode的内容进行urldecode</span></div><div class="line">        $data = urldecode($data);</div><div class="line"></div><div class="line">        <span class="comment">// 缩进处理</span></div><div class="line">        $ret = <span class="string">''</span>;</div><div class="line">        $pos = <span class="number">0</span>;</div><div class="line">        $length = strlen($data);</div><div class="line">        $indent = <span class="keyword">isset</span>($indent)? $indent : <span class="string">'    '</span>;</div><div class="line">        $newline = PHP_EOL;</div><div class="line">        $prevchar = <span class="string">''</span>;</div><div class="line">        $outofquotes = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span>($i=<span class="number">0</span>; $i&lt;=$length; $i++)&#123;</div><div class="line"></div><div class="line">            $char = substr($data, $i, <span class="number">1</span>);</div><div class="line"></div><div class="line">            <span class="keyword">if</span>($char==<span class="string">'"'</span> &amp;&amp; $prevchar!=<span class="string">'\\'</span>)&#123;</div><div class="line">                $outofquotes = !$outofquotes;</div><div class="line">            &#125;<span class="keyword">elseif</span>(($char==<span class="string">'&#125;'</span> || $char==<span class="string">']'</span>) &amp;&amp; $outofquotes)&#123;</div><div class="line">                $ret .= $newline;</div><div class="line">                $pos --;</div><div class="line">                <span class="keyword">for</span>($j=<span class="number">0</span>; $j&lt;$pos; $j++)&#123;</div><div class="line">                    $ret .= $indent;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            $ret .= $char;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(($char==<span class="string">','</span> || $char==<span class="string">'&#123;'</span> || $char==<span class="string">'['</span>) &amp;&amp; $outofquotes)&#123;</div><div class="line">                $ret .= $newline;</div><div class="line">                <span class="keyword">if</span>($char==<span class="string">'&#123;'</span> || $char==<span class="string">'['</span>)&#123;</div><div class="line">                    $pos ++;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">for</span>($j=<span class="number">0</span>; $j&lt;$pos; $j++)&#123;</div><div class="line">                    $ret .= $indent;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            $prevchar = $char;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> $ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">jsonFormatProtect</span><span class="params">(&amp;$val)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>($val!==<span class="keyword">true</span> &amp;&amp; $val!==<span class="keyword">false</span> &amp;&amp; $val!==<span class="keyword">null</span>)&#123;</div><div class="line">            $val = urlencode($val);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$array = [</div><div class="line">  <span class="string">'key1'</span> =&gt; <span class="number">123</span>,</div><div class="line">  <span class="string">'key2'</span> =&gt; <span class="string">'abc'</span>,</div><div class="line">  <span class="string">'key3'</span> =&gt; <span class="string">'中文测试'</span></div><div class="line">];</div><div class="line"></div><div class="line">$json = Helper::jsonFormat($array);</div><div class="line"><span class="keyword">echo</span> <span class="string">'&lt;/pre&gt;'</span>;</div><div class="line">print_r($json);</div></pre></td></tr></table></figure></p>
+<p>转自博客 <a href="http://blog.csdn.net/fdipzone/article/details/28766357" target="_blank" rel="external">原文</a></p>
+<p>还有一种方法就是使用 <code>json_encode()</code> 函数,它再不断的添加参数来丰富它的功能,上面同样的操作可以简化成这样:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$array = [</div><div class="line">  <span class="string">'key1'</span> =&gt; <span class="number">123</span>,</div><div class="line">  <span class="string">'key2'</span> =&gt; <span class="string">'abc'</span>,</div><div class="line">  <span class="string">'key3'</span> =&gt; <span class="string">'中文测试'</span></div><div class="line">];</div><div class="line"></div><div class="line">$json = json_encode($$array, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);</div><div class="line"><span class="keyword">echo</span> <span class="string">'&lt;/pre&gt;'</span>;</div><div class="line">print_r($json);</div></pre></td></tr></table></figure></p>
+<p>想知道 <code>json_encode</code>更多的参数可以看文档 <a href="http://php.net/manual/zh/json.constants.php" target="_blank" rel="external">文档地址</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如何将 json 格式化打印出来&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
+    
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo-Next-Title</title>
+    <link href="http://blog.justwe.site/2017/04/07/hexo-next-title/"/>
+    <id>http://blog.justwe.site/2017/04/07/hexo-next-title/</id>
+    <published>2017-04-07T07:04:39.000Z</published>
+    <updated>2017-04-09T13:46:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>hexo-next</code> 是一个很完美的组合,这次我碰到的问题就是 title 不能显示<code>&lt;hello-world/&gt;</code> 这样的文本</p>
+<a id="more"></a>
+<p>比如你的网站配置文件<code>_config.yml</code>的内容是这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Site</div><div class="line">title:  &lt;hello-world/&gt;</div><div class="line">subtitle: 代码改变世界</div><div class="line">description: hey</div><div class="line">author: GPF</div><div class="line">language: zh-Hans</div></pre></td></tr></table></figure></p>
+<p>如果这么写的话是根本不会正常输出出来的,于是我转换成实体格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># Site</div><div class="line">title: &amp;lt;hello-world/&amp;gt;</div></pre></td></tr></table></figure></p>
+<p>这里出现的问题是左边的不能正常显示出 <code>&lt;</code>而右边的可以正常显示<code>&gt;</code>,发现 <code>title:</code> 后不能出现<code>&amp;</code>特殊字符,看的比较匆暂时没理解是什么原因,但是这样写对于自己的感官上也不怎么好,于是就看了下模板的代码,原来是 <code>swig</code> 的模板引擎,<em>虽然我擅长的是 php,但是我也是用过模板引擎的人!</em> 这样就可以做很多事情了,再说 symfony 也是用的 swig.</p>
+<p>于是乎进行一下操作:</p>
+<p>打开<code>@app/themes/next/layout/_partials/header.swig</code>,找到 <code>class=&quot;site-title&quot;</code>,把这个标签改成这样:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;span class=&quot;site-title&quot;&gt;&#123;&#123; config.title | escape &#125;&#125;&lt;/span&gt;</div></pre></td></tr></table></figure></p>
+<p>这样就行了</p>
+<p><em>注意</em>,如果是本地修改的 <code>_config.yml</code>文件需要重启 hexo server 才能显示效果</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;hexo-next&lt;/code&gt; 是一个很完美的组合,这次我碰到的问题就是 title 不能显示&lt;code&gt;&amp;lt;hello-world/&amp;gt;&lt;/code&gt; 这样的文本&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="hexo-next" scheme="http://blog.justwe.site/tags/hexo-next/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
@@ -207,9 +324,9 @@
     </summary>
     
     
-      <category term="config" scheme="http://blog.justwe.site/tags/config/"/>
-    
       <category term="hexo-next" scheme="http://blog.justwe.site/tags/hexo-next/"/>
+    
+      <category term="config" scheme="http://blog.justwe.site/tags/config/"/>
     
   </entry>
   
@@ -653,162 +770,6 @@
     
       <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Docker(3) 构建Dockerfile</title>
-    <link href="http://blog.justwe.site/2017/03/08/docker-dockerfile/"/>
-    <id>http://blog.justwe.site/2017/03/08/docker-dockerfile/</id>
-    <published>2017-03-07T22:48:00.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>上一章我们用的是 <code>docker commit</code> 命令创建的自己的库，虽然简单但是定制性比较差，因此我们采用另一种且更广泛的做法就是 <code>docker build</code>命令，先上手做个demo</p>
-<a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd $HOME/document/www</div><div class="line">mkdir build_demo</div><div class="line">cd build_demo</div><div class="line">vi Dockerfile</div></pre></td></tr></table></figure>
-<p>下面是 <code>Dockerfile</code> 中的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Version 0.0.1</div><div class="line">FROM gaofeifiy/ubuntu-last</div><div class="line">MAINTAINER GPF “5173180@qq.com”</div><div class="line">RUN touch /ReadMe.txt</div><div class="line">RUN echo &apos;hey your contain build success!&apos; &gt; /ReadMe.txt</div><div class="line">EXPOSE 80</div></pre></td></tr></table></figure></p>
-<p>然后在 <code>$HOME/document/www/build_demo</code> 目录下运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">➜  lnmp_docker docker build -t=&quot;gaofeifiy/lnmp_server&quot; .</div><div class="line"># 下面是显示的</div><div class="line">Sending build context to Docker daemon 2.048 kB</div><div class="line">Step 1 : FROM gaofeifiy/ubuntu-last</div><div class="line"> ---&gt; 6f8cfa1871b0</div><div class="line">Step 2 : MAINTAINER GPF</div><div class="line"> ---&gt; Running in 3e442a5807f3</div><div class="line"> ---&gt; 8d0efc1cf9f7</div><div class="line">Removing intermediate container 3e442a5807f3</div><div class="line">Step 3 : RUN touch /ReadMe.txt</div><div class="line"> ---&gt; Running in 91a7a049d18c</div><div class="line"> ---&gt; b98309a7d5a4</div><div class="line">Removing intermediate container 91a7a049d18c</div><div class="line">Step 4 : RUN echo &apos;hey your contain build success!&apos; &gt; /ReadMe.txt</div><div class="line"> ---&gt; Running in 0158f49fef8f</div><div class="line"> ---&gt; 6416fe72ff4c</div><div class="line">Removing intermediate container 0158f49fef8f</div><div class="line">Step 5 : EXPOSE 80</div><div class="line"> ---&gt; Running in 26e1d7df6ab7</div><div class="line"> ---&gt; c994cb02df6e</div><div class="line">Removing intermediate container 26e1d7df6ab7</div><div class="line">Successfully built c994cb02df6e</div></pre></td></tr></table></figure></p>
-<p>-t 就是我们新建镜像的标签</p>
-<p>接下来我们查看一下本地的镜像列表里出现了什么<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">➜  lnmp_docker docker images</div><div class="line">REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">gaofeifiy/lnmp_server   latest              c994cb02df6e        40 hours ago        227 MB</div><div class="line">gaofeifiy/ubuntu-last   latest              6f8cfa1871b0        2 days ago          227 MB</div></pre></td></tr></table></figure></p>
-<p>我们刚刚创建的镜像已经出现到本地的列表里面了 输入 <code>docker history c994cb02df6e</code> 查看镜像的构建流程</p>
-<p>我们回顾一下整个流程：刚才所有的操作都是在 <code>Dockerfile</code> 这个文件中进行的，我们用到以下命令</p>
-<p>. FROM gaofeifiy/ubuntu-last 新建的库采用 gaofeifiy/ubuntu-last 这个镜像构建的(就是上一章我们建的那个，因为写这个的时候电脑没网… 其实应该是 ubuntu:16.04 这类的基础镜像)<br>. MAINTAINER GPF “5173180@qq.com”   指定了该镜像的作者和邮箱<br>. RUN touch /ReadMe.txt 运行系统命令，创建一个ReadMe.txt 文件 其他的RUN命令欧式同样的道理<br>. EXPOSE 80 指定镜像对外端口是80</p>
-<p>下面介绍一下更多的Dockerfile相关的指令</p>
-<p>. ENV 设置镜像中的环境变量 比如 <code>ENV REFRESHED_AT 2017-02-22</code> 设置缓存更新时间<br>. CMD  和<code>docker run</code> 命令类似，是等容器启动后执行的命令，会被<code>docker run</code>指令干扰 例<code>CMD [&quot;/bin/bash&quot;,&quot;-l&quot;]</code> 这里推荐使用数组形式，防止出现-c参数的干扰<br>. ENTRYPOINT  和CMD命令类似，但是不会被<code>docker run</code>的命令干扰，而且会把<code>docker run</code>后的指令当作 <code>ENTRYPOINT</code>的参数来用 例如：<code>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;,&quot;-g&quot;,&quot;demon off&quot;]</code> 这条命令和 <code>ENTRYPOINT [&quot;/usr/sbin/nginx&quot;]</code> 加上 <code>docker run -t -i xxx镜像 -g &quot;demon off&quot;</code> 两条语句产生的作用相同<br>. USER 指定镜像以什么用户去运行，默认是root 也可以<code>docker run -u</code> 来指定用户<br>. VOLUME 创建一个容器的共享卷，这样的话多个镜像容器公用一套内容，相当于类中的静态变量<br>. ADD   将本地文件添加到镜像当中，会解压 <em>仅限在以Dockerfile文件为根目录的目录下</em><br>. COPY 将本地文件拷贝到镜像当中，不会解压 <em>仅限在以Dockerfile文件为根目录的目录下</em><br>. ONBUILD 当其他镜像使用本镜像的时候触发的命令 例如<code>ONBUILD RUN echo &#39;hello world&#39;</code> 当别的镜像引用到这个镜像的时候就会执行这条命令</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上一章我们用的是 &lt;code&gt;docker commit&lt;/code&gt; 命令创建的自己的库，虽然简单但是定制性比较差，因此我们采用另一种且更广泛的做法就是 &lt;code&gt;docker build&lt;/code&gt;命令，先上手做个demo&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Go语言了解(1)</title>
-    <link href="http://blog.justwe.site/2017/03/08/go-info/"/>
-    <id>http://blog.justwe.site/2017/03/08/go-info/</id>
-    <published>2017-03-07T22:42:24.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p> 有人说go和php有很多相似的地方，用惯了弱语言的php是时候换换口味了</p>
-<a id="more"></a>
-<h2 id="声明变量"><a href="#声明变量" class="headerlink" title="声明变量"></a>声明变量</h2><p>go的声明变量的方式四种（茴香的茴有四种写法），开个玩笑，但是以下几种形式还是可以的</p>
-<ol>
-<li>var ValueName type   //直接声明一个，<em>声明了就要用啊，不然编译的时候就会报错</em></li>
-<li>var name1,name2,name3 type  //类型就近原则，直接声明三个相同类型的变量</li>
-<li>var ValueName type = value   //声明了变量顺便赋值</li>
-<li>var name1,name2,name3 type = value1,value2,value3   //批量赋值也可以，注意他们的类型是一样的</li>
-<li>name1,name2,name3  := value1,value2,value3   //这才是常用的写法，用 <code>:</code> 来自动判断类型，单个的也是这个用法<br>还有个特殊的变量名， <code>_</code> 这代表占个位置但是赋给他的值会被丢弃，比如  <code>_,a := 1,2</code> a的值为2 但是1就给丢了 这时的使用情景碰到再说</li>
-</ol>
-<h2 id="声明常量"><a href="#声明常量" class="headerlink" title="声明常量"></a>声明常量</h2><p>常量的关键词就不是 <code>var</code> 了 而是 <code>const</code>，和变量的区别是一旦定义就不能改了</p>
-<ol>
-<li>const ValueName = value  //直接赋值</li>
-<li>const Pi float32 = 3.1415926  //也可以声明常量的类型</li>
-</ol>
-<p>###分组赋值<br>在多个包里用到再赋值有的时候不利于debug，可以直接把要赋值的都放到一起 比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">const&#123;</div><div class="line">      ENV := true</div><div class="line">      LOCAL := &apos;dev&apos;</div><div class="line">      DATE := 20170307</div><div class="line">&#125;</div><div class="line"></div><div class="line">var&#123;</div><div class="line">    i int</div><div class="line">    pi float32</div><div class="line">    name string</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>##boolean类型<br><code>true</code> or <code>false</code> 默认为false</p>
-<p>##数值类型<br>go支持 <code>int</code>,<code>uint</code>可以定义的类型有<code>rune,int8,int16,int32,int64,byte,uint8,uint16,uint16,uint32,uint64</code></p>
-<p>其中 rune是int32的别称，byte是uint8的别称</p>
-<p>不同类型的数不能相互赋值和操作  二进制的数不能和八进制的相加减</p>
-<p>浮点型也有<code>float32,float64</code>两种，没有 <code>float</code>这个类型，默认 <code>float64</code></p>
-<p>##字符串<br>字符串的赋值方式遵循着上面的 声明变量 那一块说的。</p>
-<p>Value1 := ‘string’    和    Value1 := “string” 一个效果  <code>&quot;&quot;</code>代表的是一个空字符串也是占着内存的</p>
-<p>字符串之间的拼接用 <code>+</code> 比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a,b :=&quot;hello&quot;,&quot;world&quot;  </div><div class="line"></div><div class="line">c := a + b</div><div class="line"></div><div class="line">Printf(&quot;%s\n&quot;,c)  //输出 helloworld</div></pre></td></tr></table></figure></p>
-<p>字符串的修改不能直接修改，可以用切片的方式实现例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a := &apos;hello&apos;</div><div class="line">b := &apos;w&apos; + a[1:]</div><div class="line">//b 的值为 wello</div></pre></td></tr></table></figure></p>
-<p>什么是切片我们一会儿就会说到</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt; 有人说go和php有很多相似的地方，用惯了弱语言的php是时候换换口味了&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Go安装godoc</title>
-    <link href="http://blog.justwe.site/2017/03/07/go-doc/"/>
-    <id>http://blog.justwe.site/2017/03/07/go-doc/</id>
-    <published>2017-03-07T03:07:54.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>现在的版本(go version 1.8)下，go的开发工具已经都在git上上线了，可以直接安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/golang/tools $GOPATH/src/golang.org/x/tools</div><div class="line"></div><div class="line">go build golang.org/x/tools</div></pre></td></tr></table></figure>
-<p>就能生成 <code>godoc</code> 的二进制包了，注意需要把第三方的包放到 <code>$GOPATH/src</code> 目录下，这样才能让go能找到并构建</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;现在的版本(go version 1.8)下，go的开发工具已经都在git上上线了，可以直接安装&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;
-    
-    </summary>
-    
-      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>安装LiteIde配置</title>
-    <link href="http://blog.justwe.site/2017/03/07/go-liteide/"/>
-    <id>http://blog.justwe.site/2017/03/07/go-liteide/</id>
-    <published>2017-03-06T21:49:56.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这里设置 Liteide 的配置(环境macOS)</p>
-<blockquote>
-<p>Liteide 是一款专门为go开发的一款ide，省去了类似atom编辑器的一些麻烦的环境配置导致atom越来越臃肿，是不少go的开发者在推荐的一款ide</p>
-</blockquote>
-<a id="more"></a>
-<p>1.安装go<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install go</div></pre></td></tr></table></figure></p>
-<ol>
-<li>下载Liteide<blockquote>
-<p><a href="http://golangtc.com/download/liteide" target="_blank" rel="external">下载地址</a></p>
-</blockquote>
-</li>
-</ol>
-<p>选择一个适合系统的版本，推荐qt5的，版本高的不容易过时</p>
-<ol>
-<li>打开编辑器 <code>查看-&gt;编辑当前环境</code></li>
-</ol>
-<p>列出我现在的环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># native compiler darwin amd64</div><div class="line"></div><div class="line">GOROOT=/usr/local/Cellar/go/1.8/libexec</div><div class="line">GOPATH=$HOME/Documents/go</div><div class="line">GOBIN=</div><div class="line">GOARCH=amd64</div><div class="line">GOOS=darwin</div><div class="line">CGO_ENABLED=1</div><div class="line"></div><div class="line">PATH=$GOROOT/bin:$PATH</div><div class="line"></div><div class="line">LITEIDE_GDB=/usr/local/bin/gdb</div><div class="line">LITEIDE_MAKE=make</div><div class="line">LITEIDE_TERM=/usr/bin/open</div><div class="line">LITEIDE_TERMARGS=-a Terminal</div><div class="line">LITEIDE_EXEC=/usr/X11R6/bin/xterm</div><div class="line">LITEIDE_EXECOPT=-e</div></pre></td></tr></table></figure></p>
-<p>上面这一块刚开始是注释掉的，需要我们自己填写，这个是每次运行编辑器的适合才会用到的配置，和安装时的系统配置不冲突</p>
-<p>需要注意区分的就是 <code>GOROOT</code> 和 <code>GOPATH</code> 这两个变量</p>
-<p><code>GOROOT</code> 是go的执行目录，说白了就是go源码的安装目录，<br>比如 <code>import “fmt”</code>这条命令就是从 <code>GOROOT</code> 给的路径中找加载的包</p>
-<p><code>GOPATH</code> 是工作目录，类似apache的www目录，你的项目代码都是放到 <code>$GOPATH/src</code> 目录下的<br>同时我们通过 <code>go get</code> 获取的第三方package也是放在这里的为了能执行package里的文件也是需要把这个路径添加到环境变量当中，<br>因此才会出现 <code>PATH=$GOROOT/bin:$PATH</code> 这样的配置</p>
-<ol>
-<li>配置完成后运行个文件试一下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd $HOME/Documents/go/src</div><div class="line">mkdir hello &amp;&amp; cd hello</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>通过liteide编辑器打开目录，创建一个文件  main.go</p>
-<p>文件内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">func main()&#123;</div><div class="line">    fmt.Println(&quot;Hello world!&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>然后点击编辑器右上角的 <code>BR(build and run)</code> 就能在编辑器下面的信息框中看到输出内容了</p>
-<p>ready go！</p>
-<p><a href="https://segmentfault.com/a/1190000004008942" target="_blank" rel="external">参考1</a></p>
-<p><a href="http://www.jianshu.com/p/4e699ff478a5" target="_blank" rel="external">参考2</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这里设置 Liteide 的配置(环境macOS)&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Liteide 是一款专门为go开发的一款ide，省去了类似atom编辑器的一些麻烦的环境配置导致atom越来越臃肿，是不少go的开发者在推荐的一款ide&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="liteide" scheme="http://blog.justwe.site/tags/liteide/"/>
     
   </entry>
   
