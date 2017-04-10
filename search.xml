@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[Npm-DTrace]]></title>
+      <url>%2F2017%2F04%2F10%2Fnpm-DTrace%2F</url>
+      <content type="text"><![CDATA[安装npm模块的时候有时候会提示Error: Cannot find module &#39;./build/Release/DTraceProviderBindings 虽然会正常运行但是总是报这个错也是很不爽的,查了下相关的 issues比较直接的解决方法是1sudo npm install dtrace-provider ubuntu 和 macos 上都有效 这是一个历史遗留的问题,开发者已经逐渐替代了这个模块,所以说影响不大,如果觉的终端总是报错很烦就这样试试吧]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Docker-Composer-Install]]></title>
+      <url>%2F2017%2F04%2F10%2Fdocker-composer-install%2F</url>
+      <content type="text"><![CDATA[安装 docker-composer123curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-composechmod +x /usr/local/bin/docker-compose 可能会有被墙的情况,可以找一下国内的云服务商,比如 DaoCloud]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Brew-Update]]></title>
       <url>%2F2017%2F04%2F09%2Fbrew-update%2F</url>
       <content type="text"><![CDATA[brew更新软件时常用的操作 安装 brewruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/Go/install)&quot; 搜索brew search MySQL 查看程序具体信息brew info mysql 更新 brewbrew update 更新软件brew upgrade mysql如果不指定更新哪个则会更新所有可以更新的软件 清理缓存(更新完后的操作)brew cleanup 查看本地所有可更新的工具brew outdated]]></content>
