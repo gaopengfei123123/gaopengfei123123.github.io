@@ -95,17 +95,17 @@
 
 
 
-<meta name="description" content="yii2 关于 apache 和 nginx 的路由重写配置 apache 12345678910Options +FollowSymLinksIndexIgnore */*RewriteEngine on# if a directory or a file exists, use it directlyRewriteCond %&amp;#123;REQUEST_FILENAME&amp;#125; !-fRe">
+<meta name="description" content="yii2 关于 apache 和 nginx 的路由重写配置 apache路由重写12345678910Options +FollowSymLinksIndexIgnore */*RewriteEngine on# if a directory or a file exists, use it directlyRewriteCond %&amp;#123;REQUEST_FILENAME&amp;#125; !-">
 <meta name="keywords" content="rewrite">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Yii2路由重写方案">
 <meta property="og:url" content="http://blog.justwe.site/2016/10/27/yii-rewrite/index.html">
 <meta property="og:site_name" content="<hello-world/>">
-<meta property="og:description" content="yii2 关于 apache 和 nginx 的路由重写配置 apache 12345678910Options +FollowSymLinksIndexIgnore */*RewriteEngine on# if a directory or a file exists, use it directlyRewriteCond %&amp;#123;REQUEST_FILENAME&amp;#125; !-fRe">
-<meta property="og:updated_time" content="2017-04-06T04:17:40.000Z">
+<meta property="og:description" content="yii2 关于 apache 和 nginx 的路由重写配置 apache路由重写12345678910Options +FollowSymLinksIndexIgnore */*RewriteEngine on# if a directory or a file exists, use it directlyRewriteCond %&amp;#123;REQUEST_FILENAME&amp;#125; !-">
+<meta property="og:updated_time" content="2017-04-10T14:00:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Yii2路由重写方案">
-<meta name="twitter:description" content="yii2 关于 apache 和 nginx 的路由重写配置 apache 12345678910Options +FollowSymLinksIndexIgnore */*RewriteEngine on# if a directory or a file exists, use it directlyRewriteCond %&amp;#123;REQUEST_FILENAME&amp;#125; !-fRe">
+<meta name="twitter:description" content="yii2 关于 apache 和 nginx 的路由重写配置 apache路由重写12345678910Options +FollowSymLinksIndexIgnore */*RewriteEngine on# if a directory or a file exists, use it directlyRewriteCond %&amp;#123;REQUEST_FILENAME&amp;#125; !-">
 
 
 
@@ -392,12 +392,13 @@
       
 
       
-        <p>yii2 关于 apache 和 nginx 的路由重写配置<br> apache</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Options +FollowSymLinks</div><div class="line">IndexIgnore */*</div><div class="line">RewriteEngine on</div><div class="line"></div><div class="line"># if a directory or a file exists, use it directly</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</div><div class="line"></div><div class="line"># otherwise forward it to index.php</div><div class="line">RewriteRule . index.php</div></pre></td></tr></table></figure>
-<blockquote>
-<p>nginx</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">location / &#123;  </div><div class="line">    if (!-e $request_filename)&#123;  </div><div class="line">        rewrite ^/(.*) /index.php last;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>yii2 关于 apache 和 nginx 的路由重写配置</p>
+<h2 id="apache路由重写"><a href="#apache路由重写" class="headerlink" title="apache路由重写"></a>apache路由重写</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Options +FollowSymLinks</div><div class="line">IndexIgnore */*</div><div class="line">RewriteEngine on</div><div class="line"></div><div class="line"># if a directory or a file exists, use it directly</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</div><div class="line"></div><div class="line"># otherwise forward it to index.php</div><div class="line">RewriteRule . index.php</div></pre></td></tr></table></figure>
+<p>从yiichina那里推荐的apache路由重写方案直接改服务器的配置文件影响太大了,我们需要把它限制在这个项目里,这样更方便操作了</p>
+<p><em>需要开启 apache 的 rewrite 模块</em></p>
+<p>参考了一下laravel的路由重写方案,首先在你的根目录下 <code>your-app/web</code>创建一个文件</p>
+<p><code>.htaccess</code><br>文件内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line">     # 开启 mod_rewrite 用于美化 URL 功能的支持（译注：对应 pretty URL 选项）</div><div class="line">        RewriteEngine on</div><div class="line">        # 如果请求的是真实存在的文件或目录，直接访问</div><div class="line">        RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</div><div class="line">        RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</div><div class="line">        # 如果请求的不是真实文件或目录，分发请求至 index.php</div><div class="line">        RewriteRule . index.php</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="nginx路由重写"><a href="#nginx路由重写" class="headerlink" title="nginx路由重写"></a>nginx路由重写</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">location / &#123;  </div><div class="line">    if (!-e $request_filename)&#123;  </div><div class="line">        rewrite ^/(.*) /index.php last;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <blockquote>
 <p>conf/web.php 中的 ‘components’数组是这样的</p>
 </blockquote>
@@ -513,8 +514,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/logo.jpeg"
@@ -604,6 +614,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#apache路由重写"><span class="nav-number">1.</span> <span class="nav-text">apache路由重写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx路由重写"><span class="nav-number">2.</span> <span class="nav-text">nginx路由重写</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

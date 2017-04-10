@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2016/10/27/yii-rewrite/</loc>
+    <lastmod>2017-04-10T14:00:11.000Z</lastmod>
+    <data>
+        <display>
+        <title>Yii2路由重写方案</title>
+        <pubTime>2016-10-27T07:49:00.000Z</pubTime>
+        
+        <tag>rewrite</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2017/04/09/brew-update/</loc>
     <lastmod>2017-04-09T15:47:22.000Z</lastmod>
     <data>
@@ -95,23 +112,6 @@
              
               <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>自己封装一个Composer包玩玩</title>
-        <pubTime>2017-01-10T22:40:00.000Z</pubTime>
-        
-        <tag>composer</tag>
-         
-         
-           
         </display>
     </data>
     </url>
@@ -1130,14 +1130,14 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/10/27/yii-rewrite/</loc>
+    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Yii2路由重写方案</title>
-        <pubTime>2016-10-27T07:49:00.000Z</pubTime>
+        <title>自己封装一个Composer包玩玩</title>
+        <pubTime>2017-01-10T22:40:00.000Z</pubTime>
         
-        <tag>rewrite</tag>
+        <tag>composer</tag>
          
          
            
