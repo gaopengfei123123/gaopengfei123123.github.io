@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="等一个人, blog, laravel, php, js, vuejs, yii2.0" />
+  <meta name="keywords" content="go,interface," />
 
 
 
@@ -95,15 +95,17 @@
 
 
 
-<meta name="description" content="hey">
-<meta property="og:type" content="website">
-<meta property="og:title" content="<hello-world/>">
-<meta property="og:url" content="http://blog.justwe.site/tags/config/index.html">
+<meta name="description" content="关于 go 语言接口的简单介绍">
+<meta name="keywords" content="go,interface">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go-Interface">
+<meta property="og:url" content="http://blog.justwe.site/2017/04/19/go-interface/index.html">
 <meta property="og:site_name" content="<hello-world/>">
-<meta property="og:description" content="hey">
+<meta property="og:description" content="关于 go 语言接口的简单介绍">
+<meta property="og:updated_time" content="2017-04-19T16:10:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="<hello-world/>">
-<meta name="twitter:description" content="hey">
+<meta name="twitter:title" content="Go-Interface">
+<meta name="twitter:description" content="关于 go 语言接口的简单介绍">
 
 
 
@@ -131,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/tags/config/"/>
+  <link rel="canonical" href="http://blog.justwe.site/2017/04/19/go-interface/"/>
 
 
 
 
 
-  <title> 标签: config | <hello-world/> </title>
+  <title> Go-Interface | <hello-world/> </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -171,7 +173,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,46 +299,206 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        config
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/04/19/go-interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GPF">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<hello-world/>">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Go-Interface
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T23:43:41+08:00">
+                2017-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/19/go-interface/" class="leancloud_visitors" data-flag-title="Go-Interface">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>关于 go 语言接口的简单介绍<br><a id="more"></a><br>接口对于 go 实现面向对象来说非常重要,如果没有它 go 的结构体(struct)也就只能存储一些信息,<br>但是相关的方法将会变得非常麻烦</p>
+<h2 id="什么是接口"><a href="#什么是接口" class="headerlink" title="什么是接口?"></a>什么是接口?</h2><p>接口就是制定一个通用的规范,只要符合这个规范就能使用这个借口(听起来像是车轱辘话)</p>
+<h2 id="接口类型"><a href="#接口类型" class="headerlink" title="接口类型"></a>接口类型</h2><p>比如我定义了一个接口<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> example <span class="keyword">interface</span>&#123;</div><div class="line">  a()</div><div class="line">  b()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>他定义了两个方法,只要有结构体中含有 <code>a()</code>,<code>b()</code>两个方法就能实现这个接口,通过接口来统一调用,<br>如下<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//package main</span></div><div class="line"><span class="comment">//import "fmt"</span></div><div class="line"></div><div class="line"><span class="comment">//定义一个基本的类</span></div><div class="line"><span class="keyword">type</span> Human <span class="keyword">struct</span>&#123;</div><div class="line">  name  <span class="keyword">string</span></div><div class="line">  age   <span class="keyword">int</span></div><div class="line">  phone <span class="keyword">string</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">type</span> Student <span class="keyword">struct</span>&#123;</div><div class="line">  Human <span class="comment">//继承 human 中的字段</span></div><div class="line">  school <span class="keyword">string</span></div><div class="line">  loan   <span class="keyword">float32</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">type</span> Employee <span class="keyword">struct</span>&#123;</div><div class="line">  Human</div><div class="line">  company <span class="keyword">string</span></div><div class="line">  money   <span class="keyword">float32</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//Human 实现 Sayhi 方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h Human)</span> <span class="title">Sayhi</span><span class="params">()</span></span>&#123;</div><div class="line">  fmt.Printf(<span class="string">"hi my name is %s and my phone is %s \n"</span>, h.name,h.phone)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//Human 实现 Sing 方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h Human)</span> <span class="title">Sing</span><span class="params">(lyrics <span class="keyword">string</span>)</span></span>  &#123;</div><div class="line">  fmt.Println(<span class="string">"galigaygay galigaygay ..."</span>,lyrics)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//student 复写 Sayhi 方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(sdt Student)</span> <span class="title">Sayhi</span><span class="params">()</span></span>  &#123;</div><div class="line">  fmt.Printf(<span class="string">"my name is %s and my school is %s \n"</span>, sdt.name,sdt.school)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//定义一个通用的接口</span></div><div class="line"><span class="keyword">type</span> Men <span class="keyword">interface</span>&#123;</div><div class="line">  Sayhi()</div><div class="line">  Sing(lyrics <span class="keyword">string</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="params">()</span></span> &#123;</div><div class="line">  <span class="comment">//实例化两种类</span></div><div class="line">  mike := Student&#123;Human&#123;<span class="string">"mike"</span>,<span class="number">25</span>,<span class="string">"18333636999"</span>&#125;,<span class="string">"MIT"</span>,<span class="number">3.14</span>&#125;</div><div class="line">  jack := Employee&#123;Human&#123;<span class="string">"jack"</span>,<span class="number">30</span>,<span class="string">"18333636998"</span>&#125;,<span class="string">"hotcast"</span>,<span class="number">20000</span>&#125;</div><div class="line"></div><div class="line">  <span class="comment">//定义一个接口变量</span></div><div class="line">  <span class="keyword">var</span> i Men</div><div class="line"></div><div class="line">  <span class="comment">//接口实现了 Student 类的方法</span></div><div class="line">  fmt.Println(<span class="string">"下面有请 mike 开始他的表演:"</span>)</div><div class="line">  i = mike</div><div class="line">  i.Sayhi();</div><div class="line">  i.Sing(<span class="string">"dongci daci"</span>)</div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment">//接口实现了 Employee 类的方法</span></div><div class="line">  fmt.Println(<span class="string">"下面有请 mike 开始他的表演:"</span>)</div><div class="line">  i = jack</div><div class="line">  i.Sayhi();</div><div class="line">  i.Sing(<span class="string">"haha haha haha"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的 <code>Men</code> 接口被所有继承了<code>Human</code>的结构体的方法所实现,所以这些实例化的结构体可以赋值给<br><code>Men</code>的接口变量上,我们在 go 语言中的面向对象开发可以说就是面向接口在开发,由接口来组成一个个的<br>变量,<br>这和 php 的接口有所不同,在 php 中,接口是需要被 class 来继承,然后class 中去实现 interface 中<br>指定的方法,比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Human</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">sayHi</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">sing</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Human</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">sayHi</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">// <span class="doctag">TODO:</span></span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">sing</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">// <span class="doctag">TODO:</span></span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样子的, 每个类需要指定继承哪些接口才可以去实现接口,而 go 和 php 正好相反,是谁实现了我的规范<br>谁就可以用我的接口,实现顺序整合倒过来了</p>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/03/30/webconfig/" itemprop="url">
-              
-                <span itemprop="name">Hexo-Next 的一些配置</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>这个博客有个赞赏功能，不试一下吗？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinpay.png" alt="GPF WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-30T21:06:50+08:00"
-              content="2017-03-30" >
-          03-30
-        </time>
-      </div>
 
-    </header>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+            <a href="/tags/interface/" rel="tag"># interface</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/18/go-simple-webserver-demo/" rel="prev" title="Go-Simple-Webserver-Demo">
+                Go-Simple-Webserver-Demo <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -344,6 +506,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -363,8 +529,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/logo.jpeg"
@@ -454,6 +629,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是接口"><span class="nav-number">1.</span> <span class="nav-text">什么是接口?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口类型"><span class="nav-number">2.</span> <span class="nav-text">接口类型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -559,6 +750,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
