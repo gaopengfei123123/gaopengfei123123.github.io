@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-04-24T15:40:06.000Z</updated>
+  <updated>2017-04-26T16:03:40.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go-Http</title>
+    <link href="http://blog.justwe.site/2017/04/26/go-http/"/>
+    <id>http://blog.justwe.site/2017/04/26/go-http/</id>
+    <published>2017-04-26T15:11:29.000Z</published>
+    <updated>2017-04-26T16:03:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>用于了解 http 包的一些运行机制</p>
+<a id="more"></a>
+<h2 id="首先一个简单的例子"><a href="#首先一个简单的例子" class="headerlink" title="首先一个简单的例子"></a>首先一个简单的例子</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">  <span class="string">"fmt"</span></div><div class="line">  <span class="string">"net/http"</span></div><div class="line">  <span class="string">"strings"</span></div><div class="line">  <span class="string">"log"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sayhelloName</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">  r.ParseForm()                         <span class="comment">//解析参数,默认不解析</span></div><div class="line">  fmt.Println(r.Form)                   <span class="comment">//在终端中打印出表单内容</span></div><div class="line">  fmt.Println(<span class="string">"Path"</span>, r.URL.Path)</div><div class="line">  fmt.Println(<span class="string">"scheme"</span>, r.URL.Scheme)</div><div class="line">  fmt.Println(r.Form[<span class="string">"url_long"</span>])       <span class="comment">//输出指定的参数</span></div><div class="line">  <span class="keyword">for</span> k,v := <span class="keyword">range</span> r.Form&#123;              <span class="comment">//遍历打印出表单的值</span></div><div class="line">    fmt.Println(<span class="string">"key"</span>,k)</div><div class="line">    fmt.Println(<span class="string">"val"</span>, strings.Join(v, <span class="string">""</span>))</div><div class="line">  &#125;</div><div class="line">  fmt.Fprint(w, <span class="string">"hello gpf!"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">  http.HandleFunc(<span class="string">"/"</span>, sayhelloName)        <span class="comment">//绑定路由与方法</span></div><div class="line">  err := http.ListenAndServe(<span class="string">":9090"</span>, <span class="literal">nil</span>)  <span class="comment">//监听 tcp:9090 端口</span></div><div class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">    log.Fatal(<span class="string">"ListenAndServe: "</span>,err)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>文件目录下 <code>go build http.go</code> <code>./http</code> 再直接访问<code>http://localhost:9090</code>就能看到页面了</p>
+<h2 id="运行流程是什么呢"><a href="#运行流程是什么呢" class="headerlink" title="运行流程是什么呢?"></a>运行流程是什么呢?</h2><p>大体的运行流程是介样:</p>
+<ol>
+<li>创建 Listen Socket,监听 tcp 协议的 9090 端口,等待请求</li>
+<li>收到请求后创建一个 client socket 去解析请求(request)</li>
+<li>将请求内容交给 handle request 去处理,处理后返回给 client socket(handler)</li>
+<li>client socket 收到后台的处理结果返回给用户(response)</li>
+</ol>
+<p>我们80%的逻辑都是在第3步内进行的,其他的已经有底层包帮我们实现了</p>
+<h2 id="我们的路由绑定机制是怎么实现的"><a href="#我们的路由绑定机制是怎么实现的" class="headerlink" title="我们的路由绑定机制是怎么实现的?"></a>我们的路由绑定机制是怎么实现的?</h2><p>当走到以上的第3步的时候将会进入自己独立的 goroutine ,这也是用户访问互不影响的原因,<br>这一点和 nginx 很像,都是异步非阻塞的处理方式用来应对高并发</p>
+<p>在最开始的例子当中我们绑定路由是直接将路由和函数指定了的,这里面发生了什么呢?<br>当调用<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http.HandleFunc(<span class="string">"/"</span>, sayhelloName)</div></pre></td></tr></table></figure></p>
+<p>时 因为没有对监听函数传递第二个参数,传了个 nil 进去<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http.ListenAndServe(<span class="string">":9090"</span>, <span class="literal">nil</span>)</div></pre></td></tr></table></figure></p>
+<p>nil 的位置本应该是一个 handler,如果为空的话,将调用默认的 handler ,即 <code>DefaultServeMux</code>,<br>因为它实现了 <code>Handler</code> 接口所以能处理请求, <code>Handler</code>接口的内容是<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> Handler <span class="keyword">interface</span>&#123;</div><div class="line">  ServeHTTP(ResponseWriter, *Request)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个方法就是我们的路由实现器,我们所有的路由指向的方法都是在这里处理的,</p>
+<p>可是为什么我的<code>sayhelloName()</code>并没有实现 <code>Handler</code>的接口但还是正常运行了,这怎么回事呢?<br>这是因为 <code>http.HandleFunc()</code>帮你完成了这个接口的实现,<a href="https://gowalker.org/net/http#HandleFunc" target="_blank" rel="external">文档</a></p>
+<h2 id="自己实现一个简易的路由"><a href="#自己实现一个简易的路由" class="headerlink" title="自己实现一个简易的路由"></a>自己实现一个简易的路由</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">	<span class="string">"net/http"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment">//设定一个空的接口体来承载接口</span></div><div class="line"><span class="keyword">type</span> MyMux <span class="keyword">struct</span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="comment">//实现 Handler 接口,在这里处理路由相关的内容</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *MyMux)</span> <span class="title">ServeHTTP</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">	<span class="keyword">if</span> r.URL.Path == <span class="string">"/"</span> &#123;</div><div class="line">		sayHello(w, r)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> r.URL.Path == <span class="string">"/login"</span> &#123;</div><div class="line">		loginPage(w, r)</div><div class="line">		<span class="keyword">return</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	http.NotFound(w, r)</div><div class="line">	<span class="keyword">return</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sayHello</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">	fmt.Fprint(w, <span class="string">"Hello route '/' !"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">loginPage</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">	fmt.Fprintf(w, <span class="string">"this is login page"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">  <span class="comment">//实例化结构体</span></div><div class="line">	mux := &amp;MyMux&#123;&#125;</div><div class="line">  <span class="comment">//当做 handler 注入到监听服务当中去</span></div><div class="line">	http.ListenAndServe(<span class="string">":9090"</span>, mux)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果想自己实现路由的处理也可以这样试试,但是我不想平白的用一个空的 struct 去承载这个啊,<br>我们可以试试这个</p>
+<h2 id="ServeMux"><a href="#ServeMux" class="headerlink" title="ServeMux"></a>ServeMux</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"fmt"</span></div><div class="line">	<span class="string">"net/http"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	mux := http.NewServeMux()</div><div class="line">	mux.HandleFunc(<span class="string">"/login"</span>, <span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">		fmt.Fprintf(w, <span class="string">"this is login page"</span>)</div><div class="line">	&#125;)</div><div class="line"></div><div class="line">	mux.HandleFunc(<span class="string">"/"</span>, <span class="function"><span class="keyword">func</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</div><div class="line">		fmt.Fprintf(w, <span class="string">"hello your first page"</span>)</div><div class="line">	&#125;)</div><div class="line"></div><div class="line">	http.ListenAndServe(<span class="string">":9090"</span>, mux)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>说了这么多其实还是云里雾里的,不过没关系,可以先放在这里,等用的多了自然也能想开了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用于了解 http 包的一些运行机制&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
+    
+      <category term="http" scheme="http://blog.justwe.site/tags/http/"/>
+    
+  </entry>
   
   <entry>
     <title>Go-Comma-Switch</title>
@@ -203,9 +249,9 @@
       <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
     
     
-      <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
-    
       <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
+    
+      <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
     
   </entry>
   
@@ -655,82 +701,6 @@
       &lt;h2 id=&quot;本地搭建-hexo&quot;&gt;&lt;a href=&quot;#本地搭建-hexo&quot; class=&quot;headerlink&quot; title=&quot;本地搭建 hexo&quot;&gt;&lt;/a&gt;本地搭建 &lt;code&gt;hexo&lt;/code&gt;&lt;/h2&gt;
     
     </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>使用Hexo和github-Pages发布博客</title>
-    <link href="http://blog.justwe.site/2017/03/22/hexo-blog/"/>
-    <id>http://blog.justwe.site/2017/03/22/hexo-blog/</id>
-    <published>2017-03-22T02:18:00.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="本地搭建-hexo"><a href="#本地搭建-hexo" class="headerlink" title="本地搭建 hexo"></a>本地搭建 <code>hexo</code></h2><a id="more"></a>
-<ul>
-<li>构建hexo需要在本地安装<code>node.js</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install node</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>当前版本的node版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">node -v</div><div class="line">v7.7.3</div></pre></td></tr></table></figure></p>
-<ul>
-<li>全局安装 <code>hexo</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>国外镜像慢的话可以搜索找下淘宝的 <code>cnmp</code></p>
-</blockquote>
-<ul>
-<li><p>创建一个目录并且安装 <code>hexo</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir hexo_blog</div><div class="line">cd hexo_blog</div><div class="line">hexo init</div><div class="line">npm install</div></pre></td></tr></table></figure>
-</li>
-<li><p>新建一个文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;your-first-page&quot;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>文件在 <code>hexo_blog/source/_post/</code>下进行编辑啊</p>
-<ul>
-<li>然后就是生成静态文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate</div><div class="line">hexo server</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这时就可以访问 <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> 来查看效果，这个时候hexo已经搭建成功了，<br>但是我们需要外网能够访问，这就用到了今天的另一个主角：<code>github page</code></p>
-<h2 id="将-hexo-放到github上"><a href="#将-hexo-放到github上" class="headerlink" title="将 hexo 放到github上"></a>将 <code>hexo</code> 放到github上</h2><ul>
-<li>需要一个github账号，具体申请登录看 <a href="https://github.com" target="_blank" rel="external">https://github.com</a> 上的引导就行</li>
-<li>创建一个新的 repository 名字格式是固定的，比如我的账户名是 gaopengfei123123 那么这个库的名字就是 gaopengfei123123.github.io 不能改的哦</li>
-<li>为了可以直接提交远程文件需要添加 ssh 密匙<br>本地操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;5173180@qq.com” -f ~/.ssh/github-rsa</div><div class="line">cat ~/.ssh/github_rsa.pub</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3K5mcQxH9mu1cUIu2+byK1iksES/7Tnfh23l2U6y1fOKO4XFhPLdAoMQdePnI51PAF4faXxucOYsiDb6IpQimWPwORKTkEkcglOiZ414eZZ829gY98RAldbFQeT2L9A0l2APfcan1fH4HvrCmZKlY8CNDQDDfRzXub9hfSX3LS5mQlgS9PHiFoXRfrS10hYweere9Cb9OFiEdkdCfMKUBr25ImGahqbaHxE8Vb3QzMT8Q5PBITaqFwYnIE/z6HU6Lok92EZ/uVG81SMJb9A5SQCZdsjWmyDqXj1eDZ1A2YyUlA+/6QM7JjCrLoZAAtZHTH+ylNAG79w9WG0eYAuL GaoPengFeiFiy@github.com</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>把这一段完整的复制到 <a href="https://github.com/settings/keys" target="_blank" rel="external">https://github.com/settings/keys</a> 这个地址下，添加一条新的ssh-key，这样就能免登录提交版本文件</p>
-<ul>
-<li>现在编辑本地hexo根目录下的站点配置文件 <code>path/to/hexo_blog/_config.yml</code><br>查找字段 <code>deploy</code> 编辑成这样<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:gaopengfei123123/gaopengfei123123.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>设置好后，就将本地生成的静态文件发到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo deploy</div><div class="line"></div><div class="line">#如果报错就可能是少个插件</div><div class="line">npm install hexo-deployer-git</div></pre></td></tr></table></figure></p>
-<ul>
-<li>进入 你的版本库地址/settings 比如我的就是 <code>https://github.com/gaopengfei123123/gaopengfei123123.github.io/settings</code><br>找到 <code>github pages</code> 设置块按照你的需求调整，这时访问 <code>https://gaopengfei123123.github.io</code>就能访问 hexo 上传的内容了</li>
-</ul>
-<h2 id="绑定一个自己的域名，通过它来访问github-pages"><a href="#绑定一个自己的域名，通过它来访问github-pages" class="headerlink" title="绑定一个自己的域名，通过它来访问github pages"></a>绑定一个自己的域名，通过它来访问github pages</h2><blockquote>
-<p>我用的是阿里云的万网来举例</p>
-</blockquote>
-<ul>
-<li><p>首先进入到万网云解析的页面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">记录类型：A</div><div class="line">主机记录：blog</div><div class="line">记录值：xxx.xxx.xxx  #这里需要 ping -c 3 https://gaopengfei123123.github.io 获取ip地址</div></pre></td></tr></table></figure>
-</li>
-<li><p>然后返回到 你的版本库地址/settings 这里，将 <code>Custom domain</code> 设置成你刚才解析的名字，<br>与此同时在github上版本的根目录下添加一个文件 <code>CNAME</code> 内容是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#in CNAME</div><div class="line">blog.justwe.site</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这时再返回settings中就能看的 github pages 部分的域名绑定的是你的域名了，到这里博客算是搭建成功了</p>
-<p><a href="https://hexo.io" target="_blank" rel="external">hexo官网</a></p>
-<p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">hexo的next模版官网</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;本地搭建-hexo&quot;&gt;&lt;a href=&quot;#本地搭建-hexo&quot; class=&quot;headerlink&quot; title=&quot;本地搭建 hexo&quot;&gt;&lt;/a&gt;本地搭建 &lt;code&gt;hexo&lt;/code&gt;&lt;/h2&gt;
-    
-    </summary>
-    
-      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
     
     
   </entry>
