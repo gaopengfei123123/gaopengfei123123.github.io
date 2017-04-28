@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-04-26T16:03:40.000Z</updated>
+  <updated>2017-04-28T02:30:43.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,86 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>&lt;转&gt; 关于 Ssh 的 25 条实用命令</title>
+    <link href="http://blog.justwe.site/2017/04/28/ssh-command/"/>
+    <id>http://blog.justwe.site/2017/04/28/ssh-command/</id>
+    <published>2017-04-28T02:02:50.000Z</published>
+    <updated>2017-04-28T02:30:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>OpenSSH是SSH连接工具的免费版本。telnet，rlogin和ftp用户可能还没意识到他们在互联网上传输的密码是未加密的，但SSH是加密的，OpenSSH加密所有通信（包括密码），有效消除了窃听，连接劫持和其它攻击。此外，OpenSSH提供了安全隧道功能和多种身份验证方法，支持SSH协议的所有版本。</p>
+<a id="more"></a>
+<p>SSH是一个非常伟大的工具，如果你要在互联网上远程连接到服务器，那么SSH无疑是最佳的候选。下面是通过网络投票选出的25个最佳SSH命令，你必须牢记于心。</p>
+<p>（注：有些内容较长的命令，在本文中会显示为截断的状态。如果你需要阅读完整的命令，可以把整行复制到您的记事本当中阅读。）</p>
+<h2 id="复制SSH密钥到目标主机，开启无密码SSH登录"><a href="#复制SSH密钥到目标主机，开启无密码SSH登录" class="headerlink" title="复制SSH密钥到目标主机，开启无密码SSH登录"></a>复制SSH密钥到目标主机，开启无密码SSH登录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id user@host</div></pre></td></tr></table></figure>
+<p>如果还没有密钥，请使用ssh-keygen命令生成。</p>
+<h2 id="从某主机的80端口开启到本地主机2001端口的隧道"><a href="#从某主机的80端口开启到本地主机2001端口的隧道" class="headerlink" title="从某主机的80端口开启到本地主机2001端口的隧道"></a>从某主机的80端口开启到本地主机2001端口的隧道</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -N -L2001:localhost:80 somemachine</div></pre></td></tr></table></figure>
+<p>现在你可以直接在浏览器中输入 <a href="http://localhost:2001访问这个网站。" target="_blank" rel="external">http://localhost:2001访问这个网站。</a></p>
+<h2 id="将你的麦克风输出到远程计算机的扬声器"><a href="#将你的麦克风输出到远程计算机的扬声器" class="headerlink" title="将你的麦克风输出到远程计算机的扬声器"></a>将你的麦克风输出到远程计算机的扬声器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dd if=/dev/dsp | ssh -c arcfour -C username@host dd of=/dev/dsp</div></pre></td></tr></table></figure>
+<p>这样来自你麦克风端口的声音将在SSH目标计算机的扬声器端口输出，但遗憾的是，声音质量很差，你会听到很多嘶嘶声。</p>
+<h2 id="比较远程和本地文件"><a href="#比较远程和本地文件" class="headerlink" title="比较远程和本地文件"></a>比较远程和本地文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host cat /path/to/remotefile | diff /path/to/localfile –</div></pre></td></tr></table></figure>
+<p>在比较本地文件和远程文件是否有差异时这个命令很管用。</p>
+<h2 id="通过SSH挂载目录-文件系统"><a href="#通过SSH挂载目录-文件系统" class="headerlink" title="通过SSH挂载目录/文件系统"></a>通过SSH挂载目录/文件系统</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sshfs name@server:/path/to/folder /path/to/mount/point</div></pre></td></tr></table></figure>
+<p>从<a href="http://fuse.sourceforge.net/sshfs.html下载sshfs，它允许你跨网络安全挂载一个目录。" target="_blank" rel="external">http://fuse.sourceforge.net/sshfs.html下载sshfs，它允许你跨网络安全挂载一个目录。</a></p>
+<h2 id="通过中间主机建立SSH连接"><a href="#通过中间主机建立SSH连接" class="headerlink" title="通过中间主机建立SSH连接"></a>通过中间主机建立SSH连接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t reachable_host ssh unreachable_host</div></pre></td></tr></table></figure>
+<p>Unreachable_host 表示从本地网络无法直接访问的主机，但可以从 reachable_host 所在网络访问，这个命令通过到 reachable_host 的“隐藏”连接，创建起到 unreachable_host 的连接。</p>
+<h2 id="将你的SSH公钥复制到远程主机，开启无密码登录-–-简单的方法"><a href="#将你的SSH公钥复制到远程主机，开启无密码登录-–-简单的方法" class="headerlink" title="将你的SSH公钥复制到远程主机，开启无密码登录 – 简单的方法"></a>将你的SSH公钥复制到远程主机，开启无密码登录 – 简单的方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id username@hostname</div></pre></td></tr></table></figure>
+<h2 id="直接连接到只能通过主机B连接的主机A"><a href="#直接连接到只能通过主机B连接的主机A" class="headerlink" title="直接连接到只能通过主机B连接的主机A"></a>直接连接到只能通过主机B连接的主机A</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t hostA ssh hostB</div></pre></td></tr></table></figure>
+<p>当然，你要能访问主机A才行。</p>
+<h2 id="创建到目标主机的持久化连接"><a href="#创建到目标主机的持久化连接" class="headerlink" title="创建到目标主机的持久化连接"></a>创建到目标主机的持久化连接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -MNf &lt;user&gt;@&lt;host&gt;</div></pre></td></tr></table></figure>
+<p>在后台创建到目标主机的持久化连接，将这个命令和你~/.ssh/config中的配置结合使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Host host</div><div class="line">ControlPath ~/.ssh/master-%r@%h:%p</div><div class="line">ControlMaster no</div></pre></td></tr></table></figure></p>
+<p>所有到目标主机的SSH连接都将使用持久化SSH套接字，如果你使用SSH定期同步文件（使用rsync/sftp/cvs/svn），这个命令将非常有用，因为每次打开一个SSH连接时不会创建新的套接字。</p>
+<h2 id="通过SSH连接屏幕"><a href="#通过SSH连接屏幕" class="headerlink" title="通过SSH连接屏幕"></a>通过SSH连接屏幕</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t remote_host screen –r</div></pre></td></tr></table></figure>
+<p>直接连接到远程屏幕会话（节省了无用的父bash进程）。</p>
+<h2 id="端口检测（敲门）"><a href="#端口检测（敲门）" class="headerlink" title="端口检测（敲门）"></a>端口检测（敲门）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">knock &lt;host&gt; 3000 4000 5000 &amp;&amp; ssh -p &lt;port&gt; user@host &amp;&amp; knock &lt;host&gt; 5000 4000 3000</div></pre></td></tr></table></figure>
+<p>在一个端口上敲一下打开某个服务的端口（如SSH），再敲一下关闭该端口，需要先安装knockd，下面是一个配置文件示例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[options]</div><div class="line">logfile = /var/log/knockd.log</div><div class="line">[openSSH]</div><div class="line">sequence = 3000,4000,5000</div><div class="line">seq_timeout = 5</div><div class="line">command = /sbin/iptables -A INPUT -i eth0 -s %IP% -p tcp –dport 22 -j ACCEPT</div><div class="line">tcpflags = syn</div><div class="line">[closeSSH]</div><div class="line">sequence = 5000,4000,3000</div><div class="line">seq_timeout = 5</div><div class="line">command = /sbin/iptables -D INPUT -i eth0 -s %IP% -p tcp –dport 22 -j ACCEPT</div><div class="line">tcpflags = syn</div></pre></td></tr></table></figure>
+<h2 id="删除文本文件中的一行内容，有用的修复"><a href="#删除文本文件中的一行内容，有用的修复" class="headerlink" title="删除文本文件中的一行内容，有用的修复"></a>删除文本文件中的一行内容，有用的修复</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -R &lt;the_offending_host&gt;</div></pre></td></tr></table></figure>
+<p>在这种情况下，最好使用专业的工具。</p>
+<h2 id="通过SSH运行复杂的远程shell命令"><a href="#通过SSH运行复杂的远程shell命令" class="headerlink" title="通过SSH运行复杂的远程shell命令"></a>通过SSH运行复杂的远程shell命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh host -l user $(&lt;cmd.txt)</div></pre></td></tr></table></figure>
+<p>更具移植性的版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh host -l user “`cat cmd.txt`”</div></pre></td></tr></table></figure></p>
+<h2 id="通过SSH将MySQL数据库复制到新服务器"><a href="#通过SSH将MySQL数据库复制到新服务器" class="headerlink" title="通过SSH将MySQL数据库复制到新服务器"></a>通过SSH将MySQL数据库复制到新服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqldump –add-drop-table –extended-insert –force –log-error=error.log -uUSER -pPASS OLD_DB_NAME | ssh -C user@newhost “mysql -uUSER -pPASS NEW_DB_NAME”</div></pre></td></tr></table></figure>
+<p>通过压缩的SSH隧道Dump一个MySQL数据库，将其作为输入传递给mysql命令，我认为这是迁移数据库到新服务器最快最好的方法。</p>
+<h2 id="删除文本文件中的一行，修复“SSH主机密钥更改”的警告"><a href="#删除文本文件中的一行，修复“SSH主机密钥更改”的警告" class="headerlink" title="删除文本文件中的一行，修复“SSH主机密钥更改”的警告"></a>删除文本文件中的一行，修复“SSH主机密钥更改”的警告</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sed -i 8d ~/.ssh/known_hosts</div></pre></td></tr></table></figure>
+<h2 id="从一台没有SSH-COPY-ID命令的主机将你的SSH公钥复制到服务器"><a href="#从一台没有SSH-COPY-ID命令的主机将你的SSH公钥复制到服务器" class="headerlink" title="从一台没有SSH-COPY-ID命令的主机将你的SSH公钥复制到服务器"></a>从一台没有SSH-COPY-ID命令的主机将你的SSH公钥复制到服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~/.ssh/id_rsa.pub | ssh user@machine “mkdir ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys”</div></pre></td></tr></table></figure>
+<p>如果你使用Mac OS X或其它没有ssh-copy-id命令的*nix变种，这个命令可以将你的公钥复制到远程主机，因此你照样可以实现无密码SSH登录。</p>
+<h2 id="实时SSH网络吞吐量测试"><a href="#实时SSH网络吞吐量测试" class="headerlink" title="实时SSH网络吞吐量测试"></a>实时SSH网络吞吐量测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yes | pv | ssh $host “cat &gt; /dev/null”</div></pre></td></tr></table></figure>
+<p>通过SSH连接到主机，显示实时的传输速度，将所有传输数据指向/dev/null，需要先安装pv。</p>
+<p>如果是Debian：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install pv</div></pre></td></tr></table></figure></p>
+<p>如果是Fedora：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install pv</div></pre></td></tr></table></figure></p>
+<p>（可能需要启用额外的软件仓库）。</p>
+<h2 id="如果建立一个可以重新连接的远程GNU-screen"><a href="#如果建立一个可以重新连接的远程GNU-screen" class="headerlink" title="如果建立一个可以重新连接的远程GNU screen"></a>如果建立一个可以重新连接的远程GNU screen</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -t user@some.domain.com /usr/bin/screen –xRR</div></pre></td></tr></table></figure>
+<p>人们总是喜欢在一个文本终端中打开许多shell，如果会话突然中断，或你按下了“Ctrl-a d”，远程主机上的shell不会受到丝毫影响，你可以重新连接，其它有用的screen命令有“Ctrl-a c”（打开新的shell）和“Ctrl-a a”（在shell之间来回切换），请访问阅读更多<a href="http://aperiodic.net/screen/quick_reference" target="_blank" rel="external">关于screen命令的快速参考</a>。</p>
+<h2 id="继续SCP大文件"><a href="#继续SCP大文件" class="headerlink" title="继续SCP大文件"></a>继续SCP大文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rsync –partial –progress –rsh=ssh $file_source $user@$host:$destination_file</div></pre></td></tr></table></figure>
+<p>它可以恢复失败的rsync命令，当你通过VPN传输大文件，如备份的数据库时这个命令非常有用，需要在两边的主机上安装rsync。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rsync –partial –progress –rsh=ssh $file_source $user@$host:$destination_file local -&gt; remote</div></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rsync –partial –progress –rsh=ssh $user@$host:$remote_file $destination_file remote -&gt; local</div></pre></td></tr></table></figure></p>
+<h2 id="通过SSH-W-WIRESHARK分析流量"><a href="#通过SSH-W-WIRESHARK分析流量" class="headerlink" title="通过SSH W/ WIRESHARK分析流量"></a>通过SSH W/ WIRESHARK分析流量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@server.com ‘tshark -f “port !22″ -w -&apos; | wireshark -k -i –</div></pre></td></tr></table></figure>
+<p>使用tshark捕捉远程主机上的网络通信，通过SSH连接发送原始pcap数据，并在wireshark中显示，按下Ctrl+C将停止捕捉，但也会关闭wireshark窗口，可以传递一个“-c #”参数给tshark，让它只捕捉“#”指定的数据包类型，或通过命名管道重定向数据，而不是直接通过SSH传输给wireshark，我建议你过滤数据包，以节约带宽，tshark可以使用tcpdump替代：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@example.com tcpdump -w – ‘port !22′ | wireshark -k -i –</div></pre></td></tr></table></figure>
+<h2 id="保持SSH会话永久打开"><a href="#保持SSH会话永久打开" class="headerlink" title="保持SSH会话永久打开"></a>保持SSH会话永久打开</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">autossh -M50000 -t server.example.com ‘screen -raAd mysession’</div></pre></td></tr></table></figure>
+<p>打开一个SSH会话后，让其保持永久打开，对于使用笔记本电脑的用户，如果需要在Wi-Fi热点之间切换，可以保证切换后不会丢失连接。</p>
+<h2 id="更稳定，更快，更强的SSH客户端"><a href="#更稳定，更快，更强的SSH客户端" class="headerlink" title="更稳定，更快，更强的SSH客户端"></a>更稳定，更快，更强的SSH客户端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -4 -C -c blowfish-cbc</div></pre></td></tr></table></figure>
+<p>强制使用IPv4，压缩数据流，使用Blowfish加密。</p>
+<h2 id="使用cstream控制带宽"><a href="#使用cstream控制带宽" class="headerlink" title="使用cstream控制带宽"></a>使用cstream控制带宽</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -cj /backup | cstream -t 777k | ssh host ‘tar -xj -C /backup’</div></pre></td></tr></table></figure>
+<p>使用bzip压缩文件夹，然后以777k bit/s速率向远程主机传输。Cstream还有更多的功能，请访问<a href="http://www.cons.org/cracauer/cstream.html#usage" target="_blank" rel="external">了解详情</a>，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo w00t, i’m 733+ | cstream -b1 -t2</div></pre></td></tr></table></figure></p>
+<h2 id="一步将SSH公钥传输到另一台机器"><a href="#一步将SSH公钥传输到另一台机器" class="headerlink" title="一步将SSH公钥传输到另一台机器"></a>一步将SSH公钥传输到另一台机器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen; ssh-copy-id user@host; ssh user@host</div></pre></td></tr></table></figure>
+<p>这个命令组合允许你无密码SSH登录，注意，如果在本地机器的~/.ssh目录下已经有一个SSH密钥对，ssh-keygen命令生成的新密钥可能会覆盖它们，ssh-copy-id将密钥复制到远程主机，并追加到远程账号的~/.ssh/authorized_keys文件中，使用SSH连接时，如果你没有使用密钥口令，调用ssh user@host后不久就会显示远程shell。</p>
+<h2 id="将标准输入（stdin）复制到你的X11缓冲区"><a href="#将标准输入（stdin）复制到你的X11缓冲区" class="headerlink" title="将标准输入（stdin）复制到你的X11缓冲区"></a>将标准输入（stdin）复制到你的X11缓冲区</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh user@host cat /path/to/some/file | xclip</div></pre></td></tr></table></figure>
+<p>你是否使用scp将文件复制到工作用电脑上，以便复制其内容到电子邮件中？xclip可以帮到你，它可以将标准输入复制到X11缓冲区，你需要做的就是点击鼠标中键粘贴缓冲区中的内容。</p>
+<p><a href="http://www.cnblogs.com/weafer/archive/2011/06/10/2077852.html" target="_blank" rel="external">原文地址</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;OpenSSH是SSH连接工具的免费版本。telnet，rlogin和ftp用户可能还没意识到他们在互联网上传输的密码是未加密的，但SSH是加密的，OpenSSH加密所有通信（包括密码），有效消除了窃听，连接劫持和其它攻击。此外，OpenSSH提供了安全隧道功能和多种身份验证方法，支持SSH协议的所有版本。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Go-Http</title>
@@ -249,9 +329,9 @@
       <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
     
     
-      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
-    
       <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
+    
+      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
     
   </entry>
   
@@ -624,81 +704,6 @@
       &lt;blockquote&gt;
 &lt;p&gt;laravel的路由模块就是从这里封装起来的，咱们先了解下symfony的路由机制&lt;/p&gt;
 &lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>使用Hexo构建博客</title>
-    <link href="http://blog.justwe.site/2017/03/22/install/"/>
-    <id>http://blog.justwe.site/2017/03/22/install/</id>
-    <published>2017-03-22T07:31:55.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="本地搭建-hexo"><a href="#本地搭建-hexo" class="headerlink" title="本地搭建 hexo"></a>本地搭建 <code>hexo</code></h2><a id="more"></a>
-<ul>
-<li>构建hexo需要在本地安装<code>node.js</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install node</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>当前版本的node版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">node -v</div><div class="line">v7.7.3</div></pre></td></tr></table></figure></p>
-<!-- more -->
-<ul>
-<li>全局安装 <code>hexo</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>国外镜像慢的话可以搜索找下淘宝的 <code>cnmp</code></p>
-</blockquote>
-<ul>
-<li><p>创建一个目录并且安装 <code>hexo</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir hexo_blog</div><div class="line">cd hexo_blog</div><div class="line">hexo init</div><div class="line">npm install</div></pre></td></tr></table></figure>
-</li>
-<li><p>新建一个文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;your-first-page&quot;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>文件在 <code>hexo_blog/source/_post/</code>下进行编辑啊</p>
-<ul>
-<li>然后就是生成静态文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate</div><div class="line">hexo server</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这时就可以访问 <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> 来查看效果，这个时候hexo已经搭建成功了，<br>但是我们需要外网能够访问，这就用到了今天的另一个主角：<code>github page</code></p>
-<h2 id="将-hexo-放到github上"><a href="#将-hexo-放到github上" class="headerlink" title="将 hexo 放到github上"></a>将 <code>hexo</code> 放到github上</h2><ul>
-<li>需要一个github账号，具体申请登录看 <a href="https://github.com" target="_blank" rel="external">https://github.com</a> 上的引导就行</li>
-<li>创建一个新的 repository 名字格式是固定的，比如我的账户名是 gaopengfei123123 那么这个库的名字就是 gaopengfei123123.github.io 不能改的哦</li>
-<li>为了可以直接提交远程文件需要添加 ssh 密匙<br>本地操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;5173180@qq.com” -f ~/.ssh/github-rsa</div><div class="line">cat ~/.ssh/github_rsa.pub</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3K5mcQxH9mu1cUIu2+byK1iksES/7Tnfh23l2U6y1fOKO4XFhPLdAoMQdePnI51PAF4faXxucOYsiDb6IpQimWPwORKTkEkcglOiZ414eZZ829gY98RAldbFQeT2L9A0l2APfcan1fH4HvrCmZKlY8CNDQDDfRzXub9hfSX3LS5mQlgS9PHiFoXRfrS10hYweere9Cb9OFiEdkdCfMKUBr25ImGahqbaHxE8Vb3QzMT8Q5PBITaqFwYnIE/z6HU6Lok92EZ/uVG81SMJb9A5SQCZdsjWmyDqXj1eDZ1A2YyUlA+/6QM7JjCrLoZAAtZHTH+ylNAG79w9WG0eYAuL GaoPengFeiFiy@github.com</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>把这一段完整的复制到 <a href="https://github.com/settings/keys" target="_blank" rel="external">https://github.com/settings/keys</a> 这个地址下，添加一条新的ssh-key，这样就能免登录提交版本文件</p>
-<ul>
-<li>现在编辑本地hexo根目录下的站点配置文件 <code>path/to/hexo_blog/_config.yml</code><br>查找字段 <code>deploy</code> 编辑成这样<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:gaopengfei123123/gaopengfei123123.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>设置好后，就将本地生成的静态文件发到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo deploy</div><div class="line"></div><div class="line">#如果报错就可能是少个插件</div><div class="line">npm install hexo-deployer-git</div></pre></td></tr></table></figure></p>
-<ul>
-<li>进入 你的版本库地址/settings 比如我的就是 <code>https://github.com/gaopengfei123123/gaopengfei123123.github.io/settings</code><br>找到 <code>github pages</code> 设置块按照你的需求调整，这时访问 <code>https://gaopengfei123123.github.io</code>就能访问 hexo 上传的内容了</li>
-</ul>
-<h2 id="绑定一个自己的域名，通过它来访问github-pages"><a href="#绑定一个自己的域名，通过它来访问github-pages" class="headerlink" title="绑定一个自己的域名，通过它来访问github pages"></a>绑定一个自己的域名，通过它来访问github pages</h2><blockquote>
-<p>我用的是阿里云的万网来举例</p>
-</blockquote>
-<ul>
-<li><p>首先进入到万网云解析的页面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">记录类型：A</div><div class="line">主机记录：blog</div><div class="line">记录值：xxx.xxx.xxx  #这里需要 ping -c 3 https://gaopengfei123123.github.io 获取ip地址</div></pre></td></tr></table></figure>
-</li>
-<li><p>然后返回到 你的版本库地址/settings 这里，将 <code>Custom domain</code> 设置成你刚才解析的名字，<br>与此同时在github上版本的根目录下添加一个文件 <code>CNAME</code> 内容是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#in CNAME</div><div class="line">blog.justwe.site</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这时再返回settings中就能看的 github pages 部分的域名绑定的是你的域名了，到这里博客算是搭建成功了</p>
-<p><a href="https://hexo.io" target="_blank" rel="external">hexo官网</a></p>
-<p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">hexo的next模版官网</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;本地搭建-hexo&quot;&gt;&lt;a href=&quot;#本地搭建-hexo&quot; class=&quot;headerlink&quot; title=&quot;本地搭建 hexo&quot;&gt;&lt;/a&gt;本地搭建 &lt;code&gt;hexo&lt;/code&gt;&lt;/h2&gt;
     
     </summary>
     
