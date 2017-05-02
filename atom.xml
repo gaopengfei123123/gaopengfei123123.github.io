@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-04-28T02:30:43.000Z</updated>
+  <updated>2017-05-02T14:56:49.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,73 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 Axios-Post 提交数据</title>
+    <link href="http://blog.justwe.site/2017/05/02/vue-axios-post/"/>
+    <id>http://blog.justwe.site/2017/05/02/vue-axios-post/</id>
+    <published>2017-05-02T08:45:00.000Z</published>
+    <updated>2017-05-02T14:56:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>继 <code>vue-resource</code> 之后, <code>axios</code> 是 vue 官方首推的网络请求组件<br><a id="more"></a></p>
+<h2 id="axios简介"><a href="#axios简介" class="headerlink" title="axios简介"></a>axios简介</h2><p>它的功能更强大,而且可以无痛迁移到新的项目当中,有尤大的原话就是:</p>
+<blockquote>
+<p>最近团队讨论了一下，Ajax 本身跟 Vue 并没有什么需要特别整合的地方，使用 fetch polyfill 或是 axios、superagent 等等都可以起到同等的效果，vue-resource 提供的价值和其维护成本相比并不划算，所以决定在不久以后取消对 vue-resource 的官方推荐。已有的用户可以继续使用，但以后不再把 vue-resource 作为官方的 ajax 方案。<br>这里可以去掉 vue-resource，文档也不必翻译了。<br><a href="https://github.com/vuefe/vuefe.github.io/issues/186" target="_blank" rel="external">原文链接</a></p>
+</blockquote>
+<p>这里还有一份<a href="https://juejin.im/entry/587599388d6d810058a7a41a" target="_blank" rel="external">看两眼就是能用的手册</a></p>
+<h2 id="关于-csrf-攻击"><a href="#关于-csrf-攻击" class="headerlink" title="关于 csrf 攻击"></a>关于 csrf 攻击</h2><p>这篇文章想说的不是怎么用 axios,而是之前碰到了一种情况,就是在 php 框架当中,碰到了 csrf 验证的问题<br>关于 csrf 攻击这里也不会讲,因为前辈们已经说的很详细了,比如这篇<a href="https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html#undefined" target="_blank" rel="external">通俗易懂的文章</a></p>
+<h2 id="axios-与-csrf-token"><a href="#axios-与-csrf-token" class="headerlink" title="axios 与 csrf-token"></a>axios 与 csrf-token</h2><p>我常用的两个框架中 laravel 是支持在 header 中设置 csrf-token 的,而 yii 中的默认设置只是在表单<br>提交的内容中检测 csrf-token 相关的字段,使用 axios 提交内容的时候默认并不会出现在 from-data<br>内容当中,比如这样提交的<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> postUrl = <span class="string">'/route/to/action'</span>;</div><div class="line"><span class="keyword">let</span> postData = &#123;</div><div class="line">  <span class="attr">id</span> : <span class="number">1</span>,</div><div class="line">  <span class="attr">name</span>: <span class="string">"xiaoming"</span>,</div><div class="line">  <span class="attr">_csrf_token</span> : <span class="string">"&lt;?= Yii::$app-&gt;request-&gt;csrfToken ?&gt;"</span></div><div class="line">&#125;</div><div class="line">axios.post(postUrl,postData)</div><div class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(res)</div><div class="line">  &#125;)</div><div class="line">  .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(error)</div><div class="line">  &#125;)</div></pre></td></tr></table></figure></p>
+<p>但是这样的提交形式在 yii2.0 当中是接收不到提交的内容的,因为它的内容是存在了 <code>request payload</code>当中<br>所以使用<code>Yii::$app-&gt;request-&gt;post()</code>是获取不到内容的,想要得到提交的内容需要这样:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">requestPayload</span><span class="params">()</span></span>&#123;</div><div class="line">    $request_payload = file_get_contents(<span class="string">'php://input'</span>);</div><div class="line">    <span class="keyword">return</span> json_decode($request_payload,<span class="keyword">true</span>);</div><div class="line">&#125;</div><div class="line">print_r(requestPayload());</div></pre></td></tr></table></figure></p>
+<p>这样做的缺点就是获取请求都是自己去实现,而不是通过框架的 request 类去处理<br>这么做的前提还是关闭所提交 controller 的 csrf-token 验证,不安全啊同志们!</p>
+<p>那么问题来了,用什么样的姿势提交能让框架去识别并自动提取出来 csrf-token 呢?</p>
+<p>说了那么多废话终于到正题了,关键就是这个类了:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> postUrl = <span class="string">'/route/to/action'</span>;</div><div class="line"><span class="keyword">let</span> postData = <span class="keyword">new</span> FormData();</div><div class="line">postData.append(<span class="string">'action'</span>, <span class="string">'ADD'</span>);</div><div class="line">postData.append(<span class="string">'param'</span>, <span class="number">0</span>);</div><div class="line">postData.append(<span class="string">'_csrf_token'</span>, <span class="string">'&lt;?= Yii::$app-&gt;request-&gt;csrfToken ?&gt;'</span>);</div><div class="line"></div><div class="line">axios.post(postUrl,postData)</div><div class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(res)</div><div class="line">  &#125;)</div><div class="line">  .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(error)</div><div class="line">  &#125;)</div></pre></td></tr></table></figure></p>
+<p>在这之前 bb 了那么多也是想让自己的印象更清晰一点,边说边捋思路,这是当初找到答案的地方<a href="https://github.com/mzabriskie/axios/issues/318#issuecomment-218948420" target="_blank" rel="external">github</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;继 &lt;code&gt;vue-resource&lt;/code&gt; 之后, &lt;code&gt;axios&lt;/code&gt; 是 vue 官方首推的网络请求组件&lt;br&gt;
+    
+    </summary>
+    
+      <category term="js" scheme="http://blog.justwe.site/categories/js/"/>
+    
+    
+      <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
+    
+      <category term="axios" scheme="http://blog.justwe.site/tags/axios/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jquery 中$(This) 和 This 的区别</title>
+    <link href="http://blog.justwe.site/2017/05/02/jquery-this/"/>
+    <id>http://blog.justwe.site/2017/05/02/jquery-this/</id>
+    <published>2017-05-02T03:39:31.000Z</published>
+    <updated>2017-05-02T03:53:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>说一个常识性的东西,帮助自己回忆一下</p>
+ <a id="more"></a>
+<p> 一句话, $(this)是 jquery 的对象,而 this 是 html 元素对象<br> 什么意思呢?<br> $(this) 可以调用jquery 中的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$(<span class="keyword">this</span>).val()</div><div class="line">$(<span class="keyword">this</span>).addClass()</div></pre></td></tr></table></figure></p>
+<p>而 this 是属于 html 的对象,属于原生 js,因此不能用 jq 中一些封装好的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.value</div><div class="line"><span class="keyword">this</span>.id</div></pre></td></tr></table></figure></p>
+<p>这两者容易造成混淆的地方就是在调用 jq 方法时使用闭包的情景下:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#input'</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		inputCheck(<span class="keyword">this</span>)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>在 <code>inputCheck(param)</code> 这个方法中在调用参数的时候就不能再使用 jqery 的方法了,会报函数找不到<br>的错误,因此需要转换一下,<strong>一般情景</strong>下的转换关系是这样的:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="keyword">this</span>)[<span class="number">0</span>] == <span class="keyword">this</span></div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;说一个常识性的东西,帮助自己回忆一下&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="jquery" scheme="http://blog.justwe.site/categories/jquery/"/>
+    
+    
+      <category term="js" scheme="http://blog.justwe.site/tags/js/"/>
+    
+      <category term="jquery" scheme="http://blog.justwe.site/tags/jquery/"/>
+    
+  </entry>
   
   <entry>
     <title>&lt;转&gt; 关于 Ssh 的 25 条实用命令</title>
@@ -647,66 +714,6 @@
       <category term="hexo-next" scheme="http://blog.justwe.site/tags/hexo-next/"/>
     
       <category term="config" scheme="http://blog.justwe.site/tags/config/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>震惊！彩票的随机机制竟然是这样的...</title>
-    <link href="http://blog.justwe.site/2017/03/24/caipiao/"/>
-    <id>http://blog.justwe.site/2017/03/24/caipiao/</id>
-    <published>2017-03-23T22:01:17.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<a id="more"></a>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line">$lanList = [];</div><div class="line">$hongList = [];</div><div class="line"></div><div class="line"><span class="keyword">for</span>($i=<span class="number">1</span>;$i&lt;<span class="number">34</span>;$i++)&#123;</div><div class="line">  <span class="keyword">if</span>($i&lt;<span class="number">16</span>)&#123;</div><div class="line">    array_push($lanList,$i);</div><div class="line">  &#125;</div><div class="line">  array_push($hongList, $i);</div><div class="line">&#125;</div><div class="line"></div><div class="line">$res = [</div><div class="line">  <span class="string">'red'</span> =&gt; [],</div><div class="line">  <span class="string">'blue'</span> =&gt; []</div><div class="line">];</div><div class="line"></div><div class="line"><span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;=<span class="number">6</span>;$i++)&#123;</div><div class="line">  <span class="keyword">if</span>($i==<span class="number">0</span>)&#123;</div><div class="line">    $res[<span class="string">'blue'</span>] = array_slice($lanList, mt_rand( <span class="number">0</span>,count($lanList)<span class="number">-1</span>) ,<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  $res[<span class="string">'red'</span>][] = array_splice($hongList, mt_rand( <span class="number">0</span>,count($hongList)<span class="number">-1</span>),<span class="number">1</span>)[<span class="number">0</span>];</div><div class="line"></div><div class="line">&#125;</div><div class="line">sort($res[<span class="string">'red'</span>]);</div><div class="line"><span class="keyword">echo</span> <span class="string">'red:'</span>.implode(<span class="string">','</span>,$res[<span class="string">'red'</span>]).<span class="string">' blue:'</span>.implode(<span class="string">','</span>,$res[<span class="string">'blue'</span>]).PHP_EOL;</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div cl
-    
-    </summary>
-    
-      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Symfony-路由</title>
-    <link href="http://blog.justwe.site/2017/03/23/symfony-router/"/>
-    <id>http://blog.justwe.site/2017/03/23/symfony-router/</id>
-    <published>2017-03-23T03:25:49.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>laravel的路由模块就是从这里封装起来的，咱们先了解下symfony的路由机制</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="使用注释定义一个路由"><a href="#使用注释定义一个路由" class="headerlink" title="使用注释定义一个路由"></a>使用注释定义一个路由</h2><p>symfony 的强大之处在于代码中的注释都参与到程序运行当中，这样强制的规范了注释排版，比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LuckyController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@Route</span>("/lucky/number")</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">numberAction</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        $numbers = mt_rand(<span class="number">1</span>,<span class="number">999</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Response($numbers);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>当输入 <code>http://domain/app_dev.php/lucky/number</code> 将会返回方法中的随机数</p>
-<h2 id="使用配置文件定义一个路由推荐这种写法，方便他人维护"><a href="#使用配置文件定义一个路由推荐这种写法，方便他人维护" class="headerlink" title="使用配置文件定义一个路由推荐这种写法，方便他人维护"></a>使用配置文件定义一个路由推荐这种写法，方便他人维护</h2><p>在 <code>@app/config/routing.yml</code>文件中，定义一个blog_show路由<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">blog_show:</div><div class="line">    path:      /blog/&#123;slug&#125;</div><div class="line">    defaults:  &#123; _controller: AppBundle:Lucky:show ,slug:2333&#125;</div></pre></td></tr></table></figure></p>
-<p>这里还有 <code>{slug}</code> 奇怪的写法，这代表着路由中传入 <code>slug</code>的自定义参数，从laravel过来的同学一定不会陌生</p>
-<p><code>defaults</code> 下指定了该路由指向哪个控制器，同时 slug 也有了默认值，在控制器中就是这样写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// src: @src/AppBundle/LuckyController</div><div class="line">public function showAction($slug)&#123;</div><div class="line">        $str = &apos;this is blog-&apos;.$slug;</div><div class="line"></div><div class="line">        return new Response($str);</div><div class="line">&#125;</div><div class="line"></div><div class="line">#注释的写法就是</div><div class="line">/**</div><div class="line"> * @Route(&quot;/blog/&#123;slug&#125;&quot;, defaults=&#123;&quot;slug&quot; = 1&#125;)</div><div class="line"> */</div></pre></td></tr></table></figure></p>
-<h2 id="高级路由示例"><a href="#高级路由示例" class="headerlink" title="高级路由示例"></a>高级路由示例</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># in Controller</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@Route</span>(</div><div class="line"> *     "/articles/&#123;_locale&#125;/&#123;year&#125;/&#123;title&#125;.&#123;_format&#125;",</div><div class="line"> *     defaults=&#123;"_format": "html"&#125;,</div><div class="line"> *     requirements=&#123;</div><div class="line"> *         "_locale": "en|fr",</div><div class="line"> *         "_format": "html|rss",</div><div class="line"> *         "year": "\d+"</div><div class="line"> *     &#125;</div><div class="line"> * )</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">showAction</span><span class="params">($_locale, $year, $title)</span></span></div><div class="line">&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># in yaml</span></div><div class="line"><span class="comment"># app/config/routing.yml</span></div><div class="line">article_show:</div><div class="line">  path:     /articles/&#123;_locale&#125;/&#123;year&#125;/&#123;title&#125;.&#123;_format&#125;</div><div class="line">  defaults: &#123; _controller: AppBundle:Article:show, _format: html &#125;</div><div class="line">  requirements:</div><div class="line">      _locale:  en|fr</div><div class="line">      _format:  html|rss</div><div class="line">      year:     \d+</div></pre></td></tr></table></figure>
-<p>这里对参数进行了正则筛选，如果不复合条件的也将报 404 错误</p>
-<p>新出现的 <code>requirements</code> 部分就是对指定的参数筛分，使用的是正则的格式</p>
-<h2 id="在程序中生成路由和解析路由"><a href="#在程序中生成路由和解析路由" class="headerlink" title="在程序中生成路由和解析路由"></a>在程序中生成路由和解析路由</h2><p>路由在系统中是双向映射，既能生成带参数的路由，又能反向解析成运行的函数<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$params = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;match(<span class="string">'/blog/my-blog-post'</span>);</div><div class="line">dump($params);</div><div class="line"><span class="comment">// array(</span></div><div class="line"><span class="comment">//     'slug'        =&gt; 'my-blog-post',</span></div><div class="line"><span class="comment">//     '_controller' =&gt; 'AppBundle:Blog:show',</span></div><div class="line"><span class="comment">// )</span></div><div class="line"></div><div class="line">$uri = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;generate(<span class="string">'blog_show'</span>, <span class="keyword">array</span>(</div><div class="line">    <span class="string">'slug'</span> =&gt; <span class="string">'my-blog-post'</span></div><div class="line">));</div><div class="line">dump($uri);</div><div class="line"><span class="comment">// /blog/my-blog-post</span></div></pre></td></tr></table></figure></p>
-<p>在 <code>generate</code> 方法中，如果添加了路由中没设置的参数比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$uri = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;generate(<span class="string">'blog_show'</span>, <span class="keyword">array</span>(</div><div class="line">    <span class="string">'slug'</span> =&gt; <span class="string">'my-blog-post'</span>,</div><div class="line">    <span class="string">'author'</span> =&gt; <span class="string">'jack'</span>,</div><div class="line">    <span class="string">'type'</span> =&gt; <span class="string">'markdown'</span></div><div class="line">));</div><div class="line"><span class="comment">// /blog/my-blog-post?author=jack&amp;type=markdown</span></div></pre></td></tr></table></figure></p>
-<p>会以 Query Strings 的形式添加到地址中</p>
-<p>现在生成的是相对路径，如果是全路径的话需要加一个参数<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$uri = <span class="keyword">$this</span>-&gt;get(<span class="string">'router'</span>)-&gt;generate(<span class="string">'blog_show'</span>, <span class="keyword">array</span>(</div><div class="line">    <span class="string">'slug'</span> =&gt; <span class="string">'my-blog-post'</span>,</div><div class="line">    <span class="string">'author'</span> =&gt; <span class="string">'jack'</span>,</div><div class="line">    <span class="string">'type'</span> =&gt; <span class="string">'markdown'</span></div><div class="line">),UrlGenerator::ABSOLUTE_URL);</div></pre></td></tr></table></figure></p>
-<p><code>UrlGenerator::ABSOLUTE_URL</code> 这个参数也可以替换成 <code>0</code></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;laravel的路由模块就是从这里封装起来的，咱们先了解下symfony的路由机制&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
     
   </entry>
   
