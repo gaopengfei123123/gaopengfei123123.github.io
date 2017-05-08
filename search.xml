@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[Git-Askpass-Error]]></title>
+      <url>%2F2017%2F05%2F08%2Fgit-askpass-error%2F</url>
+      <content type="text"><![CDATA[git 的账号密码错误情况 error前段时间使用 phpstrom 中的 git 出现了一个错误1234Fetch failed error: unable to read askpass response from &apos;..\tmp\intellij-git-askpass.bat&apos; error: failed to execute prompt script (exit code 1) fatal: could not read Username for &apos;http://xxx:3000&apos;: No error 大体情况就是某一次操作的时候账户密码发生了变动,导致本地的 git 没权限去拉取远程库了(因为用的是 https)的方式 解决第一种(推荐): 将远程地址换成 ssh 地址,使用 ssh-key 登录 第二种: 实在不想换的话就是用这种方式1git remote set-url origin https://&lt;username&gt;:&lt;password&gt;@github.com/&lt;username&gt;/&lt;repo_name&gt;.git 将账号密码写入到请求地址当中比如我账户为: gaopengfei 密码为: 123456请求的库的地址是 https://github.com/gaopengfei123123/redis_lbs.git那么我的远程地址就是1git remote set-url origin https://gaopengfei:123456@github.com/gaopengfei123123/redis_lbs.git 参考issues]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Vue-Transition]]></title>
+      <url>%2F2017%2F05%2F06%2Fvue-transition%2F</url>
+      <content type="text"><![CDATA[对 vue 的渐变效果的简单使用 单个节点的渐变效果123456789101112131415161718192021222324252627282930313233343536&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt; &lt;meta charset="utf-8"&gt; &lt;title&gt;动画测试&lt;/title&gt; &lt;link href="http://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet"&gt; &lt;script src="http://cdn.bootcss.com/vue/2.3.2/vue.js"&gt;&lt;/script&gt; &lt;style media="screen"&gt; &lt;/style&gt;&lt;/head&gt;&lt;body&gt; &lt;div id="example"&gt; &lt;button @click="show = !show"&gt; Toggle render &lt;/button&gt; &lt;!-- 同一个节点的多个显隐效果 --&gt; &lt;transition mode="out-in" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutDown"&gt; &lt;p v-if="show" key="1"&gt;hello&lt;/p&gt; &lt;p v-else key="2"&gt;world&lt;/p&gt; &lt;/transition&gt; &lt;/div&gt;&lt;/body&gt;&lt;script type="text/javascript"&gt; new Vue(&#123; el: '#example', data: &#123; show: true, &#125;, &#125;)&lt;/script&gt;&lt;/html&gt; 这里解释一下 &lt;transition&gt; 中的参数问题: mode=&quot;out-in&quot; 采用的切换模式是 先出后进,保证两个节点能平滑的切换显示, 还有一种是 in-out,如果没有指定mode将同时生效,两个元素的动画同时触发这不是我现在需要的 enter-active-class=&quot;animated fadeInDown&quot; 元素显示时添加的 class , 这里使用了 animate.css, leave-active-class=&quot;animated fadeOutDown&quot; 元素消失时显示的动画 key 相同标签名中必须的标识,否则 vue 将不能区分元素内容 一种运用 key 简化判断的一种写法123&lt;transition mode="out-in" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutDown"&gt; &lt;p :key="status"&gt;&#123;&#123; status &#125;&#125;&lt;/p&gt;&lt;/transition&gt; 它的效果等同于:12345678&lt;transition mode="out-in" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutDown"&gt; &lt;button v-if="status === 'show'" key="show"&gt; show &lt;/button&gt; &lt;button v-if="status === 'hidden'" key="hidden"&gt; hidden &lt;/button&gt;&lt;/transition&gt; 如果是多重的状态判断这个会很实用 多组件之间的状态过渡123456789101112131415161718192021222324252627&lt;div id="example"&gt; &lt;input type="radio" v-model="view" value="v-a"&gt; &lt;input type="radio" v-model="view" value="v-b"&gt; &lt;!-- 多个组件的过渡效果 --&gt; &lt;transition mode="out-in" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutDown"&gt; &lt;component v-bind:is="view"&gt;&lt;/component&gt; &lt;/transition&gt; &lt;/div&gt; &lt;script type="text/javascript"&gt; new Vue(&#123; el: '#example', data: &#123; view: 'v-a' &#125;, methods: &#123;&#125;, components: &#123; 'v-a': &#123; template: '&lt;div&gt;Component A&lt;/div&gt;' &#125;, 'v-b': &#123; template: '&lt;div&gt;Component B&lt;/div&gt;' &#125; &#125; &#125;) &lt;/script&gt; 这种情况下部需要添加 key 值了,因为每次动态渲染的时候都只有一个]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[使用 Axios-Post 提交数据]]></title>
       <url>%2F2017%2F05%2F02%2Fvue-axios-post%2F</url>
       <content type="text"><![CDATA[继 vue-resource 之后, axios 是 vue 官方首推的网络请求组件 axios简介它的功能更强大,而且可以无痛迁移到新的项目当中,有尤大的原话就是: 最近团队讨论了一下，Ajax 本身跟 Vue 并没有什么需要特别整合的地方，使用 fetch polyfill 或是 axios、superagent 等等都可以起到同等的效果，vue-resource 提供的价值和其维护成本相比并不划算，所以决定在不久以后取消对 vue-resource 的官方推荐。已有的用户可以继续使用，但以后不再把 vue-resource 作为官方的 ajax 方案。这里可以去掉 vue-resource，文档也不必翻译了。原文链接 这里还有一份看两眼就是能用的手册 关于 csrf 攻击这篇文章想说的不是怎么用 axios,而是之前碰到了一种情况,就是在 php 框架当中,碰到了 csrf 验证的问题关于 csrf 攻击这里也不会讲,因为前辈们已经说的很详细了,比如这篇通俗易懂的文章 axios 与 csrf-token我常用的两个框架中 laravel 是支持在 header 中设置 csrf-token 的,而 yii 中的默认设置只是在表单提交的内容中检测 csrf-token 相关的字段,使用 axios 提交内容的时候默认并不会出现在 from-data内容当中,比如这样提交的12345678910111213let postUrl = '/route/to/action';let postData = &#123; id : 1, name: "xiaoming", _csrf_token : "&lt;?= Yii::$app-&gt;request-&gt;csrfToken ?&gt;"&#125;axios.post(postUrl,postData) .then(function(res)&#123; console.log(res) &#125;) .catch(function (error) &#123; console.log(error) &#125;) 但是这样的提交形式在 yii2.0 当中是接收不到提交的内容的,因为它的内容是存在了 request payload当中所以使用Yii::$app-&gt;request-&gt;post()是获取不到内容的,想要得到提交的内容需要这样:12345function requestPayload()&#123; $request_payload = file_get_contents('php://input'); return json_decode($request_payload,true);&#125;print_r(requestPayload()); 这样做的缺点就是获取请求都是自己去实现,而不是通过框架的 request 类去处理这么做的前提还是关闭所提交 controller 的 csrf-token 验证,不安全啊同志们! 那么问题来了,用什么样的姿势提交能让框架去识别并自动提取出来 csrf-token 呢? 说了那么多废话终于到正题了,关键就是这个类了:12345678910111213let postUrl = '/route/to/action';let postData = new FormData();postData.append('action', 'ADD');postData.append('param', 0);postData.append('_csrf_token', '&lt;?= Yii::$app-&gt;request-&gt;csrfToken ?&gt;');axios.post(postUrl,postData) .then(function(res)&#123; console.log(res) &#125;) .catch(function (error) &#123; console.log(error) &#125;) 在这之前 bb 了那么多也是想让自己的印象更清晰一点,边说边捋思路,这是当初找到答案的地方github]]></content>
@@ -313,7 +327,7 @@
     <entry>
       <title><![CDATA[Git强制将远程版本覆盖本地]]></title>
       <url>%2F2017%2F01%2F06%2Fgit-push-force%2F</url>
-      <content type="text"><![CDATA[12git fetch --all git reset --hard origin/master]]></content>
+      <content type="text"><![CDATA[12git fetch --allgit reset --hard origin/master]]></content>
     </entry>
 
     
