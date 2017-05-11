@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[Php-Callback-Func]]></title>
+      <url>%2F2017%2F05%2F11%2Fphp-callback-func%2F</url>
+      <content type="text"><![CDATA[你知道茴香的茴有四种写法,那你知道 php 的回调也有四种写法吗? 匿名函数1234var $array = [1,2,3];array_map(function($item)&#123; return $item;&#125;,$array); 类静态调用12345678910class A&#123; static function test($req) &#123; echo "hello world"; &#125;&#125;var $array = [1,2,3];array_map('A::Test',$array);array_map(['A','Test'],$array); 函数12345function test($item)&#123; return 'hello world';&#125;var $array = [1,2,3];array_map('test',$array); 对象方法12345678910class A&#123; static function test($req) &#123; echo "hello world"; &#125;&#125;var $array = [1,2,3];$obj = new A();array_map([$obj,'test'],$array); 转载自:4种PHP回调函数风格-Swoole扩展-Swoole文档中心]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Git-Askpass-Error]]></title>
       <url>%2F2017%2F05%2F08%2Fgit-askpass-error%2F</url>
       <content type="text"><![CDATA[git 的账号密码错误情况 error前段时间使用 phpstrom 中的 git 出现了一个错误1234Fetch failed error: unable to read askpass response from &apos;..\tmp\intellij-git-askpass.bat&apos; error: failed to execute prompt script (exit code 1) fatal: could not read Username for &apos;http://xxx:3000&apos;: No error 大体情况就是某一次操作的时候账户密码发生了变动,导致本地的 git 没权限去拉取远程库了(因为用的是 https)的方式 解决第一种(推荐): 将远程地址换成 ssh 地址,使用 ssh-key 登录 第二种: 实在不想换的话就是用这种方式1git remote set-url origin https://&lt;username&gt;:&lt;password&gt;@github.com/&lt;username&gt;/&lt;repo_name&gt;.git 将账号密码写入到请求地址当中比如我账户为: gaopengfei 密码为: 123456请求的库的地址是 https://github.com/gaopengfei123123/redis_lbs.git那么我的远程地址就是1git remote set-url origin https://gaopengfei:123456@github.com/gaopengfei123123/redis_lbs.git 参考issues]]></content>
