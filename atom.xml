@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-05-11T10:41:53.000Z</updated>
+  <updated>2017-05-18T02:16:03.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go-Mysql</title>
+    <link href="http://blog.justwe.site/2017/05/17/go-mysql/"/>
+    <id>http://blog.justwe.site/2017/05/17/go-mysql/</id>
+    <published>2017-05-17T15:32:12.000Z</published>
+    <updated>2017-05-18T02:16:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里写一个<code>go</code> 操作 <code>mysql</code> 的 curd 的 demo</p>
+<a id="more"></a>
+<p>表结构是这样的<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">test</span>(</div><div class="line">	<span class="keyword">id</span> <span class="built_in">int</span> primary <span class="keyword">key</span> auto_increment,</div><div class="line">	<span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">default</span> <span class="string">''</span>,</div><div class="line">	age <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">0</span>,</div><div class="line">	created_at <span class="built_in">int</span> <span class="keyword">default</span> <span class="number">0</span></div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>go 的文件是:<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> main</div><div class="line"></div><div class="line"><span class="keyword">import</span> (</div><div class="line">	<span class="string">"database/sql"</span></div><div class="line">	<span class="string">"fmt"</span></div><div class="line">	<span class="string">"time"</span></div><div class="line"></div><div class="line">	_ <span class="string">"github.com/GO-SQL-Driver/MySQL"</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">checkErr</span><span class="params">(err error)</span></span> &#123;</div><div class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</div><div class="line">		<span class="built_in">panic</span>(err)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">	db, err := sql.Open(<span class="string">"mysql"</span>, <span class="string">"root:123123@tcp(localhost:33060)/go?charset=utf8"</span>)</div><div class="line">	<span class="keyword">defer</span> db.Close()</div><div class="line">	checkErr(err)</div><div class="line"></div><div class="line">	<span class="comment">//insert</span></div><div class="line">	stmt, err := db.Prepare(<span class="string">"INSERT test SET name=? , age=? , created_at=?"</span>)</div><div class="line">	checkErr(err)</div><div class="line">	res, err := stmt.Exec(<span class="string">"gaopengfei"</span>, <span class="number">22</span>, time.Now().Unix())</div><div class="line">	checkErr(err)</div><div class="line">	<span class="comment">//获取插入数据的 id</span></div><div class="line">	id, err := res.LastInsertId()</div><div class="line">	checkErr(err)</div><div class="line">	fmt.Printf(<span class="string">"insert id %d \n"</span>, id)</div><div class="line"></div><div class="line">	<span class="comment">//update</span></div><div class="line">	stmt, err = db.Prepare(<span class="string">"UPDATE test SET age=? WHERE id &lt; ?"</span>)</div><div class="line">	checkErr(err)</div><div class="line">	res, err = stmt.Exec(<span class="number">233</span>, <span class="number">4</span>)</div><div class="line">	checkErr(err)</div><div class="line">	<span class="comment">//输出受影响的条数</span></div><div class="line">	affect, err := res.RowsAffected()</div><div class="line">	checkErr(err)</div><div class="line">	fmt.Printf(<span class="string">"affected num is %d \n"</span>, affect)</div><div class="line"></div><div class="line">	<span class="comment">//select</span></div><div class="line">	rows, err := db.Query(<span class="string">"SELECT * FROM test"</span>)</div><div class="line">	checkErr(err)</div><div class="line">	<span class="keyword">for</span> rows.Next() &#123;</div><div class="line">		<span class="keyword">var</span> id <span class="keyword">int</span></div><div class="line">		<span class="keyword">var</span> name <span class="keyword">string</span></div><div class="line">		<span class="keyword">var</span> age <span class="keyword">int</span></div><div class="line">		<span class="keyword">var</span> createdAt <span class="keyword">int</span> <span class="comment">//go 不让使用下划线的方式定义变量,如果字段是 created_at 需要写成 createdAt 驼峰命名法</span></div><div class="line">		err = rows.Scan(&amp;id, &amp;name, &amp;age, &amp;createdAt)</div><div class="line">		checkErr(err)</div><div class="line">		<span class="comment">//将int 转成 int64格式,方便格式化时间</span></div><div class="line">		<span class="keyword">var</span> tm64 <span class="keyword">int64</span></div><div class="line">		tm64 = <span class="keyword">int64</span>(createdAt)</div><div class="line">		tm := time.Unix(tm64, <span class="number">0</span>)</div><div class="line">		fmt.Printf(<span class="string">"id is %d; name is %s; age is %d: created_at is %s \n"</span>, id, name, age, tm.Format(<span class="string">"2006-01-02 03:04:05 PM"</span>))</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//delete</span></div><div class="line">	stmt, err = db.Prepare(<span class="string">"DELETE FROM test WHERE id=?"</span>)</div><div class="line">	checkErr(err)</div><div class="line">	res, err = stmt.Exec(<span class="number">3</span>)</div><div class="line">	checkErr(err)</div><div class="line">	affect, err = res.RowsAffected()</div><div class="line">	checkErr(err)</div><div class="line">	fmt.Printf(<span class="string">"affected num is %d \n"</span>, affect)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>这里使用了一个稳定的 mysql 包,因为 go 官方并没有实现 mysql 的实例,而是提供了数据操作的接口<br>只要能实现就可以进行操作</li>
+<li>文件头部 <code>import</code> 中出现了 <code>_ &quot;github.com/GO-SQL-Driver/MySQL&quot;</code> 这样的写法,意思是<br>引用 <code>_</code> 后面的包名而不直接使用其中的函数,变量等资源</li>
+<li>另外不得不吐槽一下 <code>go</code> 的时间格式函数,我大 php 的格式化是这样的<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">date(<span class="string">"Y-m-d H:i:s"</span>,time())</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这边的是 “Y-m-d H:i:s” 啊!,一眼就看出来格式是什么了,但是 go 里的格式是这样的<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">timestamp := time.Now().Unix()</div><div class="line">tm := time.Unix(timestamp, <span class="number">0</span>)</div><div class="line">timer  := tm.Format(<span class="string">"2006-01-02 03:04:05 PM"</span>)</div><div class="line">fmt.Println(timer)</div></pre></td></tr></table></figure></p>
+<p>他的格式代表不是 Y,m,d,H,i,s 而是 2006,01,02,03,04,05 PM<br>这个也好记,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">月份 1,01,Jan,January</div><div class="line"></div><div class="line">日　 2,02,_2</div><div class="line"></div><div class="line">时　 3,03,15,PM,pm,AM,am</div><div class="line"></div><div class="line">分　 4,04</div><div class="line"></div><div class="line">秒　 5,05</div><div class="line"></div><div class="line">年　 06,2006</div><div class="line"></div><div class="line">周几 Mon,Monday</div><div class="line"></div><div class="line">时区时差表示 -07,-0700,Z0700,Z07:00,-07:00,MST</div><div class="line"></div><div class="line">时区字母缩写 MST</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里写一个&lt;code&gt;go&lt;/code&gt; 操作 &lt;code&gt;mysql&lt;/code&gt; 的 curd 的 demo&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
+    
+      <category term="mysql" scheme="http://blog.justwe.site/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>Php-Callback-Func</title>
@@ -693,41 +729,6 @@
       &lt;p&gt;&lt;a href=&quot;https://laravel-china.org/topics/2777&quot;&gt;原文出处&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;auth提供了很方便的登录体系，已经做到了开箱即用的便捷，但是任何方便的工具都是需要花费学习成本的，了解的过程就由些痛苦了：）&lt;/p&gt;
 &lt;p&gt;本着松鼠过冬的原则，自己是能写一点是一点，以后忘记的话也能立即捡起来&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="laravel" scheme="http://blog.justwe.site/categories/laravel/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Laravel-Error-Log</title>
-    <link href="http://blog.justwe.site/2017/04/01/laravel-error-log/"/>
-    <id>http://blog.justwe.site/2017/04/01/laravel-error-log/</id>
-    <published>2017-04-01T12:51:06.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>laravel有一套方便的错误采集和报错机制，如果是开发api的时候我们不需要报错页面显示的那么详细，只想返回一些错误信息，而不用把所有的响应信息都返回到 controller 当中才行</p>
-<a id="more"></a>
-<p>之前的步骤是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">router-&gt;beforeMiddlware-&gt;controller-&gt;someService-&gt;controller-&gt;afterMiddleware-&gt; yourInfo</div></pre></td></tr></table></figure>
-<p>我们想在这任何一个环节报错的时候都能停止掉运行流程直接返回信息 就需要接下来要说的一个类 <code>Exception</code>。</p>
-<p>我们自定义的错误文件也是都放在 <code>app/Exception</code> 当中，比如我自定义一个 <code>TestException</code><br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="keyword">namespace</span> <span class="title">App</span>\<span class="title">Exceptions</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestException</span> <span class="keyword">extends</span> \<span class="title">Exception</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">responseJson</span><span class="params">()</span></span>&#123;</div><div class="line">        $msg = config(<span class="string">'errors.user.'</span>.<span class="keyword">$this</span>-&gt;getMessage());</div><div class="line">        <span class="keyword">return</span> \ApiResponse::error($msg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里面我自定义了一个<code>responseJson()</code>的方法，为了处理我返回的信息</p>
-<p>然后我在同文件夹下的 <code>Handler.php</code> 我们返回的错误在这里集中处理</p>
-<p>这里的两个方法<code>report()</code>和<code>render()</code></p>
-<p><code>report()</code>会优先执行，用于将错误发送到第三方服务中去，<code>render()</code>就是最终要返回的结果，我们的目标就是这个函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * Render an exception into an HTTP response.</div><div class="line">     *</div><div class="line">     * @param  \Illuminate\Http\Request  $request</div><div class="line">     * @param  \Exception  $e</div><div class="line">     * @return \Illuminate\Http\Response</div><div class="line">     */</div><div class="line">    public function render($request, Exception $e)</div><div class="line">    &#123;</div><div class="line">        if($e instanceof TestException)&#123;</div><div class="line">            return $e-&gt;responseJson();</div><div class="line">        &#125;</div><div class="line">        return parent::render($request, $e);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>这里用了<code>instanceof</code>进行比较，如果是来自<code>TestException</code>的报错就会执行我们刚才自定义好的方法，内容当然也可以随便定义了</p>
-<p>怎么使用呢？</p>
-<p>只需要在控制器中任何你需要报错的地方<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">throw new TestException(&apos;system_busy&apos;);</div></pre></td></tr></table></figure></p>
-<p>括号内的内容可以通过它的<code>getMessage()</code>方法获得</p>
-<p><a href="http://laravelacademy.org/post/465.html" target="_blank" rel="external">参考文档</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;laravel有一套方便的错误采集和报错机制，如果是开发api的时候我们不需要报错页面显示的那么详细，只想返回一些错误信息，而不用把所有的响应信息都返回到 controller 当中才行&lt;/p&gt;
     
     </summary>
     
