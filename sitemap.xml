@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.justwe.site/2017/05/24/laravel54-migrate-error/</loc>
+    
+    <lastmod>2017-05-24T04:01:21.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2017/05/17/go-mysql/</loc>
     
     <lastmod>2017-05-18T02:16:03.000Z</lastmod>
@@ -198,28 +205,7 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/04/01/laravel-auth/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2017/03/14/go-slice/</loc>
+    <loc>http://blog.justwe.site/2017/04/01/laravel-error-log/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -234,6 +220,20 @@
   
   <url>
     <loc>http://blog.justwe.site/2016/10/07/hello-world%202/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -261,14 +261,14 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/03/22/install/</loc>
+    <loc>http://blog.justwe.site/2017/03/06/html5-ajax-process/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/03/06/html5-ajax-process/</loc>
+    <loc>http://blog.justwe.site/2017/03/22/install/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -282,13 +282,6 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/03/08/docker-dockerfile/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.justwe.site/2016/10/10/js-href/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
@@ -296,14 +289,7 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/02/16/docker-info/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2017/04/01/laravel-error-log/</loc>
+    <loc>http://blog.justwe.site/2017/03/08/docker-dockerfile/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -317,7 +303,21 @@
   </url>
   
   <url>
+    <loc>http://blog.justwe.site/2017/02/16/docker-info/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2016/10/09/laravel-error/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2016/12/19/laravel-facade/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -338,21 +338,7 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/12/19/laravel-facade/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.justwe.site/2016/04/01/laravel-repository/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-stmp/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -366,21 +352,14 @@
   </url>
   
   <url>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-stmp/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2017/03/21/laravel-trancate/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2016/11/15/lumen-dd/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2016/11/15/mysql57-config/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -394,6 +373,34 @@
   </url>
   
   <url>
+    <loc>http://blog.justwe.site/2016/11/15/lumen-dd/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2017/04/01/laravel-auth/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2017/03/07/go-doc/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2016/11/15/mysql57-config/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2016/11/03/php-array-1/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
@@ -401,7 +408,7 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/10/08/fuck-ie/</loc>
+    <loc>http://blog.justwe.site/2017/03/08/go-info/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -422,13 +429,6 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/11/12/qiniujs-demo/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.justwe.site/2017/03/10/redis-geohash-lbs/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
@@ -437,13 +437,6 @@
   
   <url>
     <loc>http://blog.justwe.site/2017/02/09/shadowssocks/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2017/03/07/go-doc/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -464,21 +457,14 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/03/08/go-info/</loc>
+    <loc>http://blog.justwe.site/2016/10/08/fuck-ie/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/12/03/centos-install-git/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2017/03/30/webconfig/</loc>
+    <loc>http://blog.justwe.site/2017/03/24/caipiao/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -492,7 +478,21 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/10/12/webupload-demo/</loc>
+    <loc>http://blog.justwe.site/2017/03/30/webconfig/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2016/11/12/qiniujs-demo/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2016/12/03/centos-install-git/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -506,14 +506,14 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/11/07/wxcx-2/</loc>
+    <loc>http://blog.justwe.site/2016/10/12/webupload-demo/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
+    <loc>http://blog.justwe.site/2016/11/07/wxcx-2/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -534,7 +534,7 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/03/24/caipiao/</loc>
+    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -542,6 +542,13 @@
   
   <url>
     <loc>http://blog.justwe.site/2017/02/13/composer-debug/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2017/03/14/go-slice/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -576,14 +583,14 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/snake/snake.js</loc>
+    <loc>http://blog.justwe.site/snake/index.js</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/snake/index.js</loc>
+    <loc>http://blog.justwe.site/snake/snake.js</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
