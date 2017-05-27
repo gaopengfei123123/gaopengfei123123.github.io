@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-05-24T04:01:21.000Z</updated>
+  <updated>2017-05-27T07:20:03.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于使用 Git 的操作流程</title>
+    <link href="http://blog.justwe.site/2017/05/27/git-workflow/"/>
+    <id>http://blog.justwe.site/2017/05/27/git-workflow/</id>
+    <published>2017-05-27T05:24:32.000Z</published>
+    <updated>2017-05-27T07:20:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>老夫的毕生功力都在这了…<br><a id="more"></a></p>
+<h2 id="通常我们工作时是这样操作"><a href="#通常我们工作时是这样操作" class="headerlink" title="通常我们工作时是这样操作"></a>通常我们工作时是这样操作</h2><p>说一下使用 <code>git</code> 做版本控制的时候的工作流程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add -A           #需要添加到版本库中的文件 -A 就代表着所有文件(除开了 .gitignore忽略掉的文件)</div><div class="line">git commit -m &apos;本次提交的备注&apos;</div><div class="line">git pull            #将远程的库和本地的库版本同步一下,因为远程库可能发生了修改(多人合作开发时)</div><div class="line">git push</div></pre></td></tr></table></figure></p>
+<p>这样操作的前提是本地远程都是同一个 <code>master</code> 分支上</p>
+<h2 id="最可能会碰到的问题"><a href="#最可能会碰到的问题" class="headerlink" title="最可能会碰到的问题"></a>最可能会碰到的问题</h2><p>以上操作前两步通常不会碰到问题,最容易发生问题的是 <code>git pull</code> 这一步<br>因为多人开发时难免碰到同时修改了同一个文件,那么就会产生<strong>冲突</strong><br>git 是根据文件每行发生的修改进行的判定的,如果同时对同一文件的同一行发生了修改,就卡死到这一步上了</p>
+<h2 id="怎么解决这个问题"><a href="#怎么解决这个问题" class="headerlink" title="怎么解决这个问题"></a>怎么解决这个问题</h2><p>我常用的是命令行和 phpstrom 中的版本控制工具,最推荐的是命令行操作,别的图形界面也是调的命令行接口<br>直接学会git 的命令是学习成本最低的一种方式,一次学会到处可用啊!</p>
+<p>命令行还有个强大的地方就是它的提示通常就是你解决问题的方法,照着提示打就行(要善用提示啊,别看见报错就慌了)</p>
+<p>我们做一个实验,我自己的一个版本库本地和远程同时发生了修改,而且是操作的同一个文件,<br>我直接进行 <code>git push</code>操作<br><img src="/images/git/git-push.png" alt=""><br>看到提示没?提示中的 hint 中说了,向远程库中更新被拒,因为远程有了修改而本地没有(说白了就是没同步),<br>这通常发生在另一个版本库向远程推送了相同的文件(就是两个人在这个版本下同时操作了同一个文件),<br>提示中给出原因之后紧接着给出了解决办法<code>(e.g., &#39;git pull ...&#39;)before pushing again</code>,</p>
+<p>我们按着它给的提示操作一下<br><img src="/images/git/git-pull.png" alt=""><br>通常如果两个人之间的操作不发生冲突比如同时修改了同一个文件的同一行的情况下就会进入<code>commit</code>的<br>编辑界面了,但是我给他人为的造成一个错误,这个错误就是我们最常碰到的错误,合并冲突<br>看到提示中的最后一行了没有?<br><code>Automatic merge failed; fix conflicts and then commit the result.</code><br>自动合并失败了,请修复冲突并再次提交</p>
+<p>如果文件很多我怎么去找到它?</p>
+<ul>
+<li>一种是靠界面工具主动把错误推到你面前</li>
+<li>另一种就是自己去找了</li>
+</ul>
+<p>第一种方法坑爹的地方就是好多工具他给你提示就提示一次,你如果给关了就不会再提示了,但是该提交不上去的<br>还是提交不上去,而且如果是线上火速修复的时候你的编辑器是帮不到那么远的<br>我们选第二种,肯定不是挨个文件去翻啊!会死人的</p>
+<p>有一个很有用的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git status</div></pre></td></tr></table></figure></p>
+<p><img src="/images/git/git-status.png" alt=""><br>标红的文件都给你了,而且还给你了需要执行的命令,<strong>你别假装看不到啊!</strong><br>当然这个时候直接<code>git add &amp;&amp; git commit</code>会出事的,你还没解决冲突呢!<br>我们去这个冲突文件中解决掉冲突本地能跑通了再提交,而且这个错误提示会指名文件路径的,我这个冲突文件<br>因为正好是在项目的根目录下才没有的</p>
+<p>打开这个文件我们看到如下的内容:<br><img src="/images/git/git-chongtu.png" alt=""><br>我这是在 phpstrom 中打开的文件,如果phpstrom 能读取到你项目中的 <code>.git/</code> 目录是可以进行版本控制的<br>这里phpstrom 就帮你把冲突文件标红了,多么醒目~当然这也是我们自己找的<br>如果文件内容特别多但是就一两处冲突时我们直接搜索关键词 <code>HEAD</code>或者<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>就行,你懂的…<br>被尖角号扩起来的就是冲突的地方,接下来就是<del>保孩子还是保大人</del>解决冲突的时候了,找到谁和你改的同一处代码</p>
+<p>什么?你说你找不到是谁?你没看到代码冲突块下的 <code>779833d952d8a6557b2e8eba3bd192ede5cb6ca0</code><br>这一段文字吗?你先别激动,这个点还不适合开车,这个是提交的 commit-id,你每次提交都会产生的一个标识<br>要查看这到底是谁和我的代码冲突了就执行下面的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git log 779833d952d8a6557b2e8eba3bd192ede5cb6ca0</div></pre></td></tr></table></figure></p>
+<p>第一行就是你要的结果,<br>如果直接<code>git log -p</code> 就是列出所有的提交记录 -p 就是显示出修改的地方</p>
+<p>冲突块部分 HEAD就是你写的代码,下面的是别人写的,去掉其中一个把那些标签清理干净,测试一下没问题了<br>再<code>git add &amp;&amp; git commit &amp;&amp; git pull &amp;&amp; git push</code> 这四连技好了,世界清净了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;老夫的毕生功力都在这了…&lt;br&gt;
+    
+    </summary>
+    
+      <category term="git" scheme="http://blog.justwe.site/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
+    
+      <category term="workflow" scheme="http://blog.justwe.site/tags/workflow/"/>
+    
+  </entry>
   
   <entry>
     <title>Laravel54初始化迁移失败</title>
@@ -687,34 +731,6 @@
     
     
       <category term="hexo-next" scheme="http://blog.justwe.site/tags/hexo-next/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://blog.justwe.site/2017/04/06/hello-world/"/>
-    <id>http://blog.justwe.site/2017/04/06/hello-world/</id>
-    <published>2017-04-06T04:17:40.000Z</published>
-    <updated>2017-04-06T04:17:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<a id="more"></a>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a><br>add git</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-    
-    </summary>
-    
     
   </entry>
   
