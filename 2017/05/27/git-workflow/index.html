@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://blog.justwe.site/images/git/git-pull.png">
 <meta property="og:image" content="http://blog.justwe.site/images/git/git-status.png">
 <meta property="og:image" content="http://blog.justwe.site/images/git/git-chongtu.png">
-<meta property="og:updated_time" content="2017-05-29T14:47:50.000Z">
+<meta property="og:updated_time" content="2017-05-29T14:52:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于使用 Git 的操作流程">
 <meta name="twitter:description" content="老夫的毕生功力都在这了…">
@@ -440,7 +440,7 @@
 <p>第一行就是你要的结果,<br>如果直接<code>git log -p</code> 就是列出所有的提交记录 -p 就是显示出修改的地方</p>
 <p>冲突块部分 HEAD就是你写的代码,下面的是别人写的,去掉其中一个把那些标签清理干净,测试一下没问题了<br>再<code>git add &amp;&amp; git commit &amp;&amp; git pull &amp;&amp; git push</code> 这四连技好了,世界清净了</p>
 <h2 id="这合并的时候发生了什么"><a href="#这合并的时候发生了什么" class="headerlink" title="这合并的时候发生了什么?"></a>这合并的时候发生了什么?</h2><p>这是我在 segmentfault 中给出的答案:</p>
-<p>比如你从一个git log为<code>1,2,3,4,5,6</code>的远程库拉取到了本地,<br>另一个同事也拉取了同样的代码,而且你的同事先于你提交到远程了,<br>此时<strong>远程</strong>的版本是<code>1,2,3,4,5,6,7_new,8_new</code>,<br>而你当前只是<strong>本地</strong>的版本<code>1,2,3,4,5,6,7_local,8_local,9_local</code><br>从这里你就能看出你前一部分和<strong>远程</strong>的一样,后一部分和<strong>远程</strong>的不一样,<br>这个时候你不能正常推送上去的,如果你采取<code>git push origin master --force</code><br>那么<strong>远程</strong>的版本就变成了<code>1,2,3,4,5,6,7_local,8_local,9_local</code><br>之前你同事推送的<code>7_new,8_new</code>这两次推送被覆盖了,这不是大家想要的情况<br>因此需要<code>git pull</code>来将<strong>本地</strong>的版本合并成样<br><code>1,2,3,4,5,6,7_new,7_local,8_local,8_new,9_local,10_commit_merge</code><br>远程和<strong>本地</strong>的排序是按当时 <code>commit</code> 的时间来排的,最后一个<code>10_commit_merge</code>就是你<strong>本地</strong>和<strong>远程</strong>合并的标志,最后你推送到远程仓库的应该也是这个,<br>因为你们操作的是同一个库始终要保持代码的同步,所以一旦版本库发生改动同一分支下的所有人都要跟着去同步他,因为各开发各的直接往上推 git 还没智能到帮你处理冲突的地步</p>
+<p>比如你从一个git log为<code>1,2,3,4,5,6</code>的远程库拉取到了本地,<br>另一个同事也拉取了同样的代码,而且你的同事先于你提交到远程了,<br>此时<strong>远程</strong>的版本是<code>1,2,3,4,5,6,7_new,8_new</code>,<br>而你当前只是<strong>本地</strong>的版本<code>1,2,3,4,5,6,7_local,8_local,9_local</code><br>从这里你就能看出你前一部分和<strong>远程</strong>的一样,后一部分和<strong>远程</strong>的不一样,<br>这个时候你不能正常推送上去的,如果你采取<code>git push origin master --force</code><br>那么<strong>远程</strong>的版本就变成了<code>1,2,3,4,5,6,7_local,8_local,9_local</code><br>之前你同事推送的<code>7_new,8_new</code>这两次推送被覆盖了,这不是大家想要的情况<br>因此需要<code>git pull</code>来将<strong>本地</strong>的版本合并成样<br><code>1,2,3,4,5,6,7_new,7_local,8_local,8_new,9_local,10_commit_merge</code><br>远程和<strong>本地</strong>的排序是按当时 <code>commit</code> 的时间来排的,最后一个<code>10_commit_merge</code>就是你<strong>本地</strong>和<strong>远程</strong>合并的标志,最后你推送到远程仓库的应该也是这个,<br>因为你们操作的是同一个库始终要保持代码的同步,所以一旦版本库发生改动同一分支下的所有人都要跟着去同步他,因为各开发各的直接往上推 git 还没智能到帮你处理冲突的地步<br><a href="https://segmentfault.com/q/1010000009549291?_ea=1982061" target="_blank" rel="external">答案链接</a></p>
 
       
     </div>
