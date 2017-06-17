@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="composer," />
+  <meta name="keywords" content="等一个人, blog, laravel, php, js, vuejs, yii2.0" />
 
 
 
@@ -95,17 +95,15 @@
 
 
 
-<meta name="description" content="how to build a composer package">
-<meta name="keywords" content="composer">
-<meta property="og:type" content="article">
-<meta property="og:title" content="自己封装一个Composer包玩玩">
-<meta property="og:url" content="http://blog.justwe.site/2017/01/11/composer-package/index.html">
+<meta name="description" content="hey">
+<meta property="og:type" content="website">
+<meta property="og:title" content="<hello-world/>">
+<meta property="og:url" content="http://blog.justwe.site/tags/fork/index.html">
 <meta property="og:site_name" content="<hello-world/>">
-<meta property="og:description" content="how to build a composer package">
-<meta property="og:updated_time" content="2017-04-06T04:17:40.000Z">
+<meta property="og:description" content="hey">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自己封装一个Composer包玩玩">
-<meta name="twitter:description" content="how to build a composer package">
+<meta name="twitter:title" content="<hello-world/>">
+<meta name="twitter:description" content="hey">
 
 
 
@@ -133,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/2017/01/11/composer-package/"/>
+  <link rel="canonical" href="http://blog.justwe.site/tags/fork/"/>
 
 
 
 
 
-  <title> 自己封装一个Composer包玩玩 | <hello-world/> </title>
+  <title> 标签: fork | <hello-world/> </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -173,7 +171,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -299,195 +297,46 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/01/11/composer-package/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GPF">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/logo.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="<hello-world/>">
-    </span>
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        fork
+        <small>标签</small>
+      </h2>
+    </div>
 
     
-      <header class="post-header">
+      
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
+            <a class="post-title-link" href="/2017/06/17/git-fork-upstream/" itemprop="url">
               
-                自己封装一个Composer包玩玩
+                <span itemprop="name">Git同步所 Fork 的库代码</span>
               
-            
-          </h2>
+            </a>
         
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-11T06:40:00+08:00">
-                2017-01-11
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-06-17T14:36:23+08:00"
+              content="2017-06-17" >
+          06-17
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/01/11/composer-package/" class="leancloud_visitors" data-flag-title="自己封装一个Composer包玩玩">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>how to build a composer package</p>
-<a id="more"></a>
-<p><a href="http://docs.phpcomposer.com/04-schema.html#minimum-stability" target="_blank" rel="external">参考文档</a></p>
-<p>首先是完善 <code>composer.json</code> 这个是composer需要抓去的的东西，相当于这个composer包的名片</p>
-<p>实现步骤是</p>
-<ol>
-<li>创建一个git库 （不用说自己查）</li>
-<li>初始化composer包<br>命令 <code>composer init</code> 然后一路回车，生成的 composer.json 的样本如下（重点在这里）</li>
-<li><a href="https://packagist.org" target="_blank" rel="external">https://packagist.org</a> 上注册<br>顺着网站提示一路下去就行</li>
-<li>库中引用<br>在你想要使用库的项目中的 composer.json 的 <code>require</code> 中添加 <code>&quot;gaopengfei/born&quot;:&quot;dev-master&quot;</code></li>
-</ol>
-<p>然后运行 <code>composer update</code> ，你的包就出现在该项目中的依赖当中了，注意：require的时候一定要指明版本，不然会报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">//composer.json</div><div class="line">&#123;</div><div class="line">    &quot;name&quot;: &quot;gaopengfei/born&quot;,</div><div class="line">    &quot;description&quot;: &quot;how to build a composer package&quot;,</div><div class="line">    &quot;license&quot;: &quot;MIT&quot;,</div><div class="line">    &quot;authors&quot;: [</div><div class="line">        &#123;</div><div class="line">            &quot;name&quot;: &quot;gaofeifiy&quot;,</div><div class="line">            &quot;email&quot;: &quot;5173180@qq.com&quot;</div><div class="line">        &#125;</div><div class="line">    ],</div><div class="line">   &quot;minimum-stability&quot;: &quot;dev&quot;,</div><div class="line">   &quot;require&quot;: &#123;</div><div class="line">       &quot;php&quot;: &quot;&gt;=5.3.0&quot;</div><div class="line">   &#125;,</div><div class="line">   &quot;autoload&quot;: &#123;</div><div class="line">       &quot;psr-4&quot;: &#123;</div><div class="line">           &quot;Body\\Arm\\&quot;: &quot;src/Body/Arm&quot;,</div><div class="line">           &quot;Body\\Leg\\&quot;: &quot;src/Body/Leg&quot;</div><div class="line">       &#125;</div><div class="line">   &#125;,</div><div class="line">   &quot;files&quot;: [</div><div class="line">    &quot;path/to/file.php&quot;</div><div class="line">  ]</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>files 是用于引入全局使用的帮助函数</p>
-<p>想让文件能自动加载就靠 <code>autoload</code> 这块的配置了，这里选用了 <code>psr-4</code> 格式的命名规范，这里设置了你的命名空间生效的文件夹在哪里， 当我 <code>use Body\Arm\**</code> 的时候，composer 知道是从 <code>./src/Body/Arm</code> 这个径下找对应的类名， <code>psr-4</code>规范的大体思想就是命名空间就是文件路径，类名就是文件名，这样设置完之后 运行 <code>composer install</code> 生成了 <code>vendor／autoload.php</code> 文件就能自动加载了</p>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>这个博客有个赞赏功能，不试一下吗？</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/weixinpay.png" alt="GPF WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/composer/" rel="tag"># composer</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/01/11/git-error/" rel="next" title="Git推送远程失败">
-                <i class="fa fa-chevron-left"></i> Git推送远程失败
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/06/git-push-force/" rel="prev" title="Git强制将远程版本覆盖本地">
-                Git强制将远程版本覆盖本地 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
+    
   </div>
+
+  
 
           
           </div>
@@ -495,10 +344,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -726,10 +571,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 
