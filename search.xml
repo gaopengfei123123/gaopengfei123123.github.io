@@ -227,7 +227,7 @@
 
     
     <entry>
-      <title><![CDATA[Laravel事物]]></title>
+      <title><![CDATA[Laravel事务]]></title>
       <url>%2F2017%2F03%2F21%2Flaravel-trancate%2F</url>
       <content type="text"><![CDATA[laravel 事务的使用会忽略的地方 laravel开启事物有两种方法： 一种是闭包12345DB::transaction(function()&#123; DB::table('user')-&gt;insert(['username'=&gt;'xxx']); DB::table('comment')-&gt;insert(['content'=&gt;'zzz']);&#125;); 当闭包内发生错误就会自动回滚 另一种比较灵活1234567DB::beginTransaction();//这里执行一些数据库操作，包括 eloquent 的if(condition)&#123; DB::commit();&#125;else&#123; DB::rollback();&#125; 但是我有一次发现两种方法的事物都不起作用，在想掉几根头发之后想到了可能是不同数据库的原因！ 如果你采用的是分库存储不同逻辑的方式，执行事物的时候一定要加上连接信息 上面的就要这样写了：1234567DB::connection('admin_database')-&gt;beginTransaction();//这里执行一些数据库操作，包括 eloquent 的if(condition)&#123; DB::connection('admin_database')-&gt;commit();&#125;else&#123; DB::connection('admin_database')-&gt;rollback();&#125; 如果逻辑中的 eloquent 连接的数据库和开启事物的数据库不是一个库一样是不起作用的]]></content>
     </entry>
