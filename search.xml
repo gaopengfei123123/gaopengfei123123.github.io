@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title><![CDATA[__Callstatic]]></title>
+      <url>%2F2017%2F06%2F23%2Fphp-callstatic%2F</url>
+      <content type="text"><![CDATA[现在很多框架中调用方法都是Foo::bar()这种格式的,但是他们真的是静态方法吗? 这种情况在 larave 中尤其常见,但是开发过程中很明显这些有一部分不是静态的,比如你使用一个模型User,那么你每次实例化出来他都是一个全新的,互不影响,这里就用到了一个魔术方法__callStatic 举个栗子:123456789101112131415161718&lt;?phpclass Test&#123; public function __call($name, $arguments) &#123; echo 'this is __call'. PHP_EOL; &#125; public static function __callStatic($name, $arguments) &#123; echo 'this is __callStatic:'. PHP_EOL; &#125;&#125;$test = new Test();$test-&gt;hello();$test::hi();//this is __call:hello//this is __callStatic:hi 当然魔术方法也是很耗性能的一种方式,每次调用的时候后回先扫一遍class没找到方法时才会调用它,而为了代码的整洁和抽象这个方法也能给很大的帮助,在这之间去要有个权衡 下面实现的 log 类,采用的就是这种方法,将方法解耦出来,只要符合规定的接口就能调用12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152&lt;?phpclass Test&#123; //获取 logger 的实体 private static $logger; public static function getLogger()&#123; return self::$logger?: self::$logger = self::createLogger(); &#125; private static function createLogger()&#123; return new Logger(); &#125; public static function setLogger(LoggerInterface $logger)&#123; self::$logger = $logger; &#125; public function __call($name, $arguments) &#123; call_user_func_array([self::getLogger(),$name],$arguments); &#125; public static function __callStatic($name, $arguments) &#123; forward_static_call_array([self::getLogger(),$name],$arguments); &#125;&#125;interface LoggerInterface&#123; function info($message,array $content = []); function alert($messge,array $content = []);&#125;class Logger implements LoggerInterface &#123; function info($message, array $content = []) &#123; echo 'this is Log method info' . PHP_EOL; var_dump($content); &#125; function alert($messge, array $content = []) &#123; echo 'this is Log method alert: '. $messge . PHP_EOL; &#125;&#125;Test::info('喊个口号:',['好好','学习','天天','向上']);$test = new Test();$test-&gt;alert('hello'); 输出:123456789101112this is Log method infoarray(4) &#123; [0]=&gt; string(6) &quot;好好&quot; [1]=&gt; string(6) &quot;学习&quot; [2]=&gt; string(6) &quot;天天&quot; [3]=&gt; string(6) &quot;向上&quot;&#125;this is Log method alert: hello 也许有的小伙伴已经看出来了,没错!这段代码就是仿照(抄)的 EasyWechat的日志部分,代码片段]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Git-Error-Permission]]></title>
+      <url>%2F2017%2F06%2F23%2Fgit-error-permission%2F</url>
+      <content type="text"><![CDATA[这种情况在部署 webhook 的时候经常会碰到报错信息: git error insufficient permission for adding an object这种报错就是权限错误,把项目中的.git 文件整体改成你的执行权限就行 有一点要注意,如果你服务器上有一个 www 的角色在部署项目,那么你就不能再用root的角色去部署了,否则会在 .git/objects 目录下产生由 root所属的文件从而造成当www再次执行合并任务的时候因为权限不能操作部分commit的文件而造成合并失败]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[转 跨域请求时两次发送请求的问题]]></title>
+      <url>%2F2017%2F06%2F23%2Faxios-cors%2F</url>
+      <content type="text"><![CDATA[跨域的时候总会碰上各种各样的问题,这就是其中一种情况检查一下，两次请求分别的 Request Method:因为是跨域请求，客户端发先发送一个OPTIONS 请求Preflighted Requests是CORS中一种透明服务器验证机制。预检请求首先需要向另外一个域名的资源发送一个 HTTP OPTIONS 请求头，其目的就是为了判断实际发送的请求是否是安全的。 很有可能是这个问题，我现在用axios 作为我的网络请求库，也遇到了这个问题，跨域访问的时候 ，都会先发送一个OPTIONS请求，用来判断接下来的请求是否安全和被允许 我现在的做法是，在index.php 入口文件中，检测，是否为OPTIONS 请求，如果是就返回一个状态具体代码123456if ($_SERVER[&apos;REQUEST_METHOD&apos;]==&apos;OPTIONS&apos;) &#123; header(&quot;Access-Control-Allow-Origin: *&quot;); header(&quot;Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization&quot;); header(&apos;Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH&apos;); return;&#125; 原文]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Git同步所 Fork 的库代码]]></title>
       <url>%2F2017%2F06%2F17%2Fgit-fork-upstream%2F</url>
       <content type="text"><![CDATA[有时候我们 fork 了一个库进行开发,但是时间长了那个库已经添加了一些新的东西,这要怎么处理呢?先添加你 fork 的库的地址12git remote add FORK-sync https://github.com/xxx/yyy.gitgit remote -v 能看到类似的1234FORK-sync https://github.com/xxx/yyy.git (fetch)FORK-sync https://github.com/xxx/yyy.git (push)origin git@github.xxx/born-1.git (fetch)origin git@github.xxx/born-1.git (push) 然后接受所 fork 库的内容1git fetch FORK-sync 合并1git merge FORK-sync/master 再推送到你的远程仓库就行了1git push]]></content>

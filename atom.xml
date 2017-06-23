@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-06-17T06:39:21.000Z</updated>
+  <updated>2017-06-23T08:52:26.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,93 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>__Callstatic</title>
+    <link href="http://blog.justwe.site/2017/06/23/php-callstatic/"/>
+    <id>http://blog.justwe.site/2017/06/23/php-callstatic/</id>
+    <published>2017-06-23T08:50:15.000Z</published>
+    <updated>2017-06-23T08:52:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>现在很多框架中调用方法都是<code>Foo::bar()</code>这种格式的,但是他们真的是静态方法吗?<br><a id="more"></a></p>
+<p>这种情况在 <code>larave</code> 中尤其常见,但是开发过程中很明显这些有一部分不是静态的,比如你使用一个模型<code>User</code>,那么你每次实例化出来他都是一个全新的,互不影响,这里就用到了一个魔术方法<code>__callStatic</code></p>
+<p>举个栗子:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is __call'</span>. PHP_EOL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">__callStatic</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is __callStatic:'</span>. PHP_EOL;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$test = <span class="keyword">new</span> Test();</div><div class="line">$test-&gt;hello();</div><div class="line">$test::hi();</div><div class="line"><span class="comment">//this is __call:hello</span></div><div class="line"><span class="comment">//this is __callStatic:hi</span></div></pre></td></tr></table></figure></p>
+<p>当然魔术方法也是很耗性能的一种方式,每次调用的时候后回先扫一遍<code>class</code>没找到方法时才会调用它,而为了代码的整洁和抽象这个方法也能给很大的帮助,在这之间去要有个权衡</p>
+<p>下面实现的 <code>log</code> 类,采用的就是这种方法,将方法解耦出来,只要符合规定的接口就能调用<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    <span class="comment">//获取 logger 的实体</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> $logger;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getLogger</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">self</span>::$logger?: <span class="keyword">self</span>::$logger = <span class="keyword">self</span>::createLogger();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">createLogger</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Logger();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">setLogger</span><span class="params">(LoggerInterface $logger)</span></span>&#123;</div><div class="line">        <span class="keyword">self</span>::$logger = $logger;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        call_user_func_array([<span class="keyword">self</span>::getLogger(),$name],$arguments);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">__callStatic</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        forward_static_call_array([<span class="keyword">self</span>::getLogger(),$name],$arguments);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">LoggerInterface</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">info</span><span class="params">($message,array $content = [])</span></span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">alert</span><span class="params">($messge,array $content = [])</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span> <span class="keyword">implements</span> <span class="title">LoggerInterface</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">info</span><span class="params">($message, array $content = [])</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is Log method info'</span> . PHP_EOL;</div><div class="line">        var_dump($content);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">alert</span><span class="params">($messge, array $content = [])</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is Log method alert: '</span>. $messge . PHP_EOL;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">Test::info(<span class="string">'喊个口号:'</span>,[<span class="string">'好好'</span>,<span class="string">'学习'</span>,<span class="string">'天天'</span>,<span class="string">'向上'</span>]);</div><div class="line">$test = <span class="keyword">new</span> Test();</div><div class="line">$test-&gt;alert(<span class="string">'hello'</span>);</div></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">this is Log method info</div><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  string(6) &quot;好好&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  string(6) &quot;学习&quot;</div><div class="line">  [2]=&gt;</div><div class="line">  string(6) &quot;天天&quot;</div><div class="line">  [3]=&gt;</div><div class="line">  string(6) &quot;向上&quot;</div><div class="line">&#125;</div><div class="line">this is Log method alert: hello</div></pre></td></tr></table></figure></p>
+<p>也许有的小伙伴已经看出来了,没错!这段代码就是仿照(抄)的 <code>EasyWechat</code>的日志部分,<a href="https://github.com/overtrue/wechat/blob/master/src/Support/Log.php" target="_blank" rel="external">代码片段</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现在很多框架中调用方法都是&lt;code&gt;Foo::bar()&lt;/code&gt;这种格式的,但是他们真的是静态方法吗?&lt;br&gt;
+    
+    </summary>
+    
+      <category term="php" scheme="http://blog.justwe.site/categories/php/"/>
+    
+    
+      <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
+    
+      <category term="laravel" scheme="http://blog.justwe.site/tags/laravel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git-Error-Permission</title>
+    <link href="http://blog.justwe.site/2017/06/23/git-error-permission/"/>
+    <id>http://blog.justwe.site/2017/06/23/git-error-permission/</id>
+    <published>2017-06-23T08:46:13.000Z</published>
+    <updated>2017-06-23T08:49:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这种情况在部署 <code>webhook</code> 的时候经常会碰到<br>报错信息: <code>git error insufficient permission for adding an object</code><br>这种报错就是权限错误,把项目中的.git 文件整体改成你的执行权限就行</p>
+<p><strong>有一点要注意</strong>,如果你服务器上有一个 www 的角色在部署项目,那么你就不能再用root的角色去部署了,否则会在 .git/objects 目录下产生由 root所属的文件从而造成当www再次执行合并任务的时候因为权限不能操作部分commit的文件而造成合并失败</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这种情况在部署 &lt;code&gt;webhook&lt;/code&gt; 的时候经常会碰到&lt;br&gt;报错信息: &lt;code&gt;git error insufficient permission for adding an object&lt;/code&gt;&lt;br&gt;这种报错就是权限错误,把项目中的.gi
+    
+    </summary>
+    
+      <category term="git" scheme="http://blog.justwe.site/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
+    
+      <category term="linux" scheme="http://blog.justwe.site/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>转 跨域请求时两次发送请求的问题</title>
+    <link href="http://blog.justwe.site/2017/06/23/axios-cors/"/>
+    <id>http://blog.justwe.site/2017/06/23/axios-cors/</id>
+    <published>2017-06-23T08:42:38.000Z</published>
+    <updated>2017-06-23T08:45:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>跨域的时候总会碰上各种各样的问题,这就是其中一种情况<br><a id="more"></a><br>检查一下，两次请求分别的 Request Method:<br>因为是跨域请求，客户端发先发送一个OPTIONS 请求<br>Preflighted Requests是CORS中一种透明服务器验证机制。预检请求首先需要向另外一个域名的资源发送一个 HTTP OPTIONS 请求头，其目的就是为了判断实际发送的请求是否是安全的。</p>
+<p>很有可能是这个问题，我现在用axios 作为我的网络请求库，也遇到了这个问题，跨域访问的时候 ，都会先发送一个OPTIONS请求，用来判断接下来的请求是否安全和被允许</p>
+<p>我现在的做法是，在index.php 入口文件中，检测，是否为OPTIONS 请求，如果是就返回一个状态具体代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if ($_SERVER[&apos;REQUEST_METHOD&apos;]==&apos;OPTIONS&apos;) &#123;</div><div class="line">    header(&quot;Access-Control-Allow-Origin: *&quot;);</div><div class="line">    header(&quot;Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization&quot;);</div><div class="line">    header(&apos;Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH&apos;);</div><div class="line">    return;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="https://segmentfault.com/q/1010000009846666" target="_blank" rel="external">原文</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;跨域的时候总会碰上各种各样的问题,这就是其中一种情况&lt;br&gt;
+    
+    </summary>
+    
+      <category term="js" scheme="http://blog.justwe.site/categories/js/"/>
+    
+    
+      <category term="js" scheme="http://blog.justwe.site/tags/js/"/>
+    
+      <category term="axios" scheme="http://blog.justwe.site/tags/axios/"/>
+    
+      <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
+    
+  </entry>
   
   <entry>
     <title>Git同步所 Fork 的库代码</title>
@@ -172,9 +259,9 @@
     </summary>
     
     
-      <category term="laravel" scheme="http://blog.justwe.site/tags/laravel/"/>
-    
       <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
+    
+      <category term="laravel" scheme="http://blog.justwe.site/tags/laravel/"/>
     
   </entry>
   
@@ -347,9 +434,9 @@
       <category term="js" scheme="http://blog.justwe.site/categories/js/"/>
     
     
-      <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
-    
       <category term="axios" scheme="http://blog.justwe.site/tags/axios/"/>
+    
+      <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
     
   </entry>
   
@@ -674,92 +761,6 @@
     
     
       <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker-Composer-Install</title>
-    <link href="http://blog.justwe.site/2017/04/10/docker-composer-install/"/>
-    <id>http://blog.justwe.site/2017/04/10/docker-composer-install/</id>
-    <published>2017-04-10T14:14:01.000Z</published>
-    <updated>2017-04-10T15:11:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>安装 <code>docker-composer</code><br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose</div><div class="line"></div><div class="line">chmod +x /usr/local/bin/docker-compose</div></pre></td></tr></table></figure></p>
-<p>可能会有被墙的情况,可以找一下国内的云服务商,比如 <a href="https://download.daocloud.io/Docker_Mirror/Docker_Compose" target="_blank" rel="external">DaoCloud</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;安装 &lt;code&gt;docker-composer&lt;/code&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
-    
-    
-      <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
-    
-      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Brew-Update</title>
-    <link href="http://blog.justwe.site/2017/04/09/brew-update/"/>
-    <id>http://blog.justwe.site/2017/04/09/brew-update/</id>
-    <published>2017-04-09T15:36:54.000Z</published>
-    <updated>2017-04-09T15:47:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>brew更新软件时常用的操作<br><a id="more"></a></p>
-<h2 id="安装-brew"><a href="#安装-brew" class="headerlink" title="安装 brew"></a>安装 brew</h2><p><code>ruby -e &quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/Go/install)&quot;</code></p>
-<h2 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h2><p><code>brew search MySQL</code></p>
-<h2 id="查看程序具体信息"><a href="#查看程序具体信息" class="headerlink" title="查看程序具体信息"></a>查看程序具体信息</h2><p><code>brew info mysql</code></p>
-<h2 id="更新-brew"><a href="#更新-brew" class="headerlink" title="更新 brew"></a>更新 brew</h2><p><code>brew update</code></p>
-<h2 id="更新软件"><a href="#更新软件" class="headerlink" title="更新软件"></a>更新软件</h2><p><code>brew upgrade mysql</code><br>如果不指定更新哪个则会更新所有可以更新的软件</p>
-<h2 id="清理缓存-更新完后的操作"><a href="#清理缓存-更新完后的操作" class="headerlink" title="清理缓存(更新完后的操作)"></a>清理缓存(更新完后的操作)</h2><p><code>brew cleanup</code></p>
-<h2 id="查看本地所有可更新的工具"><a href="#查看本地所有可更新的工具" class="headerlink" title="查看本地所有可更新的工具"></a>查看本地所有可更新的工具</h2><p><code>brew outdated</code></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;brew更新软件时常用的操作&lt;br&gt;
-    
-    </summary>
-    
-      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
-    
-    
-      <category term="brew" scheme="http://blog.justwe.site/tags/brew/"/>
-    
-      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Yii-Multi-Database</title>
-    <link href="http://blog.justwe.site/2017/04/08/yii-multi-database/"/>
-    <id>http://blog.justwe.site/2017/04/08/yii-multi-database/</id>
-    <published>2017-04-08T09:31:31.000Z</published>
-    <updated>2017-04-09T13:46:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在项目中经常会碰到多个数据库的情况,在 yii 中也是可以快速设置的<br><a id="more"></a><br>演示的版本是 basic 版,但是原理很好理解</p>
-<h2 id="编辑配置文件-app-config-web-php"><a href="#编辑配置文件-app-config-web-php" class="headerlink" title="编辑配置文件 @app/config/web.php"></a>编辑配置文件 <code>@app/config/web.php</code></h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">......</div><div class="line"><span class="string">'db'</span> =&gt; <span class="keyword">require</span>(<span class="keyword">__DIR__</span> . <span class="string">'/db.php'</span>), <span class="comment">//框架提供的一个默认连接</span></div><div class="line"><span class="string">'localDb'</span> =&gt; <span class="keyword">require</span>(<span class="keyword">__DIR__</span> . <span class="string">'/db2.php'</span>), <span class="comment">//这个是我们新加的一个连接配置</span></div><div class="line">......</div></pre></td></tr></table></figure>
-<p>在同目录下的 <code>db2.php</code> 内容格式和 <code>db.php</code> 格式一样,只是连接不同</p>
-<h2 id="修改-model-中需要使用的-connection-id"><a href="#修改-model-中需要使用的-connection-id" class="headerlink" title="修改 model 中需要使用的 connection id"></a>修改 model 中需要使用的 connection id</h2><p>这时再在想改的 model 中复写 <code>getDb()</code> 方法<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Members</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@inheritdoc</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">tableName</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'members'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@return</span> \yii\db\Connection the database connection used by this AR class.</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getDb</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> Yii::$app-&gt;get(<span class="string">'localDb'</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ......some functions.................</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这个 model 中我们使用了 <code>localDb</code> 的链接配置,可以追踪代码 <code>\yii\db\ActiveRecord</code>中的 <code>getDb()</code> 方法,<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//in \yii\db\ActiveRecord</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * Returns the database connection used by this AR class.</div><div class="line">    * By default, the "db" application component is used as the database connection.</div><div class="line">    * You may override this method if you want to use a different database connection.</div><div class="line">    * <span class="doctag">@return</span> Connection the database connection used by this AR class.</div><div class="line">    */</div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getDb</span><span class="params">()</span></span></div><div class="line">   &#123;</div><div class="line">       <span class="keyword">return</span> Yii::$app-&gt;getDb();</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p>有这么一段,既然已经显示出来 <code>Yii::$app</code> 这种核心的东西了,说明已经离那个<code>connection</code>容器已经不远了<br>再追踪到<code>getDb()</code> 显示的是 <code>$this-&gt;get(&#39;db&#39;)</code> 转换一下不就是默认使用的 <code>Yii::$app-&gt;get(&#39;db&#39;)</code> 吗? 于是回到最开始的 model 中,将其重写为 <code>Yii::$app-&gt;get(&#39;localDb&#39;)</code>,之后我们再使用这个 model 的时候就是使用的id 为<code>localDb</code>的 connection 单例了</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在项目中经常会碰到多个数据库的情况,在 yii 中也是可以快速设置的&lt;br&gt;
-    
-    </summary>
-    
-      <category term="yii2" scheme="http://blog.justwe.site/categories/yii2/"/>
-    
-    
-      <category term="yii2" scheme="http://blog.justwe.site/tags/yii2/"/>
     
   </entry>
   
