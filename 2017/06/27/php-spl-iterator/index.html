@@ -75,7 +75,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="js,jquery," />
+  <meta name="keywords" content="php,SPL," />
 
 
 
@@ -93,17 +93,17 @@
 
 
 
-<meta name="description" content="说一个常识性的东西,帮助自己回忆一下">
-<meta name="keywords" content="js,jquery">
+<meta name="description" content="迭代器,让对象可用 foreach,for,while方法">
+<meta name="keywords" content="php,SPL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jquery 中$(This) 和 This 的区别">
-<meta property="og:url" content="http://blog.justwe.site/2017/05/02/jquery-this/index.html">
+<meta property="og:title" content="PHP标准类库系列 Iterator">
+<meta property="og:url" content="http://blog.justwe.site/2017/06/27/php-spl-iterator/index.html">
 <meta property="og:site_name" content="<hello-world/>">
-<meta property="og:description" content="说一个常识性的东西,帮助自己回忆一下">
-<meta property="og:updated_time" content="2017-05-02T03:53:41.000Z">
+<meta property="og:description" content="迭代器,让对象可用 foreach,for,while方法">
+<meta property="og:updated_time" content="2017-06-27T07:40:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jquery 中$(This) 和 This 的区别">
-<meta name="twitter:description" content="说一个常识性的东西,帮助自己回忆一下">
+<meta name="twitter:title" content="PHP标准类库系列 Iterator">
+<meta name="twitter:description" content="迭代器,让对象可用 foreach,for,while方法">
 
 
 
@@ -131,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/2017/05/02/jquery-this/"/>
+  <link rel="canonical" href="http://blog.justwe.site/2017/06/27/php-spl-iterator/"/>
 
 
 
 
 
-  <title> Jquery 中$(This) 和 This 的区别 | <hello-world/> </title>
+  <title> PHP标准类库系列 Iterator | <hello-world/> </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -307,7 +307,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/05/02/jquery-this/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/06/27/php-spl-iterator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="GPF">
@@ -328,7 +328,7 @@
             
             
               
-                Jquery 中$(This) 和 This 的区别
+                PHP标准类库系列 Iterator
               
             
           </h2>
@@ -343,8 +343,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-02T11:39:31+08:00">
-                2017-05-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T11:35:37+08:00">
+                2017-06-27
               </time>
             
 
@@ -366,8 +366,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jquery/" itemprop="url" rel="index">
-                    <span itemprop="name">jquery</span>
+                  <a href="/categories/php-SPL/" itemprop="url" rel="index">
+                    <span itemprop="name">php-SPL</span>
                   </a>
                 </span>
 
@@ -383,7 +383,7 @@
 
           
           
-             <span id="/2017/05/02/jquery-this/" class="leancloud_visitors" data-flag-title="Jquery 中$(This) 和 This 的区别">
+             <span id="/2017/06/27/php-spl-iterator/" class="leancloud_visitors" data-flag-title="PHP标准类库系列 Iterator">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -412,12 +412,21 @@
       
 
       
-        <p>说一个常识性的东西,帮助自己回忆一下</p>
- <a id="more"></a>
-<p> 一句话, $(this)是 jquery 的对象,而 this 是 html 元素对象<br> 什么意思呢?<br> $(this) 可以调用jquery 中的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$(<span class="keyword">this</span>).val()</div><div class="line">$(<span class="keyword">this</span>).addClass()</div></pre></td></tr></table></figure></p>
-<p>而 this 是属于 html 的对象,属于原生 js,因此不能用 jq 中一些封装好的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.value</div><div class="line"><span class="keyword">this</span>.id</div></pre></td></tr></table></figure></p>
-<p>这两者容易造成混淆的地方就是在调用 jq 方法时使用闭包的情景下:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#input'</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		inputCheck(<span class="keyword">this</span>)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>在 <code>inputCheck(param)</code> 这个方法中在调用参数的时候就不能再使用 jqery 的方法了,会报函数找不到<br>的错误,因此需要转换一下,<strong>一般情景</strong>下的转换关系是这样的:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="keyword">this</span>)[<span class="number">0</span>] == <span class="keyword">this</span></div></pre></td></tr></table></figure></p>
+        <p>迭代器,让对象可用 <code>foreach</code>,<code>for</code>,<code>while</code>方法<br><a id="more"></a></p>
+<h2 id="啥是-Iterator"><a href="#啥是-Iterator" class="headerlink" title="啥是 Iterator"></a>啥是 Iterator</h2><p>是一种 php 提供的接口标准,可以将不同的类迭代调用统一成一样的方法,打个比方(话说谁叫比方?):<br>这是调用 mysql 时取出资源的方法<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">$dbms=<span class="string">'mysql'</span>;</div><div class="line">$host=<span class="string">'localhost'</span>;</div><div class="line">$dbName=<span class="string">'wechat'</span>;</div><div class="line">$user=<span class="string">'root'</span>;      </div><div class="line">$pass=<span class="string">'123123'</span>;</div><div class="line">$dsn=<span class="string">"$dbms:host=$host:33060;dbname=$dbName;"</span>;</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    $dbh = <span class="keyword">new</span> PDO($dsn, $user, $pass); <span class="comment">//初始化一个PDO对象</span></div><div class="line">    <span class="keyword">foreach</span> ($dbh-&gt;query(<span class="string">'SELECT * from migrations;'</span>) <span class="keyword">as</span> $row) &#123;</div><div class="line">        print_r($row);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $dbh = <span class="keyword">null</span>;</div><div class="line">&#125; <span class="keyword">catch</span> (PDOException $e) &#123;</div><div class="line">    <span class="keyword">die</span> (<span class="string">"Error!: "</span> . $e-&gt;getMessage() . <span class="string">"&lt;br/&gt;"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而读取目录下所有文件的方法是:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$dirPath = <span class="string">'/Users/gpf/Desktop'</span>;</div><div class="line">$list = opendir($dirPath);</div><div class="line"><span class="keyword">while</span>($filename = readdir($list))&#123;</div><div class="line">    <span class="keyword">echo</span> $filename . PHP_EOL;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>而读取文件内容的方法是<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$filePath = <span class="string">'/Users/gpf/Desktop/test.php'</span>;</div><div class="line"></div><div class="line">$handler = @fopen($filePath,<span class="string">'r'</span>);</div><div class="line"><span class="keyword">if</span>(!$handler)&#123;</div><div class="line">    <span class="keyword">die</span>(<span class="string">'error'</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">while</span>(!feof($handler))&#123;</div><div class="line">    $line = fgets($handler);</div><div class="line">    <span class="keyword">echo</span> $line;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">foreach</span>(<span class="keyword">new</span> SplFileObject($filePath) <span class="keyword">as</span> $line)&#123;</div><div class="line">    <span class="keyword">echo</span> $line . PHP_EOL;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>都是做的循环的事但是不统一,这就很烦躁,因为同样一件事你需要用不同的方法去实现,一个<code>茴</code>字要用四种写法<br>这种情况下在 php51 之后开发组也意识到问题了,于是就出现了 SPL,就有了一个通用的 <code>Iterator</code><br>这个迭代器就是让不同的资源操作变得相同,这些接口可以自己实现,也可以用官方提供的一些<a href="http://php.net/manual/zh/spl.iterators.php" target="_blank" rel="external">迭代器</a><br>比如读取文本的迭代器就可以这样获取文本内容了:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$filePath = <span class="string">'/Users/gpf/Desktop/test.php'</span>;</div><div class="line">$handler = <span class="keyword">new</span> SplFileObject($filePath);</div><div class="line"><span class="keyword">foreach</span>($handler <span class="keyword">as</span> $line)&#123;</div><div class="line">    <span class="keyword">echo</span> $line . PHP_EOL;</div><div class="line">&#125;</div><div class="line"><span class="comment">//当然也可以直接跳行查找</span></div><div class="line">$handler-&gt;seek(<span class="number">4</span>);</div><div class="line">var_dump($handler-&gt;current());</div></pre></td></tr></table></figure></p>
+<p>这样调用就显得比较统一了,那么</p>
+<h2 id="怎么使用-Iterator"><a href="#怎么使用-Iterator" class="headerlink" title="怎么使用 Iterator?"></a>怎么使用 Iterator?</h2><p>这里参照了<a href="http://php.net/manual/zh/class.iterator.php" target="_blank" rel="external">php 文档</a> 和 <a href="http://www.ruanyifeng.com/blog/2008/07/php_spl_notes.html" target="_blank" rel="external">阮一峰的博客</a><br>写的一个例子<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">IteratorDemo</span> <span class="keyword">implements</span> <span class="title">Iterator</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> $attributes = [];</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> $valid = <span class="keyword">FALSE</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(array $array)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">$this</span>-&gt;attributes = $array;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">rewind</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">        <span class="keyword">$this</span>-&gt;valid = (<span class="keyword">FALSE</span> !== reset(<span class="keyword">$this</span>-&gt;attributes));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">current</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">        <span class="keyword">return</span> current(<span class="keyword">$this</span>-&gt;attributes);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">key</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">        <span class="keyword">return</span> key(<span class="keyword">$this</span>-&gt;attributes);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//如果 next 返回 false 循环将终止</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">next</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">        <span class="keyword">$this</span>-&gt;valid = (<span class="keyword">FALSE</span> !== next(<span class="keyword">$this</span>-&gt;attributes));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">valid</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;valid;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$arr  = [</div><div class="line">    <span class="string">'red'</span> =&gt; <span class="string">'stop'</span>,</div><div class="line">    <span class="string">'green'</span> =&gt; <span class="string">'run'</span>,</div><div class="line">    <span class="string">'yellow'</span> =&gt; <span class="string">'wait'</span></div><div class="line">];</div><div class="line">$demo = <span class="keyword">new</span> IteratorDemo($arr);</div><div class="line">var_dump($demo);</div><div class="line"><span class="keyword">foreach</span> ($demo <span class="keyword">as</span> $key =&gt; $value)&#123;</div><div class="line">    <span class="keyword">echo</span> $key  . <span class="string">'=&gt;'</span> . $value . PHP_EOL;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">object(IteratorDemo)<span class="comment">#1 (2) &#123;</span></div><div class="line">  [<span class="string">"attributes"</span>:<span class="string">"IteratorDemo"</span>:<span class="keyword">private</span>]=&gt;</div><div class="line">  <span class="keyword">array</span>(<span class="number">3</span>) &#123;</div><div class="line">    [<span class="string">"red"</span>]=&gt;</div><div class="line">    string(<span class="number">4</span>) <span class="string">"stop"</span></div><div class="line">    [<span class="string">"green"</span>]=&gt;</div><div class="line">    string(<span class="number">3</span>) <span class="string">"run"</span></div><div class="line">    [<span class="string">"yellow"</span>]=&gt;</div><div class="line">    string(<span class="number">4</span>) <span class="string">"wait"</span></div><div class="line">  &#125;</div><div class="line">  [<span class="string">"valid"</span>:<span class="keyword">protected</span>]=&gt;</div><div class="line">  bool(<span class="keyword">false</span>)</div><div class="line">&#125;</div><div class="line">string(<span class="number">20</span>) <span class="string">"IteratorDemo::rewind"</span></div><div class="line">string(<span class="number">19</span>) <span class="string">"IteratorDemo::valid"</span></div><div class="line">string(<span class="number">21</span>) <span class="string">"IteratorDemo::current"</span></div><div class="line">string(<span class="number">17</span>) <span class="string">"IteratorDemo::key"</span></div><div class="line">red=&gt;stop</div><div class="line">string(<span class="number">18</span>) <span class="string">"IteratorDemo::next"</span></div><div class="line">string(<span class="number">19</span>) <span class="string">"IteratorDemo::valid"</span></div><div class="line">string(<span class="number">21</span>) <span class="string">"IteratorDemo::current"</span></div><div class="line">string(<span class="number">17</span>) <span class="string">"IteratorDemo::key"</span></div><div class="line">green=&gt;run</div><div class="line">string(<span class="number">18</span>) <span class="string">"IteratorDemo::next"</span></div><div class="line">string(<span class="number">19</span>) <span class="string">"IteratorDemo::valid"</span></div><div class="line">string(<span class="number">21</span>) <span class="string">"IteratorDemo::current"</span></div><div class="line">string(<span class="number">17</span>) <span class="string">"IteratorDemo::key"</span></div><div class="line">yellow=&gt;wait</div><div class="line">string(<span class="number">18</span>) <span class="string">"IteratorDemo::next"</span></div><div class="line">string(<span class="number">19</span>) <span class="string">"IteratorDemo::valid"</span></div></pre></td></tr></table></figure></p>
+<p>这就实现了一个通用的 <code>Iterator</code> 接口,当然这是是为了实现而实现,中间可以做很多事情的,这要发挥一下想象力</p>
+<p>在程序里经常看到 <code>FooIterator</code> 这类的对象,就是基于上面写的 <code>Iterator</code> 进行的延伸,比如刚才我们<br>例子中用到的<code>SplFileObject</code>,<code>SimpleXMLIterator</code>,<code>ArrayIterator</code>这些类,都是大同小异的,<br>不过是根据实现的迭代器添加一些更适用的方法,比如一个<code>DirectoryIterator</code>中就是继承了<code>SplFileInfo</code>的方法<br>并且实现了 <code>Iterator</code> 接口,再添加了一些自己的方法,有用 idea 的可以用代码追踪看一下也是蛮有意思的</p>
+<p>参考资料:</p>
+<ol>
+<li><a href="http://php.net/manual/zh/class.iterator.php" target="_blank" rel="external">Iterator（迭代器）接口 </a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2008/07/php_spl_notes.html" target="_blank" rel="external">PHP SPL笔记</a></li>
+</ol>
 
       
     </div>
@@ -457,9 +466,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js/" rel="tag"># js</a>
+            <a href="/tags/php/" rel="tag"># php</a>
           
-            <a href="/tags/jquery/" rel="tag"># jquery</a>
+            <a href="/tags/SPL/" rel="tag"># SPL</a>
           
         </div>
       
@@ -472,18 +481,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/02/vue-axios-post/" rel="next" title="使用 Axios-Post 提交数据">
-                <i class="fa fa-chevron-left"></i> 使用 Axios-Post 提交数据
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/28/ssh-command/" rel="prev" title="<转> 关于 Ssh 的 25 条实用命令">
-                <转> 关于 Ssh 的 25 条实用命令 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/06/26/php-spl-arrayaccess/" rel="prev" title="PHP标准类库系列 arrayAccess">
+                PHP标准类库系列 arrayAccess <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -531,8 +536,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/logo.jpeg"
@@ -634,6 +648,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#啥是-Iterator"><span class="nav-number">1.</span> <span class="nav-text">啥是 Iterator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么使用-Iterator"><span class="nav-number">2.</span> <span class="nav-text">怎么使用 Iterator?</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
