@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-08-14T01:44:22.000Z</updated>
+  <updated>2017-08-21T13:28:59.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue的一个拖动插件</title>
+    <link href="http://blog.justwe.site/2017/08/21/vue-dnd/"/>
+    <id>http://blog.justwe.site/2017/08/21/vue-dnd/</id>
+    <published>2017-08-21T09:11:28.000Z</published>
+    <updated>2017-08-21T13:28:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里介绍一个拿来即用的拖动插件<br>这里只是一个 es5 的 demo<br><a id="more"></a><br>先上代码:</p>
+<h2 id="简单的拖动排序示例"><a href="#简单的拖动排序示例" class="headerlink" title="简单的拖动排序示例"></a>简单的拖动排序示例</h2><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/92dcvg1u/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<h2 id="拖动-clone-示例"><a href="#拖动-clone-示例" class="headerlink" title="拖动 clone 示例"></a>拖动 clone 示例</h2><iframe scrolling="no" width="100%" height="300" src="//jsfiddle.net/ebemtLz6/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>这里用上了 option 中的 group配置,<br><code>group:{ name:&#39;people&#39;,  pull: &#39;clone&#39;, put:false}</code><br>name: 所有可互相拖动的列表必须同一个 name 下<br>pull: true|false|’clone’  开启|关闭|复制 拖动时的元素, 当为 true 的时候拖动会把该元素从列表中移除<br>put: true|false|array  允许|禁止|数组中指定的值 添加到当前数组列当中<br>这样的话当两边的option 都是 <code>{group:{ name:&#39;people&#39;,  pull: true, put:true }}</code>的时候就运行两个列表互相拖动了<br>如下:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"drag"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>List 1 Draggable<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">draggable</span> <span class="attr">v-model</span>=<span class="string">"list"</span> <span class="attr">class</span>=<span class="string">"dragArea"</span> <span class="attr">:options</span>=<span class="string">"&#123;group:&#123; name:'people',  pull: true, put:true &#125;&#125;"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-for</span>=<span class="string">"(element, index) in list"</span> <span class="attr">:key</span>=<span class="string">"index"</span>&gt;</span>&#123;&#123;element.name&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">draggable</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>List 2 Draggable<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">draggable</span> <span class="attr">v-model</span>=<span class="string">"list2"</span> <span class="attr">class</span>=<span class="string">"dragArea"</span> <span class="attr">:options</span>=<span class="string">"&#123;group:&#123; name:'people',  pull: true, put:true &#125;&#125;"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-for</span>=<span class="string">"(element, index) in list2"</span> <span class="attr">:key</span>=<span class="string">"index"</span>&gt;</span>&#123;&#123;element.name&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">draggable</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>更多的配置在 <a href="https://github.com/RubaXa/Sortable" target="_blank" rel="external">这里</a>,有时间的话我就都试一下</p>
+<p><a href="https://github.com/SortableJS/Vue.Draggable" target="_blank" rel="external">github地址</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里介绍一个拿来即用的拖动插件&lt;br&gt;这里只是一个 es5 的 demo&lt;br&gt;
+    
+    </summary>
+    
+      <category term="js" scheme="http://blog.justwe.site/categories/js/"/>
+    
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
+    
+  </entry>
   
   <entry>
     <title>我还活着</title>
@@ -639,36 +667,6 @@
       <category term="axios" scheme="http://blog.justwe.site/tags/axios/"/>
     
       <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Jquery 中$(This) 和 This 的区别</title>
-    <link href="http://blog.justwe.site/2017/05/02/jquery-this/"/>
-    <id>http://blog.justwe.site/2017/05/02/jquery-this/</id>
-    <published>2017-05-02T03:39:31.000Z</published>
-    <updated>2017-05-02T03:53:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>说一个常识性的东西,帮助自己回忆一下</p>
- <a id="more"></a>
-<p> 一句话, $(this)是 jquery 的对象,而 this 是 html 元素对象<br> 什么意思呢?<br> $(this) 可以调用jquery 中的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$(<span class="keyword">this</span>).val()</div><div class="line">$(<span class="keyword">this</span>).addClass()</div></pre></td></tr></table></figure></p>
-<p>而 this 是属于 html 的对象,属于原生 js,因此不能用 jq 中一些封装好的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.value</div><div class="line"><span class="keyword">this</span>.id</div></pre></td></tr></table></figure></p>
-<p>这两者容易造成混淆的地方就是在调用 jq 方法时使用闭包的情景下:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#input'</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		inputCheck(<span class="keyword">this</span>)</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<p>在 <code>inputCheck(param)</code> 这个方法中在调用参数的时候就不能再使用 jqery 的方法了,会报函数找不到<br>的错误,因此需要转换一下,<strong>一般情景</strong>下的转换关系是这样的:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="keyword">this</span>)[<span class="number">0</span>] == <span class="keyword">this</span></div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;说一个常识性的东西,帮助自己回忆一下&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="jquery" scheme="http://blog.justwe.site/categories/jquery/"/>
-    
-    
-      <category term="js" scheme="http://blog.justwe.site/tags/js/"/>
-    
-      <category term="jquery" scheme="http://blog.justwe.site/tags/jquery/"/>
     
   </entry>
   

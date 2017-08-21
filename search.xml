@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Vue的一个拖动插件]]></title>
+    <url>%2F2017%2F08%2F21%2Fvue-dnd%2F</url>
+    <content type="text"><![CDATA[这里介绍一个拿来即用的拖动插件这里只是一个 es5 的 demo先上代码: 简单的拖动排序示例 拖动 clone 示例 这里用上了 option 中的 group配置,group:{ name:&#39;people&#39;, pull: &#39;clone&#39;, put:false}name: 所有可互相拖动的列表必须同一个 name 下pull: true|false|’clone’ 开启|关闭|复制 拖动时的元素, 当为 true 的时候拖动会把该元素从列表中移除put: true|false|array 允许|禁止|数组中指定的值 添加到当前数组列当中这样的话当两边的option 都是 {group:{ name:&#39;people&#39;, pull: true, put:true }}的时候就运行两个列表互相拖动了如下:12345678910&lt;div class="drag"&gt; &lt;h2&gt;List 1 Draggable&lt;/h2&gt; &lt;draggable v-model="list" class="dragArea" :options="&#123;group:&#123; name:'people', pull: true, put:true &#125;&#125;"&gt; &lt;div v-for="(element, index) in list" :key="index"&gt;&#123;&#123;element.name&#125;&#125;&lt;/div&gt; &lt;/draggable&gt; &lt;h2&gt;List 2 Draggable&lt;/h2&gt; &lt;draggable v-model="list2" class="dragArea" :options="&#123;group:&#123; name:'people', pull: true, put:true &#125;&#125;"&gt; &lt;div v-for="(element, index) in list2" :key="index"&gt;&#123;&#123;element.name&#125;&#125;&lt;/div&gt; &lt;/draggable&gt;&lt;/div&gt; 更多的配置在 这里,有时间的话我就都试一下 github地址]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[我还活着]]></title>
     <url>%2F2017%2F08%2F14%2Fi-am-alive%2F</url>
     <content type="text"><![CDATA[最近这两个月工作忙到飞起,等10月份再玩点儿新东西]]></content>
