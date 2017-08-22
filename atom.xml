@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-08-21T13:28:59.000Z</updated>
+  <updated>2017-08-22T03:59:03.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,138 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>转 做一枚全栈工程师</title>
+    <link href="http://blog.justwe.site/2017/08/22/be-a-fullstack-engineer/"/>
+    <id>http://blog.justwe.site/2017/08/22/be-a-fullstack-engineer/</id>
+    <published>2017-08-22T03:57:09.000Z</published>
+    <updated>2017-08-22T03:59:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><em>这篇热门文章在 2017 年 6 月更新过，引入了更多新技术。</em><br><a id="more"></a></p>
+<hr>
+<p><img src="http://p0.qhimg.com/t012ae25b10db646f23.jpg" alt="Jack of all trades"></p>
+<p>如果一个全栈工程师能够根据<a href="https://www.sitepoint.com/premium/books/the-ultimate-guide-to-prototyping?aref=bskvorc" target="_blank" rel="external">原型</a>实现一个完整的MVP（minimum viable product，至少可行的产品），我们通常会认为他十八般武艺样样精通，而且有足够的理由来证明这一点。为了给全栈工程师一个最新鲜的定义，我们首先来关注一下全栈工程师以前是搞什么的。</p>
+<h2 id="以前的全栈工程师"><a href="#以前的全栈工程师" class="headerlink" title="以前的全栈工程师"></a>以前的全栈工程师</h2><p>很久以前，大约在 2000 年(在互联网的次元里，17年可以说是一个非常长的时间了)，一个全栈工程师必须掌握下面的本领：</p>
+<ul>
+<li><p>用 Adobe 公司的 Photoshop 或者 Fireworks 工具设计出一个网页</p>
+</li>
+<li><p>将设计稿变成 HTML, CSS 还有热点图(额，还记得那些吗？)</p>
+</li>
+<li><p>写一些基本的 PHP 4.0 脚本(非面向对象的 PHP 即将成为历史)来处理服务端逻辑</p>
+</li>
+<li><p>保存所有的动态数据到 MySQL 中，也可能会做一些小优化</p>
+</li>
+<li><p>用 FTP 上传所有代码、数据库什么的到一台服务器，然后就可以领取报酬啦</p>
+</li>
+</ul>
+<p>注意我们在这里只讨论 PHP —— 一个全栈 Flash 或者 Coldfusion (一种 Web 服务器) 开发者可能有不同的工作方式(但是也仅仅是细微的差别)。</p>
+<p>在那个单纯的时代，生活是如此的美好。个人开发者一抓一大把，而且程序猿工作完还有大把的时间陪伴自己的家人。</p>
+<p>那现在呢？</p>
+<h2 id="现在的全栈工程师需要自带什么技能呢"><a href="#现在的全栈工程师需要自带什么技能呢" class="headerlink" title="现在的全栈工程师需要自带什么技能呢"></a>现在的全栈工程师需要自带什么技能呢</h2><p>最近，我们也会产生<a href="http://www.businessinsider.com/apple-planet-of-the-apps-ad-developer-rarely-saw-his-kids-2017-6" target="_blank" rel="external">这些</a>恐慌——为什么工程师的生活会变成这样？</p>
+<p><img src="http://p0.qhimg.com/t017e6e6e710405c644.jpg" alt="App developer doesn&#39;t see his kids due to schedule"></p>
+<p>为了在这个牛逼的市场里获得成功，我们这些开发者——通常都是完美主义者——应经常把“如果你想做正确的事”当做自己的座右铭，并经常质问自己。这会强迫我们自己集中精力在一处，而且必须学习<em>所有东西</em>，所以做一个全栈工程师往往要学会以下技能：</p>
+<h3 id="服务管理-运维"><a href="#服务管理-运维" class="headerlink" title="服务管理/运维"></a>服务管理/运维</h3><p>一个开发者<strong>必须</strong>了解基础的服务器管理知识。包括当不限于以下知识：</p>
+<ul>
+<li><p>通过终端或其他没有用户界面的环境来远程连接服务器</p>
+</li>
+<li><p>会写基本的 shell 脚本</p>
+</li>
+<li><p>服务器上的用户和群组管理</p>
+</li>
+<li><p>管理像 Apache 和 Nginx 这样的服务器程序来提供应用</p>
+</li>
+<li><p>防火墙管理和权限管理</p>
+</li>
+<li><p>安装和更新软件</p>
+</li>
+</ul>
+<p><img src="http://p6.qhimg.com/t01001f7d645b2147e5.gif" alt="运维"></p>
+<p><a href="https://giphy.com/gifs/richard-ayoade-it-crowd-maurice-moss-dbtDDSvWErdf2" target="_blank" rel="external">图片来自GIPHY</a></p>
+<p>除了这些基础技能，开发者必须懂得怎样去创建一个好的、健康的、分离的开发环境，在 Docker 或者像  <a href="http://www.sitepoint.com/re-introducing-vagrant-right-way-start-php/" target="_blank" rel="external">Vagrant</a> 这样的虚拟机环境中。 如果上面所有的技术你都不熟悉，那我必须给你推荐一本超棒的书，<a href="http://bit.ly/phpenv-sp" target="_blank" rel="external">点这里购买</a>。</p>
+<p>开发者必须对版本控制系统非常熟练，为了让开发有靠谱的生产备份和可分享、可协同的代码库，这些代码库能够根据时间来跟踪代码变化。现在已经没有开发者的工作流是完全离开版本控制的了。我们有一个非常棒的关于版本控制的视频教程，<a href="https://www.sitepoint.com/premium/courses/introduction-to-git-2902?aref=bskvorc" target="_blank" rel="external">点这里购买</a>。</p>
+<h3 id="云"><a href="#云" class="headerlink" title="云"></a>云</h3><p>和实际管理或者虚拟服务器不同，一个开发者也许要知道云主机平台，比如<a href="https://www.sitepoint.com/deploying-to-heroku-an-introduction/" target="_blank" rel="external">Heroku</a>, Google Cloud, Azure, AWS等等。</p>
+<p><img src="http://p1.qhimg.com/t011d26a34c4d9aa8d4.gif" alt="云"></p>
+<p><a href="https://giphy.com/gifs/animation-artists-on-tumblr-internet-fnjzX4eGNUglq" target="_blank" rel="external">图片来自GIPHY</a></p>
+<p>有一点必须说明的是，平台和工具更多的是<a href="https://blog.bradfieldcs.com/you-are-not-google-84912cf44afb" target="_blank" rel="external">为了炒作而不是其实用性</a>。尽管有很多平台和工具的实用性并不如宣传的那么好，但是了解这些大家都在谈论的服务，从长远来看会很有用——客户可能会随时要求更换服务提供商。幸运的是，我们拥有这些<a href="https://www.sitepoint.com/ultimate-guide-deploying-php-apps-cloud/" target="_blank" rel="external">云主机部署权威指南</a>。</p>
+<h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><p>在后端，除了要懂选择什么语言以外，比如 PHP 和众多的<a href="https://www.sitepoint.com/tag/php-frameworks/" target="_blank" rel="external">框架</a> and <a href="https://www.sitepoint.com/tag/cms/" target="_blank" rel="external">CMSes</a>，一个全栈开发者必须熟悉：</p>
+<ul>
+<li><p>Web 服务器，比如 <a href="https://www.sitepoint.com/tag/nginx/" target="_blank" rel="external">Nginx</a> 和 Apache ，和运维紧密相关</p>
+</li>
+<li><p>不幸的是，NodeJS 已经可以将 JS、CSS 和其他资源文件编译成静态可以方便缓存的文件了。幸运的是，也有办法避免学习 NodeJS，<a href="https://www.sitepoint.com/look-ma-no-nodejs-a-php-front-end-workflow-without-node/" target="_blank" rel="external">用PHP</a>也是可以的</p>
+</li>
+<li><p>像<a href="https://www.sitepoint.com/re-introducing-composer/" target="_blank" rel="external">Composer</a>这样的 PHP 包管理工具在现代化的开发环境中已经离不开了</p>
+</li>
+<li><p>好的<a href="https://www.sitepoint.com/tag/api+php/" target="_blank" rel="external">API 设计</a>，自从大部分新型网页都基于 API 而且仅仅为前端服务（下面会详细描述）</p>
+</li>
+<li><p>ElasticSearch (<a href="https://www.sitepoint.com/introduction-to-elasticsearch-in-php/" target="_blank" rel="external">introduction here</a>) 这样的搜索引擎对于网站性能的提高是非常重要的</p>
+</li>
+<li><p><a href="https://www.sitepoint.com/a-comprehensive-crash-course-into-cronjobs/" target="_blank" rel="external">cronjobs</a> 和后端的工作，使用<a href="https://www.sitepoint.com/introduction-gearman-multi-tasking-php/" target="_blank" rel="external">Gearman</a> 或者  <a href="https://www.sitepoint.com/framework-agnostic-php-cronjobs-made-easy-with-crunz/" target="_blank" rel="external">Crunz</a> 这类的库</p>
+</li>
+<li><p>了解缓存， <a href="https://www.sitepoint.com/getting-started-with-varnish/" target="_blank" rel="external">Varnish</a>, <a href="https://www.sitepoint.com/speeding-up-existing-apps-with-a-redis-cache/" target="_blank" rel="external">Redis</a> 等牛B的工具可以分片存储数据，这样可以将一个项目部署的多个主机上</p>
+</li>
+</ul>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>数据库是一个单独的部分，因为除了很好地掌握我们基本上不会有结构变化的关系数据库(<a href="https://www.sitepoint.com/php-mysql-tutorial/" target="_blank" rel="external">MySQL</a> 或者 PostgreSQL)的数据模式之外，一个全栈工程师应该对非关系型数据库有所了解，如<a href="https://www.sitepoint.com/building-simple-blog-app-mongodb-php/" target="_blank" rel="external">MongoDB</a>, Redis, 或 <a href="https://www.sitepoint.com/a-quick-introduction-to-apache-cassandra/" target="_blank" rel="external">Cassandra</a> ，更不用说像 <a href="https://www.sitepoint.com/discover-graph-databases-neo4j-php/" target="_blank" rel="external">Neo4j</a> 这样的图形数据库了。</p>
+<p><img src="http://p0.qhimg.com/t01598768094b450302.png" alt="Database illustration"></p>
+<p>不幸的是，这些都是服务器上的东西，都在全栈工程师的控制下。也有几个类似 Mongo 的远程解决方案，像<a href="https://www.sitepoint.com/how-to-build-a-twitter-follower-farmer-detection-app-with-restdb/" target="_blank" rel="external">RestDB</a>或者 Google-owned <a href="https://www.sitepoint.com/tag/firebase/" target="_blank" rel="external">Firebase</a> 等。</p>
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><p>说到前端，真的很蛋疼。</p>
+<p><img src="http://p1.qhimg.com/t0185b6f3475a9a5a03.gif" alt="前端"></p>
+<p><a href="https://giphy.com/gifs/cheezburger-cars-chaoshour-mciMfMijRXIfm" target="_blank" rel="external">图片来自GIPHY</a></p>
+<p>想知道一个正常的前端知识图谱是怎么样的，可以在JavaScript 版块看  <a href="https://www.sitepoint.com/anatomy-of-a-modern-javascript-application/" target="_blank" rel="external">这篇绝世好文</a> 。但是作为一个全栈工程师，你需要了解</p>
+<ul>
+<li><p>NodeJS and NPM</p>
+</li>
+<li><p>Yarn</p>
+</li>
+<li><p>预处理器和编译器(如Babel)，用来编译 Typescript, ES6, LESS, SCSS, SaSS</p>
+</li>
+<li><p>构建工具，如 Grunt 和 Gulp</p>
+</li>
+<li><p>框架，如 VueJS、React、Angular</p>
+</li>
+<li><p>模块打包工具，如 Webpack、Browserify、Rollup</p>
+</li>
+</ul>
+<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>在设计方面，全栈开发者需要了解怎样在一个产品变成真正可用的 HTML 、CSS 代码之前，画一个 <a href="https://www.sitepoint.com/premium/books/the-ultimate-guide-to-prototyping?aref=bskvorc" target="_blank" rel="external">原型图</a> 。然后就可以去用 JS 写交互、后端也可以用假数据来模拟生产环境。只有这个关键的原型图完成，用户体验设计和接口设计就绪，真正的开发才能开始。这本身就是一项艰巨的任务，需要一套特殊的工具：</p>
+<ul>
+<li><p>Photoshop 和 Illustrator 或者一些开源的工具比如 Gimp / Inkscape。访问 <a href="https://www.sitepoint.com/design-ux/" target="_blank" rel="external">Design channel</a> 来了解更多这样的工具。</p>
+</li>
+<li><p>一个牛B的、快速的编辑器，比如 <a href="https://www.sitepoint.com/10-essential-atom-add-ons/" target="_blank" rel="external">Atom</a> 或 Sublime Text (这儿有<a href="https://www.sitepoint.com/10-essential-sublime-text-plugins-full-stack-developer/" target="_blank" rel="external">十种好用的 sublime插件</a>)</p>
+</li>
+<li><p>像 Subtlepatterns 的背景选择器和颜色选择器能够搭配一些颜色</p>
+</li>
+<li><p>CSS  的<a href="https://www.sitepoint.com/understanding-css-grid-systems/" target="_blank" rel="external">栅格系统</a></p>
+</li>
+<li><p>上面所说的前端所需要了解的所有知识和 JS 数据模拟</p>
+</li>
+<li><p>将原型图发表到网上供大家浏览并给于反馈，<a href="https://www.sitepoint.com/use-ngrok-test-local-site/" target="_blank" rel="external">Ngrok</a> 就非常好用</p>
+</li>
+</ul>
+<h3 id="日志系统"><a href="#日志系统" class="headerlink" title="日志系统"></a>日志系统</h3><p>为了高效监控应用的健康度，全栈开发者必须能够追踪错误，找到错误日志然后从中提取出有用的信息。全栈开发者也需要从日志中预测一些趋势，比如 CPU 或者 I/O 占用率的上涨，以防应用不知道什么时候就挂了。这部分和运维也有一些关系，但是需要一些特别的技能：</p>
+<p><img src="http://p1.qhimg.com/t0167564fdeb0c3ffdd.gif" alt="日志"></p>
+<p><a href="https://giphy.com/gifs/screen-8mpct5wMjdXnW" target="_blank" rel="external">图片来自GIPHY</a></p>
+<p>推荐一篇<a href="https://www.sitepoint.com/how-can-the-elk-stack-be-used-to-monitor-php-apps/" target="_blank" rel="external">非常棒的 ELK stack 的文章</a>，这会帮助你了解做日志系统所需要的知识。里面包括了查找日志的 ElasticSearch ，收集日志的 Logstash，把日志用非常棒的图表展现出来的的 Kibana，甚至还有提供解决方案的 <a href="http://logz.io?utm_source=sitepoint" target="_blank" rel="external">Logz.io</a>。</p>
+<h3 id="移动端"><a href="#移动端" class="headerlink" title="移动端"></a>移动端</h3><p>最后，我们该说说移动端了。随着 iOS 和安卓上的的 webview 变得越来越高效，还有 PWA(<a href="https://blog.tighten.co/a-brief-introduction-to-progressive-web-apps-or-pwas" target="_blank" rel="external">渐进式web应用</a>) 的到来，native 应用正在变得黯淡，因为他们开发起来实在是太复杂了。所以一个全栈工程师必须了解 PWA 或者 <a href="https://www.sitepoint.com/build-android-app-react-native/" target="_blank" rel="external">React Native</a>，或者像NativeScript, Tabris, Cordova, Phonegap或者其他 <a href="https://www.sitepoint.com/understanding-android-webviews/" target="_blank" rel="external">webview</a> 来让客户端应用调用 API 跑起来（如上一章最后说的那样）。</p>
+<h2 id="做一个全栈工程师值得吗？"><a href="#做一个全栈工程师值得吗？" class="headerlink" title="做一个全栈工程师值得吗？"></a>做一个全栈工程师值得吗？</h2><p>所以最后只有一个问题，值不值？</p>
+<p>首先，应该注意到很少的全栈工程师称得上真正的全栈，大部分全栈工程师关注了上面技术的某些方面，而不是所有的，仅仅因为不可能有那么多精力放在上面所有方面。</p>
+<p>其次，对所有方面都了解一点也许不会让你在具体方面成为大师，但是说实在的，这会让你在更好地理解项目的流程，和项目确实都需要用到的技术。当作为乙方、开一个外包公司或者给一个迷茫的团队指一条明路方面是无价的技术。</p>
+<p>我可能不是一个“JavaScript 巨星”，“Elasticsearch 忍者”，“MySQL 大师”，“运维狂人”，或者“移动端老司机”，我不想被奉承，但是我觉得，做一个全栈工程师让我张开了翅膀，测试不同的技术，作为自由职业者给我的客户提供与众不同的解决方案。我可以有各种各样的赚钱方式，也能拿到从服务端工作到 WordPress 插件开发等不同的订单，因为我对所有的这些都有很多了解（迟早的事）。对于我来说，做一个全栈工程师是非常值得的，对比我以前只做 Flash 的日子，我现在更喜欢我的工作，当时工作多而且工资低（没有 JavaScript）。</p>
+<p>你呢，你是全栈还是也精于专呢？不管你是不是全栈，你觉得做的事情值吗？</p>
+<blockquote>
+<p>本文转载自：<a href="http://www.zcfy.cc" target="_blank" rel="external">众成翻译</a><br>译者：<a href="http://www.zcfy.cc/@lzhbupt" target="_blank" rel="external">弈晨</a><br>链接：<a href="http://www.zcfy.cc/article/3548" target="_blank" rel="external">http://www.zcfy.cc/article/3548</a><br>原文：<a href="https://www.sitepoint.com/full-stack-developer/" target="_blank" rel="external">https://www.sitepoint.com/full-stack-developer/</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;em&gt;这篇热门文章在 2017 年 6 月更新过，引入了更多新技术。&lt;/em&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="精选转载" scheme="http://blog.justwe.site/categories/%E7%B2%BE%E9%80%89%E8%BD%AC%E8%BD%BD/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Vue的一个拖动插件</title>
@@ -630,43 +762,6 @@
       <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
     
       <category term="animate" scheme="http://blog.justwe.site/tags/animate/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用 Axios-Post 提交数据</title>
-    <link href="http://blog.justwe.site/2017/05/02/vue-axios-post/"/>
-    <id>http://blog.justwe.site/2017/05/02/vue-axios-post/</id>
-    <published>2017-05-02T08:45:00.000Z</published>
-    <updated>2017-05-02T14:56:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>继 <code>vue-resource</code> 之后, <code>axios</code> 是 vue 官方首推的网络请求组件<br><a id="more"></a></p>
-<h2 id="axios简介"><a href="#axios简介" class="headerlink" title="axios简介"></a>axios简介</h2><p>它的功能更强大,而且可以无痛迁移到新的项目当中,有尤大的原话就是:</p>
-<blockquote>
-<p>最近团队讨论了一下，Ajax 本身跟 Vue 并没有什么需要特别整合的地方，使用 fetch polyfill 或是 axios、superagent 等等都可以起到同等的效果，vue-resource 提供的价值和其维护成本相比并不划算，所以决定在不久以后取消对 vue-resource 的官方推荐。已有的用户可以继续使用，但以后不再把 vue-resource 作为官方的 ajax 方案。<br>这里可以去掉 vue-resource，文档也不必翻译了。<br><a href="https://github.com/vuefe/vuefe.github.io/issues/186" target="_blank" rel="external">原文链接</a></p>
-</blockquote>
-<p>这里还有一份<a href="https://juejin.im/entry/587599388d6d810058a7a41a" target="_blank" rel="external">看两眼就是能用的手册</a></p>
-<h2 id="关于-csrf-攻击"><a href="#关于-csrf-攻击" class="headerlink" title="关于 csrf 攻击"></a>关于 csrf 攻击</h2><p>这篇文章想说的不是怎么用 axios,而是之前碰到了一种情况,就是在 php 框架当中,碰到了 csrf 验证的问题<br>关于 csrf 攻击这里也不会讲,因为前辈们已经说的很详细了,比如这篇<a href="https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html#undefined" target="_blank" rel="external">通俗易懂的文章</a></p>
-<h2 id="axios-与-csrf-token"><a href="#axios-与-csrf-token" class="headerlink" title="axios 与 csrf-token"></a>axios 与 csrf-token</h2><p>我常用的两个框架中 laravel 是支持在 header 中设置 csrf-token 的,而 yii 中的默认设置只是在表单<br>提交的内容中检测 csrf-token 相关的字段,使用 axios 提交内容的时候默认并不会出现在 from-data<br>内容当中,比如这样提交的<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> postUrl = <span class="string">'/route/to/action'</span>;</div><div class="line"><span class="keyword">let</span> postData = &#123;</div><div class="line">  <span class="attr">id</span> : <span class="number">1</span>,</div><div class="line">  <span class="attr">name</span>: <span class="string">"xiaoming"</span>,</div><div class="line">  <span class="attr">_csrf_token</span> : <span class="string">"&lt;?= Yii::$app-&gt;request-&gt;csrfToken ?&gt;"</span></div><div class="line">&#125;</div><div class="line">axios.post(postUrl,postData)</div><div class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(res)</div><div class="line">  &#125;)</div><div class="line">  .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(error)</div><div class="line">  &#125;)</div></pre></td></tr></table></figure></p>
-<p>但是这样的提交形式在 yii2.0 当中是接收不到提交的内容的,因为它的内容是存在了 <code>request payload</code>当中<br>所以使用<code>Yii::$app-&gt;request-&gt;post()</code>是获取不到内容的,想要得到提交的内容需要这样:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">requestPayload</span><span class="params">()</span></span>&#123;</div><div class="line">    $request_payload = file_get_contents(<span class="string">'php://input'</span>);</div><div class="line">    <span class="keyword">return</span> json_decode($request_payload,<span class="keyword">true</span>);</div><div class="line">&#125;</div><div class="line">print_r(requestPayload());</div></pre></td></tr></table></figure></p>
-<p>这样做的缺点就是获取请求都是自己去实现,而不是通过框架的 request 类去处理<br>这么做的前提还是关闭所提交 controller 的 csrf-token 验证,不安全啊同志们!</p>
-<p>那么问题来了,用什么样的姿势提交能让框架去识别并自动提取出来 csrf-token 呢?</p>
-<p>说了那么多废话终于到正题了,关键就是这个类了:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> postUrl = <span class="string">'/route/to/action'</span>;</div><div class="line"><span class="keyword">let</span> postData = <span class="keyword">new</span> FormData();</div><div class="line">postData.append(<span class="string">'action'</span>, <span class="string">'ADD'</span>);</div><div class="line">postData.append(<span class="string">'param'</span>, <span class="number">0</span>);</div><div class="line">postData.append(<span class="string">'_csrf_token'</span>, <span class="string">'&lt;?= Yii::$app-&gt;request-&gt;csrfToken ?&gt;'</span>);</div><div class="line"></div><div class="line">axios.post(postUrl,postData)</div><div class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(res)</div><div class="line">  &#125;)</div><div class="line">  .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</div><div class="line">      <span class="built_in">console</span>.log(error)</div><div class="line">  &#125;)</div></pre></td></tr></table></figure></p>
-<p>在这之前 bb 了那么多也是想让自己的印象更清晰一点,边说边捋思路,这是当初找到答案的地方<a href="https://github.com/mzabriskie/axios/issues/318#issuecomment-218948420" target="_blank" rel="external">github</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;继 &lt;code&gt;vue-resource&lt;/code&gt; 之后, &lt;code&gt;axios&lt;/code&gt; 是 vue 官方首推的网络请求组件&lt;br&gt;
-    
-    </summary>
-    
-      <category term="js" scheme="http://blog.justwe.site/categories/js/"/>
-    
-    
-      <category term="axios" scheme="http://blog.justwe.site/tags/axios/"/>
-    
-      <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
     
   </entry>
   

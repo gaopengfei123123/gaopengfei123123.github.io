@@ -96,7 +96,7 @@
 <meta name="description" content="hey">
 <meta property="og:type" content="website">
 <meta property="og:title" content="&lt;hello-world&#x2F;&gt;">
-<meta property="og:url" content="http://blog.justwe.site/categories/yii2/index.html">
+<meta property="og:url" content="http://blog.justwe.site/categories/Yii2/index.html">
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="hey">
 <meta name="twitter:card" content="summary">
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/categories/yii2/"/>
+  <link rel="canonical" href="http://blog.justwe.site/categories/Yii2/"/>
 
 
 
 
 
-  <title> 分类: yii2 | <hello-world/> </title>
+  <title> 分类: Yii2 | <hello-world/> </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -308,7 +308,7 @@
   <section id="posts" class="posts-collapse">
     <div class="collection-title">
       <h2 >
-        yii2
+        Yii2
         <small>分类</small>
       </h2>
     </div>
@@ -321,9 +321,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2017/04/08/yii-multi-database/" itemprop="url">
+            <a class="post-title-link" href="/2017/02/28/yii-beforeaction/" itemprop="url">
               
-                <span itemprop="name">Yii-Multi-Database</span>
+                <span itemprop="name">beforeAction的一个示例</span>
               
             </a>
         
@@ -331,9 +331,37 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-08T17:31:31+08:00"
-              content="2017-04-08" >
-          04-08
+              datetime="2017-02-28T07:42:34+08:00"
+              content="2017-02-28" >
+          02-28
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2017/02/28/yii-csrf/" itemprop="url">
+              
+                <span itemprop="name">局部关闭Csrf验证</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-02-28T07:40:44+08:00"
+              content="2017-02-28" >
+          02-28
         </time>
       </div>
 
@@ -388,7 +416,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-count">94</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -397,7 +425,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -847,41 +875,6 @@
 
     $(function() {
       var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-
-  
-
-</body>
-</html>
-);
       if ($('.leancloud_visitors').length == 1) {
         addCount(Counter);
       } else if ($('.post-title-link').length > 1) {
