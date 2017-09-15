@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[关于 elementUI 中的 Intput 框的Enter 事件]]></title>
     <url>%2F2017%2F09%2F15%2Felementui-form-event%2F</url>
-    <content type="text"><![CDATA[在文档中没有出现相关的说明,但是在实际使用中确实需要用到,怎么办呢? 这里有一个示例:1234567891011121314151617181920&lt;el-form:inline="true":model="price_form":rules="price_rules"ref="priceForm"@submit.native.preventv-if="scope.row.edit_deposit"&gt; &lt;el-row style="margin-top: 22px;"&gt; &lt;el-form-item label-width="0" prop="price"&gt; &lt;el-input placeholder="请输入价格" :icon="price_loading ? 'loading' : 'edit' " v-model="price_form.price" @keyup.native.enter="storePrice" :on-icon-click="storePrice"&gt; &lt;/el-input&gt; &lt;/el-form-item&gt; &lt;/el-row&gt;&lt;/el-form&gt; 这里需要在input 中加入 @keyup.native.enter=&quot;&quot; 事件,只加这个还不完整,因为回车的时候会出现表单默认提交的情况,有些时候是我们不需要的,因此,需要在 el-form中添加@submit.native.prevent来阻止 form 的默认提交行为]]></content>
+    <content type="text"><![CDATA[在文档中没有出现相关的说明,但是在实际使用中确实需要用到,怎么办呢? 这里有一个示例:1234567891011121314151617181920&lt;el-form:inline="true":model="price_form":rules="price_rules"ref="priceForm"@submit.native.preventv-if="scope.row.edit_deposit"&gt; &lt;el-row style="margin-top: 22px;"&gt; &lt;el-form-item label-width="0" prop="price"&gt; &lt;el-input placeholder="请输入价格" :icon="price_loading ? 'loading' : 'edit' " v-model="price_form.price" @keyup.native.enter="storePrice" :on-icon-click="storePrice"&gt; &lt;/el-input&gt; &lt;/el-form-item&gt; &lt;/el-row&gt;&lt;/el-form&gt; 这里需要在input 中加入 @keyup.native.enter=&quot;&quot; 事件,只加这个还不完整,因为回车的时候会出现表单默认提交的情况,有些时候是我们不需要的,因此,需要在 el-form中添加@submit.native.prevent来阻止 form 的默认提交行为 资料来源]]></content>
       <categories>
         <category>elementUI</category>
       </categories>
