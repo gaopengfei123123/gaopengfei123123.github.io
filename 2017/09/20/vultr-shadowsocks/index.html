@@ -75,7 +75,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="等一个人, blog, laravel, php, js, vuejs, yii2.0" />
+  <meta name="keywords" content="tools,shadowsocks," />
 
 
 
@@ -93,16 +93,17 @@
 
 
 
-<meta name="description" content="centos自带的git版本太低了,安装个新吧">
+<meta name="description" content="因为坑爹的GFW某些问题,导致一些浏览器的默认搜索长期404,为了解决这个问题之前试过lantern也试过一些 vpn,但是都不好用啊,vpn 要面对商家跑路的危险(和去理发店找 tony 老师办卡一样),lantern虽然好用但是免费版有流量限制,只能自己动手丰衣足食了">
+<meta name="keywords" content="tools,shadowsocks">
 <meta property="og:type" content="article">
-<meta property="og:title" content="centos上安装git2.2">
-<meta property="og:url" content="http://blog.justwe.site/2016/12/03/centos-install-git/index.html">
+<meta property="og:title" content="使用Vultr来搭建梯子">
+<meta property="og:url" content="http://blog.justwe.site/2017/09/20/vultr-shadowsocks/index.html">
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
-<meta property="og:description" content="centos自带的git版本太低了,安装个新吧">
-<meta property="og:updated_time" content="2017-04-06T04:17:40.000Z">
+<meta property="og:description" content="因为坑爹的GFW某些问题,导致一些浏览器的默认搜索长期404,为了解决这个问题之前试过lantern也试过一些 vpn,但是都不好用啊,vpn 要面对商家跑路的危险(和去理发店找 tony 老师办卡一样),lantern虽然好用但是免费版有流量限制,只能自己动手丰衣足食了">
+<meta property="og:updated_time" content="2017-09-20T08:53:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="centos上安装git2.2">
-<meta name="twitter:description" content="centos自带的git版本太低了,安装个新吧">
+<meta name="twitter:title" content="使用Vultr来搭建梯子">
+<meta name="twitter:description" content="因为坑爹的GFW某些问题,导致一些浏览器的默认搜索长期404,为了解决这个问题之前试过lantern也试过一些 vpn,但是都不好用啊,vpn 要面对商家跑路的危险(和去理发店找 tony 老师办卡一样),lantern虽然好用但是免费版有流量限制,只能自己动手丰衣足食了">
 
 
 
@@ -130,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/2016/12/03/centos-install-git/"/>
+  <link rel="canonical" href="http://blog.justwe.site/2017/09/20/vultr-shadowsocks/"/>
 
 
 
 
 
-  <title> centos上安装git2.2 | <hello-world/> </title>
+  <title> 使用Vultr来搭建梯子 | <hello-world/> </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -316,7 +317,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2016/12/03/centos-install-git/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/09/20/vultr-shadowsocks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="GPF">
@@ -337,7 +338,7 @@
             
             
               
-                centos上安装git2.2
+                使用Vultr来搭建梯子
               
             
           </h2>
@@ -352,8 +353,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-03T14:24:00+08:00">
-                2016-12-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T14:16:47+08:00">
+                2017-09-20
               </time>
             
 
@@ -375,8 +376,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
                   </a>
                 </span>
 
@@ -392,7 +393,7 @@
 
           
           
-             <span id="/2016/12/03/centos-install-git/" class="leancloud_visitors" data-flag-title="centos上安装git2.2">
+             <span id="/2017/09/20/vultr-shadowsocks/" class="leancloud_visitors" data-flag-title="使用Vultr来搭建梯子">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -421,15 +422,42 @@
       
 
       
-        <p> centos自带的git版本太低了,安装个新吧</p>
- <a id="more"></a>
-<h3 id="安装依赖环境"><a href="#安装依赖环境" class="headerlink" title="安装依赖环境"></a>安装依赖环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;# yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel asciidoc</div><div class="line">&gt;# yum install  gcc perl-ExtUtils-MakeMaker   error: ```/utf8.c:463: undefined reference to `libiconv&apos;</div></pre></td></tr></table></figure>
-<blockquote>
-<h1 id="wget-http-ftp-gnu-org-pub-gnu-libiconv-libiconv-1-14-tar-gz"><a href="#wget-http-ftp-gnu-org-pub-gnu-libiconv-libiconv-1-14-tar-gz" class="headerlink" title="wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz"></a>wget <a href="http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz" target="_blank" rel="external">http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz</a></h1><h1 id="tar-zxvf-libiconv-1-14-tar-gz"><a href="#tar-zxvf-libiconv-1-14-tar-gz" class="headerlink" title="tar zxvf libiconv-1.14.tar.gz"></a>tar zxvf libiconv-1.14.tar.gz</h1><h1 id="cd-libiconv-1-14"><a href="#cd-libiconv-1-14" class="headerlink" title="cd libiconv-1.14"></a>cd libiconv-1.14</h1><h1 id="configure-–prefix-usr-local-libiconv"><a href="#configure-–prefix-usr-local-libiconv" class="headerlink" title="./configure –prefix=/usr/local/libiconv"></a>./configure –prefix=/usr/local/libiconv</h1><h1 id="make-amp-amp-make-install"><a href="#make-amp-amp-make-install" class="headerlink" title="make &amp;&amp; make install"></a>make &amp;&amp; make install</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">### 卸载Centos自带的git1.7.1</div></pre></td></tr></table></figure>
-<h1 id="yum-remove-git"><a href="#yum-remove-git" class="headerlink" title="yum remove git"></a>yum remove git</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">### 下载git2.2.1并将git添加到环境变量中</div></pre></td></tr></table></figure>
-<h1 id="wget-https-github-com-git-git-archive-v2-2-1-tar-gz"><a href="#wget-https-github-com-git-git-archive-v2-2-1-tar-gz" class="headerlink" title="wget https://github.com/git/git/archive/v2.2.1.tar.gz"></a>wget <a href="https://github.com/git/git/archive/v2.2.1.tar.gz" target="_blank" rel="external">https://github.com/git/git/archive/v2.2.1.tar.gz</a></h1><h1 id="tar-zxvf-v2-2-1-tar-gz"><a href="#tar-zxvf-v2-2-1-tar-gz" class="headerlink" title="tar zxvf v2.2.1.tar.gz"></a>tar zxvf v2.2.1.tar.gz</h1><h1 id="cd-git-2-2-1"><a href="#cd-git-2-2-1" class="headerlink" title="cd git-2.2.1"></a>cd git-2.2.1</h1><h1 id="make-configure"><a href="#make-configure" class="headerlink" title="make configure"></a>make configure</h1><h1 id="configure-–prefix-usr-local-git-–with-iconv-usr-local-libiconv"><a href="#configure-–prefix-usr-local-git-–with-iconv-usr-local-libiconv" class="headerlink" title="./configure –prefix=/usr/local/git –with-iconv=/usr/local/libiconv"></a>./configure –prefix=/usr/local/git –with-iconv=/usr/local/libiconv</h1><h1 id="makeall-doc"><a href="#makeall-doc" class="headerlink" title="makeall doc"></a>makeall doc</h1><h1 id="make-install-install-doc-install-html"><a href="#make-install-install-doc-install-html" class="headerlink" title="make install install-doc install-html"></a>make install install-doc install-html</h1><h1 id="echo”export-PATH-PATH-usr-local-git-bin”-gt-gt-etc-bashrc"><a href="#echo”export-PATH-PATH-usr-local-git-bin”-gt-gt-etc-bashrc" class="headerlink" title="echo”export PATH=$PATH:/usr/local/git/bin” &gt;&gt; /etc/bashrc"></a>echo”export PATH=$PATH:/usr/local/git/bin” &gt;&gt; /etc/bashrc</h1><h1 id="source-etc-bashrc"><a href="#source-etc-bashrc" class="headerlink" title="source /etc/bashrc"></a>source /etc/bashrc</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">### 查看版本号</div></pre></td></tr></table></figure>
-<h1 id="git-–version"><a href="#git-–version" class="headerlink" title="git –version"></a>git –version</h1><p>git version2.2.1<br>```</p>
-</blockquote>
+        <p>因为<del>坑爹的GFW</del>某些问题,导致一些浏览器的默认搜索长期404,为了解决这个问题之前试过<a href="https://getlantern.org/en_US/" target="_blank" rel="external">lantern</a><br>也试过一些 vpn,但是都不好用啊,vpn 要面对商家跑路的危险(和去理发店找 tony 老师办卡一样),lantern<br>虽然好用但是免费版有流量限制,只能自己动手丰衣足食了</p>
+<a id="more"></a>
+<h3 id="首先选一个国外的服务器"><a href="#首先选一个国外的服务器" class="headerlink" title="首先选一个国外的服务器"></a>首先选一个国外的服务器</h3><p>国内的服务厂商就不用想了,哪怕是有国外的服务器也是死贵死贵的,然后如果没有办过 <a href="https://amazonaws-china.com/cn/" target="_blank" rel="external">aws</a> 的话,这个是<br><strong>最佳</strong> 选择,因为初次注册并绑定信用卡就能免费使用一年的 vps,用来做 shadowsocks 服务器完全没<br>问题啊!具体开那个服务器其实都是那一套流程了,现在进入主题:买一个 <a href="https://my.vultr.com/" target="_blank" rel="external">vultr</a>服务器.</p>
+<p>我认为 vultr 的优势</p>
+<ul>
+<li>国外服务器,可以做翻墙用</li>
+<li>价格便宜,每月最低2.5$,丰俭由人,<strong>计价方式是按小时计费哟!</strong></li>
+<li>如果是个人使用有用不完的流量(1T+)</li>
+<li>主要是我还想用它做网站服务器,配置和价格比国内有强</li>
+</ul>
+<p>去<a href="https://my.vultr.com/" target="_blank" rel="external">官网</a>注册一个账户就可以开始选择服务器了,配置选<code>东京服务器&gt;centos7&gt;1cpu&amp;1GMery&amp;1TBandwidth</code>,<br>点完这三项就什么都不用点了, deploy now</p>
+<p>这时应该是有一个ip,一个密码了,可以登录服务器了<br>如果你是 windows 环境,下载一个 <a href="http://rj.baidu.com/soft/detail/15201.html" target="_blank" rel="external">xshell</a><br>如果你是 macOS 就用终端或者 <a href="https://www.iterm2.com/" target="_blank" rel="external">item2</a><br>接下来的操作两个平台都是一样的,就是用 ssh 去链接远程服务器<br>比如你的 ip 是<code>120.0.0.1</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@120.0.0.1</div></pre></td></tr></table></figure></p>
+<p>回车后输入密码就能登录上去了</p>
+<h3 id="在服务器搭建-shadowsocks"><a href="#在服务器搭建-shadowsocks" class="headerlink" title="在服务器搭建 shadowsocks"></a>在服务器搭建 shadowsocks</h3><ol>
+<li><p>最简单的就是通过脚本搭建,按以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 下载脚本</div><div class="line">wget -O ss.sh http://zhangdanyang.com/file/ss.sh</div><div class="line"># 执行脚本</div><div class="line">bash ss.sh</div><div class="line"></div><div class="line"># 设置端口号并回车，直接回车是设置为1225</div><div class="line">Please enter PORT(1225 default):</div><div class="line"># 设置密码并回车，直接回车是设置为123456</div><div class="line">Please enter PASSWORD(123456 default):</div><div class="line"></div><div class="line"># 等待一会……就完成了（初次执行约2-5min）</div></pre></td></tr></table></figure>
+<p>脚本源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">#! /bin/bash</div><div class="line"># log路径</div><div class="line">export log_path=/etc/ss.log</div><div class="line"># 设置端口号</div><div class="line">echo -n -e &apos;\033[36mPlease enter PORT(1225 default): \033[0m&apos;</div><div class="line"># echo -n &quot;please enter port(1225 default):&quot;</div><div class="line">read port</div><div class="line">if [ ! -n &quot;$port&quot; ];then</div><div class="line">        echo &quot;port will be set to 1225&quot;</div><div class="line">        port=1225</div><div class="line">else</div><div class="line">        echo &quot;port will be set to $port&quot;</div><div class="line">fi</div><div class="line"># 设置密码</div><div class="line">echo -n -e &apos;\033[36mPlease enter PASSWORD(123456 default): \033[0m&apos;</div><div class="line"># echo -n &quot;please enter password(123456 default):&quot;</div><div class="line">read pwd</div><div class="line">if [ ! -n &quot;$pwd&quot; ];then</div><div class="line">        echo &quot;password will be set to 123456&quot;</div><div class="line">        pwd=123456</div><div class="line">else</div><div class="line">        echo &quot;password will be set to $pwd&quot;</div><div class="line">fi</div><div class="line"># 写shadowsocks.json配置文件</div><div class="line">cat&gt;/etc/shadowsocks.json&lt;&lt;EOF</div><div class="line">&#123;</div><div class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</div><div class="line">    &quot;server_port&quot;:$port,</div><div class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">    &quot;local_port&quot;:1080,</div><div class="line">    &quot;password&quot;:&quot;$pwd&quot;,</div><div class="line">    &quot;timeout&quot;:300,</div><div class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</div><div class="line">    &quot;fast_open&quot;: false</div><div class="line">&#125;</div><div class="line">EOF</div><div class="line"># 安装 shadowsocks 防火墙等</div><div class="line">ret=`yum install -y m2crypto python-setuptools &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`easy_install pip &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`pip install shadowsocks &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`yum install -y firewalld &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`systemctl start firewalld &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line"># 开启端口</div><div class="line">ret=`firewall-cmd --permanent --zone=public --add-port=22/tcp &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`firewall-cmd --permanent --zone=public --add-port=$port/tcp &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`firewall-cmd --reload &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line"># 如果有相同功能的进程则杀死</div><div class="line">ps -ef|grep ssserver|grep shadowsocks|awk &apos;&#123; print $2 &#125;&apos;|xargs kill -9</div><div class="line">nohup /usr/bin/ssserver -c /etc/shadowsocks.json &amp;</div><div class="line"># 成功</div><div class="line">if [ $? -eq 0 ];then</div><div class="line">clear</div><div class="line">cat&lt;&lt;EOF</div><div class="line">***************Congratulation!*************</div><div class="line">Shadowsocks installed successfully!</div><div class="line"></div><div class="line">PORT: $port</div><div class="line">PASSWORD: $pwd</div><div class="line">METHOD: aes-256-cfb</div><div class="line"></div><div class="line">***************JUST ENJOY IT!**************</div><div class="line">EOF</div><div class="line"># 失败</div><div class="line">else</div><div class="line">clear</div><div class="line">cat&lt;&lt;EOF</div><div class="line">************Failed,retry please!***********</div><div class="line"></div><div class="line">cat /etc/ss.log to get something you need…</div><div class="line"></div><div class="line">************Failed,retry please!***********</div><div class="line">EOF</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>需要记住 <strong>端口号</strong> 和 <strong>密码</strong> 一会儿会用到</p>
+</li>
+</ol>
+<p>如果是用脚本搭建的就没必要看这一部分了,直接看客户端部分就行<br>手动搭建 shadowsocks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 安装 pip 工具且安装 shadowsocks</div><div class="line">$ yum install m2crypto python-setuptools</div><div class="line">$ easy_install pip</div><div class="line">$ pip install shadowsocks</div></pre></td></tr></table></figure></p>
+<p>编辑启动配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi  /etc/shadowsocks.json</div></pre></td></tr></table></figure></p>
+<p>文件内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</div><div class="line">    &quot;server_port&quot;:443,  //对外的端口</div><div class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">    &quot;local_port&quot;:1080,</div><div class="line">    &quot;password&quot;:&quot;123456&quot;,//你的链接密码</div><div class="line">    &quot;timeout&quot;:300,</div><div class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</div><div class="line">    &quot;fast_open&quot;: false</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果是多端口配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</div><div class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">    &quot;local_port&quot;:1080,</div><div class="line">    &quot;port_password&quot;: &#123;</div><div class="line">         &quot;443&quot;: &quot;443&quot;,</div><div class="line">         &quot;8888&quot;: &quot;8888&quot;</div><div class="line">     &#125;,</div><div class="line">    &quot;timeout&quot;:300,</div><div class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</div><div class="line">    &quot;fast_open&quot;: false</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置防火墙,centos7默认的防火墙是 <code>firewalld</code> 和 centos6的 <code>iptables</code> 稍有区别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 安装防火墙</div><div class="line">$ yum install firewalld</div><div class="line"># 启动防火墙</div><div class="line">$ systemctl start firewalld</div></pre></td></tr></table></figure></p>
+<p>开启对应的端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 端口号是你自己设置的端口(上文中的配置,443端口)</div><div class="line">$ firewall-cmd --permanent --zone=public --add-port=443/tcp</div><div class="line"># 新增防火墙规则后一定要执行,这一步很重要</div><div class="line">$ firewall-cmd --reload</div></pre></td></tr></table></figure></p>
+<p>启动 shadowsocks 服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ssserver -c /etc/shadowsocks.json</div><div class="line">//如果改成常驻后台的模式</div><div class="line">$ nohup ssserver -c /etc/shadowsocks.json &amp;</div></pre></td></tr></table></figure></p>
+<p>将它设置成开机自启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/systemd/system/shadowsocks.service</div></pre></td></tr></table></figure></p>
+<p>输入内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Shadowsocks</div><div class="line"></div><div class="line">[Service]</div><div class="line">TimeoutStartSec=0</div><div class="line">ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
+<p>添加进服务中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ systemctl enable shadowsocks</div><div class="line">//启动服务(如果执行过之前的流程的话就不用执行这一步,因为已经启动了)</div><div class="line">$ systemctl start shadowsocks</div><div class="line">//查看启动状态</div><div class="line">$ systemctl status shadowsocks -l</div></pre></td></tr></table></figure></p>
+<p>如果启动没问题和防火墙没问题那么服务器这块就没问题了</p>
+<h3 id="通过客户端连接远程-ss-服务"><a href="#通过客户端连接远程-ss-服务" class="headerlink" title="通过客户端连接远程 ss 服务"></a>通过客户端连接远程 ss 服务</h3><p>下载一个 <a href="https://www.shadowsocks.company/download-mac.html" target="_blank" rel="external">shadowsocks 客户端下载</a></p>
+<p><a href="https://sourceforge.net/projects/shadowsocksgui/files/dist/" target="_blank" rel="external">各个平台版本列表</a></p>
+<p>软件下载安装后,点击 <code>服务器&gt;服务器设定</code>,<br>地址就是你的服务器 ip,后面的端口是 <code>shadowsocks.json</code>中设置的 <code>server_port</code>,也就是脚本设置时的第一个参数<br>密码是配置文件中的密码,加密方式如果用的脚本就是默认 <code>aes-256-cfb</code> 如果是独立安装就参考<code>shadowsocks.json</code>中<br>的<code>method</code><br>设置好点选这个服务器再打开 shadowsocks 就好</p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>我用的是 mac,之前也是用同样的程序链接的 aws 的服务,后来到期后改用的 vultr,结果搭建的服务器在 mac 上<br>连接不上了,但是同样的地址用手机就能连上!折腾了半天发现是电脑中有之前的配置缓存,索性我就把当前的<br>shadowsocks 删了重装一下,用 cleanMyMac 给它卸载干净,卸载的时候就能发现它究竟有哪些配置存在<br>统统删掉删掉,再重装一下就一切正常了</p>
 
       
     </div>
@@ -467,6 +495,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/tools/" rel="tag"># tools</a>
+          
+            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
+          
+        </div>
+      
 
       
         
@@ -476,8 +512,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/29/git-rm-cache/" rel="next" title="Git删除已提交入库的文件">
-                <i class="fa fa-chevron-left"></i> Git删除已提交入库的文件
+              <a href="/2017/09/15/elementui-form-event/" rel="next" title="关于 elementUI 中的 Intput 框的Enter 事件">
+                <i class="fa fa-chevron-left"></i> 关于 elementUI 中的 Intput 框的Enter 事件
               </a>
             
           </div>
@@ -485,10 +521,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/10/php-swoole/" rel="prev" title="安装Swoole的记录">
-                安装Swoole的记录 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -657,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖环境"><span class="nav-number">1.</span> <span class="nav-text">安装依赖环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-http-ftp-gnu-org-pub-gnu-libiconv-libiconv-1-14-tar-gz"><span class="nav-number"></span> <span class="nav-text">wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar-zxvf-libiconv-1-14-tar-gz"><span class="nav-number"></span> <span class="nav-text">tar zxvf libiconv-1.14.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-libiconv-1-14"><span class="nav-number"></span> <span class="nav-text">cd libiconv-1.14</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#configure-–prefix-usr-local-libiconv"><span class="nav-number"></span> <span class="nav-text">./configure –prefix=/usr/local/libiconv</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-amp-amp-make-install"><span class="nav-number"></span> <span class="nav-text">make && make install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yum-remove-git"><span class="nav-number"></span> <span class="nav-text">yum remove git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-https-github-com-git-git-archive-v2-2-1-tar-gz"><span class="nav-number"></span> <span class="nav-text">wget https://github.com/git/git/archive/v2.2.1.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar-zxvf-v2-2-1-tar-gz"><span class="nav-number"></span> <span class="nav-text">tar zxvf v2.2.1.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-git-2-2-1"><span class="nav-number"></span> <span class="nav-text">cd git-2.2.1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-configure"><span class="nav-number"></span> <span class="nav-text">make configure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#configure-–prefix-usr-local-git-–with-iconv-usr-local-libiconv"><span class="nav-number"></span> <span class="nav-text">./configure –prefix=/usr/local/git –with-iconv=/usr/local/libiconv</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#makeall-doc"><span class="nav-number"></span> <span class="nav-text">makeall doc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-install-install-doc-install-html"><span class="nav-number"></span> <span class="nav-text">make install install-doc install-html</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#echo”export-PATH-PATH-usr-local-git-bin”-gt-gt-etc-bashrc"><span class="nav-number"></span> <span class="nav-text">echo”export PATH=$PATH:/usr/local/git/bin” >> /etc/bashrc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#source-etc-bashrc"><span class="nav-number"></span> <span class="nav-text">source /etc/bashrc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#git-–version"><span class="nav-number"></span> <span class="nav-text">git –version</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先选一个国外的服务器"><span class="nav-number">1.</span> <span class="nav-text">首先选一个国外的服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在服务器搭建-shadowsocks"><span class="nav-number">2.</span> <span class="nav-text">在服务器搭建 shadowsocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过客户端连接远程-ss-服务"><span class="nav-number">3.</span> <span class="nav-text">通过客户端连接远程 ss 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>

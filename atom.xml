@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-09-15T03:50:29.000Z</updated>
+  <updated>2017-09-20T08:53:11.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -14,6 +14,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Vultr来搭建梯子</title>
+    <link href="http://blog.justwe.site/2017/09/20/vultr-shadowsocks/"/>
+    <id>http://blog.justwe.site/2017/09/20/vultr-shadowsocks/</id>
+    <published>2017-09-20T06:16:47.000Z</published>
+    <updated>2017-09-20T08:53:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为<del>坑爹的GFW</del>某些问题,导致一些浏览器的默认搜索长期404,为了解决这个问题之前试过<a href="https://getlantern.org/en_US/" target="_blank" rel="external">lantern</a><br>也试过一些 vpn,但是都不好用啊,vpn 要面对商家跑路的危险(和去理发店找 tony 老师办卡一样),lantern<br>虽然好用但是免费版有流量限制,只能自己动手丰衣足食了</p>
+<a id="more"></a>
+<h3 id="首先选一个国外的服务器"><a href="#首先选一个国外的服务器" class="headerlink" title="首先选一个国外的服务器"></a>首先选一个国外的服务器</h3><p>国内的服务厂商就不用想了,哪怕是有国外的服务器也是死贵死贵的,然后如果没有办过 <a href="https://amazonaws-china.com/cn/" target="_blank" rel="external">aws</a> 的话,这个是<br><strong>最佳</strong> 选择,因为初次注册并绑定信用卡就能免费使用一年的 vps,用来做 shadowsocks 服务器完全没<br>问题啊!具体开那个服务器其实都是那一套流程了,现在进入主题:买一个 <a href="https://my.vultr.com/" target="_blank" rel="external">vultr</a>服务器.</p>
+<p>我认为 vultr 的优势</p>
+<ul>
+<li>国外服务器,可以做翻墙用</li>
+<li>价格便宜,每月最低2.5$,丰俭由人,<strong>计价方式是按小时计费哟!</strong></li>
+<li>如果是个人使用有用不完的流量(1T+)</li>
+<li>主要是我还想用它做网站服务器,配置和价格比国内有强</li>
+</ul>
+<p>去<a href="https://my.vultr.com/" target="_blank" rel="external">官网</a>注册一个账户就可以开始选择服务器了,配置选<code>东京服务器&gt;centos7&gt;1cpu&amp;1GMery&amp;1TBandwidth</code>,<br>点完这三项就什么都不用点了, deploy now</p>
+<p>这时应该是有一个ip,一个密码了,可以登录服务器了<br>如果你是 windows 环境,下载一个 <a href="http://rj.baidu.com/soft/detail/15201.html" target="_blank" rel="external">xshell</a><br>如果你是 macOS 就用终端或者 <a href="https://www.iterm2.com/" target="_blank" rel="external">item2</a><br>接下来的操作两个平台都是一样的,就是用 ssh 去链接远程服务器<br>比如你的 ip 是<code>120.0.0.1</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@120.0.0.1</div></pre></td></tr></table></figure></p>
+<p>回车后输入密码就能登录上去了</p>
+<h3 id="在服务器搭建-shadowsocks"><a href="#在服务器搭建-shadowsocks" class="headerlink" title="在服务器搭建 shadowsocks"></a>在服务器搭建 shadowsocks</h3><ol>
+<li><p>最简单的就是通过脚本搭建,按以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 下载脚本</div><div class="line">wget -O ss.sh http://zhangdanyang.com/file/ss.sh</div><div class="line"># 执行脚本</div><div class="line">bash ss.sh</div><div class="line"></div><div class="line"># 设置端口号并回车，直接回车是设置为1225</div><div class="line">Please enter PORT(1225 default):</div><div class="line"># 设置密码并回车，直接回车是设置为123456</div><div class="line">Please enter PASSWORD(123456 default):</div><div class="line"></div><div class="line"># 等待一会……就完成了（初次执行约2-5min）</div></pre></td></tr></table></figure>
+<p>脚本源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">#! /bin/bash</div><div class="line"># log路径</div><div class="line">export log_path=/etc/ss.log</div><div class="line"># 设置端口号</div><div class="line">echo -n -e &apos;\033[36mPlease enter PORT(1225 default): \033[0m&apos;</div><div class="line"># echo -n &quot;please enter port(1225 default):&quot;</div><div class="line">read port</div><div class="line">if [ ! -n &quot;$port&quot; ];then</div><div class="line">        echo &quot;port will be set to 1225&quot;</div><div class="line">        port=1225</div><div class="line">else</div><div class="line">        echo &quot;port will be set to $port&quot;</div><div class="line">fi</div><div class="line"># 设置密码</div><div class="line">echo -n -e &apos;\033[36mPlease enter PASSWORD(123456 default): \033[0m&apos;</div><div class="line"># echo -n &quot;please enter password(123456 default):&quot;</div><div class="line">read pwd</div><div class="line">if [ ! -n &quot;$pwd&quot; ];then</div><div class="line">        echo &quot;password will be set to 123456&quot;</div><div class="line">        pwd=123456</div><div class="line">else</div><div class="line">        echo &quot;password will be set to $pwd&quot;</div><div class="line">fi</div><div class="line"># 写shadowsocks.json配置文件</div><div class="line">cat&gt;/etc/shadowsocks.json&lt;&lt;EOF</div><div class="line">&#123;</div><div class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</div><div class="line">    &quot;server_port&quot;:$port,</div><div class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">    &quot;local_port&quot;:1080,</div><div class="line">    &quot;password&quot;:&quot;$pwd&quot;,</div><div class="line">    &quot;timeout&quot;:300,</div><div class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</div><div class="line">    &quot;fast_open&quot;: false</div><div class="line">&#125;</div><div class="line">EOF</div><div class="line"># 安装 shadowsocks 防火墙等</div><div class="line">ret=`yum install -y m2crypto python-setuptools &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`easy_install pip &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`pip install shadowsocks &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`yum install -y firewalld &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`systemctl start firewalld &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line"># 开启端口</div><div class="line">ret=`firewall-cmd --permanent --zone=public --add-port=22/tcp &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`firewall-cmd --permanent --zone=public --add-port=$port/tcp &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line">ret=`firewall-cmd --reload &gt;&gt; $&#123;log_path&#125; 2&gt;&amp;1`</div><div class="line"># 如果有相同功能的进程则杀死</div><div class="line">ps -ef|grep ssserver|grep shadowsocks|awk &apos;&#123; print $2 &#125;&apos;|xargs kill -9</div><div class="line">nohup /usr/bin/ssserver -c /etc/shadowsocks.json &amp;</div><div class="line"># 成功</div><div class="line">if [ $? -eq 0 ];then</div><div class="line">clear</div><div class="line">cat&lt;&lt;EOF</div><div class="line">***************Congratulation!*************</div><div class="line">Shadowsocks installed successfully!</div><div class="line"></div><div class="line">PORT: $port</div><div class="line">PASSWORD: $pwd</div><div class="line">METHOD: aes-256-cfb</div><div class="line"></div><div class="line">***************JUST ENJOY IT!**************</div><div class="line">EOF</div><div class="line"># 失败</div><div class="line">else</div><div class="line">clear</div><div class="line">cat&lt;&lt;EOF</div><div class="line">************Failed,retry please!***********</div><div class="line"></div><div class="line">cat /etc/ss.log to get something you need…</div><div class="line"></div><div class="line">************Failed,retry please!***********</div><div class="line">EOF</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>需要记住 <strong>端口号</strong> 和 <strong>密码</strong> 一会儿会用到</p>
+</li>
+</ol>
+<p>如果是用脚本搭建的就没必要看这一部分了,直接看客户端部分就行<br>手动搭建 shadowsocks<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 安装 pip 工具且安装 shadowsocks</div><div class="line">$ yum install m2crypto python-setuptools</div><div class="line">$ easy_install pip</div><div class="line">$ pip install shadowsocks</div></pre></td></tr></table></figure></p>
+<p>编辑启动配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi  /etc/shadowsocks.json</div></pre></td></tr></table></figure></p>
+<p>文件内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</div><div class="line">    &quot;server_port&quot;:443,  //对外的端口</div><div class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">    &quot;local_port&quot;:1080,</div><div class="line">    &quot;password&quot;:&quot;123456&quot;,//你的链接密码</div><div class="line">    &quot;timeout&quot;:300,</div><div class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</div><div class="line">    &quot;fast_open&quot;: false</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果是多端口配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</div><div class="line">    &quot;local_address&quot;: &quot;127.0.0.1&quot;,</div><div class="line">    &quot;local_port&quot;:1080,</div><div class="line">    &quot;port_password&quot;: &#123;</div><div class="line">         &quot;443&quot;: &quot;443&quot;,</div><div class="line">         &quot;8888&quot;: &quot;8888&quot;</div><div class="line">     &#125;,</div><div class="line">    &quot;timeout&quot;:300,</div><div class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</div><div class="line">    &quot;fast_open&quot;: false</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置防火墙,centos7默认的防火墙是 <code>firewalld</code> 和 centos6的 <code>iptables</code> 稍有区别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 安装防火墙</div><div class="line">$ yum install firewalld</div><div class="line"># 启动防火墙</div><div class="line">$ systemctl start firewalld</div></pre></td></tr></table></figure></p>
+<p>开启对应的端口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 端口号是你自己设置的端口(上文中的配置,443端口)</div><div class="line">$ firewall-cmd --permanent --zone=public --add-port=443/tcp</div><div class="line"># 新增防火墙规则后一定要执行,这一步很重要</div><div class="line">$ firewall-cmd --reload</div></pre></td></tr></table></figure></p>
+<p>启动 shadowsocks 服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ ssserver -c /etc/shadowsocks.json</div><div class="line">//如果改成常驻后台的模式</div><div class="line">$ nohup ssserver -c /etc/shadowsocks.json &amp;</div></pre></td></tr></table></figure></p>
+<p>将它设置成开机自启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/systemd/system/shadowsocks.service</div></pre></td></tr></table></figure></p>
+<p>输入内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[Unit]</div><div class="line">Description=Shadowsocks</div><div class="line"></div><div class="line">[Service]</div><div class="line">TimeoutStartSec=0</div><div class="line">ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json</div><div class="line"></div><div class="line">[Install]</div><div class="line">WantedBy=multi-user.target</div></pre></td></tr></table></figure></p>
+<p>添加进服务中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ systemctl enable shadowsocks</div><div class="line">//启动服务(如果执行过之前的流程的话就不用执行这一步,因为已经启动了)</div><div class="line">$ systemctl start shadowsocks</div><div class="line">//查看启动状态</div><div class="line">$ systemctl status shadowsocks -l</div></pre></td></tr></table></figure></p>
+<p>如果启动没问题和防火墙没问题那么服务器这块就没问题了</p>
+<h3 id="通过客户端连接远程-ss-服务"><a href="#通过客户端连接远程-ss-服务" class="headerlink" title="通过客户端连接远程 ss 服务"></a>通过客户端连接远程 ss 服务</h3><p>下载一个 <a href="https://www.shadowsocks.company/download-mac.html" target="_blank" rel="external">shadowsocks 客户端下载</a></p>
+<p><a href="https://sourceforge.net/projects/shadowsocksgui/files/dist/" target="_blank" rel="external">各个平台版本列表</a></p>
+<p>软件下载安装后,点击 <code>服务器&gt;服务器设定</code>,<br>地址就是你的服务器 ip,后面的端口是 <code>shadowsocks.json</code>中设置的 <code>server_port</code>,也就是脚本设置时的第一个参数<br>密码是配置文件中的密码,加密方式如果用的脚本就是默认 <code>aes-256-cfb</code> 如果是独立安装就参考<code>shadowsocks.json</code>中<br>的<code>method</code><br>设置好点选这个服务器再打开 shadowsocks 就好</p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>我用的是 mac,之前也是用同样的程序链接的 aws 的服务,后来到期后改用的 vultr,结果搭建的服务器在 mac 上<br>连接不上了,但是同样的地址用手机就能连上!折腾了半天发现是电脑中有之前的配置缓存,索性我就把当前的<br>shadowsocks 删了重装一下,用 cleanMyMac 给它卸载干净,卸载的时候就能发现它究竟有哪些配置存在<br>统统删掉删掉,再重装一下就一切正常了</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;因为&lt;del&gt;坑爹的GFW&lt;/del&gt;某些问题,导致一些浏览器的默认搜索长期404,为了解决这个问题之前试过&lt;a href=&quot;https://getlantern.org/en_US/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;lantern&lt;/a&gt;&lt;br&gt;也试过一些 vpn,但是都不好用啊,vpn 要面对商家跑路的危险(和去理发店找 tony 老师办卡一样),lantern&lt;br&gt;虽然好用但是免费版有流量限制,只能自己动手丰衣足食了&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
+    
+      <category term="shadowsocks" scheme="http://blog.justwe.site/tags/shadowsocks/"/>
+    
+  </entry>
   
   <entry>
     <title>关于 elementUI 中的 Intput 框的Enter 事件</title>
@@ -717,37 +777,6 @@
       <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
     
       <category term="callback" scheme="http://blog.justwe.site/tags/callback/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git-Askpass-Error</title>
-    <link href="http://blog.justwe.site/2017/05/08/git-askpass-error/"/>
-    <id>http://blog.justwe.site/2017/05/08/git-askpass-error/</id>
-    <published>2017-05-08T14:31:42.000Z</published>
-    <updated>2017-05-08T14:46:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>git 的账号密码错误情况<br><a id="more"></a></p>
-<h2 id="error"><a href="#error" class="headerlink" title="error"></a>error</h2><p>前段时间使用 phpstrom 中的 git 出现了一个错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Fetch failed</div><div class="line">	error: unable to read askpass response from &apos;..\tmp\intellij-git-askpass.bat&apos;</div><div class="line">	error: failed to execute prompt script (exit code 1)</div><div class="line">	fatal: could not read Username for &apos;http://xxx:3000&apos;: No error</div></pre></td></tr></table></figure></p>
-<p>大体情况就是某一次操作的时候账户密码发生了变动,导致本地的 git 没权限去拉取远程库了(因为用的是 https)<br>的方式</p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>第一种(推荐): 将远程地址换成 ssh 地址,使用 ssh-key 登录</p>
-<p>第二种: 实在不想换的话就是用这种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote set-url origin https://&lt;username&gt;:&lt;password&gt;@github.com/&lt;username&gt;/&lt;repo_name&gt;.git</div></pre></td></tr></table></figure></p>
-<p>将账号密码写入到请求地址当中<br>比如我账户为: gaopengfei 密码为: 123456<br>请求的库的地址是 <code>https://github.com/gaopengfei123123/redis_lbs.git</code><br>那么我的远程地址就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote set-url origin https://gaopengfei:123456@github.com/gaopengfei123123/redis_lbs.git</div></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/atom/atom/issues/8984#issuecomment-144697558" target="_blank" rel="external">参考issues</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;git 的账号密码错误情况&lt;br&gt;
-    
-    </summary>
-    
-      <category term="git" scheme="http://blog.justwe.site/categories/git/"/>
-    
-    
-      <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
-    
-      <category term="askpass" scheme="http://blog.justwe.site/tags/askpass/"/>
     
   </entry>
   
