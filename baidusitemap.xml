@@ -4,26 +4,8 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/24/caipiao/</loc>
-    <lastmod>2017-09-20T08:59:18.000Z</lastmod>
-    <data>
-        <display>
-        <title>震惊！彩票的随机机制竟然是这样的...</title>
-        <pubTime>2017-03-23T22:01:17.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.justwe.site/2017/09/20/vultr-shadowsocks/</loc>
-    <lastmod>2017-09-20T08:53:11.000Z</lastmod>
+    <lastmod>2017-09-20T09:37:07.000Z</lastmod>
     <data>
         <display>
         <title>使用Vultr来搭建梯子</title>
@@ -37,6 +19,24 @@
            
              
               <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/03/24/caipiao/</loc>
+    <lastmod>2017-09-20T08:59:18.000Z</lastmod>
+    <data>
+        <display>
+        <title>震惊！彩票的随机机制竟然是这样的...</title>
+        <pubTime>2017-03-23T22:01:17.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
           
         </display>
     </data>
