@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[树莓派上安装 Golang]]></title>
+    <url>%2F2017%2F11%2F22%2FRaspberry-Pi3-golang-env%2F</url>
+    <content type="text"><![CDATA[树莓派上需要进行编译安装,不过很简单,而且 golang 官方也有 arm 平台的编译包,在树莓派上一定要选linux-armv61这个版本啊 golang 各版本的下载列表 $ 开头的都是在命令行中输入123456789101112131415$ wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-armv6l.tar.gz$ tar -C /usr/local -zvxf go1.8.3.linux-armv6l.tar.gz$cd / &amp;&amp; mkdir -p /data/www/go$ sudo vim /etc/profile# 在文件末尾添加如下内容export PATH=$PATH:/usr/local/go/bin# 添加如下设置项export GOROOT=/usr/local/goexport GOPATH=/data/www/goexport PATH=$GOROOT/bin:$PATH//保存退出后让环境变量立即生效$ source /etc/profile$ go version]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>Raspberry</tag>
+        <tag>MacOS</tag>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[用树莓派3搞一个信号灯输出]]></title>
+    <url>%2F2017%2F11%2F21%2FRaspberry-Pi3-traffic-light%2F</url>
+    <content type="text"><![CDATA[通过一个python脚本跑一个监控 cpu 的交通信号灯,运行环境是官方的系统 Raspbian 执行脚本有编程基础的同学就直接上手好了: 123456789101112131415161718192021222324252627282930313233343536373839#! /usr/bin/env python# to use with Pi Traffic Lightimport RPi.GPIO as GPIOimport psutilGREEN = 13YELLOW = 19RED = 26# Pin Setup:GPIO.setmode(GPIO.BCM) # Broadcom pin-numbering scheme.GPIO.setwarnings(False)GPIO.setup(GREEN, GPIO.OUT)GPIO.setup(YELLOW, GPIO.OUT)GPIO.setup(RED, GPIO.OUT)try: while (1): cpu_pc = psutil.cpu_percent(interval=2) print 'CPU: %d%%' % (cpu_pc) if cpu_pc &lt;= 50: GPIO.output(RED, False) GPIO.output(YELLOW, False) GPIO.output(GREEN, True) if 50 &lt; cpu_pc &lt; 90: GPIO.output(GREEN, False) GPIO.output(RED, False) GPIO.output(YELLOW, True) if cpu_pc &gt;=90 : GPIO.output(GREEN, False) GPIO.output(YELLOW, False) GPIO.output(RED, True)except KeyboardInterrupt: print "Good bye" GPIO.output(GREEN, False) GPIO.output(YELLOW, False) GPIO.output(RED, False) GPIO.cleanup() 如果出现提示****line 5, in &lt;module&gt; import psutil***** 提示缺少psutil模块,就按照下面的方法安装: 代码原文 123wget https://pypi.python.org/packages/source/p/psutil/psutil-3.2.2.tar.gzcd psutil-3.2.2python setup.py install 如果报错检查 gcc,python-devel 是否安装(官方系统的话会把这些环境默认安装好,不用管的) 针脚怎么插?软件方面的搞定了,接下来需要搞明白怎么配置硬件了,这是树莓派系列的针脚图(咱们这是3代,最右边的那个):我又从网上找的一张实物图这是我淘来的信号灯这两个都是针脚型的,但是我有一个40针脚的扁平线可以用来对接,按照信号灯指定的端口插就行 插好以后就直接运行脚本就行比如这个脚本叫做 traffic.py,就运行1$ python ./traffic.py 就能看到效果 代码都做了什么? 引入需要用到的模块, RPi.GPIO针脚输出,psutil用于系统监控 12345#! /usr/bin/env python# to use with Pi Traffic Lightimport RPi.GPIO as GPIOimport psutil 定义三个灯输出的针脚 123GREEN = 13YELLOW = 19RED = 26 对指定的针脚进行设置 123456# Pin Setup:GPIO.setmode(GPIO.BCM) GPIO.setwarnings(False)GPIO.setup(GREEN, GPIO.OUT)GPIO.setup(YELLOW, GPIO.OUT)GPIO.setup(RED, GPIO.OUT) 这里的 GPIO.setmode(GPIO.BCM)就是指定了输出模式为按照信道编号,就是上图中的GPIO2,GPIO3...这类如果GPIO.setmode(GPIO.BOARD)就是Pin No.1 =&gt; GPIO1,使用物理针脚的编号作为输出信道 GPIO.setwarnings(False) 关闭warning 提示 GPIO.setup(GREEN, GPIO.OUT) 将对应的信道设置为输出信道 通过 while 循环检索 cpu 的使用情况并输出,且根据所占百分比显示相应的灯 123456789101112131415while (1): cpu_pc = psutil.cpu_percent(interval=2) print 'CPU: %d%%' % (cpu_pc) if cpu_pc &lt;= 50: GPIO.output(RED, False) GPIO.output(YELLOW, False) GPIO.output(GREEN, True) if 50 &lt; cpu_pc &lt; 90: GPIO.output(GREEN, False) GPIO.output(RED, False) GPIO.output(YELLOW, True) if cpu_pc &gt;=90 : GPIO.output(GREEN, False) GPIO.output(YELLOW, False) GPIO.output(RED, True) GPIO.output(GREEN, False)和GPIO.output(GREEN, True)猜都能猜到是控制输出的啦 对于程序退出的操作:把灯全关了,再调用GPIO.cleanup()释放资源 12345678910try: // some code....except KeyboardInterrupt: print "Good bye" GPIO.output(GREEN, False) GPIO.output(YELLOW, False) GPIO.output(RED, False) GPIO.cleanup() 总结这个 demo 只是对 GPIO 的输出进行展示,还没涉及到信号输入,接下来如果有空的话我会做一个输入的 demo 相关-极客大讲堂：手把手教你用树莓派控制红绿灯]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>Raspberry</tag>
+        <tag>MacOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[转 烧录树莓派系统(新手版)]]></title>
+    <url>%2F2017%2F11%2F21%2FRaspberry-Pi3-install%2F</url>
+    <content type="text"><![CDATA[怎么在 mac 上给 TF 卡烧录一个树莓派系统(为什么没有 win 的?因为 win 上的烧录软件很好用啊!混蛋!) 下载树莓派镜像首先需要下载个系统镜像 官方镜像列表 RASPBIAN :这是树莓派为自己定制的系统,基于 Debian,原生支持最好,新手强烈推荐桌面版的 UBUNTU MATE :ubuntu 的 mate 版本,习惯使用 ubuntu 的选这个 SNAPPY UBUNTU CORE :仅包含 ubuntu 16.04 内核的版本,如果做 IoT 的据说用这个很不错,但是如果做网络服务器不咋好用其他的比如 WIN10 的这种有需要的自取 格式化 TF 卡先用读卡机器插到 mac 上,用系统自带的 磁盘工具 格式化一下 tf 卡,选择抹掉,格式为MS-DOS(FAT),名字随便,写完系统就没用了 打开 终端 使用df名称查看当前已挂载的卷1234567$ dfFilesystem 512-blocks Used Available Capacity iused ifree %iused Mounted on/dev/disk1 233269248 218788512 13968736 94% 27412562 1746092 94% /devfs 374 374 0 100% 648 0 100% /devmap -hosts 0 0 0 100% 0 0 100% /netmap auto_home 0 0 0 100% 0 0 100% /home/dev/disk2s1 31100416 4992 31095424 1% 0 0 100% /Volumes/Pi 基本商最后一行就是你的 tf 卡,/Volumes/Pi 这个 Pi 就是刚才格式化 tf 卡的时候输入的名字 使用diskutil unmount卸载12$ diskutil unmount /dev/disk2s1Volume Pi on disk2s1 unmounted diskutil list 确认设备,这里是 16G 的卡12345$ diskutil list/dev/disk2 #: TYPE NAME SIZE IDENTIFIER 0: FDisk_partition_scheme *15.9 GB disk2 1: DOS_FAT_32 Pi 15.9 GB disk2s1 进入你下载好镜像文件的目录下,使用 dd 命令将镜像写入 PS /dev/disk2s1是分区，/dev/disk2是块设备，/dev/rdisk2是原始字符设备 1234$ dd bs=4m if=2017-09-07-raspbian-stretch.img of=/dev/rdisk2781+1 records in781+1 records out3276800000 bytes transferred in 194.134151 secs (16879050 bytes/sec) if后是镜像的地址,如果是当前目录地址的话直接输入文件名就行, of就是要写入的设备,执行的时候会感觉卡一会,大概30s,正常现象这时候这张 tf 卡就算是烧录好系统了,插到派上启动就行 这个时候你需要鼠标,键盘,有 hdmi 的显示器,插上 pi 就能启动了,可以在左上角菜单中preference中进行各种设置了,在界面可以很方便的设置 wifi使用网线插入路由器的话,可以在路由器的管理界面中找到设备名,默认设备名为raspberry进行 ssh 链接,用户命是 pi,密码 raspberry,或者你自己设置的1ssh pi@192.168.66.207 转载原文]]></content>
+      <categories>
+        <category>精选转载</category>
+      </categories>
+      <tags>
+        <tag>Raspberry</tag>
+        <tag>MacOS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[转 Json移除非法 Utf8字符串]]></title>
     <url>%2F2017%2F11%2F08%2Fphp-json-error%2F</url>
     <content type="text"><![CDATA[当 json_decode 解析为 null 的时候怎么处理 当 json 中出现非法 utf8 时怎么处理 失败时返回NULL当返回 null 的时候,可以用json_last_error()根据返回码来判断 如果 php 版本过低的话将会出现错误码反馈不全的问题,返回值是JSON_ERROR_NONE (0)这是示例:123456789101112131415161718 // $json = '&#123;"a":1,"b":2,"c":3,"d":4,"e":5, "name":"Corwien"&#125;';$json = '&#123;"a":1,"b":2,"c":3,"d":4,"e":5, "name":&#125;'; //错误的json格式$result = json_decode($json, true); if(!$result) &#123; //error handle ,错误处理 $ret = json_last_error(); print_r($ret); //打印为： 4,查错误信息表，可知是语法错误 &#125; json_last_error错误msg对照表：0 = JSON_ERROR_NONE1 = JSON_ERROR_DEPTH2 = JSON_ERROR_STATE_MISMATCH3 = JSON_ERROR_CTRL_CHAR4 = JSON_ERROR_SYNTAX5 = JSON_ERROR_UTF8 如何处理json中的非法utf8字符如果出现 JSON_ERROR_SYNTAX 这个错误码的时候,常见的要么是其中的双引号单引号问题,要么是出现了 /r/n之类的结尾问题,还有一种比较烦的情况就是错误的 utf8编码 解决问题:1234567891011//reject overly long 2 byte sequences, as well as characters above U+10000 and replace with ?$some_string = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'. '|[\x00-\x7F][\x80-\xBF]+'. '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'. '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]&#123;2,&#125;)'. '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]&#123;2&#125;)|[\x80-\xBF]&#123;3,&#125;)/S', '?', $some_string );//reject overly long 3 byte sequences and UTF-16 surrogates and replace with ?$some_string = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'. '|\xED[\xA0-\xBF][\x80-\xBF]/S','?', $some_string ); 原文utf8代码]]></content>
