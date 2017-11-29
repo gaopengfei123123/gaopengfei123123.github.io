@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-11-22T03:27:46.208Z</updated>
+  <updated>2017-11-29T05:50:31.198Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派3安装 Sense HAT</title>
+    <link href="http://blog.justwe.site/2017/11/29/Raspberry-pi3-install-sense-HAT/"/>
+    <id>http://blog.justwe.site/2017/11/29/Raspberry-pi3-install-sense-HAT/</id>
+    <published>2017-11-29T05:21:26.000Z</published>
+    <updated>2017-11-29T05:50:31.198Z</updated>
+    
+    <content type="html"><![CDATA[<p>因为感觉各种感应器的 GPIO 有点乱,干脆买了一个官方提供的集成板来玩,这样看着也整体一些…<br><a id="more"></a></p><p>英文不错的同学出门右转:</p><blockquote><p><a href="https://www.raspberrypi.org/documentation/hardware/sense-hat/" target="_blank" rel="external">官方提供的一个说明</a><br><a href="https://pythonhosted.org/sense-hat/" target="_blank" rel="external">一个 sense-hat 的接口文档</a><br><a href="https://www.raspberrypi.org/documentation/hardware/sense-hat/images/Sense-HAT-V1_0.pdf" target="_blank" rel="external">各感应模块的针脚示意图</a></p></blockquote><h2 id="更新系统-Rasbian"><a href="#更新系统-Rasbian" class="headerlink" title="更新系统(Rasbian)"></a>更新系统(Rasbian)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt update &amp;&amp; sudo apt upgrade -y</div></pre></td></tr></table></figure><p>可能得等一大会儿….</p><h2 id="安装扩展模块"><a href="#安装扩展模块" class="headerlink" title="安装扩展模块"></a>安装扩展模块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install sense-hat</div><div class="line">$ sudo reboot</div></pre></td></tr></table></figure><p>运行一个 demo,</p><blockquote><p><a href="https://github.com/RPi-Distro/python-sense-hat/tree/master/examples" target="_blank" rel="external">官方提供的一些 demo</a></p></blockquote><figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> sense_hat <span class="keyword">import</span> SenseHat</div><div class="line"></div><div class="line">sense = SenseHat()</div><div class="line"></div><div class="line">r = <span class="number">255</span></div><div class="line">g = <span class="number">0</span></div><div class="line">b = <span class="number">0</span></div><div class="line"></div><div class="line">msleep = <span class="keyword">lambda</span> x: time.sleep(x / <span class="number">1000.0</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">next_colour</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> r</div><div class="line">    <span class="keyword">global</span> g</div><div class="line">    <span class="keyword">global</span> b</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (r == <span class="number">255</span> <span class="keyword">and</span> g &lt; <span class="number">255</span> <span class="keyword">and</span> b == <span class="number">0</span>):</div><div class="line">        g += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (g == <span class="number">255</span> <span class="keyword">and</span> r &gt; <span class="number">0</span> <span class="keyword">and</span> b == <span class="number">0</span>):</div><div class="line">        r -= <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (g == <span class="number">255</span> <span class="keyword">and</span> b &lt; <span class="number">255</span> <span class="keyword">and</span> r == <span class="number">0</span>):</div><div class="line">        b += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (b == <span class="number">255</span> <span class="keyword">and</span> g &gt; <span class="number">0</span> <span class="keyword">and</span> r == <span class="number">0</span>):</div><div class="line">        g -= <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (b == <span class="number">255</span> <span class="keyword">and</span> r &lt; <span class="number">255</span> <span class="keyword">and</span> g == <span class="number">0</span>):</div><div class="line">        r += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> (r == <span class="number">255</span> <span class="keyword">and</span> b &gt; <span class="number">0</span> <span class="keyword">and</span> g == <span class="number">0</span>):</div><div class="line">        b -= <span class="number">1</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    sense.clear([r, g, b])</div><div class="line">    msleep(<span class="number">2</span>)</div><div class="line">    next_colour()</div></pre></td></tr></table></figure><p>如果运行是出现下列报错的话:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;demo1.py&quot;, line 38, in &lt;module&gt;</div><div class="line">    sense.clear([r, g, b])</div><div class="line">  File &quot;/usr/lib/python2.7/dist-packages/sense_hat/sense_hat.py&quot;, line 413, in clear</div><div class="line">    self.set_pixels([colour] * 64)</div><div class="line">  File &quot;/usr/lib/python2.7/dist-packages/sense_hat/sense_hat.py&quot;, line 294, in set_pixels</div><div class="line">    f.seek(map[index // 8][index % 8] * 2)  # row, column</div></pre></td></tr></table></figure></p><p>还是比较好解决的,更改配置就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ sudo vi /boot/config.txt</div><div class="line">//找到 dtoverlay 这一行修改成</div><div class="line">dtoverlay=rpi-sense</div><div class="line">//然后 wq 退出</div><div class="line">$ sudo reboot</div></pre></td></tr></table></figure></p><p>这是我第一次安装时碰到的问题</p><blockquote><p><a href="https://www.raspberrypi.org/forums/viewtopic.php?f=28&amp;t=173113" target="_blank" rel="external">解决方案来源</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;因为感觉各种感应器的 GPIO 有点乱,干脆买了一个官方提供的集成板来玩,这样看着也整体一些…&lt;br&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="Raspberry" scheme="http://blog.justwe.site/tags/Raspberry/"/>
+    
+      <category term="MacOS" scheme="http://blog.justwe.site/tags/MacOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树莓派的一些报错问题</title>
+    <link href="http://blog.justwe.site/2017/11/28/Raspberry-pi3-local-lang/"/>
+    <id>http://blog.justwe.site/2017/11/28/Raspberry-pi3-local-lang/</id>
+    <published>2017-11-28T06:50:49.000Z</published>
+    <updated>2017-11-29T05:23:22.197Z</updated>
+    
+    <content type="html"><![CDATA[<p>树莓派出现本地语言出现问题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">perl: warning: Setting locale failed.</div><div class="line">perl: warning: Please check that your locale settings:</div><div class="line">LANGUAGE = <span class="string">"en_US.UTF-8"</span>,</div><div class="line">LC_ALL = <span class="string">"en_US.UTF-8"</span>,</div><div class="line">LC_CTYPE = <span class="string">"zh_CN.UTF-8"</span>,</div><div class="line">LANG = <span class="string">"en_US.UTF-8"</span></div><div class="line">    are supported and installed on your system.</div><div class="line">perl: warning: Falling back to the standard locale (<span class="string">"C"</span>).</div><div class="line">locale: Cannot <span class="built_in">set</span> LC_CTYPE to default locale: No such file or directory</div><div class="line">locale: Cannot <span class="built_in">set</span> LC_MESSAGES to default locale: No such file or directory</div><div class="line">locale: Cannot <span class="built_in">set</span> LC_ALL to default locale: No such file or directory</div><div class="line">/usr/sbin/dpkg-reconfigure must be run as root</div></pre></td></tr></table></figure></p><p>解决方法其实已经给出<br>运行命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg-reconfigure locales</div></pre></td></tr></table></figure></p><p>设置 utf8 就行</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;树莓派出现本地语言出现问题&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div
+      
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="Raspberry" scheme="http://blog.justwe.site/tags/Raspberry/"/>
+    
+      <category term="MacOS" scheme="http://blog.justwe.site/tags/MacOS/"/>
+    
+  </entry>
   
   <entry>
     <title>树莓派上安装 Golang</title>
@@ -442,56 +493,6 @@
       <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
     
       <category term="linux" scheme="http://blog.justwe.site/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>转 跨域请求时两次发送请求的问题</title>
-    <link href="http://blog.justwe.site/2017/06/23/axios-cors/"/>
-    <id>http://blog.justwe.site/2017/06/23/axios-cors/</id>
-    <published>2017-06-23T08:42:38.000Z</published>
-    <updated>2017-06-23T08:45:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>跨域的时候总会碰上各种各样的问题,这就是其中一种情况<br><a id="more"></a><br>检查一下，两次请求分别的 Request Method:<br>因为是跨域请求，客户端发先发送一个OPTIONS 请求<br>Preflighted Requests是CORS中一种透明服务器验证机制。预检请求首先需要向另外一个域名的资源发送一个 HTTP OPTIONS 请求头，其目的就是为了判断实际发送的请求是否是安全的。</p><p>很有可能是这个问题，我现在用axios 作为我的网络请求库，也遇到了这个问题，跨域访问的时候 ，都会先发送一个OPTIONS请求，用来判断接下来的请求是否安全和被允许</p><p>我现在的做法是，在index.php 入口文件中，检测，是否为OPTIONS 请求，如果是就返回一个状态具体代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if ($_SERVER[&apos;REQUEST_METHOD&apos;]==&apos;OPTIONS&apos;) &#123;</div><div class="line">    header(&quot;Access-Control-Allow-Origin: *&quot;);</div><div class="line">    header(&quot;Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization&quot;);</div><div class="line">    header(&apos;Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH&apos;);</div><div class="line">    return;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p><a href="https://segmentfault.com/q/1010000009846666" target="_blank" rel="external">原文</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;跨域的时候总会碰上各种各样的问题,这就是其中一种情况&lt;br&gt;
-    
-    </summary>
-    
-      <category term="js" scheme="http://blog.justwe.site/categories/js/"/>
-    
-    
-      <category term="js" scheme="http://blog.justwe.site/tags/js/"/>
-    
-      <category term="axios" scheme="http://blog.justwe.site/tags/axios/"/>
-    
-      <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git同步所 Fork 的库代码</title>
-    <link href="http://blog.justwe.site/2017/06/17/git-fork-upstream/"/>
-    <id>http://blog.justwe.site/2017/06/17/git-fork-upstream/</id>
-    <published>2017-06-17T06:36:23.000Z</published>
-    <updated>2017-06-17T06:39:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>有时候我们 fork 了一个库进行开发,但是时间长了那个库已经添加了一些新的东西,这要怎么处理呢?<br><a id="more"></a><br>先添加你 fork 的库的地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add FORK-sync https://github.com/xxx/yyy.git</div><div class="line">git remote -v</div></pre></td></tr></table></figure></p><p> 能看到类似的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">FORK-synchttps://github.com/xxx/yyy.git (fetch)</div><div class="line">FORK-synchttps://github.com/xxx/yyy.git (push)</div><div class="line">origingit@github.xxx/born-1.git (fetch)</div><div class="line">origingit@github.xxx/born-1.git (push)</div></pre></td></tr></table></figure></p><p>然后接受所 fork 库的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git fetch FORK-sync</div></pre></td></tr></table></figure></p><p>合并<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge FORK-sync/master</div></pre></td></tr></table></figure></p><p>再推送到你的远程仓库就行了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push</div></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;有时候我们 fork 了一个库进行开发,但是时间长了那个库已经添加了一些新的东西,这要怎么处理呢?&lt;br&gt;
-    
-    </summary>
-    
-      <category term="git" scheme="http://blog.justwe.site/categories/git/"/>
-    
-    
-      <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
-    
-      <category term="fork" scheme="http://blog.justwe.site/tags/fork/"/>
     
   </entry>
   

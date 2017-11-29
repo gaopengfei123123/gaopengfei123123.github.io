@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[树莓派3安装 Sense HAT]]></title>
+    <url>%2F2017%2F11%2F29%2FRaspberry-pi3-install-sense-HAT%2F</url>
+    <content type="text"><![CDATA[因为感觉各种感应器的 GPIO 有点乱,干脆买了一个官方提供的集成板来玩,这样看着也整体一些… 英文不错的同学出门右转: 官方提供的一个说明一个 sense-hat 的接口文档各感应模块的针脚示意图 更新系统(Rasbian)1$ sudo apt update &amp;&amp; sudo apt upgrade -y 可能得等一大会儿…. 安装扩展模块12$ sudo apt-get install sense-hat$ sudo reboot 运行一个 demo, 官方提供的一些 demo 12345678910111213141516171819202122232425262728293031323334353637383940#!/usr/bin/pythonimport timefrom sense_hat import SenseHatsense = SenseHat()r = 255g = 0b = 0msleep = lambda x: time.sleep(x / 1000.0)def next_colour(): global r global g global b if (r == 255 and g &lt; 255 and b == 0): g += 1 if (g == 255 and r &gt; 0 and b == 0): r -= 1 if (g == 255 and b &lt; 255 and r == 0): b += 1 if (b == 255 and g &gt; 0 and r == 0): g -= 1 if (b == 255 and r &lt; 255 and g == 0): r += 1 if (r == 255 and b &gt; 0 and g == 0): b -= 1while True: sense.clear([r, g, b]) msleep(2) next_colour() 如果运行是出现下列报错的话:1234567Traceback (most recent call last): File &quot;demo1.py&quot;, line 38, in &lt;module&gt; sense.clear([r, g, b]) File &quot;/usr/lib/python2.7/dist-packages/sense_hat/sense_hat.py&quot;, line 413, in clear self.set_pixels([colour] * 64) File &quot;/usr/lib/python2.7/dist-packages/sense_hat/sense_hat.py&quot;, line 294, in set_pixels f.seek(map[index // 8][index % 8] * 2) # row, column 还是比较好解决的,更改配置就行12345$ sudo vi /boot/config.txt//找到 dtoverlay 这一行修改成dtoverlay=rpi-sense//然后 wq 退出$ sudo reboot 这是我第一次安装时碰到的问题 解决方案来源]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>Raspberry</tag>
+        <tag>MacOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[树莓派的一些报错问题]]></title>
+    <url>%2F2017%2F11%2F28%2FRaspberry-pi3-local-lang%2F</url>
+    <content type="text"><![CDATA[树莓派出现本地语言出现问题123456789101112perl: warning: Setting locale failed.perl: warning: Please check that your locale settings: LANGUAGE = "en_US.UTF-8", LC_ALL = "en_US.UTF-8", LC_CTYPE = "zh_CN.UTF-8", LANG = "en_US.UTF-8" are supported and installed on your system.perl: warning: Falling back to the standard locale ("C").locale: Cannot set LC_CTYPE to default locale: No such file or directorylocale: Cannot set LC_MESSAGES to default locale: No such file or directorylocale: Cannot set LC_ALL to default locale: No such file or directory/usr/sbin/dpkg-reconfigure must be run as root 解决方法其实已经给出运行命令:1sudo dpkg-reconfigure locales 设置 utf8 就行]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>Raspberry</tag>
+        <tag>MacOS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[树莓派上安装 Golang]]></title>
     <url>%2F2017%2F11%2F22%2FRaspberry-Pi3-golang-env%2F</url>
     <content type="text"><![CDATA[树莓派上需要进行编译安装,不过很简单,而且 golang 官方也有 arm 平台的编译包,在树莓派上一定要选linux-armv61这个版本啊 golang 各版本的下载列表 $ 开头的都是在命令行中输入123456789101112131415$ wget https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-armv6l.tar.gz$ tar -C /usr/local -zvxf go1.8.3.linux-armv6l.tar.gz$cd / &amp;&amp; mkdir -p /data/www/go$ sudo vim /etc/profile# 在文件末尾添加如下内容export PATH=$PATH:/usr/local/go/bin# 添加如下设置项export GOROOT=/usr/local/goexport GOPATH=/data/www/goexport PATH=$GOROOT/bin:$PATH//保存退出后让环境变量立即生效$ source /etc/profile$ go version]]></content>
