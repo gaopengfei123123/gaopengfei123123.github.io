@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2017-12-02T16:15:35.459Z</updated>
+  <updated>2017-12-19T02:57:21.766Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于 Chrome 浏览器会强制跳转到 Https 的问题</title>
+    <link href="http://blog.justwe.site/2017/12/19/chrome-redirection-https/"/>
+    <id>http://blog.justwe.site/2017/12/19/chrome-redirection-https/</id>
+    <published>2017-12-19T02:34:25.000Z</published>
+    <updated>2017-12-19T02:57:21.766Z</updated>
+    
+    <content type="html"><![CDATA[<p>我在本地使用的是 <code>*.app</code> 的域名开发的,某一天发现使用谷歌的时候会强制跳转到 <code>https</code>,改成<code>http</code>都<br>不管用<br><a id="more"></a></p><p>询问了一下万能的404网站,查询的结果大多是:</p><blockquote><p>chrome浏览器地址栏输入：chrome://net-internals/#hsts<br>在该页面中搜索：Query HSTS/PKP domain<br>在其下方的 Domain 后面的输入框中输入自己无法访问的域名，比如：domain.app，点击Query进行查询，如果有类似下面的结果，说明该域名后缀无法使用http前缀。</p></blockquote><p>这样式儿的结果,结果试了以后没有解决都我目前的问题,后来根据这篇文章的描述 <a href="https://laravel-china.org/articles/7035/chrome-forcibly-converts-thedev-domain-name-to-https-as-of-the-v63-version#reply10" target="_blank" rel="external">Chrome 于 V63 版本起会将 .dev 域名强制转换为 HTTPS</a><br>说 <code>.dev</code> 的域名就是会强制跳转,看来我用的<code>.app</code>的域名估计也是同样的问题,解决方法也简单.<br>根据 <a href="https://iyware.com/dont-use-dev-for-development/" target="_blank" rel="external">Don’t Use .dev For Development</a>建议使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.localhost</div><div class="line">.invalid</div><div class="line">.text</div><div class="line">.example</div></pre></td></tr></table></figure></p><p>作为本地开发的模拟域名,如果用的不爽的话,换火狐啊 :)</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我在本地使用的是 &lt;code&gt;*.app&lt;/code&gt; 的域名开发的,某一天发现使用谷歌的时候会强制跳转到 &lt;code&gt;https&lt;/code&gt;,改成&lt;code&gt;http&lt;/code&gt;都&lt;br&gt;不管用&lt;br&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
+    
+  </entry>
   
   <entry>
     <title>Sense-HAT Api 文档</title>
@@ -466,30 +488,6 @@
       <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
     
       <category term="SPL" scheme="http://blog.justwe.site/tags/SPL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>__Callstatic</title>
-    <link href="http://blog.justwe.site/2017/06/23/php-callstatic/"/>
-    <id>http://blog.justwe.site/2017/06/23/php-callstatic/</id>
-    <published>2017-06-23T08:50:15.000Z</published>
-    <updated>2017-06-23T08:52:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>现在很多框架中调用方法都是<code>Foo::bar()</code>这种格式的,但是他们真的是静态方法吗?<br><a id="more"></a></p><p>这种情况在 <code>larave</code> 中尤其常见,但是开发过程中很明显这些有一部分不是静态的,比如你使用一个模型<code>User</code>,那么你每次实例化出来他都是一个全新的,互不影响,这里就用到了一个魔术方法<code>__callStatic</code></p><p>举个栗子:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is __call'</span>. PHP_EOL;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">__callStatic</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is __callStatic:'</span>. PHP_EOL;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$test = <span class="keyword">new</span> Test();</div><div class="line">$test-&gt;hello();</div><div class="line">$test::hi();</div><div class="line"><span class="comment">//this is __call:hello</span></div><div class="line"><span class="comment">//this is __callStatic:hi</span></div></pre></td></tr></table></figure></p><p>当然魔术方法也是很耗性能的一种方式,每次调用的时候后回先扫一遍<code>class</code>没找到方法时才会调用它,而为了代码的整洁和抽象这个方法也能给很大的帮助,在这之间去要有个权衡</p><p>下面实现的 <code>log</code> 类,采用的就是这种方法,将方法解耦出来,只要符合规定的接口就能调用<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</div><div class="line">    <span class="comment">//获取 logger 的实体</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> $logger;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getLogger</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">self</span>::$logger?: <span class="keyword">self</span>::$logger = <span class="keyword">self</span>::createLogger();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">createLogger</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Logger();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">setLogger</span><span class="params">(LoggerInterface $logger)</span></span>&#123;</div><div class="line">        <span class="keyword">self</span>::$logger = $logger;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        call_user_func_array([<span class="keyword">self</span>::getLogger(),$name],$arguments);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">__callStatic</span><span class="params">($name, $arguments)</span></span></div><div class="line">    &#123;</div><div class="line">        forward_static_call_array([<span class="keyword">self</span>::getLogger(),$name],$arguments);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">LoggerInterface</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">info</span><span class="params">($message,array $content = [])</span></span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">alert</span><span class="params">($messge,array $content = [])</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span> <span class="keyword">implements</span> <span class="title">LoggerInterface</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">info</span><span class="params">($message, array $content = [])</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is Log method info'</span> . PHP_EOL;</div><div class="line">        var_dump($content);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">alert</span><span class="params">($messge, array $content = [])</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">echo</span> <span class="string">'this is Log method alert: '</span>. $messge . PHP_EOL;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">Test::info(<span class="string">'喊个口号:'</span>,[<span class="string">'好好'</span>,<span class="string">'学习'</span>,<span class="string">'天天'</span>,<span class="string">'向上'</span>]);</div><div class="line">$test = <span class="keyword">new</span> Test();</div><div class="line">$test-&gt;alert(<span class="string">'hello'</span>);</div></pre></td></tr></table></figure></p><p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">this is Log method info</div><div class="line">array(4) &#123;</div><div class="line">  [0]=&gt;</div><div class="line">  string(6) &quot;好好&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  string(6) &quot;学习&quot;</div><div class="line">  [2]=&gt;</div><div class="line">  string(6) &quot;天天&quot;</div><div class="line">  [3]=&gt;</div><div class="line">  string(6) &quot;向上&quot;</div><div class="line">&#125;</div><div class="line">this is Log method alert: hello</div></pre></td></tr></table></figure></p><p>也许有的小伙伴已经看出来了,没错!这段代码就是仿照(抄)的 <code>EasyWechat</code>的日志部分,<a href="https://github.com/overtrue/wechat/blob/master/src/Support/Log.php" target="_blank" rel="external">代码片段</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;现在很多框架中调用方法都是&lt;code&gt;Foo::bar()&lt;/code&gt;这种格式的,但是他们真的是静态方法吗?&lt;br&gt;
-    
-    </summary>
-    
-      <category term="php" scheme="http://blog.justwe.site/categories/php/"/>
-    
-    
-      <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
-    
-      <category term="laravel" scheme="http://blog.justwe.site/tags/laravel/"/>
     
   </entry>
   
