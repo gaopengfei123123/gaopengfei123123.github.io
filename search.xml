@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[关于跨域请求的二三事]]></title>
+    <url>%2F2018%2F01%2F16%2Fhttp-cross-domain-etc%2F</url>
+    <content type="text"><![CDATA[在前后端分离开发时跨域经常是一个不可回避的问题,这里介绍一个比较简单的办法,前端 vue.js,后端 go 首先要区分简单请求和复杂请求这里阮一峰有详细讲解过一个: 跨域资源共享 CORS 详解 如果你有一种太长不看的想法,就听我给你简单说一下: 简单路由: 指的就是你平时表单提交,ajax 提交,使用GET,POST,HEAD,http 头信息里面没有杂七杂八的东西的请求 复杂请求: 就是除了简单请求之外的请求,比如你在 http 头里有自定义的字段,或者你使用像DELETE,PATCH这样的方法 你会发现复杂请求最明显的变化就是浏览器每次去请求接口的时候会发送两次,这里第一次发送的必定是一个请求方法为OPTIONS的,第二个才是你写的方法,我截图里的就是POST, 第二张截图之所以被判定为复杂请求就是因为我加了一个X-TOKEN这个header,而如果第一次的OPTIONS方法的请求如果失败了也就不会发送第二条信息了,至于为什么,我只能说这是规定 跨域资源共享标准新增了一组 HTTP 首部字段，允许服务器声明哪些源站有权限访问哪些资源。另外，规范要求，对那些可能对服务器数据产生副作用的 HTTP 请求方法（特别是 GET 以外的 HTTP 请求，或者搭配某些 MIME 类型的 POST 请求），浏览器必须首先使用 OPTIONS 方法发起一个预检请求（preflight request），从而获知服务端是否允许该跨域请求。服务器确认允许之后，才发起实际的 HTTP 请求。在预检请求的返回中，服务器端也可以通知客户端，是否需要携带身份凭证（包括 Cookies 和 HTTP 认证相关数据）。——HTTP访问控制（CORS） 对于简单请求和复杂请求的处理(后端)既然叫简单请求处理起来也很简单,下面已经列出代码, 关键就是设置Access-Control-Allow这一些参数就行,复杂请求就是添加一个针对OPTIONS的处理方式,通常情况返回一个空字符串就行至于跨域验证之类的就是八仙过海各显神通了各家有个家的处理方法12345678910111213141516171819202122232425262728293031323334353637383940package mainimport ( "flag" "fmt" "net" "net/http")type httpServer struct &#123;&#125;func (s *httpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) &#123; // Stop here if its Preflighted OPTIONS request if origin := r.Header.Get("Origin"); origin != "" &#123; w.Header().Set("Access-Control-Allow-Origin", "*") // 限制请求方的域 * 就是不限制 w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE") // 限制请求方式 w.Header().Set("Access-Control-Allow-Headers","Action, Module") //有使用自定义头 需要这个,Action, Module是例子 w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Token") //允许的header的类型 &#125; // if r.Method == "OPTIONS" &#123; // 针对复杂请求时做出的处理 // return // &#125; w.Write([]byte("hello"))&#125;func main() &#123; addr := flag.String("http-address", "", "") flag.Parse() var h httpServer httpListener, err := net.Listen("tcp", *addr) server := http.Server&#123;Handler: &amp;h,&#125; server.Serve(httpListener) fmt.Println("finish ", err)&#125;]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[转 在 Vue-Cli 中使用 Svg 做 Icon]]></title>
     <url>%2F2017%2F12%2F26%2Fvue-svg-icon%2F</url>
     <content type="text"><![CDATA[之前都是用的image sprite或者使用的 Font Awesome这类的开源库现在咱们已经走进了现代浏览器的年代(ie9+),可以玩点新鲜的东西了,svg svg 有几个好处: 矢量图,不失真 可以受CSS样式影响,就像一个文本 http请求低了 相关阅读: 未来必热：SVG Sprite技术介绍 而对我来说最直观的好处就是可以让设计师给你出一个 svg,而不是自己眼都挑花了去找一个合适的图标:) 做一个 svg-icon 组件在 vue-cli 生成的 vue 脚手架中添加组件1234567891011121314151617181920212223242526272829303132333435363738// path: @/components/SvgIcon/index.vue&lt;template&gt; &lt;svg class="svg-icon" aria-hidden="true"&gt; &lt;use :xlink:href="iconName"&gt;&lt;/use&gt; &lt;/svg&gt;&lt;/template&gt;&lt;script&gt;export default &#123; name: 'icon-svg', props: &#123; iconClass: &#123; type: String, required: true &#125; &#125;, computed: &#123; iconName() &#123; return `#icon-$&#123;this.iconClass&#125;` &#125; &#125;&#125;&lt;/script&gt;&lt;style&gt;.svg-icon &#123; width: 1em; height: 1em; vertical-align: -0.15em; fill: currentColor; overflow: hidden;&#125;&lt;/style&gt;作者：花裤衩链接：https://juejin.im/post/59bb864b5188257e7a427c09来源：掘金著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 使用:12345678910111213//引入svg组件import IconSvg from &apos;@/components/IconSvg&apos;//全局注册icon-svgVue.component(&apos;icon-svg&apos;, IconSvg)//在代码中使用&lt;icon-svg icon-class=&quot;password&quot; /&gt;作者：花裤衩链接：https://juejin.im/post/59bb864b5188257e7a427c09来源：掘金著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。 现在组件有了,svg 去哪里搞? 使用 svg-sprite-loader这个工具可以把多个 svg 打包成 svg-sprite 为了把 icon 使用的 svg 和其他地方使用的 svg 区分开,我们需要对webpack.base.conf.js中的内容重新设置一下:12345678910111213141516171819202122//path: app-project/build/webpack.base.conf.js ... // [新增]当引用图标 svg 的时候引入指定目录下的文件 &#123; test: /\.svg$/, loader: 'svg-sprite-loader', include: [resolve('src/icons')], options: &#123; symbolId: 'icon-[name]' &#125; &#125;, // [修改]这里 exclude 来忽略常规的 svg 引入 &#123; test: /\.(png|jpe?g|gif|svg)(\?.*)?$/, loader: 'url-loader', exclude: [resolve('src/icons')], // 这一步必不可少 options: &#123; limit: 10000, name: utils.assetsPath('img/[name].[hash:7].[ext]') &#125; &#125;, ... 接下来需要使用 webpack 的require.context函数 require.context(“./test”, false, /.test.js$/);这行代码就会去 test 文件夹（不包含子目录）下面的找所有文件名以 .test.js 结尾的文件能被 require 的文件。更直白的说就是 我们可以通过正则匹配引入相应的文件模块。 为了拆卸方便就把这些都放在了icons目录下123456789101112// path: app-project/src/icons.index.jsimport Vue from 'vue'import SvgIcon from '@/components/SvgIcon'// svg组件// 全局注册组件Vue.component('svg-icon', SvgIcon)// 定义一个加载目录的函数const requireAll = requireContext =&gt; requireContext.keys().map(requireContext)const req = require.context('./svg', false, /\.svg$/)// 加载目录下的所有 svg 文件requireAll(req) 然后只需要在 main.js 文件中引入这个组件就可以了1234// path: app-project/src/main.js...import './icons' // 引入图标文件... 具体代码可以参考 这个地址链接 压缩 svg 内容这里推荐一个比较好用的工具: svgo SVG精简压缩工具svgo简介和初体验 最后这是我抄的 花裤衩的 手摸手，带你优雅的使用 icon,观摩别人的代码给自己带来了很多收获]]></content>
@@ -474,8 +486,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>docker-composer</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
