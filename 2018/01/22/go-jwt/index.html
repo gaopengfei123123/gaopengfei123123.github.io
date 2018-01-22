@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="对于使用负载均衡的服务器来说,使用 JWT(JSON WEB TOKEN) 是一个更优的选择,session受到单台服务器的限制,一个用户登录过后就只能分配到这一台服务器上,这和负载均衡的初衷不一致啊,而 jwt 就解决了这类的痛点">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-22T09:51:15.250Z">
+<meta property="og:updated_time" content="2018-01-22T09:53:53.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Go 进行 Jwt 验证">
 <meta name="twitter:description" content="对于使用负载均衡的服务器来说,使用 JWT(JSON WEB TOKEN) 是一个更优的选择,session受到单台服务器的限制,一个用户登录过后就只能分配到这一台服务器上,这和负载均衡的初衷不一致啊,而 jwt 就解决了这类的痛点">
@@ -458,11 +458,14 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>选择 jwt 最大的理由:</p>
 <ol>
 <li>内容有公钥私钥,可以保证内容的合法性</li>
-<li>token 中可以包含很多信息<br>不过 jwt 不保证的安全问题:</li>
+<li>token 中可以包含很多信息</li>
+</ol>
+<p>不过 jwt 不保证的安全问题:</p>
+<ol>
 <li>因为<code>header,paylaod</code>是 base64编码,相当于明文可见的,因此不能在<code>payload</code>中放入敏感信息</li>
 <li>并不能保证数据传输时会不会被盗用,这一点和 sessionID 一样,因此不要迷信它有多高的安全性..</li>
-<li><strong>为了安全还是上 https</strong></li>
 </ol>
+<p><strong>为了安全还是要上 https</strong></p>
 <blockquote>
 <p>相关推荐:<br><a href="https://jwt.io/introduction/" target="_blank" rel="external">jwt.io</a></p>
 </blockquote>
