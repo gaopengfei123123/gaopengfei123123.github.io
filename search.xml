@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[使用 Go 进行 Jwt 验证]]></title>
+    <url>%2F2018%2F01%2F22%2Fgo-jwt%2F</url>
+    <content type="text"><![CDATA[对于使用负载均衡的服务器来说,使用 JWT(JSON WEB TOKEN) 是一个更优的选择,session受到单台服务器的限制,一个用户登录过后就只能分配到这一台服务器上,这和负载均衡的初衷不一致啊,而 jwt 就解决了这类的痛点 使用 JWT 的场景 身份验证 用户在登录过后服务器会用 jwt 返回用户可访问的资源,比如权限什么的 传递信息 通过 jwt 的header和signature可以保证payload没有被篡改,保证信息的安全 JWT 的结构JWT 是由header,payload,signature三部分组成的,咱们先用例子说话 header12345&#123; "alg": "HS256", "typ": "JWT"&#125;// base64编码的字符串`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9` 这里规定了加密算法,hash256 payload 123456&#123; "sub": "1234567890", "name": "John Doe", "admin": true&#125;// base64编码的字符串`eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9` 这里的内容没有强制要求,因为 paylaod 就是为了承载内容而存在的,不过想用规范的话也可以参考下面的 iss: jwt签发者 sub: jwt所面向的用户 aud: 接收jwt的一方 exp: jwt的过期时间，这个过期时间必须要大于签发时间 nbf: 定义在什么时间之前，该jwt都是不可用的. iat: jwt的签发时间 jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。 signature是用 header + payload + secret组合起来加密的,公式是: 1234HMACSHA256( base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(payload), secret) 这里 secret就是自己定义的一个随机字符串,这一个过程只能发生在 server 端,会随机生成一个 hash 值 这样组合起来之后就是一个完整的 jwt 了:1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.4c9540f793ab33b13670169bdf444c1eb1c37047f18e861981e14e34587b1e04 这里有一个用 go 加密和验证 jwt 的 demo]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>json</tag>
+        <tag>jwt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[关于跨域请求的二三事]]></title>
     <url>%2F2018%2F01%2F16%2Fhttp-cross-domain-etc%2F</url>
     <content type="text"><![CDATA[在前后端分离开发时跨域经常是一个不可回避的问题,这里介绍一个比较简单的办法,前端 vue.js,后端 go 首先要区分简单请求和复杂请求这里阮一峰有详细讲解过一个: 跨域资源共享 CORS 详解 如果你有一种太长不看的想法,就听我给你简单说一下: 简单路由: 指的就是你平时表单提交,ajax 提交,使用GET,POST,HEAD,http 头信息里面没有杂七杂八的东西的请求 复杂请求: 就是除了简单请求之外的请求,比如你在 http 头里有自定义的字段,或者你使用像DELETE,PATCH这样的方法 你会发现复杂请求最明显的变化就是浏览器每次去请求接口的时候会发送两次,这里第一次发送的必定是一个请求方法为OPTIONS的,第二个才是你写的方法,我截图里的就是POST, 第二张截图之所以被判定为复杂请求就是因为我加了一个X-TOKEN这个header,而如果第一次的OPTIONS方法的请求如果失败了也就不会发送第二条信息了,至于为什么,我只能说这是规定 跨域资源共享标准新增了一组 HTTP 首部字段，允许服务器声明哪些源站有权限访问哪些资源。另外，规范要求，对那些可能对服务器数据产生副作用的 HTTP 请求方法（特别是 GET 以外的 HTTP 请求，或者搭配某些 MIME 类型的 POST 请求），浏览器必须首先使用 OPTIONS 方法发起一个预检请求（preflight request），从而获知服务端是否允许该跨域请求。服务器确认允许之后，才发起实际的 HTTP 请求。在预检请求的返回中，服务器端也可以通知客户端，是否需要携带身份凭证（包括 Cookies 和 HTTP 认证相关数据）。——HTTP访问控制（CORS） 对于简单请求和复杂请求的处理(后端)既然叫简单请求处理起来也很简单,下面已经列出代码, 关键就是设置Access-Control-Allow这一些参数就行,复杂请求就是添加一个针对OPTIONS的处理方式,通常情况返回一个空字符串就行至于跨域验证之类的就是八仙过海各显神通了各家有个家的处理方法12345678910111213141516171819202122232425262728293031323334353637383940package mainimport ( "flag" "fmt" "net" "net/http")type httpServer struct &#123;&#125;func (s *httpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) &#123; // Stop here if its Preflighted OPTIONS request if origin := r.Header.Get("Origin"); origin != "" &#123; w.Header().Set("Access-Control-Allow-Origin", "*") // 限制请求方的域 * 就是不限制 w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE") // 限制请求方式 w.Header().Set("Access-Control-Allow-Headers","Action, Module") //有使用自定义头 需要这个,Action, Module是例子 w.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Token") //允许的header的类型 &#125; // if r.Method == "OPTIONS" &#123; // 针对复杂请求时做出的处理 // return // &#125; w.Write([]byte("hello"))&#125;func main() &#123; addr := flag.String("http-address", "", "") flag.Parse() var h httpServer httpListener, err := net.Listen("tcp", *addr) server := http.Server&#123;Handler: &amp;h,&#125; server.Serve(httpListener) fmt.Println("finish ", err)&#125;]]></content>
@@ -486,8 +499,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker-composer</tag>
         <tag>docker</tag>
+        <tag>docker-composer</tag>
       </tags>
   </entry>
   <entry>
