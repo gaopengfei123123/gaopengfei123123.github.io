@@ -499,8 +499,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>docker-composer</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
@@ -511,8 +511,8 @@
         <category>tools</category>
       </categories>
       <tags>
-        <tag>tools</tag>
         <tag>brew</tag>
+        <tag>tools</tag>
       </tags>
   </entry>
   <entry>
