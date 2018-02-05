@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Go 开发过程中一些不错的工具(不定期更新)]]></title>
     <url>%2F2018%2F02%2F05%2Fgolang-awesome-tools%2F</url>
-    <content type="text"><![CDATA[fswatch用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 go run 之类的, 这个使用 go 写的 codeskyblue/fswatch 还有个跨平台的命令行工具,同样的名字 start 更多 emcrisostomo/fswatch 不过图方便用 go 这个就行 bee属于 beego 的附属开发工具, bee run [project-name] 的执行效果也是自动监听文件改动执行编译命令, 感觉不如fswatch方便,当然用 beego 开发的另说astaxie/beego govendor是 go 开发的包管理工具, 虽然依赖的package都在 gopath当中,但是代码换一个环境就要重新go get一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题govendor工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样kardianos/govendor]]></content>
+    <content type="text"><![CDATA[就是平时用到的一些工具 fswatch用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 go run 之类的, 这个使用 go 写的 codeskyblue/fswatch 还有个跨平台的命令行工具,同样的名字 start 更多 emcrisostomo/fswatch 不过图方便用 go 这个就行 bee属于 beego 的附属开发工具, bee run [project-name] 的执行效果也是自动监听文件改动执行编译命令, 感觉不如fswatch方便,当然用 beego 开发的另说astaxie/beego govendor是 go 开发的包管理工具, 虽然依赖的package都在 gopath当中,但是代码换一个环境就要重新go get一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题govendor工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样kardianos/govendor]]></content>
       <categories>
         <category>go</category>
       </categories>
@@ -510,8 +510,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>docker-composer</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
