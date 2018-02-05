@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-01-22T09:53:53.416Z</updated>
+  <updated>2018-02-05T06:23:53.422Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Go 开发过程中一些不错的工具(不定期更新)</title>
+    <link href="http://blog.justwe.site/2018/02/05/golang-awesome-tools/"/>
+    <id>http://blog.justwe.site/2018/02/05/golang-awesome-tools/</id>
+    <published>2018-02-05T03:47:28.000Z</published>
+    <updated>2018-02-05T06:23:53.422Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="fswatch"><a href="#fswatch" class="headerlink" title="fswatch"></a>fswatch</h1><p>用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 <code>go run</code> 之类的, 这个使用 go 写的</p><p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="external">codeskyblue/fswatch</a></p><p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="external">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p><h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="external">astaxie/beego</a></p><h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="external">kardianos/govendor</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;fswatch&quot;&gt;&lt;a href=&quot;#fswatch&quot; class=&quot;headerlink&quot; title=&quot;fswatch&quot;&gt;&lt;/a&gt;fswatch&lt;/h1&gt;&lt;p&gt;用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 &lt;code&gt;go run&lt;/
+      
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
+    
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
+    
+  </entry>
   
   <entry>
     <title>使用 Go 进行 Jwt 验证</title>
@@ -472,28 +497,6 @@
       <category term="element-ui" scheme="http://blog.justwe.site/tags/element-ui/"/>
     
       <category term="vuejs" scheme="http://blog.justwe.site/tags/vuejs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>记一次 Hexo 报错经历</title>
-    <link href="http://blog.justwe.site/2017/06/29/hexo-error-reinstall/"/>
-    <id>http://blog.justwe.site/2017/06/29/hexo-error-reinstall/</id>
-    <published>2017-06-29T07:49:58.000Z</published>
-    <updated>2017-06-29T08:02:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>就在今天,吾心中忽有所感,心想不如升级一发环境版本?结果就立马受到了环境的制裁….</p><a id="more"></a><p>报错信息如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">Error: The module &apos;/usr/local/lib/node_modules/hexo/node_modules/dtrace-provider/build/Release/DTraceProviderBindings.node&apos;</div><div class="line">was compiled against a different Node.js version using</div><div class="line">NODE_MODULE_VERSION 51. This version of Node.js requires</div><div class="line">NODE_MODULE_VERSION 57. Please try re-compiling or re-installing</div><div class="line">the module (for instance, using `npm rebuild` or `npm install`).</div><div class="line">    at Object.Module._extensions..node (module.js:598:18)</div><div class="line">    at Module.load (module.js:503:32)</div><div class="line">    at tryModuleLoad (module.js:466:12)</div><div class="line">    at Function.Module._load (module.js:458:3)</div><div class="line">    at Module.require (module.js:513:17)</div><div class="line">    at require (internal/module.js:11:18)</div><div class="line">    at Object.&lt;anonymous&gt; (/usr/local/lib/node_modules/hexo/node_modules/dtrace-provider/dtrace-provider.js:17:23)</div><div class="line">    at Module._compile (module.js:569:30)</div><div class="line">    at Object.Module._extensions..js (module.js:580:10)</div><div class="line">    at Module.load (module.js:503:32)</div><div class="line">    at tryModuleLoad (module.js:466:12)</div><div class="line">    at Function.Module._load (module.js:458:3)</div><div class="line">    at Module.require (module.js:513:17)</div><div class="line">    at require (internal/module.js:11:18)</div><div class="line">    at Object.&lt;anonymous&gt; (/usr/local/lib/node_modules/hexo/node_modules/bunyan/lib/bunyan.js:79:18)</div><div class="line">    at Module._compile (module.js:569:30)</div><div class="line">&#123; Error: Cannot find module &apos;./build/default/DTraceProviderBindings&apos;</div><div class="line">    at Function.Module._resolveFilename (module.js:485:15)</div><div class="line">    at Function.Module._load (module.js:437:25)</div><div class="line">    at Module.require (module.js:513:17)</div><div class="line">    at require (internal/module.js:11:18)</div><div class="line">    at Object.&lt;anonymous&gt; (/usr/local/lib/node_modules/hexo/node_modules/dtrace-provider/dtrace-provider.js:17:23)</div><div class="line">    at Module._compile (module.js:569:30)</div><div class="line">    at Object.Module._extensions..js (module.js:580:10)</div><div class="line">    at Module.load (module.js:503:32)</div><div class="line">    at tryModuleLoad (module.js:466:12)</div><div class="line">    at Function.Module._load (module.js:458:3)</div><div class="line">    at Module.require (module.js:513:17)</div><div class="line">    at require (internal/module.js:11:18)</div><div class="line">    at Object.&lt;anonymous&gt; (/usr/local/lib/node_modules/hexo/node_modules/bunyan/lib/bunyan.js:79:18)</div><div class="line">    at Module._compile (module.js:569:30)</div><div class="line">    at Object.Module._extensions..js (module.js:580:10)</div><div class="line">    at Module.load (module.js:503:32) code: &apos;MODULE_NOT_FOUND&apos; &#125;</div><div class="line">&#123; Error: Cannot find module &apos;./build/Debug/DTraceProviderBindings&apos;</div><div class="line">    at Function.Module._resolveFilename (module.js:485:15)</div><div class="line">    at Function.Module._load (module.js:437:25)</div><div class="line">    at Module.require (module.js:513:17)</div><div class="line">    at require (internal/module.js:11:18)</div><div class="line">    at Object.&lt;anonymous&gt; (/usr/local/lib/node_modules/hexo/node_modules/dtrace-provider/dtrace-provider.js:17:23)</div><div class="line">    at Module._compile (module.js:569:30)</div><div class="line">    at Object.Module._extensions..js (module.js:580:10)</div><div class="line">    at Module.load (module.js:503:32)</div><div class="line">    at tryModuleLoad (module.js:466:12)</div><div class="line">    at Function.Module._load (module.js:458:3)</div><div class="line">    at Module.require (module.js:513:17)</div><div class="line">    at require (internal/module.js:11:18)</div><div class="line">    at Object.&lt;anonymous&gt; (/usr/local/lib/node_modules/hexo/node_modules/bunyan/lib/bunyan.js:79:18)</div><div class="line">    at Module._compile (module.js:569:30)</div><div class="line">    at Object.Module._extensions..js (module.js:580:10)</div><div class="line">    at Module.load (module.js:503:32) code: &apos;MODULE_NOT_FOUND&apos; &#125;</div><div class="line">(node:7992) [DEP0061] DeprecationWarning: fs.SyncWriteStream is deprecated.</div></pre></td></tr></table></figure></p><p>唔…之前报过<code>dtrace-provider</code>的错误,翻了一下以前的记录就直接无脑的<code>sudo npm install dtrace-provider</code> 但是该怎么报错还是怎么报错….</p><p>后来再粗暴点就删了<code>package-lock.json</code>和<code>node_modules</code>目录重新来了一遍<code>npm install</code>,结果还是不行…</p><p>有点绝望的我在想:难道我以后就不能用新版本了吗? 后来开始仔细看一下报错信息:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Error: The module &apos;/usr/local/lib/node_modules/hexo/node_modules/dtrace-provider/build/Release/DTraceProviderBindings.node&apos;</div><div class="line">was compiled against a different Node.js version using</div><div class="line">NODE_MODULE_VERSION 51. This version of Node.js requires</div><div class="line">NODE_MODULE_VERSION 57. Please try re-compiling or re-installing</div><div class="line">the module (for instance, using `npm rebuild` or `npm install`).</div></pre></td></tr></table></figure></p><p>看到这我意识到之前<strong>全局安装的文件</strong>都没更新过!<br>于是乎执行<code>sudo npm install -g hexo-cli</code> 好了,解决了</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;就在今天,吾心中忽有所感,心想不如升级一发环境版本?结果就立马受到了环境的制裁….&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="hexo" scheme="http://blog.justwe.site/tags/hexo/"/>
-    
-      <category term="error" scheme="http://blog.justwe.site/tags/error/"/>
     
   </entry>
   
