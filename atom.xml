@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-02-05T06:23:53.422Z</updated>
+  <updated>2018-02-05T06:28:37.267Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -21,15 +21,16 @@
     <link href="http://blog.justwe.site/2018/02/05/golang-awesome-tools/"/>
     <id>http://blog.justwe.site/2018/02/05/golang-awesome-tools/</id>
     <published>2018-02-05T03:47:28.000Z</published>
-    <updated>2018-02-05T06:23:53.422Z</updated>
+    <updated>2018-02-05T06:28:37.267Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="fswatch"><a href="#fswatch" class="headerlink" title="fswatch"></a>fswatch</h1><p>用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 <code>go run</code> 之类的, 这个使用 go 写的</p><p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="external">codeskyblue/fswatch</a></p><p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="external">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p><h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="external">astaxie/beego</a></p><h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="external">kardianos/govendor</a></p>]]></content>
+    <content type="html"><![CDATA[<a id="more"></a><h1 id="fswatch"><a href="#fswatch" class="headerlink" title="fswatch"></a>fswatch</h1><p>用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 <code>go run</code> 之类的, 这个使用 go 写的</p><p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="external">codeskyblue/fswatch</a></p><p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="external">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p><h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="external">astaxie/beego</a></p><h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="external">kardianos/govendor</a></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;fswatch&quot;&gt;&lt;a href=&quot;#fswatch&quot; class=&quot;headerlink&quot; title=&quot;fswatch&quot;&gt;&lt;/a&gt;fswatch&lt;/h1&gt;&lt;p&gt;用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 &lt;code&gt;go run&lt;/
+        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;fswatch&quot;&gt;&lt;a href=&quot;#fswatch&quot; class=&quot;headerlink&quot; title=&quot;fswatch&quot;&gt;&lt;/a&gt;fswatch&lt;/h1&gt;&lt;p&gt;用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存
       
     
     </summary>
