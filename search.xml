@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Docker-compose.yml 常用命令]]></title>
+    <url>%2F2018%2F02%2F12%2Fdocker-compose-yml%2F</url>
+    <content type="text"><![CDATA[常用命令备注 build 构建(重构)服务容器格式为: docker-compose build [options] [service...] --force-rm 删除构建时的临时容器 --no-cache 构建不使用 cache --pull 始终尝试 pull 最新的镜像 up (这个才是最常用的)docker-compose up [options] [service...] 直接输出docker-compose up就是将执行目录下的docker-compose.yml里的服务都自动构建,重新创建,并启动起来,同时将不同的容器关联起来,默认保持前台运行,同时也会输出各容器的输出日志 docker-compose up -d 将后台执行,在生产环境中使用 -d 保持后台运行 --no-color 不以颜色区分日志输出 --no-deps 不启动服务关联的容器 --force-recreate 强制重新创建容器 --no-recreate 若容器已经存在,则不再构建, 与上者不同时使用 --no-build 不自动构建缺失的镜像 -t , --timeout TIMEOUT 停止容器时候的超时,默认10s config 检测配置文件格式如果正确则显示配置文件内容,如果错误则显示错误原因 down 停止up启动的游戏exec 进入指定的容器images 列出 compose 中包含的镜像kill 发送信号停止容器docker-compose kill [options] [service...]比如 docker kill -s web logs 日志docker-compose logs [options] [service...]不同容器输出的日志颜色不同,不想有颜色就添加参数--no-color pause 暂停一个服务pull 拉取所需的镜像docker-compose pull [options] [service...] version 输出 compose 的版本一个简单的示例,具体代码参考 这里 123456789version: '3'services: web: # 一个 service 的名字 build: . # 指出 Dockerfile 所在文件夹的路径, 而且每个 service 中必须有 build 或者 image ports: # 将容器内的接口绑定到宿主机上 - "5000:5000" redis: image: "redis:alpine" # 这就是使用的远程镜像 下面列出来几个常用的参数命令: build 通过 Dockerfile 来构建镜像,可以指定Dockerfile路径以及context的路径, 可以用arg指定构建时的参数 比如: 123456web: build: context: ./dir dockerfile: ./other-dir arg: buildno: 1 image 根据提供的镜像名拉取镜像 command 覆盖容器启动后的默认命令比如: 1command: echo "hello world" container_name 指定 service 容器的名字,如果没设置的话就是 容器_序号 这样, 比如 web_1,db_1 这样的 1container_name: web-container devices 指定设备映射关系 12devices: - "/dev/ttyUSB1:/dev/ttyUSB0" depends_on 指定容器依赖关系,会优先构建依赖的容器,比如: 123456789101112version: '3'services: web: build: . depends_on: - db - redis redis: image: redis db: image: mysql 会先构建 db,redis再构建web dns 自定义 dns 服务列表 123dns: - 8.8.8.8 - 114.114.114.114 env_file 从文件中提取环境变量,同变量名的会被最后的变量覆盖 12345env_file: .envenv_file: - .env1 - .env2 格式必须是可以被 #注释的12PRO_ENV=productAPP_NAME=hahaha environment 设置环境变量,可以是KEY=VALUE 也可以只给出变量名,这将调取 docker 宿主机的环境变量 1234567environment: ROCK_ENV: 'development' SESSION_SECRET:environment: - ROCK_ENV=development - SESSION_SECRET port 将端口暴露到宿主机上对于表示布尔值的变量建议添加引号,防止 yaml 解析的时候产生歧义,比如:y|yes|TRYE|true|ON|on 这一类的 volumes 将宿主机的目录路径和容器中的路径挂载,可以设置访问模式,比如: 1234volumes: - /var/lib/mysql # 同路径挂载 - cache/:/tmp/cache - ~/configs:/etc/configs:/ro # 支持相对路径, 支持访问模式 读取变量: compose会读取宿主机的环境变量和当前目录下的.env文件中的变量 比如: 1234version: '3'services: db: image: "mongodb:($MONGO_VERSION) 这在启动的时候就会根据环境变量来调整要拉取的镜像]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker-composer</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go 开发过程中一些不错的工具(不定期更新)]]></title>
     <url>%2F2018%2F02%2F05%2Fgolang-awesome-tools%2F</url>
-    <content type="text"><![CDATA[就是平时用到的一些工具 fswatch用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 go run 之类的, 这个使用 go 写的 codeskyblue/fswatch 还有个跨平台的命令行工具,同样的名字 start 更多 emcrisostomo/fswatch 不过图方便用 go 这个就行 bee属于 beego 的附属开发工具, bee run [project-name] 的执行效果也是自动监听文件改动执行编译命令, 感觉不如fswatch方便,当然用 beego 开发的另说astaxie/beego govendor是 go 开发的包管理工具, 虽然依赖的package都在 gopath当中,但是代码换一个环境就要重新go get一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题govendor工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样kardianos/govendor]]></content>
+    <content type="text"><![CDATA[就是平时用到的一些工具 fswatch用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 go run 之类的, 这个使用 go 写的 codeskyblue/fswatch 还有个跨平台的命令行工具,同样的名字 start 更多 emcrisostomo/fswatch 不过图方便用 go 这个就行 bee属于 beego 的附属开发工具, bee run [project-name] 的执行效果也是自动监听文件改动执行编译命令, 感觉不如fswatch方便,当然用 beego 开发的另说astaxie/beego govendor是 go 开发的包管理工具, 虽然依赖的package都在 gopath当中,但是代码换一个环境就要重新go get一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题govendor工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样kardianos/govendor Gin一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 Martini的api 很像,但是更快,适合用来做 restful 的 APIgin-gonic/gin mux一个独立的路由包, 支持 restful,轻量,而且支持go的net/http 的接口gorilla/mux beego国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…astaxie/beego]]></content>
       <categories>
         <category>go</category>
       </categories>
@@ -510,8 +522,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker-composer</tag>
         <tag>docker</tag>
+        <tag>docker-compose</tag>
       </tags>
   </entry>
   <entry>

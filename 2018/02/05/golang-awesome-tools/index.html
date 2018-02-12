@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="就是平时用到的一些工具">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-05T06:31:01.687Z">
+<meta property="og:updated_time" content="2018-02-05T07:18:45.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 开发过程中一些不错的工具(不定期更新)">
 <meta name="twitter:description" content="就是平时用到的一些工具">
@@ -439,6 +439,9 @@
 <p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="external">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p>
 <h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="external">astaxie/beego</a></p>
 <h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="external">kardianos/govendor</a></p>
+<h1 id="Gin"><a href="#Gin" class="headerlink" title="Gin"></a>Gin</h1><p>一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 <code>Martini</code>的api 很像,但是更快,适合用来做 restful 的 API<br><a href="https://github.com/gin-gonic/gin" target="_blank" rel="external">gin-gonic/gin</a></p>
+<h1 id="mux"><a href="#mux" class="headerlink" title="mux"></a>mux</h1><p>一个独立的路由包, 支持 restful,轻量,而且支持go的<code>net/http</code> 的接口<br><a href="https://github.com/gorilla/mux" target="_blank" rel="external">gorilla/mux</a></p>
+<h1 id="beego"><a href="#beego" class="headerlink" title="beego"></a>beego</h1><p>国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…<br><a href="https://github.com/astaxie/beego" target="_blank" rel="external">astaxie/beego</a></p>
 
       
     </div>
@@ -500,6 +503,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/12/docker-compose-yml/" rel="prev" title="Docker-compose.yml 常用命令">
+                Docker-compose.yml 常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -571,7 +578,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">109</span>
+                <span class="site-state-item-count">110</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -589,7 +596,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -664,7 +671,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fswatch"><span class="nav-number">1.</span> <span class="nav-text">fswatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bee"><span class="nav-number">2.</span> <span class="nav-text">bee</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#govendor"><span class="nav-number">3.</span> <span class="nav-text">govendor</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fswatch"><span class="nav-number">1.</span> <span class="nav-text">fswatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bee"><span class="nav-number">2.</span> <span class="nav-text">bee</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#govendor"><span class="nav-number">3.</span> <span class="nav-text">govendor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gin"><span class="nav-number">4.</span> <span class="nav-text">Gin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mux"><span class="nav-number">5.</span> <span class="nav-text">mux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego"><span class="nav-number">6.</span> <span class="nav-text">beego</span></a></li></ol></div>
             
 
           </div>
