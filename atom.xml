@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-02-12T02:39:14.386Z</updated>
+  <updated>2018-02-13T05:25:02.471Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker-Volume</title>
+    <link href="http://blog.justwe.site/2018/02/13/docker-volume/"/>
+    <id>http://blog.justwe.site/2018/02/13/docker-volume/</id>
+    <published>2018-02-13T05:24:30.000Z</published>
+    <updated>2018-02-13T05:25:02.471Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里有一个使用 wordpress 的 <code>docker-compose.yml</code>的示例:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'3'</span></div><div class="line"></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  db:</span></div><div class="line"><span class="attr">    image:</span> <span class="attr">mysql:5.7</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="attr">      - db_data:</span><span class="string">/var/lib/mysql</span></div><div class="line"><span class="attr">    restart:</span> <span class="string">always</span></div><div class="line"><span class="attr">    environment:</span> </div><div class="line"><span class="attr">      MYSQL_ROOT_PASSWORD:</span> <span class="string">gaofeifiy</span></div><div class="line"><span class="attr">      MYSQL_DATABASE:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">      MYSQL_USER:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">      MYSQL_PASSWORD:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="number">33060</span><span class="string">:3306</span></div><div class="line">  </div><div class="line"><span class="attr">  wordpress:</span></div><div class="line"><span class="attr">    depends_on:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">db</span></div><div class="line"><span class="attr">    image:</span> <span class="attr">wordpress:latest</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">"8080:80"</span></div><div class="line"><span class="attr">    restart:</span> <span class="string">always</span></div><div class="line"><span class="attr">    environment:</span></div><div class="line"><span class="attr">      WORDPRESS_DB_HOST:</span> <span class="attr">db:3306</span></div><div class="line"><span class="attr">      WORDPRESS_DB_USER:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">      WORDPRESS_DB_PASSWORD:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">volumes:</span></div><div class="line"><span class="attr">  db_data:</span></div></pre></td></tr></table></figure></p><p>其中有一点奇怪的地方就是在<code>db</code>的数据挂载当中,是这么写的:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="string">...</span></div><div class="line"><span class="attr">  db:</span></div><div class="line"><span class="attr">    image:</span> <span class="attr">mysql:5.7</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="attr">      - db_data:</span><span class="string">/var/lib/mysql</span></div><div class="line"><span class="string">....</span></div><div class="line"></div><div class="line"><span class="attr">volumes:</span></div><div class="line"><span class="attr">  db_data:</span></div></pre></td></tr></table></figure></p><p>这是<code>docker-compose</code> version2 起开始的新语法,目的就是方便多个服务之间公用同一个卷<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">volumes:</span></div><div class="line"><span class="attr">  db_data:</span></div></pre></td></tr></table></figure></p><p>这种写法就是声明一个命名卷, 通过<code>docker volume ls</code> 可以列出来宿主机上的所有挂载的卷,而且这些卷<strong>不会因为容器被删除而删除</strong>,为的就是方便数据和服务分离</p><p>可以通过命令<code>docker inspect wordpress_db_data</code> 来查看卷的配置,这里<code>wordpress_db_data</code>就是我们刚才声明的那个卷的名字<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">➜  wordpress git:(master) ✗ docker inspect wordpress_db_data</div><div class="line">[</div><div class="line">    &#123;</div><div class="line">        "CreatedAt": "2018-02-13T04:29:29Z",</div><div class="line">        "Driver": "local",</div><div class="line">        "Labels": &#123;</div><div class="line">            "com.docker.compose.project": "wordpress",</div><div class="line">            "com.docker.compose.volume": "db_data"</div><div class="line">        &#125;,</div><div class="line">        "Mountpoint": "/var/lib/docker/volumes/wordpress_db_data/_data",</div><div class="line">        "Name": "wordpress_db_data",</div><div class="line">        "Options": &#123;&#125;,</div><div class="line">        "Scope": "local"</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure></p><p>不过他的<code>mountpoint</code>的路径并不是宿主机上的路径,而依然是属于<code>docker</code>的路径,在<code>macOS</code>系统当中可以执行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> ls -ltrh /var/lib/docker/volumes</span></div></pre></td></tr></table></figure><p>可以查看卷的列表, <a href="https://forums.docker.com/t/host-path-of-volume/12277/6" target="_blank" rel="external">参考资料1</a> <a href="https://stackoverflow.com/questions/39175194/docker-compose-persistent-data-mysql" target="_blank" rel="external">参考资料2</a></p><p>清除本地的卷可以执行<code>docker volume prune</code></p><p><a href="https://docs.docker.com/compose/compose-file/#volumes" target="_blank" rel="external">官方文档</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这里有一个使用 wordpress 的 &lt;code&gt;docker-compose.yml&lt;/code&gt;的示例:&lt;br&gt;&lt;figure class=&quot;highlight yml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;l
+      
+    
+    </summary>
+    
+      <category term="docker" scheme="http://blog.justwe.site/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
+    
+      <category term="volume" scheme="http://blog.justwe.site/tags/volume/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker-compose.yml 常用命令</title>
@@ -34,9 +61,9 @@
       <category term="docker" scheme="http://blog.justwe.site/categories/docker/"/>
     
     
-      <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
-    
       <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
+    
+      <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
     
   </entry>
   
@@ -470,30 +497,6 @@
     
       <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Js生成笛卡尔积数组</title>
-    <link href="http://blog.justwe.site/2017/07/18/js-decartes/"/>
-    <id>http://blog.justwe.site/2017/07/18/js-decartes/</id>
-    <published>2017-07-18T02:36:50.000Z</published>
-    <updated>2017-07-18T02:40:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>以下转载了来自 <a href="https://segmentfault.com/q/1010000002696523" target="_blank" rel="external">segmentfault</a>的一个回答</p><a id="more"></a><ol><li><p>第一种</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">        <span class="keyword">var</span> data = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>));</div><div class="line">        <span class="keyword">var</span> result = [];</div><div class="line">        <span class="built_in">console</span>.log(data);</div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">descartes</span>(<span class="params">arrIndex, aresult</span>)</span>&#123;</div><div class="line">            <span class="keyword">if</span> (arrIndex &gt;= data.length) &#123;</div><div class="line">                result.push(aresult);</div><div class="line">                <span class="keyword">return</span> ;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">var</span> aArr = data[arrIndex];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; aArr.length; ++i) &#123;</div><div class="line">                <span class="keyword">var</span> theResult = aresult.slice(<span class="number">0</span>, aresult.length);</div><div class="line">                theResult.push(aArr[i]);</div><div class="line">                descartes(arrIndex + <span class="number">1</span>, theResult);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        descartes(<span class="number">0</span>, []);</div><div class="line">        <span class="built_in">console</span>.log(result);</div><div class="line">    <span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure></li><li><p>第二种</p><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">descartes</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>( <span class="built_in">arguments</span>.length &lt; <span class="number">2</span> ) <span class="keyword">return</span> <span class="built_in">arguments</span>[<span class="number">0</span>] || [];</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [].reduce.call(<span class="built_in">arguments</span>, <span class="function"><span class="keyword">function</span>(<span class="params">col, set</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> res = [];</div><div class="line">        col.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;set.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</div><div class="line">            <span class="keyword">var</span> t = [].concat( <span class="built_in">Array</span>.isArray(c) ? c : [c] );</div><div class="line">            t.push(s);</div><div class="line">            res.push(t);</div><div class="line">        &#125;)&#125;);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line">descartes([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>],[<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>],[<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>]);</div></pre></td></tr></table></figure></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;以下转载了来自 &lt;a href=&quot;https://segmentfault.com/q/1010000002696523&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;segmentfault&lt;/a&gt;的一个回答&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="js" scheme="http://blog.justwe.site/categories/js/"/>
-    
-    
-      <category term="js" scheme="http://blog.justwe.site/tags/js/"/>
-    
-      <category term="decartes" scheme="http://blog.justwe.site/tags/decartes/"/>
     
   </entry>
   

@@ -328,6 +328,166 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/02/13/docker-volume/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GPF">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<hello-world/>">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/13/docker-volume/" itemprop="url">
+                  Docker-Volume
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-13T13:24:30+08:00">
+                2018-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/docker/" itemprop="url" rel="index">
+                    <span itemprop="name">docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/13/docker-volume/" class="leancloud_visitors" data-flag-title="Docker-Volume">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里有一个使用 wordpress 的 <code>docker-compose.yml</code>的示例:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">'3'</span></div><div class="line"></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  db:</span></div><div class="line"><span class="attr">    image:</span> <span class="attr">mysql:5.7</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="attr">      - db_data:</span><span class="string">/var/lib/mysql</span></div><div class="line"><span class="attr">    restart:</span> <span class="string">always</span></div><div class="line"><span class="attr">    environment:</span> </div><div class="line"><span class="attr">      MYSQL_ROOT_PASSWORD:</span> <span class="string">gaofeifiy</span></div><div class="line"><span class="attr">      MYSQL_DATABASE:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">      MYSQL_USER:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">      MYSQL_PASSWORD:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="number">33060</span><span class="string">:3306</span></div><div class="line">  </div><div class="line"><span class="attr">  wordpress:</span></div><div class="line"><span class="attr">    depends_on:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">db</span></div><div class="line"><span class="attr">    image:</span> <span class="attr">wordpress:latest</span></div><div class="line"><span class="attr">    ports:</span></div><div class="line"><span class="bullet">      -</span> <span class="string">"8080:80"</span></div><div class="line"><span class="attr">    restart:</span> <span class="string">always</span></div><div class="line"><span class="attr">    environment:</span></div><div class="line"><span class="attr">      WORDPRESS_DB_HOST:</span> <span class="attr">db:3306</span></div><div class="line"><span class="attr">      WORDPRESS_DB_USER:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">      WORDPRESS_DB_PASSWORD:</span> <span class="string">wordpress</span></div><div class="line"><span class="attr">volumes:</span></div><div class="line"><span class="attr">  db_data:</span></div></pre></td></tr></table></figure></p>
+<p>其中有一点奇怪的地方就是在<code>db</code>的数据挂载当中,是这么写的:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="string">...</span></div><div class="line"><span class="attr">  db:</span></div><div class="line"><span class="attr">    image:</span> <span class="attr">mysql:5.7</span></div><div class="line"><span class="attr">    volumes:</span></div><div class="line"><span class="attr">      - db_data:</span><span class="string">/var/lib/mysql</span></div><div class="line"><span class="string">....</span></div><div class="line"></div><div class="line"><span class="attr">volumes:</span></div><div class="line"><span class="attr">  db_data:</span></div></pre></td></tr></table></figure></p>
+<p>这是<code>docker-compose</code> version2 起开始的新语法,目的就是方便多个服务之间公用同一个卷<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">volumes:</span></div><div class="line"><span class="attr">  db_data:</span></div></pre></td></tr></table></figure></p>
+<p>这种写法就是声明一个命名卷, 通过<code>docker volume ls</code> 可以列出来宿主机上的所有挂载的卷,而且这些卷<strong>不会因为容器被删除而删除</strong>,为的就是方便数据和服务分离</p>
+<p>可以通过命令<code>docker inspect wordpress_db_data</code> 来查看卷的配置,这里<code>wordpress_db_data</code>就是我们刚才声明的那个卷的名字<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">➜  wordpress git:(master) ✗ docker inspect wordpress_db_data</div><div class="line">[</div><div class="line">    &#123;</div><div class="line">        "CreatedAt": "2018-02-13T04:29:29Z",</div><div class="line">        "Driver": "local",</div><div class="line">        "Labels": &#123;</div><div class="line">            "com.docker.compose.project": "wordpress",</div><div class="line">            "com.docker.compose.volume": "db_data"</div><div class="line">        &#125;,</div><div class="line">        "Mountpoint": "/var/lib/docker/volumes/wordpress_db_data/_data",</div><div class="line">        "Name": "wordpress_db_data",</div><div class="line">        "Options": &#123;&#125;,</div><div class="line">        "Scope": "local"</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>不过他的<code>mountpoint</code>的路径并不是宿主机上的路径,而依然是属于<code>docker</code>的路径,在<code>macOS</code>系统当中可以执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> ls -ltrh /var/lib/docker/volumes</span></div></pre></td></tr></table></figure>
+<p>可以查看卷的列表, <a href="https://forums.docker.com/t/host-path-of-volume/12277/6" target="_blank" rel="external">参考资料1</a> <a href="https://stackoverflow.com/questions/39175194/docker-compose-persistent-data-mysql" target="_blank" rel="external">参考资料2</a></p>
+<p>清除本地的卷可以执行<code>docker volume prune</code></p>
+<p><a href="https://docs.docker.com/compose/compose-file/#volumes" target="_blank" rel="external">官方文档</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/02/12/docker-compose-yml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1712,169 +1872,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/11/22/Raspberry-Pi3-golang-env/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GPF">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/logo.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="<hello-world/>">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/11/22/Raspberry-Pi3-golang-env/" itemprop="url">
-                  树莓派上安装 Golang
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T10:30:03+08:00">
-                2017-11-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/22/Raspberry-Pi3-golang-env/" class="leancloud_visitors" data-flag-title="树莓派上安装 Golang">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>树莓派上需要进行编译安装,不过很简单,而且 golang 官方也有 arm 平台的编译包,<br>在树莓派上一定要选<strong>linux-armv61</strong>这个版本啊</p>
-<blockquote>
-<p><a href="https://golang.org/dl/" target="_blank" rel="external">golang 各版本的下载列表</a></p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/22/Raspberry-Pi3-golang-env/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1919,7 +1921,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">110</span>
+                <span class="site-state-item-count">111</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1937,7 +1939,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
