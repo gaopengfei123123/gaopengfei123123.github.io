@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="这里有一个使用 wordpress 的 docker-compose.yml的示例:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-14T05:28:28.528Z">
+<meta property="og:updated_time" content="2018-02-16T12:35:24.116Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker-Volume">
 <meta name="twitter:description" content="这里有一个使用 wordpress 的 docker-compose.yml的示例:">
@@ -440,7 +440,7 @@
 <p>可以通过命令<code>docker inspect wordpress_db_data</code> 来查看卷的配置,这里<code>wordpress_db_data</code>就是我们刚才声明的那个卷的名字<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">➜  wordpress git:(master) ✗ docker inspect wordpress_db_data</div><div class="line">[</div><div class="line">    &#123;</div><div class="line">        "CreatedAt": "2018-02-13T04:29:29Z",</div><div class="line">        "Driver": "local",</div><div class="line">        "Labels": &#123;</div><div class="line">            "com.docker.compose.project": "wordpress",</div><div class="line">            "com.docker.compose.volume": "db_data"</div><div class="line">        &#125;,</div><div class="line">        "Mountpoint": "/var/lib/docker/volumes/wordpress_db_data/_data",</div><div class="line">        "Name": "wordpress_db_data",</div><div class="line">        "Options": &#123;&#125;,</div><div class="line">        "Scope": "local"</div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure></p>
 <p>不过他的<code>mountpoint</code>的路径并不是宿主机上的路径,而依然是属于<code>docker</code>的路径,在<code>macOS</code>系统当中可以执行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty</div><div class="line"><span class="meta"></span></div><div class="line"># ls -ltrh /var/lib/docker/volumes</div></pre></td></tr></table></figure>
-<p>可以查看卷的列表, <a href="https://forums.docker.com/t/host-path-of-volume/12277/6" target="_blank" rel="external">参考资料1</a> <a href="https://stackoverflow.com/questions/39175194/docker-compose-persistent-data-mysql" target="_blank" rel="external">参考资料2</a></p>
+<p>在 <code>macOS</code> 中并不能看到实体文件,而是进入<code>linuxkit</code>中,所有的资源也是在那里,这在<code>win</code>和<code>mac</code>会出现,在 <code>linuxOS</code>中就是正常的<code>/var/lib/docker</code>路径<br>可以查看卷的列表, <a href="https://forums.docker.com/t/host-path-of-volume/12277/6" target="_blank" rel="external">参考资料1</a> <a href="https://stackoverflow.com/questions/39175194/docker-compose-persistent-data-mysql" target="_blank" rel="external">参考资料2</a></p>
 <p>清除本地的卷可以执行<code>docker volume prune</code></p>
 <p><a href="https://docs.docker.com/compose/compose-file/#volumes" target="_blank" rel="external">官方文档</a></p>
 
