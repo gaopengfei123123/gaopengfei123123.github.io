@@ -412,13 +412,13 @@
       
         <h2 id="本地搭建-hexo"><a href="#本地搭建-hexo" class="headerlink" title="本地搭建 hexo"></a>本地搭建 <code>hexo</code></h2><a id="more"></a>
 <ul>
-<li>构建hexo需要在本地安装<code>node.js</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install node</div></pre></td></tr></table></figure>
+<li>构建hexo需要在本地安装<code>node.js</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install node</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>当前版本的node版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">node -v</div><div class="line">v7.7.3</div></pre></td></tr></table></figure></p>
+<p>当前版本的node版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">v7.7.3</span><br></pre></td></tr></table></figure></p>
 <!-- more -->
 <ul>
-<li>全局安装 <code>hexo</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo</div></pre></td></tr></table></figure>
+<li>全局安装 <code>hexo</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
@@ -426,30 +426,30 @@
 </blockquote>
 <ul>
 <li><p>创建一个目录并且安装 <code>hexo</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdir hexo_blog</div><div class="line">cd hexo_blog</div><div class="line">hexo init</div><div class="line">npm install</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir hexo_blog</span><br><span class="line">cd hexo_blog</span><br><span class="line">hexo init</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>新建一个文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new &quot;your-first-page&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;your-first-page&quot;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>文件在 <code>hexo_blog/source/_post/</code>下进行编辑啊</p>
 <ul>
-<li>然后就是生成静态文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate</div><div class="line">hexo server</div></pre></td></tr></table></figure>
+<li>然后就是生成静态文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>这时就可以访问 <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> 来查看效果，这个时候hexo已经搭建成功了，<br>但是我们需要外网能够访问，这就用到了今天的另一个主角：<code>github page</code></p>
+<p>这时就可以访问 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 来查看效果，这个时候hexo已经搭建成功了，<br>但是我们需要外网能够访问，这就用到了今天的另一个主角：<code>github page</code></p>
 <h2 id="将-hexo-放到github上"><a href="#将-hexo-放到github上" class="headerlink" title="将 hexo 放到github上"></a>将 <code>hexo</code> 放到github上</h2><ul>
-<li>需要一个github账号，具体申请登录看 <a href="https://github.com" target="_blank" rel="external">https://github.com</a> 上的引导就行</li>
+<li>需要一个github账号，具体申请登录看 <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a> 上的引导就行</li>
 <li>创建一个新的 repository 名字格式是固定的，比如我的账户名是 gaopengfei123123 那么这个库的名字就是 gaopengfei123123.github.io 不能改的哦</li>
-<li>为了可以直接提交远程文件需要添加 ssh 密匙<br>本地操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;5173180@qq.com” -f ~/.ssh/github-rsa</div><div class="line">cat ~/.ssh/github_rsa.pub</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3K5mcQxH9mu1cUIu2+byK1iksES/7Tnfh23l2U6y1fOKO4XFhPLdAoMQdePnI51PAF4faXxucOYsiDb6IpQimWPwORKTkEkcglOiZ414eZZ829gY98RAldbFQeT2L9A0l2APfcan1fH4HvrCmZKlY8CNDQDDfRzXub9hfSX3LS5mQlgS9PHiFoXRfrS10hYweere9Cb9OFiEdkdCfMKUBr25ImGahqbaHxE8Vb3QzMT8Q5PBITaqFwYnIE/z6HU6Lok92EZ/uVG81SMJb9A5SQCZdsjWmyDqXj1eDZ1A2YyUlA+/6QM7JjCrLoZAAtZHTH+ylNAG79w9WG0eYAuL GaoPengFeiFiy@github.com</div></pre></td></tr></table></figure>
+<li>为了可以直接提交远程文件需要添加 ssh 密匙<br>本地操作<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;5173180@qq.com” -f ~/.ssh/github-rsa</span><br><span class="line">cat ~/.ssh/github_rsa.pub</span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3K5mcQxH9mu1cUIu2+byK1iksES/7Tnfh23l2U6y1fOKO4XFhPLdAoMQdePnI51PAF4faXxucOYsiDb6IpQimWPwORKTkEkcglOiZ414eZZ829gY98RAldbFQeT2L9A0l2APfcan1fH4HvrCmZKlY8CNDQDDfRzXub9hfSX3LS5mQlgS9PHiFoXRfrS10hYweere9Cb9OFiEdkdCfMKUBr25ImGahqbaHxE8Vb3QzMT8Q5PBITaqFwYnIE/z6HU6Lok92EZ/uVG81SMJb9A5SQCZdsjWmyDqXj1eDZ1A2YyUlA+/6QM7JjCrLoZAAtZHTH+ylNAG79w9WG0eYAuL GaoPengFeiFiy@github.com</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>把这一段完整的复制到 <a href="https://github.com/settings/keys" target="_blank" rel="external">https://github.com/settings/keys</a> 这个地址下，添加一条新的ssh-key，这样就能免登录提交版本文件</p>
+<p>把这一段完整的复制到 <a href="https://github.com/settings/keys" target="_blank" rel="noopener">https://github.com/settings/keys</a> 这个地址下，添加一条新的ssh-key，这样就能免登录提交版本文件</p>
 <ul>
-<li>现在编辑本地hexo根目录下的站点配置文件 <code>path/to/hexo_blog/_config.yml</code><br>查找字段 <code>deploy</code> 编辑成这样<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:gaopengfei123123/gaopengfei123123.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<li>现在编辑本地hexo根目录下的站点配置文件 <code>path/to/hexo_blog/_config.yml</code><br>查找字段 <code>deploy</code> 编辑成这样<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:gaopengfei123123/gaopengfei123123.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>设置好后，就将本地生成的静态文件发到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo deploy</div><div class="line"></div><div class="line">#如果报错就可能是少个插件</div><div class="line">npm install hexo-deployer-git</div></pre></td></tr></table></figure></p>
+<p>设置好后，就将本地生成的静态文件发到github上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br><span class="line"></span><br><span class="line">#如果报错就可能是少个插件</span><br><span class="line">npm install hexo-deployer-git</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>进入 你的版本库地址/settings 比如我的就是 <code>https://github.com/gaopengfei123123/gaopengfei123123.github.io/settings</code><br>找到 <code>github pages</code> 设置块按照你的需求调整，这时访问 <code>https://gaopengfei123123.github.io</code>就能访问 hexo 上传的内容了</li>
 </ul>
@@ -458,15 +458,15 @@
 </blockquote>
 <ul>
 <li><p>首先进入到万网云解析的页面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">记录类型：A</div><div class="line">主机记录：blog</div><div class="line">记录值：xxx.xxx.xxx  #这里需要 ping -c 3 https://gaopengfei123123.github.io 获取ip地址</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">记录类型：A</span><br><span class="line">主机记录：blog</span><br><span class="line">记录值：xxx.xxx.xxx  #这里需要 ping -c 3 https://gaopengfei123123.github.io 获取ip地址</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>然后返回到 你的版本库地址/settings 这里，将 <code>Custom domain</code> 设置成你刚才解析的名字，<br>与此同时在github上版本的根目录下添加一个文件 <code>CNAME</code> 内容是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#in CNAME</div><div class="line">blog.justwe.site</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#in CNAME</span><br><span class="line">blog.justwe.site</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>这时再返回settings中就能看的 github pages 部分的域名绑定的是你的域名了，到这里博客算是搭建成功了</p>
-<p><a href="https://hexo.io" target="_blank" rel="external">hexo官网</a></p>
-<p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">hexo的next模版官网</a></p>
+<p><a href="https://hexo.io" target="_blank" rel="noopener">hexo官网</a></p>
+<p><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">hexo的next模版官网</a></p>
 
       
     </div>

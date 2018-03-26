@@ -432,18 +432,18 @@
       
 
       
-        <p><a href="https://github.com/swoole/swoole-src" target="_blank" rel="external">源码地址</a></p>
+        <p><a href="https://github.com/swoole/swoole-src" target="_blank" rel="noopener">源码地址</a></p>
 <a id="more"></a>
-<p>因为swoole已经加入官方扩展包中，可以直接用pecl安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pecl install swoole</div></pre></td></tr></table></figure></p>
+<p>因为swoole已经加入官方扩展包中，可以直接用pecl安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pecl install swoole</span><br></pre></td></tr></table></figure></p>
 <p>也可以通过源码安装：</p>
-<p>首先确认php的安装路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">which php</div></pre></td></tr></table></figure></p>
+<p>首先确认php的安装路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">which php</span><br></pre></td></tr></table></figure></p>
 <p>这个大部分都是指向的/usr/local/bin/php这个地址，但这些文件都是链接，顺着这个就能找到文件真正所在了</p>
-<p>去这里是为了找到 phpize 这个工具,在文件安装目录中的 bin 目录中找有没有 phpize 这个快捷方式<br>如果没有的话，就运行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install php-dev</div><div class="line">注意版本问题</div></pre></td></tr></table></figure></p>
-<p>之后有了 <code>phpize</code> 工具就好说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install php5-dev</div><div class="line">git clone https://github.com/swoole/swoole-src.git</div><div class="line">cd swoole-src</div><div class="line">phpize</div><div class="line">./configure</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure></p>
+<p>去这里是为了找到 phpize 这个工具,在文件安装目录中的 bin 目录中找有没有 phpize 这个快捷方式<br>如果没有的话，就运行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install php-dev</span><br><span class="line">注意版本问题</span><br></pre></td></tr></table></figure></p>
+<p>之后有了 <code>phpize</code> 工具就好说了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install php5-dev</span><br><span class="line">git clone https://github.com/swoole/swoole-src.git</span><br><span class="line">cd swoole-src</span><br><span class="line">phpize</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
 <p>这一段是官方提供的安装命令，安装完毕后留意一下他的安装路径，或者指定路径 可以在编译前的 <code>./configure --help</code>查看，比如<code>----prefix=/your/wanted/path</code></p>
-<p>之后就是在运行的<code>php.ini</code>文件中添加配置了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#查看php运行的php.ini</div><div class="line">php -i | grep php.ini</div></pre></td></tr></table></figure></p>
-<p>编辑 <code>php.ini</code> 直接添加一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extension= swoole.so</div></pre></td></tr></table></figure></p>
-<p>保存退出后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">php -m | grep swoole</div></pre></td></tr></table></figure></p>
+<p>之后就是在运行的<code>php.ini</code>文件中添加配置了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看php运行的php.ini</span><br><span class="line">php -i | grep php.ini</span><br></pre></td></tr></table></figure></p>
+<p>编辑 <code>php.ini</code> 直接添加一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extension= swoole.so</span><br></pre></td></tr></table></figure></p>
+<p>保存退出后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -m | grep swoole</span><br></pre></td></tr></table></figure></p>
 <p>出现了就说明已经安装上了，high起来！</p>
 
       

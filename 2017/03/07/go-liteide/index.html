@@ -416,10 +416,10 @@
 <p>Liteide 是一款专门为go开发的一款ide，省去了类似atom编辑器的一些麻烦的环境配置导致atom越来越臃肿，是不少go的开发者在推荐的一款ide</p>
 </blockquote>
 <a id="more"></a>
-<p>1.安装go<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install go</div></pre></td></tr></table></figure></p>
+<p>1.安装go<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install go</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li>下载Liteide<blockquote>
-<p><a href="http://golangtc.com/download/liteide" target="_blank" rel="external">下载地址</a></p>
+<p><a href="http://golangtc.com/download/liteide" target="_blank" rel="noopener">下载地址</a></p>
 </blockquote>
 </li>
 </ol>
@@ -427,21 +427,21 @@
 <ol>
 <li>打开编辑器 <code>查看-&gt;编辑当前环境</code></li>
 </ol>
-<p>列出我现在的环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># native compiler darwin amd64</div><div class="line"></div><div class="line">GOROOT=/usr/local/Cellar/go/1.8/libexec</div><div class="line">GOPATH=$HOME/Documents/go</div><div class="line">GOBIN=</div><div class="line">GOARCH=amd64</div><div class="line">GOOS=darwin</div><div class="line">CGO_ENABLED=1</div><div class="line"></div><div class="line">PATH=$GOROOT/bin:$PATH</div><div class="line"></div><div class="line">LITEIDE_GDB=/usr/local/bin/gdb</div><div class="line">LITEIDE_MAKE=make</div><div class="line">LITEIDE_TERM=/usr/bin/open</div><div class="line">LITEIDE_TERMARGS=-a Terminal</div><div class="line">LITEIDE_EXEC=/usr/X11R6/bin/xterm</div><div class="line">LITEIDE_EXECOPT=-e</div></pre></td></tr></table></figure></p>
+<p>列出我现在的环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># native compiler darwin amd64</span><br><span class="line"></span><br><span class="line">GOROOT=/usr/local/Cellar/go/1.8/libexec</span><br><span class="line">GOPATH=$HOME/Documents/go</span><br><span class="line">GOBIN=</span><br><span class="line">GOARCH=amd64</span><br><span class="line">GOOS=darwin</span><br><span class="line">CGO_ENABLED=1</span><br><span class="line"></span><br><span class="line">PATH=$GOROOT/bin:$PATH</span><br><span class="line"></span><br><span class="line">LITEIDE_GDB=/usr/local/bin/gdb</span><br><span class="line">LITEIDE_MAKE=make</span><br><span class="line">LITEIDE_TERM=/usr/bin/open</span><br><span class="line">LITEIDE_TERMARGS=-a Terminal</span><br><span class="line">LITEIDE_EXEC=/usr/X11R6/bin/xterm</span><br><span class="line">LITEIDE_EXECOPT=-e</span><br></pre></td></tr></table></figure></p>
 <p>上面这一块刚开始是注释掉的，需要我们自己填写，这个是每次运行编辑器的适合才会用到的配置，和安装时的系统配置不冲突</p>
 <p>需要注意区分的就是 <code>GOROOT</code> 和 <code>GOPATH</code> 这两个变量</p>
 <p><code>GOROOT</code> 是go的执行目录，说白了就是go源码的安装目录，<br>比如 <code>import “fmt”</code>这条命令就是从 <code>GOROOT</code> 给的路径中找加载的包</p>
 <p><code>GOPATH</code> 是工作目录，类似apache的www目录，你的项目代码都是放到 <code>$GOPATH/src</code> 目录下的<br>同时我们通过 <code>go get</code> 获取的第三方package也是放在这里的为了能执行package里的文件也是需要把这个路径添加到环境变量当中，<br>因此才会出现 <code>PATH=$GOROOT/bin:$PATH</code> 这样的配置</p>
 <ol>
-<li>配置完成后运行个文件试一下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd $HOME/Documents/go/src</div><div class="line">mkdir hello &amp;&amp; cd hello</div></pre></td></tr></table></figure>
+<li>配置完成后运行个文件试一下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME/Documents/go/src</span><br><span class="line">mkdir hello &amp;&amp; cd hello</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>通过liteide编辑器打开目录，创建一个文件  main.go</p>
-<p>文件内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import &quot;fmt&quot;</div><div class="line"></div><div class="line">func main()&#123;</div><div class="line">    fmt.Println(&quot;Hello world!&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>文件内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">    fmt.Println(&quot;Hello world!&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然后点击编辑器右上角的 <code>BR(build and run)</code> 就能在编辑器下面的信息框中看到输出内容了</p>
 <p>ready go！</p>
-<p><a href="https://segmentfault.com/a/1190000004008942" target="_blank" rel="external">参考1</a></p>
-<p><a href="http://www.jianshu.com/p/4e699ff478a5" target="_blank" rel="external">参考2</a></p>
+<p><a href="https://segmentfault.com/a/1190000004008942" target="_blank" rel="noopener">参考1</a></p>
+<p><a href="http://www.jianshu.com/p/4e699ff478a5" target="_blank" rel="noopener">参考2</a></p>
 <blockquote>
 <p>ps:<br>因为颜值我最后还是采用了 atom 的 go-plus 插件 :)</p>
 </blockquote>

@@ -411,17 +411,17 @@
       
 
       
-        <p>在新版的 laravel 框架当中(v5.4.23) 出现了报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Illuminate\Database\QueryException]</div><div class="line"> SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t</div><div class="line"> oo long; max key length is 767 bytes (SQL: alter table `users` add unique `</div><div class="line"> users_email_unique`(`email`))</div></pre></td></tr></table></figure></p>
+        <p>在新版的 laravel 框架当中(v5.4.23) 出现了报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Illuminate\Database\QueryException]</span><br><span class="line"> SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t</span><br><span class="line"> oo long; max key length is 767 bytes (SQL: alter table `users` add unique `</span><br><span class="line"> users_email_unique`(`email`))</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p>错误重现:</p>
 <ol>
 <li>laravel 版本 5.4.23</li>
-<li>配置好数据库链接,执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">php artisan make:auth</div><div class="line">php artisan migrate</div></pre></td></tr></table></figure>
+<li>配置好数据库链接,执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php artisan make:auth</span><br><span class="line">php artisan migrate</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>就会出现错误</p>
-<p>解决办法:<br>打开文件 <code>@yourApp/app/Prividers/AppserviceProvider.php</code><br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">boot</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    Schema::defaultStringLength(<span class="number">191</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>文章来源: <a href="https://laracasts.com/discuss/channels/laravel/laravel-54-failing-on-php-artisan-migrate-after-php-artisan-makeauth?page=1" target="_blank" rel="external">laracast</a></p>
+<p>解决办法:<br>打开文件 <code>@yourApp/app/Prividers/AppserviceProvider.php</code><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">Illuminate</span>\<span class="title">Support</span>\<span class="title">Facades</span>\<span class="title">Schema</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">boot</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Schema::defaultStringLength(<span class="number">191</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>文章来源: <a href="https://laracasts.com/discuss/channels/laravel/laravel-54-failing-on-php-artisan-migrate-after-php-artisan-makeauth?page=1" target="_blank" rel="noopener">laracast</a></p>
 
       
     </div>

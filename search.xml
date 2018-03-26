@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go 开发过程中一些不错的工具(不定期更新)]]></title>
+    <url>%2F2018%2F03%2F26%2Fgolang-awesome-tools%2F</url>
+    <content type="text"><![CDATA[就是平时用到的一些工具 fswatch用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 go run 之类的, 这个使用 go 写的 codeskyblue/fswatch 还有个跨平台的命令行工具,同样的名字 start 更多 emcrisostomo/fswatch 不过图方便用 go 这个就行 bee属于 beego 的附属开发工具, bee run [project-name] 的执行效果也是自动监听文件改动执行编译命令, 感觉不如fswatch方便,当然用 beego 开发的另说astaxie/beego govendor是 go 开发的包管理工具, 虽然依赖的package都在 gopath当中,但是代码换一个环境就要重新go get一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题govendor工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样kardianos/govendor Gin一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 Martini的api 很像,但是更快,适合用来做 restful 的 APIgin-gonic/gin mux一个独立的路由包, 支持 restful,轻量,而且支持go的net/http 的接口gorilla/mux beego国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…astaxie/beego beego-log如果不想全部引用 beego 的内容,可以引进它的模块啊,它的 log 模块就是一个很不错的选择beego-log 的中文档 kafka-go和 kafka 相关的库很少,不过我个人使用的话这个库已经能满足我的需求, 我这里也有一个demo示例segmentio/kafka-go go-redis/redisredis 的依赖包还是很简单的,这里推荐一个 star 不少的库go-redis/redis]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Docker-Volume]]></title>
     <url>%2F2018%2F02%2F13%2Fdocker-volume%2F</url>
     <content type="text"><![CDATA[这里有一个使用 wordpress 的 docker-compose.yml的示例:1234567891011121314151617181920212223242526272829version: '3'services: db: image: mysql:5.7 volumes: - db_data:/var/lib/mysql restart: always environment: MYSQL_ROOT_PASSWORD: gaofeifiy MYSQL_DATABASE: wordpress MYSQL_USER: wordpress MYSQL_PASSWORD: wordpress ports: - 33060:3306 wordpress: depends_on: - db image: wordpress:latest ports: - "8080:80" restart: always environment: WORDPRESS_DB_HOST: db:3306 WORDPRESS_DB_USER: wordpress WORDPRESS_DB_PASSWORD: wordpressvolumes: db_data: 其中有一点奇怪的地方就是在db的数据挂载当中,是这么写的:123456789... db: image: mysql:5.7 volumes: - db_data:/var/lib/mysql....volumes: db_data: 这是docker-compose version2 起开始的新语法,目的就是方便多个服务之间公用同一个卷12volumes: db_data: 这种写法就是声明一个命名卷, 通过docker volume ls 可以列出来宿主机上的所有挂载的卷,而且这些卷不会因为容器被删除而删除,为的就是方便数据和服务分离 可以通过命令docker inspect wordpress_db_data 来查看卷的配置,这里wordpress_db_data就是我们刚才声明的那个卷的名字123456789101112131415➜ wordpress git:(master) ✗ docker inspect wordpress_db_data[ &#123; "CreatedAt": "2018-02-13T04:29:29Z", "Driver": "local", "Labels": &#123; "com.docker.compose.project": "wordpress", "com.docker.compose.volume": "db_data" &#125;, "Mountpoint": "/var/lib/docker/volumes/wordpress_db_data/_data", "Name": "wordpress_db_data", "Options": &#123;&#125;, "Scope": "local" &#125;] 不过他的mountpoint的路径并不是宿主机上的路径,而依然是属于docker的路径,在macOS系统当中可以执行 123screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty# ls -ltrh /var/lib/docker/volumes 在 macOS 中并不能看到实体文件,而是进入linuxkit中,所有的资源也是在那里,这在win和mac会出现,在 linuxOS中就是正常的/var/lib/docker路径可以查看卷的列表, 参考资料1 参考资料2 清除本地的卷可以执行docker volume prune 官方文档]]></content>
@@ -20,19 +31,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>docker-composer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Go 开发过程中一些不错的工具(不定期更新)]]></title>
-    <url>%2F2018%2F02%2F05%2Fgolang-awesome-tools%2F</url>
-    <content type="text"><![CDATA[就是平时用到的一些工具 fswatch用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 go run 之类的, 这个使用 go 写的 codeskyblue/fswatch 还有个跨平台的命令行工具,同样的名字 start 更多 emcrisostomo/fswatch 不过图方便用 go 这个就行 bee属于 beego 的附属开发工具, bee run [project-name] 的执行效果也是自动监听文件改动执行编译命令, 感觉不如fswatch方便,当然用 beego 开发的另说astaxie/beego govendor是 go 开发的包管理工具, 虽然依赖的package都在 gopath当中,但是代码换一个环境就要重新go get一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题govendor工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样kardianos/govendor Gin一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 Martini的api 很像,但是更快,适合用来做 restful 的 APIgin-gonic/gin mux一个独立的路由包, 支持 restful,轻量,而且支持go的net/http 的接口gorilla/mux beego国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…astaxie/beego]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>tools</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
@@ -195,7 +195,7 @@
   <entry>
     <title><![CDATA[关于 elementUI 中的 Intput 框的Enter 事件]]></title>
     <url>%2F2017%2F09%2F15%2Felementui-form-event%2F</url>
-    <content type="text"><![CDATA[在文档中没有出现相关的说明,但是在实际使用中确实需要用到,怎么办呢? 这里有一个示例:1234567891011121314151617181920&lt;el-form:inline="true":model="price_form":rules="price_rules"ref="priceForm"@submit.native.preventv-if="scope.row.edit_deposit"&gt; &lt;el-row style="margin-top: 22px;"&gt; &lt;el-form-item label-width="0" prop="price"&gt; &lt;el-input placeholder="请输入价格" :icon="price_loading ? 'loading' : 'edit' " v-model="price_form.price" @keyup.native.enter="storePrice" :on-icon-click="storePrice"&gt; &lt;/el-input&gt; &lt;/el-form-item&gt; &lt;/el-row&gt;&lt;/el-form&gt; 这里需要在input 中加入 @keyup.native.enter=&quot;&quot; 事件,只加这个还不完整,因为回车的时候会出现表单默认提交的情况,有些时候是我们不需要的,因此,需要在 el-form中添加@submit.native.prevent来阻止 form 的默认提交行为 资料来源]]></content>
+    <content type="text"><![CDATA[在文档中没有出现相关的说明,但是在实际使用中确实需要用到,怎么办呢? 这里有一个示例:1234567891011121314151617181920&lt;el-form:inline="true":model="price_form":rules="price_rules"ref="priceForm"@submit.native.preventv-if="scope.row.edit_deposit"&gt; &lt;el-row style="margin-top: 22px;"&gt; &lt;el-form-item label-width="0" prop="price"&gt; &lt;el-input placeholder="请输入价格" :icon="price_loading ? 'loading' : 'edit' " v-model="price_form.price" @keyup.native.enter="storePrice" :on-icon-click="storePrice"&gt; &lt;/el-input&gt; &lt;/el-form-item&gt; &lt;/el-row&gt;&lt;/el-form&gt; 这里需要在input 中加入 `@keyup.native.enter=””事件,只加这个还不完整,因为回车的时候会 出现表单默认提交的情况,有些时候是我们不需要的,因此,需要在el-form中添加@submit.native.prevent`来阻止 form 的默认提交行为 资料来源]]></content>
       <categories>
         <category>elementUI</category>
       </categories>
@@ -486,7 +486,7 @@
   <entry>
     <title><![CDATA[Go-Interface]]></title>
     <url>%2F2017%2F04%2F19%2Fgo-interface%2F</url>
-    <content type="text"><![CDATA[关于 go 语言接口的简单介绍接口对于 go 实现面向对象来说非常重要,如果没有它 go 的结构体(struct)也就只能存储一些信息,但是相关的方法将会变得非常麻烦 什么是接口?接口就是制定一个通用的规范,只要符合这个规范就能使用这个借口(听起来像是车轱辘话) 接口类型比如我定义了一个接口1234type example interface&#123; a() b()&#125; 他定义了两个方法,只要有结构体中含有 a(),b()两个方法就能实现这个接口,通过接口来统一调用,如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364//package main//import "fmt"//定义一个基本的类type Human struct&#123; name string age int phone string&#125;type Student struct&#123; Human //继承 human 中的字段 school string loan float32&#125;type Employee struct&#123; Human company string money float32&#125;//Human 实现 Sayhi 方法func (h Human) Sayhi()&#123; fmt.Printf("hi my name is %s and my phone is %s \n", h.name,h.phone)&#125;//Human 实现 Sing 方法func (h Human) Sing(lyrics string) &#123; fmt.Println("galigaygay galigaygay ...",lyrics)&#125;//student 复写 Sayhi 方法func (sdt Student) Sayhi() &#123; fmt.Printf("my name is %s and my school is %s \n", sdt.name,sdt.school)&#125;//定义一个通用的接口type Men interface&#123; Sayhi() Sing(lyrics string)&#125;func main () &#123; //实例化两种类 mike := Student&#123;Human&#123;"mike",25,"18333636999"&#125;,"MIT",3.14&#125; jack := Employee&#123;Human&#123;"jack",30,"18333636998"&#125;,"hotcast",20000&#125; //定义一个接口变量 var i Men //接口实现了 Student 类的方法 fmt.Println("下面有请 mike 开始他的表演:") i = mike i.Sayhi(); i.Sing("dongci daci") //接口实现了 Employee 类的方法 fmt.Println("下面有请 mike 开始他的表演:") i = jack i.Sayhi(); i.Sing("haha haha haha")&#125; 这里的 Men 接口被所有继承了Human的结构体的方法所实现,所以这些实例化的结构体可以赋值给Men的接口变量上,我们在 go 语言中的面向对象开发可以说就是面向接口在开发,由接口来组成一个个的变量,这和 php 的接口有所不同,在 php 中,接口是需要被 class 来继承,然后class 中去实现 interface 中指定的方法,比如12345678910111213interface Human&#123; function sayHi(); function sing();&#125;class Student implements Human&#123; public function sayHi()&#123; // TODO: &#125; public function sing()&#123; // TODO: &#125;&#125; 这样子的, 每个类需要指定继承哪些接口才可以去实现接口,而 go 和 php 正好相反,是谁实现了我的规范谁就可以用我的接口,实现顺序正好倒过来了 再举一个接口的例子12345678910111213141516171819202122package mainimport ( "fmt" "strconv")type Human struct &#123; name string age int phone string&#125;// 这里需要把 int 类型转换成字符串,否则使用 + 来连接字符的时候报数据类型不匹配的错误func (h Human) String() string &#123; return "&lt;" + h.name + "-" + strconv.Itoa(h.age) + "years old ,phone is " + h.phone + "/&gt;"&#125;func main() &#123; Duck := Human&#123;"duck", 22, "110-120-119"&#125; fmt.Println("this human is :", Duck)&#125; 上述例子当中我们实现了 fmt.Println 中的一个接口```gotype Stringer interface { String() string} 这样之后,调用 Human 的 String() 函数就能被 fmt.Println() 所用了]]></content>
+    <content type="text"><![CDATA[关于 go 语言接口的简单介绍接口对于 go 实现面向对象来说非常重要,如果没有它 go 的结构体(struct)也就只能存储一些信息,但是相关的方法将会变得非常麻烦 什么是接口?接口就是制定一个通用的规范,只要符合这个规范就能使用这个借口(听起来像是车轱辘话) 接口类型比如我定义了一个接口1234type example interface&#123; a() b()&#125; 他定义了两个方法,只要有结构体中含有 a(),b()两个方法就能实现这个接口,通过接口来统一调用,如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364//package main//import "fmt"//定义一个基本的类type Human struct&#123; name string age int phone string&#125;type Student struct&#123; Human //继承 human 中的字段 school string loan float32&#125;type Employee struct&#123; Human company string money float32&#125;//Human 实现 Sayhi 方法func (h Human) Sayhi()&#123; fmt.Printf("hi my name is %s and my phone is %s \n", h.name,h.phone)&#125;//Human 实现 Sing 方法func (h Human) Sing(lyrics string) &#123; fmt.Println("galigaygay galigaygay ...",lyrics)&#125;//student 复写 Sayhi 方法func (sdt Student) Sayhi() &#123; fmt.Printf("my name is %s and my school is %s \n", sdt.name,sdt.school)&#125;//定义一个通用的接口type Men interface&#123; Sayhi() Sing(lyrics string)&#125;func main () &#123; //实例化两种类 mike := Student&#123;Human&#123;"mike",25,"18333636999"&#125;,"MIT",3.14&#125; jack := Employee&#123;Human&#123;"jack",30,"18333636998"&#125;,"hotcast",20000&#125; //定义一个接口变量 var i Men //接口实现了 Student 类的方法 fmt.Println("下面有请 mike 开始他的表演:") i = mike i.Sayhi(); i.Sing("dongci daci") //接口实现了 Employee 类的方法 fmt.Println("下面有请 mike 开始他的表演:") i = jack i.Sayhi(); i.Sing("haha haha haha")&#125; 这里的 Men 接口被所有继承了Human的结构体的方法所实现,所以这些实例化的结构体可以赋值给Men的接口变量上,我们在 go 语言中的面向对象开发可以说就是面向接口在开发,由接口来组成一个个的变量,这和 php 的接口有所不同,在 php 中,接口是需要被 class 来继承,然后class 中去实现 interface 中指定的方法,比如12345678910111213interface Human&#123; function sayHi(); function sing();&#125;class Student implements Human&#123; public function sayHi()&#123; // TODO: &#125; public function sing()&#123; // TODO: &#125;&#125; 这样子的, 每个类需要指定继承哪些接口才可以去实现接口,而 go 和 php 正好相反,是谁实现了我的规范谁就可以用我的接口,实现顺序正好倒过来了 再举一个接口的例子12345678910111213141516171819202122package mainimport ( "fmt" "strconv")type Human struct &#123; name string age int phone string&#125;// 这里需要把 int 类型转换成字符串,否则使用 + 来连接字符的时候报数据类型不匹配的错误func (h Human) String() string &#123; return "&lt;" + h.name + "-" + strconv.Itoa(h.age) + "years old ,phone is " + h.phone + "/&gt;"&#125;func main() &#123; Duck := Human&#123;"duck", 22, "110-120-119"&#125; fmt.Println("this human is :", Duck)&#125; 上述例子当中我们实现了 fmt.Println 中的一个接口`gotype Stringer interface { String() string} 这样之后,调用 Human 的 String() 函数就能被 fmt.Println() 所用了]]></content>
       <categories>
         <category>go</category>
       </categories>
@@ -546,8 +546,8 @@
         <category>tools</category>
       </categories>
       <tags>
-        <tag>tools</tag>
         <tag>brew</tag>
+        <tag>tools</tag>
       </tags>
   </entry>
   <entry>
@@ -886,7 +886,7 @@
   <entry>
     <title><![CDATA[centos上安装git2.2]]></title>
     <url>%2F2016%2F12%2F03%2Fcentos-install-git%2F</url>
-    <content type="text"><![CDATA[centos自带的git版本太低了,安装个新吧 安装依赖环境12&gt;# yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel asciidoc&gt;# yum install gcc perl-ExtUtils-MakeMaker error: ```/utf8.c:463: undefined reference to `libiconv&apos; wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gztar zxvf libiconv-1.14.tar.gzcd libiconv-1.14./configure –prefix=/usr/local/libiconvmake &amp;&amp; make install1### 卸载Centos自带的git1.7.1 yum remove git1### 下载git2.2.1并将git添加到环境变量中 wget https://github.com/git/git/archive/v2.2.1.tar.gztar zxvf v2.2.1.tar.gzcd git-2.2.1make configure./configure –prefix=/usr/local/git –with-iconv=/usr/local/libiconvmakeall docmake install install-doc install-htmlecho”export PATH=$PATH:/usr/local/git/bin” &gt;&gt; /etc/bashrcsource /etc/bashrc1### 查看版本号 git –versiongit version2.2.1```]]></content>
+    <content type="text"><![CDATA[centos自带的git版本太低了,安装个新吧 安装依赖环境12&gt;# yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel asciidoc&gt;# yum install gcc perl-ExtUtils-MakeMaker error: ```/utf8.c:463: undefined reference to `libiconv&apos; wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gztar zxvf libiconv-1.14.tar.gzcd libiconv-1.14./configure –prefix=/usr/local/libiconvmake &amp;&amp; make install1### 卸载Centos自带的git1.7.1 yum remove git1### 下载git2.2.1并将git添加到环境变量中 wget https://github.com/git/git/archive/v2.2.1.tar.gztar zxvf v2.2.1.tar.gzcd git-2.2.1make configure./configure –prefix=/usr/local/git –with-iconv=/usr/local/libiconvmakeall docmake install install-doc install-htmlecho”export PATH=$PATH:/usr/local/git/bin” &gt;&gt; /etc/bashrcsource /etc/bashrc1### 查看版本号 git –versiongit version2.2.1`]]></content>
       <categories>
         <category>git</category>
       </categories>

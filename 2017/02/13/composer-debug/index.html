@@ -432,17 +432,17 @@
       
 
       
-        <p>当环境中同时安装xdebug和composer的时候，会产生一个报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">You are running composer with xdebug enabled. This has a major impact on runtime performance. See Https://getcomposer.org/xdebug</div></pre></td></tr></table></figure></p>
+        <p>当环境中同时安装xdebug和composer的时候，会产生一个报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You are running composer with xdebug enabled. This has a major impact on runtime performance. See Https://getcomposer.org/xdebug</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p>其实作为开发环境来说，并没有太大的影响，也就是拖慢了composer的运行速度，大概3-4倍的样子。</p>
 <p>当然，如果不想让那个 warning 再显示就先全局关闭xdebug</p>
-<p>首先知道到php.ini的文件路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">➜  ~ php -i | grep &quot;php.ini&quot;</div><div class="line">Configuration File (php.ini) Path =&gt; /usr/local/etc/php/7.0</div><div class="line">Loaded Configuration File =&gt; /usr/local/etc/php/7.0/php.ini</div></pre></td></tr></table></figure></p>
-<p>编辑php.ini文件 找到xdebug扩展的位置给加上引号注释下就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">;[xdebug]</div><div class="line">;zend_extension=&quot;/usr/local/opt/php70-xdebug/xdebug.so&quot;</div><div class="line">~</div></pre></td></tr></table></figure></p>
+<p>首先知道到php.ini的文件路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ php -i | grep &quot;php.ini&quot;</span><br><span class="line">Configuration File (php.ini) Path =&gt; /usr/local/etc/php/7.0</span><br><span class="line">Loaded Configuration File =&gt; /usr/local/etc/php/7.0/php.ini</span><br></pre></td></tr></table></figure></p>
+<p>编辑php.ini文件 找到xdebug扩展的位置给加上引号注释下就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">;[xdebug]</span><br><span class="line">;zend_extension=&quot;/usr/local/opt/php70-xdebug/xdebug.so&quot;</span><br><span class="line">~</span><br></pre></td></tr></table></figure></p>
 <p>如果php.ini文件当中没有这个模块的配置，就找找<code>php.ini</code>同级目录下的 <code>conf.d</code> 目录，那里也是加载php扩展的配置文件的</p>
-<p>比如我的路径就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/etc/php/7.0/conf.d/ext-xdebug.ini</div></pre></td></tr></table></figure></p>
+<p>比如我的路径就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/etc/php/7.0/conf.d/ext-xdebug.ini</span><br></pre></td></tr></table></figure></p>
 <p>一样给注释掉就行</p>
-<p><a href="http://stackoverflow.com/questions/33909559/php-composer-xdebug-warning" target="_blank" rel="external">参考1</a></p>
-<p><a href="http://www.tuicool.com/articles/qYNnqmf" target="_blank" rel="external">参考2</a></p>
+<p><a href="http://stackoverflow.com/questions/33909559/php-composer-xdebug-warning" target="_blank" rel="noopener">参考1</a></p>
+<p><a href="http://www.tuicool.com/articles/qYNnqmf" target="_blank" rel="noopener">参考2</a></p>
 
       
     </div>

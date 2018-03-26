@@ -433,7 +433,7 @@
       
 
       
-        <p>将git已经提交的文件移除出库（针对的就是 .idea 和 .DS_Store）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git rm -r --cache .idea/</div><div class="line">git rm --cache .DS_Store</div><div class="line"></div><div class="line">在 .gitignore 文件中添加相应禁止的东西</div><div class="line"></div><div class="line">git commit -m &apos;we didnt want to see you any more!&apos;</div><div class="line">git pull</div><div class="line">git push</div></pre></td></tr></table></figure></p>
+        <p>将git已经提交的文件移除出库（针对的就是 .idea 和 .DS_Store）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git rm -r --cache .idea/</span><br><span class="line">git rm --cache .DS_Store</span><br><span class="line"></span><br><span class="line">在 .gitignore 文件中添加相应禁止的东西</span><br><span class="line"></span><br><span class="line">git commit -m &apos;we didnt want to see you any more!&apos;</span><br><span class="line">git pull</span><br><span class="line">git push</span><br></pre></td></tr></table></figure></p>
 <p>这是将指定的文件从库中删除而不影响实际使用的文件</p>
 
       

@@ -432,33 +432,33 @@
       
 
       
-        <p>windows 安装 node 其实很简单<br><a id="more"></a><br> <a href="http://www.ituring.com.cn/article/205990" target="_blank" rel="external">原文地址</a></p>
+        <p>windows 安装 node 其实很简单<br><a id="more"></a><br> <a href="http://www.ituring.com.cn/article/205990" target="_blank" rel="noopener">原文地址</a></p>
 <ol>
 <li><p>第一步<br>到官网下载页下载nodejs，并默认安装，安装成功后打开cmd， 运行node -v即可查看当前node.js版本。</p>
 </li>
 <li><p>第二步<br>安装windows git工具，本机已经安装好git bash，可自行百度安装。</p>
 </li>
 <li><p>第三步<br>安装npm，打开git bash，进入自定义的文件夹下，然后执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --system http.sslcainfo /bin/curl-ca-bundle.crt</div><div class="line">git clone --recursive git://github.com/isaacs/npm.git</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --system http.sslcainfo /bin/curl-ca-bundle.crt</span><br><span class="line">git clone --recursive git://github.com/isaacs/npm.git</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>克隆成功后，进入npm文件夹下，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node cli.js install npm -gf</div></pre></td></tr></table></figure></p>
+<p>克隆成功后，进入npm文件夹下，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node cli.js install npm -gf</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li><p>第四步<br>用npm安装gulp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install --global gulp</div><div class="line">$ npm install --save-dev gulp</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --global gulp</span><br><span class="line">$ npm install --save-dev gulp</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>第五步<br>安装gulp插件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat gulp-clean gulp-livereload tiny-lr --save-dev</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gulp-util gulp-imagemin gulp-ruby-sass gulp-minify-css gulp-jshint gulp-uglify gulp-rename gulp-concat gulp-clean gulp-livereload tiny-lr --save-dev</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>第六步<br>测试gulp，创建一个名为 gulpfile.js 的配置文件在当前目录下，并输入下面的代码，这里创建了一个空的任务（仅作为用于测试gulp是否正常工作）</p>
 </li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var gulp = require(&apos;gulp&apos;);</div><div class="line">gulp.task(&apos;default&apos;, function() &#123;</div><div class="line">  // place code for your default task here</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;);</span><br><span class="line">gulp.task(&apos;default&apos;, function() &#123;</span><br><span class="line">  // place code for your default task here</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <ol>
-<li>最后，执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gulp</div></pre></td></tr></table></figure>
+<li>最后，执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gulp</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>运行gulp，如果正确输出类似下面的信息，则说明gulp 已经正确安装并运行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ gulp</div><div class="line">[11:13:17] Using gulpfile xxx\gulpfile.js</div><div class="line">[11:13:17] Starting &apos;default&apos;...</div><div class="line">[11:13:17] Finished &apos;default&apos; after 44 μs</div></pre></td></tr></table></figure></p>
+<p>运行gulp，如果正确输出类似下面的信息，则说明gulp 已经正确安装并运行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ gulp</span><br><span class="line">[11:13:17] Using gulpfile xxx\gulpfile.js</span><br><span class="line">[11:13:17] Starting &apos;default&apos;...</span><br><span class="line">[11:13:17] Finished &apos;default&apos; after 44 μs</span><br></pre></td></tr></table></figure></p>
 
       
     </div>

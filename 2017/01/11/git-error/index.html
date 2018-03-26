@@ -433,14 +433,14 @@
       
 
       
-        <p>git push 的时候提示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">remote: Permission to ******/born.git denied to  ******/.</div><div class="line">fatal: unable to access &apos;https://github.com/ ******//born.git/&apos;: The requested URL returned error: 403</div></pre></td></tr></table></figure></p>
+        <p>git push 的时候提示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">remote: Permission to ******/born.git denied to  ******/.</span><br><span class="line">fatal: unable to access &apos;https://github.com/ ******//born.git/&apos;: The requested URL returned error: 403</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p>是因为git的账号冲突，git误认为你使用的是另一个账号，解决办法也很简单</p>
 <p>推送方式改成ssh的，这样即使是不同账号但是使用的是同一台设备，还不需要改动究竟和哪一个账号冲突了</p>
-<p>查看本机ssh－key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat ~/.ssh/id_rsa.pub</div></pre></td></tr></table></figure></p>
+<p>查看本机ssh－key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure></p>
 <p>登录自己的github账户&gt;自己的头像&gt;Setting&gt;SSH and GPG keys&gt;New SSH key</p>
 <p>把本机的那一串密码填里面就行</p>
-<p>推送方式也改成ssh的地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote set-url origin git@github.com:******/born.git</div></pre></td></tr></table></figure></p>
+<p>推送方式也改成ssh的地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin git@github.com:******/born.git</span><br></pre></td></tr></table></figure></p>
 
       
     </div>

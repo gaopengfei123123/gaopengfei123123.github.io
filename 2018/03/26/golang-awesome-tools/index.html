@@ -97,11 +97,11 @@
 <meta name="keywords" content="tools">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go 开发过程中一些不错的工具(不定期更新)">
-<meta property="og:url" content="http://blog.justwe.site/2018/02/05/golang-awesome-tools/index.html">
+<meta property="og:url" content="http://blog.justwe.site/2018/03/26/golang-awesome-tools/index.html">
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="就是平时用到的一些工具">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-05T07:18:45.216Z">
+<meta property="og:updated_time" content="2018-03-26T12:20:28.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 开发过程中一些不错的工具(不定期更新)">
 <meta name="twitter:description" content="就是平时用到的一些工具">
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/2018/02/05/golang-awesome-tools/"/>
+  <link rel="canonical" href="http://blog.justwe.site/2018/03/26/golang-awesome-tools/"/>
 
 
 
@@ -328,7 +328,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/02/05/golang-awesome-tools/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/03/26/golang-awesome-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="GPF">
@@ -364,8 +364,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-05T11:47:28+08:00">
-                2018-02-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-26T20:20:00+08:00">
+                2018-03-26
               </time>
             
 
@@ -404,7 +404,7 @@
 
           
           
-             <span id="/2018/02/05/golang-awesome-tools/" class="leancloud_visitors" data-flag-title="Go 开发过程中一些不错的工具(不定期更新)">
+             <span id="/2018/03/26/golang-awesome-tools/" class="leancloud_visitors" data-flag-title="Go 开发过程中一些不错的工具(不定期更新)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -435,13 +435,16 @@
       
         <p>就是平时用到的一些工具<br><a id="more"></a></p>
 <h1 id="fswatch"><a href="#fswatch" class="headerlink" title="fswatch"></a>fswatch</h1><p>用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 <code>go run</code> 之类的, 这个使用 go 写的</p>
-<p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="external">codeskyblue/fswatch</a></p>
-<p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="external">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p>
-<h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="external">astaxie/beego</a></p>
-<h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="external">kardianos/govendor</a></p>
-<h1 id="Gin"><a href="#Gin" class="headerlink" title="Gin"></a>Gin</h1><p>一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 <code>Martini</code>的api 很像,但是更快,适合用来做 restful 的 API<br><a href="https://github.com/gin-gonic/gin" target="_blank" rel="external">gin-gonic/gin</a></p>
-<h1 id="mux"><a href="#mux" class="headerlink" title="mux"></a>mux</h1><p>一个独立的路由包, 支持 restful,轻量,而且支持go的<code>net/http</code> 的接口<br><a href="https://github.com/gorilla/mux" target="_blank" rel="external">gorilla/mux</a></p>
-<h1 id="beego"><a href="#beego" class="headerlink" title="beego"></a>beego</h1><p>国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…<br><a href="https://github.com/astaxie/beego" target="_blank" rel="external">astaxie/beego</a></p>
+<p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="noopener">codeskyblue/fswatch</a></p>
+<p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="noopener">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p>
+<h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p>
+<h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="noopener">kardianos/govendor</a></p>
+<h1 id="Gin"><a href="#Gin" class="headerlink" title="Gin"></a>Gin</h1><p>一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 <code>Martini</code>的api 很像,但是更快,适合用来做 restful 的 API<br><a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">gin-gonic/gin</a></p>
+<h1 id="mux"><a href="#mux" class="headerlink" title="mux"></a>mux</h1><p>一个独立的路由包, 支持 restful,轻量,而且支持go的<code>net/http</code> 的接口<br><a href="https://github.com/gorilla/mux" target="_blank" rel="noopener">gorilla/mux</a></p>
+<h1 id="beego"><a href="#beego" class="headerlink" title="beego"></a>beego</h1><p>国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p>
+<h1 id="beego-log"><a href="#beego-log" class="headerlink" title="beego-log"></a>beego-log</h1><p>如果不想全部引用 beego 的内容,可以引进它的模块啊,它的 log 模块就是一个很不错的选择<br><a href="https://beego.me/docs/module/logs.md" target="_blank" rel="noopener">beego-log 的中文档</a></p>
+<h1 id="kafka-go"><a href="#kafka-go" class="headerlink" title="kafka-go"></a>kafka-go</h1><p>和 kafka 相关的库很少,不过我个人使用的话这个库已经能满足我的需求, 我这里也有一个<a href="https://github.com/gaopengfei123123/go_study/tree/master/src/kafka_demo" target="_blank" rel="noopener">demo示例</a><br><a href="https://github.com/segmentio/kafka-go" target="_blank" rel="noopener">segmentio/kafka-go</a></p>
+<h1 id="go-redis-redis"><a href="#go-redis-redis" class="headerlink" title="go-redis/redis"></a>go-redis/redis</h1><p>redis 的依赖包还是很简单的,这里推荐一个 star 不少的库<br><a href="https://github.com/go-redis/redis" target="_blank" rel="noopener">go-redis/redis</a></p>
 
       
     </div>
@@ -494,8 +497,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/22/go-jwt/" rel="next" title="使用 Go 进行 Jwt 验证">
-                <i class="fa fa-chevron-left"></i> 使用 Go 进行 Jwt 验证
+              <a href="/2018/02/13/docker-volume/" rel="next" title="Docker-Volume">
+                <i class="fa fa-chevron-left"></i> Docker-Volume
               </a>
             
           </div>
@@ -503,10 +506,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/12/docker-compose-yml/" rel="prev" title="Docker-compose.yml 常用命令">
-                Docker-compose.yml 常用命令 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -671,7 +670,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fswatch"><span class="nav-number">1.</span> <span class="nav-text">fswatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bee"><span class="nav-number">2.</span> <span class="nav-text">bee</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#govendor"><span class="nav-number">3.</span> <span class="nav-text">govendor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gin"><span class="nav-number">4.</span> <span class="nav-text">Gin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mux"><span class="nav-number">5.</span> <span class="nav-text">mux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego"><span class="nav-number">6.</span> <span class="nav-text">beego</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fswatch"><span class="nav-number">1.</span> <span class="nav-text">fswatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bee"><span class="nav-number">2.</span> <span class="nav-text">bee</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#govendor"><span class="nav-number">3.</span> <span class="nav-text">govendor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gin"><span class="nav-number">4.</span> <span class="nav-text">Gin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mux"><span class="nav-number">5.</span> <span class="nav-text">mux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego"><span class="nav-number">6.</span> <span class="nav-text">beego</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego-log"><span class="nav-number">7.</span> <span class="nav-text">beego-log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka-go"><span class="nav-number">8.</span> <span class="nav-text">kafka-go</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go-redis-redis"><span class="nav-number">9.</span> <span class="nav-text">go-redis/redis</span></a></li></ol></div>
             
 
           </div>

@@ -433,10 +433,10 @@
       
 
       
-        <p>首先git clone一个git库，<br>其次在本地新建一个分支<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b devlocal</div></pre></td></tr></table></figure></p>
-<p>然后设置本地git文件，将本地分支和远程分支关联起来 （我有个远程分支叫做dev）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch --set-upstream-to=origin/dev devlocal</div></pre></td></tr></table></figure></p>
+        <p>首先git clone一个git库，<br>其次在本地新建一个分支<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b devlocal</span><br></pre></td></tr></table></figure></p>
+<p>然后设置本地git文件，将本地分支和远程分支关联起来 （我有个远程分支叫做dev）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch --set-upstream-to=origin/dev devlocal</span><br></pre></td></tr></table></figure></p>
 <p>再git pull 就能获取到远程git dev分支上的东西到本地的devlocal这个分支上了</p>
-<p>还有一个是将本地分支推送到远程分支前要做的处理（远程不存在该分支）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push --set-upstream origin new</div></pre></td></tr></table></figure></p>
+<p>还有一个是将本地分支推送到远程分支前要做的处理（远程不存在该分支）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --set-upstream origin new</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
