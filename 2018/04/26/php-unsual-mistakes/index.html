@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="这里做一些备注,以防再次碰到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-26T02:54:04.103Z">
+<meta property="og:updated_time" content="2018-04-26T02:56:21.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Php开发过程中不常碰到的error">
 <meta name="twitter:description" content="这里做一些备注,以防再次碰到">
@@ -434,12 +434,12 @@
 
       
         <p>这里做一些备注,以防再次碰到<br><a id="more"></a></p>
-<h1 id="url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890"><a href="#url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890" class="headerlink" title="url 当中的参数有 &amp;timestamp=1234567890这样的字段会被转义成xtamp=1234567890"></a>url 当中的参数有 <code>&amp;timestamp=1234567890</code>这样的字段会被转义成<code>xtamp=1234567890</code></h1><p>这个不仅存在于页面解析当中,当使用 curl 请求时拼接的参数有这种格式的也会发生转义<br>解决方法有两个:</p>
+<h3 id="url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890"><a href="#url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890" class="headerlink" title="url 当中的参数有 &amp;timestamp=1234567890这样的字段会被转义成xtamp=1234567890"></a>url 当中的参数有 <code>&amp;timestamp=1234567890</code>这样的字段会被转义成<code>xtamp=1234567890</code></h3><p>这个不仅存在于页面解析当中,当使用 curl 请求时拼接的参数有这种格式的也会发生转义<br>解决方法有两个:</p>
 <ol>
 <li>把 timestamp 这个参数放在 urlQuery 的最前面, <code>?timestamp=1234567890</code> 这样避免出现 <code>&amp;time</code>发生转义的情况</li>
 <li>将<code>&amp;</code>用<code>&amp;amp;</code>来代替</li>
 </ol>
-<h1 id="Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version"><a href="#Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version" class="headerlink" title="Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version."></a>Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version.</h1><p>出现这句话通常说明你在用的 php 版本是5.6.而且在<code>php&lt;=5.6</code>的时候,进行 <code>application/json</code>格式的 post 提交会把数据放在<code>$HTTP_RAW_POST_DATA</code>这个系统变量里面,在<code>php&gt;=7</code>的时候这个变量被移除了,统统归总到<code>php://input</code>这里<br>解决方法:</p>
+<h3 id="Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version"><a href="#Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version" class="headerlink" title="Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version."></a>Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version.</h3><p>出现这句话通常说明你在用的 php 版本是5.6.而且在<code>php&lt;=5.6</code>的时候,进行 <code>application/json</code>格式的 post 提交会把数据放在<code>$HTTP_RAW_POST_DATA</code>这个系统变量里面,在<code>php&gt;=7</code>的时候这个变量被移除了,统统归总到<code>php://input</code>这里<br>解决方法:</p>
 <ol>
 <li><p>根据系统提示的走:</p>
 <blockquote>
@@ -676,7 +676,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890"><span class="nav-number">1.</span> <span class="nav-text">url 当中的参数有 &amp;timestamp=1234567890这样的字段会被转义成xtamp=1234567890</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version"><span class="nav-number">2.</span> <span class="nav-text">Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version.</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890"><span class="nav-number">1.</span> <span class="nav-text">url 当中的参数有 &amp;timestamp=1234567890这样的字段会被转义成xtamp=1234567890</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version"><span class="nav-number">2.</span> <span class="nav-text">Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version.</span></a></li></ol></div>
             
 
           </div>
