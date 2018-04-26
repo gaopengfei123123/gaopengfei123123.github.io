@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Php开发过程中不常碰到的error]]></title>
+    <url>%2F2018%2F04%2F26%2Fphp-unsual-mistakes%2F</url>
+    <content type="text"><![CDATA[这里做一些备注,以防再次碰到 url 当中的参数有 &amp;timestamp=1234567890这样的字段会被转义成xtamp=1234567890这个不仅存在于页面解析当中,当使用 curl 请求时拼接的参数有这种格式的也会发生转义解决方法有两个: 把 timestamp 这个参数放在 urlQuery 的最前面, ?timestamp=1234567890 这样避免出现 &amp;time发生转义的情况 将&amp;用&amp;amp;来代替 Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version.出现这句话通常说明你在用的 php 版本是5.6.而且在php&lt;=5.6的时候,进行 application/json格式的 post 提交会把数据放在$HTTP_RAW_POST_DATA这个系统变量里面,在php&gt;=7的时候这个变量被移除了,统统归总到php://input这里解决方法: 根据系统提示的走: Although that indeed would be technically impossible (as $HTTP_RAW_POST_DATA is populated in the bootstrapping phase of the PHP process) allow one to override the setting by means of calling ini_set. 要确保自己的系统中没有使用 HTTP_RAW_POST_DATA这个变量,直接在php.ini里面禁掉它的设置,但是容易出现系统中又打开的情况(在框架中很常见) 改一下自己的提交方式, 使用 application/form-data或者application/x-www-form-urlencoded这种格式的提交, 然后在后端接收数据的时候再转成自己需要的格式(通常是数组) 参考资料]]></content>
+      <categories>
+        <category>php</category>
+      </categories>
+      <tags>
+        <tag>php</tag>
+        <tag>debug</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go 开发过程中一些不错的工具(不定期更新)]]></title>
     <url>%2F2018%2F03%2F26%2Fgolang-awesome-tools%2F</url>
     <content type="text"><![CDATA[就是平时用到的一些工具 fswatch用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 go run 之类的, 这个使用 go 写的 codeskyblue/fswatch 还有个跨平台的命令行工具,同样的名字 start 更多 emcrisostomo/fswatch 不过图方便用 go 这个就行 bee属于 beego 的附属开发工具, bee run [project-name] 的执行效果也是自动监听文件改动执行编译命令, 感觉不如fswatch方便,当然用 beego 开发的另说astaxie/beego govendor是 go 开发的包管理工具, 虽然依赖的package都在 gopath当中,但是代码换一个环境就要重新go get一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题govendor工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样kardianos/govendor Gin一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 Martini的api 很像,但是更快,适合用来做 restful 的 APIgin-gonic/gin mux一个独立的路由包, 支持 restful,轻量,而且支持go的net/http 的接口gorilla/mux beego国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…astaxie/beego beego-log如果不想全部引用 beego 的内容,可以引进它的模块啊,它的 log 模块就是一个很不错的选择beego-log 的中文档 kafka-go和 kafka 相关的库很少,不过我个人使用的话这个库已经能满足我的需求, 我这里也有一个demo示例segmentio/kafka-go go-redis/redisredis 的依赖包还是很简单的,这里推荐一个 star 不少的库go-redis/redis]]></content>
@@ -31,8 +43,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker-composer</tag>
         <tag>docker</tag>
+        <tag>docker-composer</tag>
       </tags>
   </entry>
   <entry>
@@ -534,8 +546,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>docker-compose</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
