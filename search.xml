@@ -940,7 +940,7 @@
   <entry>
     <title><![CDATA[Git本地建库推送远程]]></title>
     <url>%2F2016%2F11%2F29%2Fgit-push%2F</url>
-    <content type="text"><![CDATA[本地新建库12345678910111213#初始化git initgit add -Agit commit -m &apos;init it&apos;#删除本地远程连接git remote rm origingit remote add origin https://git.oschina.net/gaofeifps/laravel53.git#自动合并远程文件git pull origin master#推送到远程git push --set-upstream origin master 多个远程分支的情况1234567891011121314151617181920# 添加远程分支git remote add test http://blog.justwe.site # 添加了一个名为 test 的远程分支,地址为 http://blog.justwe.site # 查看当前的远程地址列表, 通常会有一个 origin 的默认远程分支, 其他的都是咱们自己加的git remote -v# 向指定远程分支推送git push test master# 这行命令的含义就是将本地的 master 分支提交到 test 这个远程库的 master 分支上# 向指定远程分支的某一分支推送git push test master:develop# 这行的结果就是 本地的 master 分支被推送到 test 这个远程库的 develop 分支上# 移除指定的远程库git remote remove test# 查看其他命令git remote -h]]></content>
+    <content type="text"><![CDATA[本地新建库和多远程库的操作 新建本地库12345678910111213#初始化git initgit add -Agit commit -m 'init it'#删除本地远程连接git remote rm origingit remote add origin https://git.oschina.net/gaofeifps/laravel53.git#自动合并远程文件git pull origin master#推送到远程git push --set-upstream origin master 多个远程分支的情况这种情况比如说你本地开发的代码想提交一份到 github,又想提交一份到 gitlab,别问我为什么,就是为了刷 commit 1234567891011121314151617181920# 添加远程分支git remote add test http://blog.justwe.site # 添加了一个名为 test 的远程分支,地址为 http://blog.justwe.site # 查看当前的远程地址列表, 通常会有一个 origin 的默认远程分支, 其他的都是咱们自己加的git remote -v# 向指定远程分支推送git push test master# 这行命令的含义就是将本地的 master 分支提交到 test 这个远程库的 master 分支上# 向指定远程分支的某一分支推送git push test master:develop# 这行的结果就是 本地的 master 分支被推送到 test 这个远程库的 develop 分支上# 移除指定的远程库git remote remove test# 查看其他命令git remote -h]]></content>
       <categories>
         <category>git</category>
       </categories>

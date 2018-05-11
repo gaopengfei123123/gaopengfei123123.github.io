@@ -93,18 +93,18 @@
 
 
 
-<meta name="description" content="本地新建库">
+<meta name="description" content="本地新建库和多远程库的操作">
 <meta name="keywords" content="git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git本地建库推送远程">
 <meta property="og:url" content="http://blog.justwe.site/2016/11/29/git-push/index.html">
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
-<meta property="og:description" content="本地新建库">
+<meta property="og:description" content="本地新建库和多远程库的操作">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-11T07:53:38.111Z">
+<meta property="og:updated_time" content="2018-05-11T07:56:44.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git本地建库推送远程">
-<meta name="twitter:description" content="本地新建库">
+<meta name="twitter:description" content="本地新建库和多远程库的操作">
 
 
 
@@ -433,8 +433,10 @@
       
 
       
-        <p>本地新建库<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#初始化</span><br><span class="line">git init</span><br><span class="line">git add -A</span><br><span class="line">git commit -m &apos;init it&apos;</span><br><span class="line"></span><br><span class="line">#删除本地远程连接</span><br><span class="line">git remote rm origin</span><br><span class="line">git remote add origin https://git.oschina.net/gaofeifps/laravel53.git</span><br><span class="line"></span><br><span class="line">#自动合并远程文件</span><br><span class="line">git pull origin master</span><br><span class="line">#推送到远程</span><br><span class="line">git push --set-upstream origin master</span><br></pre></td></tr></table></figure></p>
-<h1 id="多个远程分支的情况"><a href="#多个远程分支的情况" class="headerlink" title="多个远程分支的情况"></a>多个远程分支的情况</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加远程分支</span></span><br><span class="line">git remote add <span class="built_in">test</span> http://blog.justwe.site </span><br><span class="line"><span class="comment"># 添加了一个名为 test 的远程分支,地址为  http://blog.justwe.site </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前的远程地址列表, 通常会有一个 origin 的默认远程分支, 其他的都是咱们自己加的</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 向指定远程分支推送</span></span><br><span class="line">git push <span class="built_in">test</span> master</span><br><span class="line"><span class="comment"># 这行命令的含义就是将本地的 master 分支提交到 test 这个远程库的 master 分支上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 向指定远程分支的某一分支推送</span></span><br><span class="line">git push <span class="built_in">test</span> master:develop</span><br><span class="line"><span class="comment"># 这行的结果就是 本地的 master 分支被推送到 test 这个远程库的 develop 分支上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除指定的远程库</span></span><br><span class="line">git remote remove <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看其他命令</span></span><br><span class="line">git remote -h</span><br></pre></td></tr></table></figure>
+        <p>本地新建库和多远程库的操作<br><a id="more"></a></p>
+<h1 id="新建本地库"><a href="#新建本地库" class="headerlink" title="新建本地库"></a>新建本地库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#初始化</span></span><br><span class="line">git init</span><br><span class="line">git add -A</span><br><span class="line">git commit -m <span class="string">'init it'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#删除本地远程连接</span></span><br><span class="line">git remote rm origin</span><br><span class="line">git remote add origin https://git.oschina.net/gaofeifps/laravel53.git</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动合并远程文件</span></span><br><span class="line">git pull origin master</span><br><span class="line"><span class="comment">#推送到远程</span></span><br><span class="line">git push --<span class="built_in">set</span>-upstream origin master</span><br></pre></td></tr></table></figure>
+<h1 id="多个远程分支的情况"><a href="#多个远程分支的情况" class="headerlink" title="多个远程分支的情况"></a>多个远程分支的情况</h1><p>这种情况比如说你本地开发的代码想提交一份到 github,又想提交一份到 gitlab,别问我为什么,<del>就是为了刷 commit</del></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加远程分支</span></span><br><span class="line">git remote add <span class="built_in">test</span> http://blog.justwe.site </span><br><span class="line"><span class="comment"># 添加了一个名为 test 的远程分支,地址为  http://blog.justwe.site </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前的远程地址列表, 通常会有一个 origin 的默认远程分支, 其他的都是咱们自己加的</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 向指定远程分支推送</span></span><br><span class="line">git push <span class="built_in">test</span> master</span><br><span class="line"><span class="comment"># 这行命令的含义就是将本地的 master 分支提交到 test 这个远程库的 master 分支上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 向指定远程分支的某一分支推送</span></span><br><span class="line">git push <span class="built_in">test</span> master:develop</span><br><span class="line"><span class="comment"># 这行的结果就是 本地的 master 分支被推送到 test 这个远程库的 develop 分支上</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除指定的远程库</span></span><br><span class="line">git remote remove <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看其他命令</span></span><br><span class="line">git remote -h</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -663,7 +665,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多个远程分支的情况"><span class="nav-number">1.</span> <span class="nav-text">多个远程分支的情况</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#新建本地库"><span class="nav-number">1.</span> <span class="nav-text">新建本地库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多个远程分支的情况"><span class="nav-number">2.</span> <span class="nav-text">多个远程分支的情况</span></a></li></ol></div>
             
 
           </div>
