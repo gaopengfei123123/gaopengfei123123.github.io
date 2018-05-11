@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2016/11/29/git-push/</loc>
+    <lastmod>2018-05-11T07:53:38.111Z</lastmod>
+    <data>
+        <display>
+        <title>Git本地建库推送远程</title>
+        <pubTime>2016-11-28T19:04:00.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2018/03/26/golang-awesome-tools/</loc>
     <lastmod>2018-05-09T10:06:44.158Z</lastmod>
     <data>
@@ -1041,26 +1061,6 @@
         <display>
         <title>通过Git Rebase来合并commit提交记录</title>
         <pubTime>2016-12-25T07:43:00.000Z</pubTime>
-        
-        <tag>git</tag>
-         
-         
-           
-             
-              <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/11/29/git-push/</loc>
-    <lastmod>2017-05-08T14:34:39.000Z</lastmod>
-    <data>
-        <display>
-        <title>Git本地建库推送远程</title>
-        <pubTime>2016-11-28T19:04:00.000Z</pubTime>
         
         <tag>git</tag>
          
