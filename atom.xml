@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-05-14T14:48:03.471Z</updated>
+  <updated>2018-05-23T03:03:21.773Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>十进制与二进制,八进制,十六进制的换算</title>
+    <link href="http://blog.justwe.site/2018/05/23/conversion-calculation/"/>
+    <id>http://blog.justwe.site/2018/05/23/conversion-calculation/</id>
+    <published>2018-05-23T02:58:29.000Z</published>
+    <updated>2018-05-23T03:03:21.773Z</updated>
+    
+    <content type="html"><![CDATA[<p>复习一下二进制,八进制,十六进制之间的互相转换和怎么用十进制去转换它们</p><a id="more"></a><p>首先做一个定义： B(Binary)表示二进制，O(Octal)表示八进制，D(Decimal)或不加表示十进制，H(Hexadecimal)表示十六进制，比如：(101011)B=(53)O=(43)D=(2B)H</p><h3 id="十进制转换成二进制"><a href="#十进制转换成二进制" class="headerlink" title="十进制转换成二进制"></a>十进制转换成二进制</h3><h4 id="除二取余法"><a href="#除二取余法" class="headerlink" title="除二取余法"></a>除二取余法</h4><p>二进制说白了就是 0 和 1 啊，在十进制的时候就是2的次方</p><p>以十进制的(43)D为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">43/2=21%1</span><br><span class="line">21/2=10%1</span><br><span class="line">10/2=5 %0</span><br><span class="line">5 /2=2 %1</span><br><span class="line">2 /2=1 %0</span><br><span class="line">1 /2=0 %1</span><br><span class="line">以上把余数倒着排就是二进制的结果了，即101011</span><br></pre></td></tr></table></figure></p><h4 id="阶段相减法（适合低次方的速算）"><a href="#阶段相减法（适合低次方的速算）" class="headerlink" title="阶段相减法（适合低次方的速算）"></a>阶段相减法（适合低次方的速算）</h4><p>每次都减去最大的值，还是拿(42)D举例：42-32-8-2-1=0， 对应以下的表格为：<br>|64|32|16|8|4|2|1|<br>|:-:|:-:|:-:|:-:|:-:|:-:|:-:|<br>|<a href="http://www.codecogs.com/eqnedit.php?latex=2^{6}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?2^{6}" title="2^{6}"></a>|<a href="http://www.codecogs.com/eqnedit.php?latex=2^{5}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?2^{5}" title="2^{5}"></a>|<a href="http://www.codecogs.com/eqnedit.php?latex=2^{4}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?2^{4}" title="2^{4}"></a>|<a href="http://www.codecogs.com/eqnedit.php?latex=2^{3}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?2^{3}" title="2^{3}"></a>|<a href="http://www.codecogs.com/eqnedit.php?latex=2^{2}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?2^{2}" title="2^{2}"></a>|<a href="http://www.codecogs.com/eqnedit.php?latex=2^{1}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?2^{1}" title="2^{1}"></a>|<a href="http://www.codecogs.com/eqnedit.php?latex=2^{0}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?2^{0}" title="2^{0}"></a>|<br>|0|1|0|1|0|1|1|<br>结果就是： 101011</p><h3 id="十进制转二进制"><a href="#十进制转二进制" class="headerlink" title="十进制转二进制"></a>十进制转二进制</h3><p>以 (101011)B 举例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1*2^0 + 1*2^1 + 1*2^3 + 1*2^5 = 43</span><br></pre></td></tr></table></figure></p><h3 id="十进制转八进制和十六进制"><a href="#十进制转八进制和十六进制" class="headerlink" title="十进制转八进制和十六进制"></a>十进制转八进制和十六进制</h3><p>都是用的除8或16取余法，不做赘述了，有点区别就是16进制的9以后就是abcd…代替的<br>这等式就自己进行一下验算好了: (101011)B=(53)O=(43)D=(2B)H</p><h3 id="二进制转八进制、十六进制"><a href="#二进制转八进制、十六进制" class="headerlink" title="二进制转八进制、十六进制"></a>二进制转八进制、十六进制</h3><p>先复习一个等式: <code>2^0 * 2^1 * 2^2 = 2^3</code>， 那么二进制转八进制就是将二进制的数三个为一组合并一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">101|011 =&gt; 53</span><br></pre></td></tr></table></figure></p><p>同理， 二进制转16进制就是按四个为一组合并一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0010|1011 =&gt; 2b</span><br></pre></td></tr></table></figure></p><h3 id="十六进制和八进制之间转换"><a href="#十六进制和八进制之间转换" class="headerlink" title="十六进制和八进制之间转换"></a>十六进制和八进制之间转换</h3><p>都是先转换成二进制，然后再转成想要的进制</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;复习一下二进制,八进制,十六进制之间的互相转换和怎么用十进制去转换它们&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
+    
+    
+      <category term="binary" scheme="http://blog.justwe.site/tags/binary/"/>
+    
+  </entry>
   
   <entry>
     <title>基于Rabbitmq实现的延时队列(golang版)</title>
@@ -478,28 +500,6 @@
       <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
     
       <category term="shadowsocks" scheme="http://blog.justwe.site/tags/shadowsocks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于 elementUI 中的 Intput 框的Enter 事件</title>
-    <link href="http://blog.justwe.site/2017/09/15/elementui-form-event/"/>
-    <id>http://blog.justwe.site/2017/09/15/elementui-form-event/</id>
-    <published>2017-09-15T03:42:23.000Z</published>
-    <updated>2017-09-15T03:50:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在文档中没有出现相关的说明,但是在实际使用中确实需要用到,怎么办呢?</p><a id="more"></a><p>这里有一个示例:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">el-form</span></span></span><br><span class="line"><span class="tag"><span class="attr">:inline</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag"><span class="attr">:model</span>=<span class="string">"price_form"</span></span></span><br><span class="line"><span class="tag"><span class="attr">:rules</span>=<span class="string">"price_rules"</span></span></span><br><span class="line"><span class="tag"><span class="attr">ref</span>=<span class="string">"priceForm"</span></span></span><br><span class="line"><span class="tag">@<span class="attr">submit.native.prevent</span></span></span><br><span class="line"><span class="tag"><span class="attr">v-if</span>=<span class="string">"scope.row.edit_deposit"</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">el-row</span> <span class="attr">style</span>=<span class="string">"margin-top: 22px;"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">el-form-item</span> <span class="attr">label-width</span>=<span class="string">"0"</span> <span class="attr">prop</span>=<span class="string">"price"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">el-input</span></span></span><br><span class="line"><span class="tag">               <span class="attr">placeholder</span>=<span class="string">"请输入价格"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">:icon</span>=<span class="string">"price_loading ?  'loading' : 'edit' "</span></span></span><br><span class="line"><span class="tag">               <span class="attr">v-model</span>=<span class="string">"price_form.price"</span></span></span><br><span class="line"><span class="tag">               @<span class="attr">keyup.native.enter</span>=<span class="string">"storePrice"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">:on-icon-click</span>=<span class="string">"storePrice"</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">el-row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>这里需要在input 中加入 <a href="mailto:`@keyup.native.enter" target="_blank" rel="noopener">`@keyup.native.enter</a>=””<code>事件,只加这个还不完整,因为回车的时候会出现表单默认提交的情况,有些时候是我们不需要的,因此,需要在</code>el-form<code>中添加</code>@submit.native.prevent`<br>来阻止 form 的默认提交行为</p><p><a href="https://github.com/ElemeFE/element/issues/3625" target="_blank" rel="noopener">资料来源</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在文档中没有出现相关的说明,但是在实际使用中确实需要用到,怎么办呢?&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="elementUI" scheme="http://blog.justwe.site/categories/elementUI/"/>
-    
-    
-      <category term="elementUI" scheme="http://blog.justwe.site/tags/elementUI/"/>
     
   </entry>
   
