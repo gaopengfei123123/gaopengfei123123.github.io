@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
+    <lastmod>2018-06-20T10:38:34.205Z</lastmod>
+    <data>
+        <display>
+        <title>Php开发过程中不常碰到的error</title>
+        <pubTime>2018-04-26T02:30:23.000Z</pubTime>
+        
+        <tag>php</tag>
+         
+        <tag>debug</tag>
+         
+         
+           
+             
+              <breadCrumb title="php" url="http://blog.justwe.site/categories/php/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2018/05/23/yii-gii/</loc>
     <lastmod>2018-05-23T06:17:24.442Z</lastmod>
     <data>
@@ -41,28 +63,6 @@
            
              
               <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
-    <lastmod>2018-05-21T03:58:25.048Z</lastmod>
-    <data>
-        <display>
-        <title>Php开发过程中不常碰到的error</title>
-        <pubTime>2018-04-26T02:30:23.000Z</pubTime>
-        
-        <tag>php</tag>
-         
-        <tag>debug</tag>
-         
-         
-           
-             
-              <breadCrumb title="php" url="http://blog.justwe.site/categories/php/"/>
           
         </display>
     </data>

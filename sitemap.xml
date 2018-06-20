@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
+    
+    <lastmod>2018-06-20T10:38:34.205Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2018/05/23/yii-gii/</loc>
     
     <lastmod>2018-05-23T06:17:24.442Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://blog.justwe.site/2018/05/23/conversion-calculation/</loc>
     
     <lastmod>2018-05-23T03:16:16.339Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
-    
-    <lastmod>2018-05-21T03:58:25.048Z</lastmod>
     
   </url>
   
