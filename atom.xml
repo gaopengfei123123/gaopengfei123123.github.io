@@ -222,9 +222,9 @@
       <category term="docker" scheme="http://blog.justwe.site/categories/docker/"/>
     
     
-      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
-    
       <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
+    
+      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
     
   </entry>
   
