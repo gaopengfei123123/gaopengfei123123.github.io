@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Docker中 Arg 和 Env 的区别]]></title>
+    <url>%2F2018%2F06%2F28%2Fdocker-arg-env%2F</url>
+    <content type="text"><![CDATA[在使用 docker-compoe 构建镜像的时候会感觉 ARG 和 ENV 的作用很相似, 但是这两个存在就肯定有它的原因 它们起作用的时机 arg 是在 build 的时候存在的, 可以在 Dockerfile 中当做变量来使用 env 是容器构建好之后的环境变量, 不能在 Dockerfile 中当参数使用 从这里可以看出来 ARG 就是专门为构建镜像而生的 拿一个具体的例子12345678910111213# DockerfileFROM redis:3.2-alpineLABEL maintainer="GPF &lt;5173180@qq.com&gt;"ARG REDIS_SET_PASSWORD=developerENV REDIS_PASSWORD $&#123;REDIS_SET_PASSWORD&#125;VOLUME /dataEXPOSE 6379CMD ["sh", "-c", "exec redis-server --requirepass \"$REDIS_PASSWORD\""] 这是一个构建 redis 的文件, 中间有这么一句12ARG REDIS_SET_PASSWORD=developerENV REDIS_PASSWORD $&#123;REDIS_SET_PASSWORD&#125; 它是为1CMD ["sh", "-c", "exec redis-server --requirepass \"$REDIS_PASSWORD\""] 这一句服务的, 这句就是在启动 redis 的时候设置密码, 因为当执行 CMD 的时候,说明容器已经构建成功运行了起来,此时 CMD是在容器中执行容器中的命令, 因此 CMD 中的变量是用的环境变量而不是在 Dockerfile 中的变量,因此需要把 ARG 中的值在构建的时候赋值给 ENV 另一个使用 ARG 的例子1234567891011121314151617181920212223FROM nginx:1.13.1-alpineLABEL maintainer="GPF &lt;5173180@qq.com&gt;"#https://yeasy.gitbooks.io/docker_practice/content/image/build.htmlRUN mkdir -p /etc/nginx/cert \ &amp;&amp; mkdir -p /etc/nginx/conf.d \ &amp;&amp; mkdir -p /etc/nginx/sitesCOPY ./nginx.conf /etc/ngixn/nginx.confCOPY ./conf.d/ /etc/nginx/conf.d/COPY ./cert/ /etc/nginx/cert/COPY ./sites /etc/nginx/sites/ARG PHP_UPSTREAM_CONTAINER=php-fpmARG PHP_UPSTREAM_PORT=9000RUN echo "upstream php-upstream &#123; server $&#123;PHP_UPSTREAM_CONTAINER&#125;:$&#123;PHP_UPSTREAM_PORT&#125;; &#125;" &gt; /etc/nginx/conf.d/upstream.confVOLUME ["/var/log/nginx", "/var/www"]WORKDIR /usr/share/nginx/html 这里就只是用了ARG123ARG PHP_UPSTREAM_CONTAINER=php-fpmARG PHP_UPSTREAM_PORT=9000RUN echo "upstream php-upstream &#123; server $&#123;PHP_UPSTREAM_CONTAINER&#125;:$&#123;PHP_UPSTREAM_PORT&#125;; &#125;" &gt; /etc/nginx/conf.d/upstream.conf 这里的变量用的就是 ARG 而不是 ENV了,因为这条命令运行在 Dockerfile 当中的, 像这种临时使用一下的变量没必要存环境变量的值就很适合使用 ARG]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker-composer</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Git调整 Ssh 登录参数]]></title>
     <url>%2F2018%2F06%2F23%2Fgit-sshcommand%2F</url>
     <content type="text"><![CDATA[指定 ssh 命令使用时的签名文件进入 app的.git/config 文件下12345678910111213141516 Engine:[core] repositoryformatversion = 0 filemode = true bare = false logallrefupdates = true ignorecase = true precomposeunicode = true # 添加一行这个就行 sshCommand = ssh -i ~/.ssh/id_rsa_gayhuber[remote "origin"] url = git@github.com:gayhuber/php-fpm.git fetch = +refs/heads/*:refs/remotes/origin/*[branch "master"] remote = origin merge = refs/heads/master]]></content>
@@ -225,18 +237,6 @@
       <tags>
         <tag>Raspberry</tag>
         <tag>MacOS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[转 Json移除非法 Utf8字符串]]></title>
-    <url>%2F2017%2F11%2F08%2Fphp-json-error%2F</url>
-    <content type="text"><![CDATA[当 json_decode 解析为 null 的时候怎么处理 当 json 中出现非法 utf8 时怎么处理 失败时返回NULL当返回 null 的时候,可以用json_last_error()根据返回码来判断 如果 php 版本过低的话将会出现错误码反馈不全的问题,返回值是JSON_ERROR_NONE (0)这是示例:123456789101112131415161718 // $json = '&#123;"a":1,"b":2,"c":3,"d":4,"e":5, "name":"Corwien"&#125;';$json = '&#123;"a":1,"b":2,"c":3,"d":4,"e":5, "name":&#125;'; //错误的json格式$result = json_decode($json, true); if(!$result) &#123; //error handle ,错误处理 $ret = json_last_error(); print_r($ret); //打印为： 4,查错误信息表，可知是语法错误 &#125; json_last_error错误msg对照表：0 = JSON_ERROR_NONE1 = JSON_ERROR_DEPTH2 = JSON_ERROR_STATE_MISMATCH3 = JSON_ERROR_CTRL_CHAR4 = JSON_ERROR_SYNTAX5 = JSON_ERROR_UTF8 如何处理json中的非法utf8字符如果出现 JSON_ERROR_SYNTAX 这个错误码的时候,常见的要么是其中的双引号单引号问题,要么是出现了 /r/n之类的结尾问题,还有一种比较烦的情况就是错误的 utf8编码 解决问题:1234567891011//reject overly long 2 byte sequences, as well as characters above U+10000 and replace with ?$some_string = preg_replace('/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'. '|[\x00-\x7F][\x80-\xBF]+'. '|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'. '|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]&#123;2,&#125;)'. '|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]&#123;2&#125;)|[\x80-\xBF]&#123;3,&#125;)/S', '?', $some_string );//reject overly long 3 byte sequences and UTF-16 surrogates and replace with ?$some_string = preg_replace('/\xE0[\x80-\x9F][\x80-\xBF]'. '|\xED[\xA0-\xBF][\x80-\xBF]/S','?', $some_string ); 原文utf8代码]]></content>
-      <categories>
-        <category>精选转载</category>
-      </categories>
-      <tags>
-        <tag>php</tag>
-        <tag>json</tag>
       </tags>
   </entry>
 </search>

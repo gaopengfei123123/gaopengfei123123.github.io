@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-06-23T15:44:09.323Z</updated>
+  <updated>2018-06-28T10:20:49.672Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker中 Arg 和 Env 的区别</title>
+    <link href="http://blog.justwe.site/2018/06/28/docker-arg-env/"/>
+    <id>http://blog.justwe.site/2018/06/28/docker-arg-env/</id>
+    <published>2018-06-28T09:55:59.000Z</published>
+    <updated>2018-06-28T10:20:49.672Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用 <code>docker-compoe</code> 构建镜像的时候会感觉 <code>ARG</code> 和 <code>ENV</code> 的作用很相似, 但是这两个存在就肯定有它的原因</p><a id="more"></a><h3 id="它们起作用的时机"><a href="#它们起作用的时机" class="headerlink" title="它们起作用的时机"></a>它们起作用的时机</h3><ul><li>arg 是在 build 的时候存在的, 可以在 Dockerfile 中当做变量来使用</li><li>env 是容器构建好之后的环境变量, 不能在 Dockerfile 中当参数使用</li></ul><p>从这里可以看出来 <code>ARG</code> 就是专门为构建镜像而生的</p><h3 id="拿一个具体的例子"><a href="#拿一个具体的例子" class="headerlink" title="拿一个具体的例子"></a>拿一个具体的例子</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dockerfile</span></span><br><span class="line"><span class="keyword">FROM</span> redis:<span class="number">3.2</span>-alpine</span><br><span class="line"></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=<span class="string">"GPF &lt;5173180@qq.com&gt;"</span></span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">ARG REDIS_SET_PASSWORD=developer</span></span><br><span class="line"><span class="bash">ENV REDIS_PASSWORD <span class="variable">$&#123;REDIS_SET_PASSWORD&#125;</span></span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">VOLUME /data</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">EXPOSE 6379</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">CMD [<span class="string">"sh"</span>, <span class="string">"-c"</span>, <span class="string">"exec redis-server --requirepass \"<span class="variable">$REDIS_PASSWORD</span>\""</span>]</span></span><br></pre></td></tr></table></figure><p>这是一个构建 redis 的文件, 中间有这么一句<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ARG REDIS_SET_PASSWORD=developer</span><br><span class="line">ENV REDIS_PASSWORD <span class="variable">$&#123;REDIS_SET_PASSWORD&#125;</span></span><br></pre></td></tr></table></figure></p><p>它是为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMD [<span class="string">"sh"</span>, <span class="string">"-c"</span>, <span class="string">"exec redis-server --requirepass \"<span class="variable">$REDIS_PASSWORD</span>\""</span>]</span><br></pre></td></tr></table></figure></p><p>这一句服务的, 这句就是在启动 redis 的时候设置密码, 因为当执行 <code>CMD</code> 的时候,说明容器已经构建成功运行了起来,此时 <code>CMD</code>是在容器中执行容器中的命令, 因此 <code>CMD</code> 中的变量是用的环境变量而不是在 <code>Dockerfile</code> 中的变量,因此需要把 <code>ARG</code> 中的值在构建的时候赋值给 <code>ENV</code></p><h3 id="另一个使用-ARG-的例子"><a href="#另一个使用-ARG-的例子" class="headerlink" title="另一个使用 ARG 的例子"></a>另一个使用 ARG 的例子</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.13</span>.<span class="number">1</span>-alpine</span><br><span class="line"></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=<span class="string">"GPF &lt;5173180@qq.com&gt;"</span></span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment">#https://yeasy.gitbooks.io/docker_practice/content/image/build.html</span></span></span><br><span class="line"><span class="bash">RUN mkdir -p /etc/nginx/cert \</span></span><br><span class="line"><span class="bash">    &amp;&amp; mkdir -p /etc/nginx/conf.d \</span></span><br><span class="line"><span class="bash">    &amp;&amp; mkdir -p /etc/nginx/sites</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY ./nginx.conf /etc/ngixn/nginx.conf</span></span><br><span class="line"><span class="bash">COPY ./conf.d/ /etc/nginx/conf.d/</span></span><br><span class="line"><span class="bash">COPY ./cert/ /etc/nginx/cert/</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY ./sites /etc/nginx/sites/</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">ARG PHP_UPSTREAM_CONTAINER=php-fpm</span></span><br><span class="line"><span class="bash">ARG PHP_UPSTREAM_PORT=9000</span></span><br><span class="line"><span class="bash">RUN <span class="built_in">echo</span> <span class="string">"upstream php-upstream &#123; server <span class="variable">$&#123;PHP_UPSTREAM_CONTAINER&#125;</span>:<span class="variable">$&#123;PHP_UPSTREAM_PORT&#125;</span>; &#125;"</span> &gt; /etc/nginx/conf.d/upstream.conf</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">VOLUME [<span class="string">"/var/log/nginx"</span>, <span class="string">"/var/www"</span>]</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">WORKDIR /usr/share/nginx/html</span></span><br></pre></td></tr></table></figure><p>这里就只是用了<code>ARG</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ARG PHP_UPSTREAM_CONTAINER=php-fpm</span><br><span class="line">ARG PHP_UPSTREAM_PORT=9000</span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"upstream php-upstream &#123; server <span class="variable">$&#123;PHP_UPSTREAM_CONTAINER&#125;</span>:<span class="variable">$&#123;PHP_UPSTREAM_PORT&#125;</span>; &#125;"</span> &gt; /etc/nginx/conf.d/upstream.conf</span><br></pre></td></tr></table></figure></p><p>这里的变量用的就是 <code>ARG</code> 而不是 <code>ENV</code>了,因为这条命令运行在 <code>Dockerfile</code> 当中的, 像这种临时使用一下的变量没必要存环境变量的值就很适合使用 <code>ARG</code></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用 &lt;code&gt;docker-compoe&lt;/code&gt; 构建镜像的时候会感觉 &lt;code&gt;ARG&lt;/code&gt; 和 &lt;code&gt;ENV&lt;/code&gt; 的作用很相似, 但是这两个存在就肯定有它的原因&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="docker" scheme="http://blog.justwe.site/categories/docker/"/>
+    
+    
+      <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
+    
+      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>Git调整 Ssh 登录参数</title>
@@ -473,33 +497,6 @@
       <category term="Raspberry" scheme="http://blog.justwe.site/tags/Raspberry/"/>
     
       <category term="MacOS" scheme="http://blog.justwe.site/tags/MacOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>转 Json移除非法 Utf8字符串</title>
-    <link href="http://blog.justwe.site/2017/11/08/php-json-error/"/>
-    <id>http://blog.justwe.site/2017/11/08/php-json-error/</id>
-    <published>2017-11-08T03:17:21.000Z</published>
-    <updated>2017-11-08T03:54:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li>当 json_decode 解析为 <code>null</code> 的时候怎么处理</li><li>当 json 中出现非法 utf8 时怎么处理</li></ul><a id="more"></a><h3 id="失败时返回NULL"><a href="#失败时返回NULL" class="headerlink" title="失败时返回NULL"></a>失败时返回NULL</h3><p>当返回 <code>null</code> 的时候,可以用<code>json_last_error()</code>根据返回码来判断</p><p><strong>如果 php 版本过低的话将会出现错误码反馈不全的问题</strong>,返回值是<code>JSON_ERROR_NONE (0)</code><br>这是示例:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//  $json = '&#123;"a":1,"b":2,"c":3,"d":4,"e":5, "name":"Corwien"&#125;';</span></span><br><span class="line">$json = <span class="string">'&#123;"a":1,"b":2,"c":3,"d":4,"e":5, "name":&#125;'</span>;  <span class="comment">//错误的json格式</span></span><br><span class="line">$result = json_decode($json, <span class="keyword">true</span>);</span><br><span class="line"> <span class="keyword">if</span>(!$result)</span><br><span class="line"> &#123;</span><br><span class="line">       <span class="comment">//error handle ,错误处理</span></span><br><span class="line">       $ret = json_last_error();</span><br><span class="line">       print_r($ret);   <span class="comment">//打印为： 4,查错误信息表，可知是语法错误</span></span><br><span class="line"></span><br><span class="line"> &#125;   </span><br><span class="line"></span><br><span class="line">json_last_error错误msg对照表：</span><br><span class="line"><span class="number">0</span> = JSON_ERROR_NONE</span><br><span class="line"><span class="number">1</span> = JSON_ERROR_DEPTH</span><br><span class="line"><span class="number">2</span> = JSON_ERROR_STATE_MISMATCH</span><br><span class="line"><span class="number">3</span> = JSON_ERROR_CTRL_CHAR</span><br><span class="line"><span class="number">4</span> = JSON_ERROR_SYNTAX</span><br><span class="line"><span class="number">5</span> = JSON_ERROR_UTF8</span><br></pre></td></tr></table></figure></p><h3 id="如何处理json中的非法utf8字符"><a href="#如何处理json中的非法utf8字符" class="headerlink" title="如何处理json中的非法utf8字符"></a>如何处理json中的非法utf8字符</h3><p>如果出现 <code>JSON_ERROR_SYNTAX</code> 这个错误码的时候,常见的要么是其中的双引号单引号问题,要么是<br>出现了 <code>/r/n</code>之类的结尾问题,还有一种比较烦的情况就是错误的 utf8编码</p><p>解决问题:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//reject overly long 2 byte sequences, as well as characters above U+10000 and replace with ?</span></span><br><span class="line">$some_string = preg_replace(<span class="string">'/[\x00-\x08\x10\x0B\x0C\x0E-\x19\x7F]'</span>.</span><br><span class="line"> <span class="string">'|[\x00-\x7F][\x80-\xBF]+'</span>.</span><br><span class="line"> <span class="string">'|([\xC0\xC1]|[\xF0-\xFF])[\x80-\xBF]*'</span>.</span><br><span class="line"> <span class="string">'|[\xC2-\xDF]((?![\x80-\xBF])|[\x80-\xBF]&#123;2,&#125;)'</span>.</span><br><span class="line"> <span class="string">'|[\xE0-\xEF](([\x80-\xBF](?![\x80-\xBF]))|(?![\x80-\xBF]&#123;2&#125;)|[\x80-\xBF]&#123;3,&#125;)/S'</span>,</span><br><span class="line"> <span class="string">'?'</span>, $some_string );</span><br><span class="line"></span><br><span class="line"><span class="comment">//reject overly long 3 byte sequences and UTF-16 surrogates and replace with ?</span></span><br><span class="line">$some_string = preg_replace(<span class="string">'/\xE0[\x80-\x9F][\x80-\xBF]'</span>.</span><br><span class="line"> <span class="string">'|\xED[\xA0-\xBF][\x80-\xBF]/S'</span>,<span class="string">'?'</span>, $some_string );</span><br></pre></td></tr></table></figure></p><p><a href="https://segmentfault.com/a/1190000006154011" target="_blank" rel="noopener">原文</a><br><a href="https://magp.ie/2011/01/06/remove-non-utf8-characters-from-string-with-php/" target="_blank" rel="noopener">utf8代码</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;当 json_decode 解析为 &lt;code&gt;null&lt;/code&gt; 的时候怎么处理&lt;/li&gt;
-&lt;li&gt;当 json 中出现非法 utf8 时怎么处理&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="精选转载" scheme="http://blog.justwe.site/categories/%E7%B2%BE%E9%80%89%E8%BD%AC%E8%BD%BD/"/>
-    
-    
-      <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
-    
-      <category term="json" scheme="http://blog.justwe.site/tags/json/"/>
     
   </entry>
   
