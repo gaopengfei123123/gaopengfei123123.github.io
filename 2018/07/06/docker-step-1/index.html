@@ -82,7 +82,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="docker 教程," />
+  <meta name="keywords" content="docker入门," />
 
 
 
@@ -101,18 +101,18 @@
 
 
 <meta name="description" content="从命名上就知道这是一篇简单粗暴的docker新手入门教程， 为什么要简单粗暴？ 我认为有自学能力的人帮他入门就够了， 不能自学的一时半会儿也教不会， 不符合入门教程的初衷， 建议出门左拐去找找视频教程…">
-<meta name="keywords" content="docker 教程">
+<meta name="keywords" content="docker入门">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不正宗 Docker 入门教程(1&#x2F;3)">
+<meta property="og:title" content="不正宗 Docker 入门教程-启动一个容器(1&#x2F;3)">
 <meta property="og:url" content="http://blog.justwe.site/2018/07/06/docker-step-1/index.html">
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="从命名上就知道这是一篇简单粗暴的docker新手入门教程， 为什么要简单粗暴？ 我认为有自学能力的人帮他入门就够了， 不能自学的一时半会儿也教不会， 不符合入门教程的初衷， 建议出门左拐去找找视频教程…">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog-image.onlyoneip.com/run-nginx.png">
 <meta property="og:image" content="http://blog-image.onlyoneip.com/image-container.jpg">
-<meta property="og:updated_time" content="2018-07-06T11:08:08.971Z">
+<meta property="og:updated_time" content="2018-07-08T15:03:50.506Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不正宗 Docker 入门教程(1&#x2F;3)">
+<meta name="twitter:title" content="不正宗 Docker 入门教程-启动一个容器(1&#x2F;3)">
 <meta name="twitter:description" content="从命名上就知道这是一篇简单粗暴的docker新手入门教程， 为什么要简单粗暴？ 我认为有自学能力的人帮他入门就够了， 不能自学的一时半会儿也教不会， 不符合入门教程的初衷， 建议出门左拐去找找视频教程…">
 <meta name="twitter:image" content="http://blog-image.onlyoneip.com/run-nginx.png">
 
@@ -149,7 +149,7 @@
 
 
 
-  <title>不正宗 Docker 入门教程(1/3) | <hello-world/></title>
+  <title>不正宗 Docker 入门教程-启动一个容器(1/3) | <hello-world/></title>
   
 
 
@@ -366,7 +366,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">不正宗 Docker 入门教程(1/3)</h2>
+          <h2 class="post-title" itemprop="name headline">不正宗 Docker 入门教程-启动一个容器(1/3)</h2>
         
 
         <div class="post-meta">
@@ -396,7 +396,7 @@
 
           
           
-             <span id="/2018/07/06/docker-step-1/" class="leancloud_visitors" data-flag-title="不正宗 Docker 入门教程(1/3)">
+             <span id="/2018/07/06/docker-step-1/" class="leancloud_visitors" data-flag-title="不正宗 Docker 入门教程-启动一个容器(1/3)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -437,7 +437,7 @@
 <h3 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h3><p>强烈推荐使用 <code>Docker for Mac</code> 或 <code>Docker for Windows</code>, 这两个工具已经将 <code>Kitematic</code> 和 <code>docker-compose</code> 集成好了， 至于这两个工具是做什么的咱们后面再说， <code>win10</code> 版本需要专业版的， 不然开启不了<code>Hyper-V</code>， <code>win7</code> 就别想了，不支持…</p>
 <p>怎么安装在 <a href="https://cr.console.aliyun.com/#/accelerator" target="_blank" rel="noopener">阿里云镜像容器服务</a> 里面都说的很清楚了， 连<strong>国内镜像源</strong>都给你安排好了， 咱们就进入下一话题</p>
 <blockquote>
-<p>PS: 如果是 CentOS 6 的就需要升级一下系统内核了， <a href="http://note.youdao.com/noteshare?id=d4515598471a46ed2fd6090e548107b3&amp;sub=WEBd79b399d399855870db6fcaf5822a497" target="_blank" rel="noopener">centOS6.5 安装docker</a>， 毕竟都 <code>8102</code> 年了， docker 又是个比较新的东西， 对于稍微久一点的系统的支持就不那么友好</p>
+<p>PS: 如果是 CentOS 6 的就需要升级一下系统内核了， <a href="http://blog.justwe.site/2018/07/06/docker-install-centos65/">centOS6.5 安装docker</a>， 毕竟都 <code>8102</code> 年了， docker 又是个比较新的东西， 对于稍微久一点的系统的支持就不那么友好</p>
 </blockquote>
 <h3 id="运行第一个容器"><a href="#运行第一个容器" class="headerlink" title="运行第一个容器"></a>运行第一个容器</h3><p>安装完环境之后就启动一个镜像开开眼儿<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:80 --name local_nginx nginx</span><br></pre></td></tr></table></figure></p>
 <p>然后访问 <code>http://localhost:8080/</code> 就能看到 <code>nginx</code> 的初始界面了<br><img src="http://blog-image.onlyoneip.com/run-nginx.png" alt="run-image"></p>
@@ -500,6 +500,17 @@
 <h4 id="docker-network-容器之间的互联"><a href="#docker-network-容器之间的互联" class="headerlink" title="docker network 容器之间的互联"></a><code>docker network</code> 容器之间的互联</h4><p>如果只是在一个容器里搞来搞去就真的是虚拟机了, docker 的强大之处就是它内部维护一个网络, 处在相同网络的容器是可以互通的<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建一个 docker 网络, -d bridge 是指定网络模式, 当前是桥接网络</span></span><br><span class="line">docker network create -d bridge nginx_swarm</span><br><span class="line"><span class="comment"># 启动两个 nginx 容器, 分别命名 nginx_swarm_a nginx_swarm_b , 两者都加入了 nginx_swarm 这个网络  --rm 是当容器停止后自动删除</span></span><br><span class="line">docker run -it --rm  --name nginx_swarm_a --network nginx_swarm  nginx /bin/bash</span><br><span class="line">docker run -it --rm  --name nginx_swarm_b --network nginx_swarm  nginx /bin/bash</span><br></pre></td></tr></table></figure></p>
 <p>注意, 我们并没把接口暴露出去, 现在随便在一个容器中 <code>ping</code> 另一个容器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是在 nginx_swarm_a 中</span></span><br><span class="line"><span class="comment"># 没有 ping 命令的先装一个 ping</span></span><br><span class="line"><span class="comment"># apt-get update &amp;&amp; apt-get install -y iputils-ping</span></span><br><span class="line">root@73d04107780f:/<span class="comment"># ping -c 3 nginx_swarm_b</span></span><br><span class="line">PING nginx_swarm_b (172.18.0.3) 56(84) bytes of data.</span><br><span class="line">64 bytes from nginx_swarm_b.nginx_swarm (172.18.0.3): icmp_seq=1 ttl=64 time=0.084 ms</span><br><span class="line">64 bytes from nginx_swarm_b.nginx_swarm (172.18.0.3): icmp_seq=2 ttl=64 time=0.161 ms</span><br><span class="line">64 bytes from nginx_swarm_b.nginx_swarm (172.18.0.3): icmp_seq=3 ttl=64 time=0.146 ms</span><br><span class="line"></span><br><span class="line">--- nginx_swarm_b ping statistics ---</span><br></pre></td></tr></table></figure></p>
 <p>docker 能自动的把 server name 转换成 ip, 我们只需要标明请求的是哪个容器, 而不是还要记住它的 ip 地址(当然 ip 地址也能设置)</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>弄明白以下几点启动一个容器应该是没什么问题了:</p>
+<ol>
+<li>国内一定要使用国内镜像源, 不然会痛不欲生, <a href="https://ieevee.com/tech/2016/09/28/docker-mirror.html#%E9%80%89%E6%8B%A9%E9%9B%B6%E7%BD%91%E6%98%93163-docker%E9%95%9C%E5%83%8F" target="_blank" rel="noopener">国内 docker 仓库镜像对比</a></li>
+<li>分清镜像和容器的概念, 容器就是基于镜像构建出来的一个实例</li>
+<li>不要往容器中保存数据, 容器应该是无状态的, 需要持久化保存的就<code>docker run -v xx:xx</code> 或者 <code>docker create volume ...</code> 用独立的卷来保存</li>
+<li>docker 不是虚拟机</li>
+<li>分清楚宿主机端口和容器端口</li>
+<li>处在相同<code>network</code>下的容器才能通过容器明互相访问</li>
+</ol>
+<p>参考资料:<br><a href="https://github.com/yeasy/docker_practice/blob/master/SUMMARY.md" target="_blank" rel="noopener">Docker — 从入门到实践</a><br><a href="https://hub.docker.com/_/nginx/" target="_blank" rel="noopener">nginx 官方镜像</a></p>
+<p>下一章:<br><a href="http://blog.justwe.site/2018/07/08/docker-step-2/">不正宗 docker 入门教程 构建一个镜像(2/3)</a></p>
 
       
     </div>
@@ -517,7 +528,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker-教程/" rel="tag"># docker 教程</a>
+            <a href="/tags/docker入门/" rel="tag"># docker入门</a>
           
         </div>
       
@@ -539,6 +550,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/08/docker-step-2/" rel="prev" title="不正宗 Docker 入门教程-构建一个镜像(2/3)">
+                不正宗 Docker 入门教程-构建一个镜像(2/3) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -615,7 +630,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">120</span>
+                <span class="site-state-item-count">121</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -701,7 +716,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本章目标"><span class="nav-number">1.</span> <span class="nav-text">本章目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装环境"><span class="nav-number">2.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行第一个容器"><span class="nav-number">3.</span> <span class="nav-text">运行第一个容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是容器？什么是镜像？"><span class="nav-number">4.</span> <span class="nav-text">什么是容器？什么是镜像？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的运行参数和命令"><span class="nav-number">5.</span> <span class="nav-text">常用的运行参数和命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#it-建立一个可在终端交互的容器"><span class="nav-number">5.1.</span> <span class="nav-text">-it  建立一个可在终端交互的容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#p-用于宿主机和容器的端口绑定"><span class="nav-number">5.2.</span> <span class="nav-text">-p    用于宿主机和容器的端口绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-将宿主机的卷挂载到容器中的指定目录"><span class="nav-number">5.3.</span> <span class="nav-text">-v 将宿主机的卷挂载到容器中的指定目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-后台运行"><span class="nav-number">5.4.</span> <span class="nav-text">-d 后台运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-exec-执行-docker-容器中的命令"><span class="nav-number">5.5.</span> <span class="nav-text">docker exec 执行 docker 容器中的命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-ps-容器的运行状态"><span class="nav-number">5.6.</span> <span class="nav-text">docker ps 容器的运行状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-stop-containerID-或-name-停止容器"><span class="nav-number">5.7.</span> <span class="nav-text">docker stop [containerID 或 name] 停止容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-rm-containerID-或-name-删除指定未运行的容器-一个或多个"><span class="nav-number">5.8.</span> <span class="nav-text">docker rm [containerID 或 name] 删除指定未运行的容器, 一个或多个</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-rmi-imageID-或-tag-删除宿主机指定的镜像"><span class="nav-number">5.9.</span> <span class="nav-text">docker rmi [imageID 或 tag] 删除宿主机指定的镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prune-大杀器"><span class="nav-number">5.10.</span> <span class="nav-text">prune 大杀器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-network-容器之间的互联"><span class="nav-number">5.11.</span> <span class="nav-text">docker network 容器之间的互联</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本章目标"><span class="nav-number">1.</span> <span class="nav-text">本章目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装环境"><span class="nav-number">2.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行第一个容器"><span class="nav-number">3.</span> <span class="nav-text">运行第一个容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是容器？什么是镜像？"><span class="nav-number">4.</span> <span class="nav-text">什么是容器？什么是镜像？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的运行参数和命令"><span class="nav-number">5.</span> <span class="nav-text">常用的运行参数和命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#it-建立一个可在终端交互的容器"><span class="nav-number">5.1.</span> <span class="nav-text">-it  建立一个可在终端交互的容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#p-用于宿主机和容器的端口绑定"><span class="nav-number">5.2.</span> <span class="nav-text">-p    用于宿主机和容器的端口绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-将宿主机的卷挂载到容器中的指定目录"><span class="nav-number">5.3.</span> <span class="nav-text">-v 将宿主机的卷挂载到容器中的指定目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-后台运行"><span class="nav-number">5.4.</span> <span class="nav-text">-d 后台运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-exec-执行-docker-容器中的命令"><span class="nav-number">5.5.</span> <span class="nav-text">docker exec 执行 docker 容器中的命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-ps-容器的运行状态"><span class="nav-number">5.6.</span> <span class="nav-text">docker ps 容器的运行状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-stop-containerID-或-name-停止容器"><span class="nav-number">5.7.</span> <span class="nav-text">docker stop [containerID 或 name] 停止容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-rm-containerID-或-name-删除指定未运行的容器-一个或多个"><span class="nav-number">5.8.</span> <span class="nav-text">docker rm [containerID 或 name] 删除指定未运行的容器, 一个或多个</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-rmi-imageID-或-tag-删除宿主机指定的镜像"><span class="nav-number">5.9.</span> <span class="nav-text">docker rmi [imageID 或 tag] 删除宿主机指定的镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prune-大杀器"><span class="nav-number">5.10.</span> <span class="nav-text">prune 大杀器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-network-容器之间的互联"><span class="nav-number">5.11.</span> <span class="nav-text">docker network 容器之间的互联</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
