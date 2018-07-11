@@ -110,7 +110,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://blog-image.onlyoneip.com/run-nginx.png">
 <meta property="og:image" content="http://blog-image.onlyoneip.com/image-container.jpg">
-<meta property="og:updated_time" content="2018-07-08T15:03:50.506Z">
+<meta property="og:updated_time" content="2018-07-11T02:26:36.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不正宗 Docker 入门教程-启动一个容器(1&#x2F;3)">
 <meta name="twitter:description" content="从命名上就知道这是一篇简单粗暴的docker新手入门教程， 为什么要简单粗暴？ 我认为有自学能力的人帮他入门就够了， 不能自学的一时半会儿也教不会， 不符合入门教程的初衷， 建议出门左拐去找找视频教程…">
@@ -476,6 +476,7 @@
 <li>同理, 一份 Image 可以生成无数个 Container, 这就是方便集群化部署的所在</li>
 </ul>
 <p>简单的说 Container 就是 Image 的儿子, 模样和 Image 预想的一样, 但是 Container 运行之后会发生一些改变, 而且这种改变是可以保存的</p>
+<p>7-11补充: 这位大佬讲的 image 和 虚拟机 之前的很清晰 -&gt; <a href="https://mp.weixin.qq.com/s/sACsDZNjPa2vSidWUMB14g" target="_blank" rel="noopener">宋宝华：Docker 最初的2小时(Docker从入门到入门)</a>, 不过推荐是先敲几个实际的例子运行一下再看, 工具先跑起来再去了解它嘛!</p>
 <h3 id="常用的运行参数和命令"><a href="#常用的运行参数和命令" class="headerlink" title="常用的运行参数和命令"></a>常用的运行参数和命令</h3><p>咱们先不说构建镜像的事儿(那是下一章的话题), 这里先了解一下 <code>docker run</code> 命令中比较常用的参数:</p>
 <h4 id="it-建立一个可在终端交互的容器"><a href="#it-建立一个可在终端交互的容器" class="headerlink" title="-it  建立一个可在终端交互的容器"></a><code>-it</code>  建立一个可在终端交互的容器</h4><p>比如:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name local_nginx nginx:latest /bin/bash</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">docker <span class="built_in">exec</span> -it local_nginx bin/bash</span><br></pre></td></tr></table></figure></p>
 <h4 id="p-用于宿主机和容器的端口绑定"><a href="#p-用于宿主机和容器的端口绑定" class="headerlink" title="-p    用于宿主机和容器的端口绑定"></a><code>-p</code>    用于宿主机和容器的端口绑定</h4><p>绑定多个端口就设置多个映射<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8088:80 -p 4433:443 nginx:latest</span><br><span class="line"><span class="comment"># 或    不写本地端口, docker 将帮你自动分配</span></span><br><span class="line">docker run -d -p :80 -p :443 nginx:latest</span><br><span class="line"><span class="comment"># 或    加上 ip 就绑本地指定的 ip</span></span><br><span class="line">docker run -d -p 127.0.0.1:8088:80 -p :443 nginx:latest</span><br><span class="line"><span class="comment"># 或    照样不写本地端口就随机分配</span></span><br><span class="line">docker run -d -p 127.0.0.1::80 -p :443 nginx:latest</span><br></pre></td></tr></table></figure></p>
