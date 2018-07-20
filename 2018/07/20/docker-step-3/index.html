@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VvMRi2mvr2-coUGzBvV70mi473YMTjSnsTdBaMjUnCA" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="docker入门," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="<hello-world/>" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="本章通过一个具体的demo来了解 docker-compose">
+<meta name="keywords" content="docker入门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不正宗 Docker 入门教程-使用 Docker-Compose (3&#x2F;3)">
+<meta property="og:url" content="http://blog.justwe.site/2018/07/20/docker-step-3/index.html">
+<meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
+<meta property="og:description" content="本章通过一个具体的demo来了解 docker-compose">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-20T03:53:24.012Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="不正宗 Docker 入门教程-使用 Docker-Compose (3&#x2F;3)">
+<meta name="twitter:description" content="本章通过一个具体的demo来了解 docker-compose">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '00JE2O0YE7',
+      apiKey: 'b50cd11f02da1e59a119d03842e8cb36',
+      indexName: 'hexo-index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"查找站点文章","hits_empty":"没有找到相关文章: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justwe.site/2018/07/20/docker-step-3/"/>
+
+
+
+
+
+  <title>不正宗 Docker 入门教程-使用 Docker-Compose (3/3) | <hello-world/></title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-92777740-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7c9c1ba6fc08944ab44a0d401f1721fe";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">&lt;hello-world/&gt;</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">代码改变世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/07/20/docker-step-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GPF">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<hello-world/>">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">不正宗 Docker 入门教程-使用 Docker-Compose (3/3)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-20T11:11:07+08:00">
+                2018-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/20/docker-step-3/" class="leancloud_visitors" data-flag-title="不正宗 Docker 入门教程-使用 Docker-Compose (3/3)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本章通过一个具体的demo来了解 docker-compose</p>
+</blockquote>
+<a id="more"></a>
+<h4 id="docker-compose-是做什么的"><a href="#docker-compose-是做什么的" class="headerlink" title="docker-compose 是做什么的"></a>docker-compose 是做什么的</h4><p>在构建一个完整的服务时，我们通常启动一个容器， 一旦出现多个容器需要同时启动的时候手打是下下之策， 因为时间一长难免会忘记细节，写脚本也不是不可以，但是大家没有达成共识时脚本也很难维护…</p>
+<p><code>docker-compose</code> 就是来解决这个痛点， 只需要按照统一的格式书写，那么大家生成的容器也都是一致的， 在团队开发的时候扔一个配置好的   <code>docker-compose</code> 能节省很多时间和口水</p>
+<h4 id="配置-docker-compose"><a href="#配置-docker-compose" class="headerlink" title="配置 docker-compose"></a>配置 docker-compose</h4><p>这是我构建的一个开发环境的容器:<a href="https://github.com/gaopengfei123123/dnmp" target="_blank" rel="noopener">dnmp</a></p>
+<p>首先下载下来<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gaopengfei123123/dnmp.git &amp;&amp; <span class="built_in">cd</span> dnmp</span><br></pre></td></tr></table></figure></p>
+<p>我们第一件事就是先瞄一眼 <code>.env</code> 文件， 这里设置了很多常量，一会根据个人需求来调整</p>
+<p>第二步才是打开 <code>docker-compose.yml</code> 文件， 看后缀都能猜到这是一个配置文件， 另外 <code>docker-compose.yml</code> <strong>是根据缩进来进行分层的，注意书写格式</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="comment"># 语法版本( 3 和 2 区别有点大, 比如 3 取消了 volume_from 的相关语法)</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">"3"</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  frontend:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;NETWORKS_DRIVER&#125;</span></span><br><span class="line"><span class="attr">  backend:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;NETWORKS_DRIVER&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line"><span class="attr">  mysql_volume:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;VOLUMES_DRIVER&#125;</span></span><br><span class="line"><span class="attr">  redis_volume:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;VOLUMES_DRIVER&#125;</span></span><br><span class="line"><span class="attr">  rabbitmq_volume:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;VOLUMES_DRIVER&#125;</span></span><br><span class="line"><span class="comment"># 服务编排</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="comment"># workspace:</span></span><br><span class="line">  <span class="comment">#   image: tianon/true</span></span><br><span class="line">  <span class="comment">#   container_name: dnmp-www</span></span><br><span class="line">  <span class="comment">#   volumes:</span></span><br><span class="line">  <span class="comment">#     - ./www:/usr/share/nginx/html</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># NGINX #############################################</span></span><br><span class="line"><span class="attr">  nginx:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">dnmp-nginx</span></span><br><span class="line"><span class="attr">    build:</span> </span><br><span class="line"><span class="attr">      context:</span> <span class="string">./nginx</span></span><br><span class="line"><span class="attr">      args:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">PHP_UPSTREAM_CONTAINER=$&#123;NGINX_PHP_UPSTREAM_CONTAINER&#125;</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">PHP_UPSTREAM_PORT=$&#123;NGINX_PHP_UPSTREAM_PORT&#125;</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">php-fpm</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"$&#123;NGINX_HOST_HTTP_PORT&#125;:80"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"$&#123;NGINX_HOST_HTTPS_PORT&#125;:443"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line">      <span class="comment"># 没必要把配置文件用卷来挂载, 不然就算配置更新了 nginx 也是要重启的</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 挂载运行代码目录</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$&#123;APP_CODE_PATH_HOST&#125;:/var/www</span></span><br><span class="line">      <span class="comment"># 挂载日志目录</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$&#123;NGINX_HOST_LOG_PATH&#125;:/var/log/nginx</span></span><br><span class="line">    <span class="comment"># 使用 networks 取代 links 在同一个网络模式下的服务是互通的</span></span><br><span class="line">    <span class="comment"># 在service 中使用其他的 service 就直接调用 service 名就行, 不用管 ip 地址, docker 会自己维护一套</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">frontend</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">backend</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># PHP-FPM #############################################</span></span><br><span class="line"><span class="attr">  php-fpm:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">dnmp-php-fpm</span></span><br><span class="line">    <span class="comment"># 这里的args 是属于 build 下面的,用于构建./php-fpm/Dockerfile 文件中 ARG 参数指定 php 版本</span></span><br><span class="line"><span class="attr">    build:</span> </span><br><span class="line"><span class="attr">      context:</span> <span class="string">./php-fpm</span></span><br><span class="line"><span class="attr">      args:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">PHP_VERSION=$&#123;PHP_VERSION&#125;</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$&#123;APP_CODE_PATH_HOST&#125;:/var/www</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./php-fpm/php$&#123;PHP_VERSION&#125;.ini:/usr/local/etc/php/php.ini</span></span><br><span class="line"><span class="attr">    expose:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"9000"</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">backend</span></span><br><span class="line">    </span><br><span class="line"><span class="attr">  redis:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">dnmp-redis</span></span><br><span class="line"><span class="attr">    build:</span></span><br><span class="line"><span class="attr">      context:</span> <span class="string">./redis</span></span><br><span class="line"><span class="attr">      args:</span></span><br><span class="line"><span class="bullet">        -</span> <span class="string">REDIS_SET_PASSWORD=$&#123;REDIS_SET_PASSWORD&#125;</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$&#123;REDIS_HOST_PORT&#125;:6379</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line">      <span class="comment"># 这里卷挂载的是本地文件</span></span><br><span class="line">      <span class="comment"># - $&#123;DATA_PATH_HOST&#125;/redis:/data</span></span><br><span class="line">      <span class="comment"># 这里创建一个 redis_volume来存放数据</span></span><br><span class="line"><span class="attr">      - redis_volume:</span><span class="string">/data</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mysql #############################################</span></span><br><span class="line"><span class="attr">  mysql:</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">dnmp-mysql</span></span><br><span class="line">    <span class="comment"># 镜像来源: https://github.com/docker-library/mysql/blob/fc3e856313423dc2d6a8d74cfd6b678582090fc7/5.7/Dockerfile</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">mysql:$&#123;MYSQL_VERSION&#125;</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line">      <span class="comment"># - $&#123;DATA_PATH_HOST&#125;/mysql:/var/lib/mysql</span></span><br><span class="line"><span class="attr">      - mysql_volume:</span><span class="string">/var/lib/mysql</span></span><br><span class="line">    <span class="comment"># 容器只要停止就会重启</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    environment:</span> </span><br><span class="line"><span class="attr">      MYSQL_ROOT_PASSWORD:</span> <span class="string">$&#123;MYSQL_ROOT_PASSWORD&#125;</span></span><br><span class="line"><span class="attr">      MYSQL_DATABASE:</span> <span class="string">$&#123;MYSQL_DATABASE&#125;</span></span><br><span class="line"><span class="attr">      MYSQL_USER:</span> <span class="string">$&#123;MYSQL_USER&#125;</span></span><br><span class="line"><span class="attr">      MYSQL_PASSWORD:</span> <span class="string">$&#123;MYSQL_PASSWORD&#125;</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$&#123;MYSQL_HOST_PORT&#125;:3306</span></span><br></pre></td></tr></table></figure>
+<p>接下来看看它的关键词都起着什么作用：</p>
+<h5 id="version"><a href="#version" class="headerlink" title="version"></a>version</h5><p>这个规定了文件的版本， 既然有 3 就肯定不用 2 啊， 虽然两者没冲突，但是我喜欢， 2 和 3 版本之间有轻微的变动，具体区别你可以在写配置文件时产生的报错信息来体验一下</p>
+<h5 id="network"><a href="#network" class="headerlink" title="network"></a>network</h5><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">  frontend:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;NETWORKS_DRIVER&#125;</span></span><br><span class="line"><span class="attr">  backend:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;NETWORKS_DRIVER&#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>${NETWORKS_DRIVER}</code> 是从 <code>.env</code> 文件中取的值， 下面的同理</p>
+<p>这一块就相当于执行 <code>docker network create -d bridge frontend &amp;&amp; docker network create -d bridge backend</code><br>在本地持久化的建立一个网络配置，稍后方便容器进行连接， 当然这里也不止是一个 <code>driver</code> 参数，具体配置情况还是参考<code>docker network inspect dnmp_frontend</code> 来看一下</p>
+<p>没有设置名字的配置当需要名字的时候会 <code>{当前docker-compose.yml文件名}_{key}</code> 这种格式</p>
+<p>有了 <code>network</code> 配置就极大的简化了老版的 <code>--links</code> 命令， 只要属于同一个 network 就能互相访问到， 而不是每新增一个服务就要把原来的服务都 link 一遍 </p>
+<h5 id="volume"><a href="#volume" class="headerlink" title="volume"></a>volume</h5><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line"><span class="attr">  mysql_volume:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;VOLUMES_DRIVER&#125;</span></span><br><span class="line"><span class="attr">  redis_volume:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;VOLUMES_DRIVER&#125;</span></span><br><span class="line"><span class="attr">  rabbitmq_volume:</span></span><br><span class="line"><span class="attr">    driver:</span> <span class="string">$&#123;VOLUMES_DRIVER&#125;</span></span><br></pre></td></tr></table></figure>
+<p>和 <code>network</code> 部分一样， 持久化的创建几个 <code>volume</code>, 相当于命令 <code>docker network create mysql_volume</code>等等</p>
+<p>这算是 v3 的一个新特性， 在 v2 的时候， 为了共享数据大家会创建一个什么镜像都不继承的image， 所有容器的 volume 都会和它连接， 现在有了 <code>volume</code> 就没必要这么搞了</p>
+<h5 id="service"><a href="#service" class="headerlink" title="service"></a>service</h5><p>这个是本章的重点， 我们来看下面的例子中的注释， 按序号来<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">#1 创建一个服务叫做nginx服务</span></span><br><span class="line"><span class="attr">  nginx:</span></span><br><span class="line">    <span class="comment">#2 为了显得个性化一点，我们指定这个容器的名字叫做 dnmp-nginx</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">dnmp-nginx</span></span><br><span class="line">    <span class="comment">#3 标明这个服务的 Dockerfile 的地址，用相对路径方便项目迁移</span></span><br><span class="line"><span class="attr">    build:</span> </span><br><span class="line">      <span class="comment">#3.1 相当于命令： </span></span><br><span class="line">      <span class="comment"># docker build ./nginx -t dnmp-nginx \</span></span><br><span class="line">      <span class="comment">#     --build-arg PHP_UPSTREAM_CONTAINER=xxx \</span></span><br><span class="line">      <span class="comment">#     --build-arg PHP_UPSTREAM_PORT=zzz</span></span><br><span class="line"><span class="attr">      context:</span> <span class="string">./nginx</span></span><br><span class="line">      <span class="comment">#3.2 这里 $&#123;NGINX_PHP_UPSTREAM_PORT&#125; 的值是从 .env 文件中取的， args 属于构建时传入的参数</span></span><br><span class="line"><span class="attr">      args:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">PHP_UPSTREAM_CONTAINER=$&#123;NGINX_PHP_UPSTREAM_CONTAINER&#125;</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">PHP_UPSTREAM_PORT=$&#123;NGINX_PHP_UPSTREAM_PORT&#125;</span></span><br><span class="line">    <span class="comment">#4  在启动这个容器之前先启动 php-fpm 这个容器 </span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">php-fpm</span></span><br><span class="line">    <span class="comment">#5 将本地端口和容器端口绑定， 本地哪个端口就看 .env 里怎么写的</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"$&#123;NGINX_HOST_HTTP_PORT&#125;:80"</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"$&#123;NGINX_HOST_HTTPS_PORT&#125;:443"</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">#6 设置需要挂载的卷, 这里时将本地目录和容器绑定， 也可以像 services.redis 那样和创建好的卷绑定 </span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line">      <span class="comment"># 没必要把配置文件用卷来挂载, 不然就算配置更新了 nginx 也是要重启的</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 挂载运行代码目录</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$&#123;APP_CODE_PATH_HOST&#125;:/var/www</span></span><br><span class="line">      <span class="comment"># 挂载日志目录</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">$&#123;NGINX_HOST_LOG_PATH&#125;:/var/log/nginx</span></span><br><span class="line">    <span class="comment"># 使用 networks 取代 links 在同一个网络模式下的服务是互通的</span></span><br><span class="line">    <span class="comment"># 在service 中使用其他的 service 就直接调用 service 名就行, 不用管 ip 地址, docker 会自己维护一套</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">#7 设置容器从属的网络， 同一个网络下可互相访问</span></span><br><span class="line"><span class="attr">    networks:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">frontend</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">backend</span></span><br></pre></td></tr></table></figure></p>
+<p>在上文的 <code>#3</code> 步骤看其他的service也有直接使用<code>image</code>的， 这是直接从远程获取镜像的方式</p>
+<p>配置文件写完了， 我们看下nginx的构建文件</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in file ./nginx/Dockerfile</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1 选择继承的镜像</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.13</span>.<span class="number">1</span>-alpine</span><br><span class="line"><span class="comment">#2 各种标签</span></span><br><span class="line"><span class="keyword">LABEL</span><span class="bash"> maintainer=<span class="string">"GPF &lt;5173180@qq.com&gt;"</span></span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment">#3 容器中执行命令， 且把本地的配置文件添加进去</span></span></span><br><span class="line"><span class="bash"><span class="comment">#https://yeasy.gitbooks.io/docker_practice/content/image/build.html</span></span></span><br><span class="line"><span class="bash">RUN mkdir -p /etc/nginx/cert \</span></span><br><span class="line"><span class="bash">    &amp;&amp; mkdir -p /etc/nginx/conf.d \</span></span><br><span class="line"><span class="bash">    &amp;&amp; mkdir -p /etc/nginx/sites</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY ./nginx.conf /etc/ngixn/nginx.conf</span></span><br><span class="line"><span class="bash">COPY ./conf.d/ /etc/nginx/conf.d/</span></span><br><span class="line"><span class="bash">COPY ./cert/ /etc/nginx/cert/</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">COPY ./sites /etc/nginx/sites/</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment">#4 这里也是设置构建参数， 不过相同 key 值会被 docker-compose 中的给覆盖掉</span></span></span><br><span class="line"><span class="bash">ARG PHP_UPSTREAM_CONTAINER=php-fpm</span></span><br><span class="line"><span class="bash">ARG PHP_UPSTREAM_PORT=9000</span></span><br><span class="line"><span class="bash"><span class="comment">#5 $&#123;PHP_UPSTREAM_CONTAINER&#125; 就在构建时的参数使用方式</span></span></span><br><span class="line"><span class="bash">RUN <span class="built_in">echo</span> <span class="string">"upstream php-upstream &#123; server <span class="variable">$&#123;PHP_UPSTREAM_CONTAINER&#125;</span>:<span class="variable">$&#123;PHP_UPSTREAM_PORT&#125;</span>; &#125;"</span> &gt; /etc/nginx/conf.d/upstream.conf</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment">#6 设置挂载的目录， 该目录下文件变化不会影响到容器</span></span></span><br><span class="line"><span class="bash">VOLUME [<span class="string">"/var/log/nginx"</span>, <span class="string">"/var/www"</span>]</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment">#7 设置目录运行时所处在容器中的目录地址</span></span></span><br><span class="line"><span class="bash">WORKDIR /usr/share/nginx/html</span></span><br></pre></td></tr></table></figure>
+<p>这里需要注意的时 <code>ARG</code> 和 <code>ENV</code> 的区别， 参考这篇文章： <a href="http://blog.justwe.site/2018/06/28/docker-arg-env/">Docker中 Arg 和 Env 的区别</a></p>
+<h4 id="启动docker-compse"><a href="#启动docker-compse" class="headerlink" title="启动docker-compse"></a>启动docker-compse</h4><p>在配置好 <code>.env</code> 文件和 <code>docker-compose.yml</code> 配置文件后就可以启动它了， 命令也很简单，在同级目录下运行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure></p>
+<p>它会自动创建<code>volume</code>，<code>network</code>，<code>services</code>， 而且相关的运行参数都是按着配置文件来的， 这样一来每个完整<code>docker-compose.yml</code>中的service就相当于时一个整体，每个服务又属于各自的容器，这样操控是不是节省了很多代码呢？</p>
+<p>查看这些容器的运行状况也很是简单</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-compose ps</span><br><span class="line"><span class="comment"># 或者使用更方便的一个工具： ctop ， github地址： https://github.com/bcicen/ctop</span></span><br></pre></td></tr></table></figure>
+<p>可操控单一容器一样， 但是它会把这一组容器都囊括了进去，操控起来只需要知道操控哪个服务，而一些参数就写在配置文件当中已经默认添加了</p>
+<p>一些常用的命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 终止整个服务集合</span></span><br><span class="line">docker-compose stop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 终止指定的服务 （这有个点就是启动的时候会先启动 depond_on 中的容器，关闭的时候不会影响到 depond_on 中的）</span></span><br><span class="line">docker-compose stop nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器的输出日志</span></span><br><span class="line">docker-compose logs -f [services...]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像时不使用缓存（能避免很多因为缓存造成的问题）</span></span><br><span class="line">docker-compose build --no-cache --force-rm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除指定的容器</span></span><br><span class="line">docker-compose rm nginx</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>本来熟悉命令的最好方式就是 用-&gt;犯错-&gt;排错-&gt;用 这种循环, 有什么不懂的 谷歌bing 都能查到, 直接 <code>docker-compose --help</code> 也能猜出命令的大概作用, 这里就不细说了 </p>
+</blockquote>
+<p>还有个很不错的 docker-compose 项目就是 <a href="http://laradock.io/" target="_blank" rel="noopener">laradock</a>, dnmp 就是仿照着它写的， 不过网络不好的情况下别运行 laradock， 它现在做的太臃肿了。。。。 看看它里面的镜像是怎么写的还是很有收获的</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker入门/" rel="tag"># docker入门</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/08/docker-step-2/" rel="next" title="不正宗 Docker 入门教程-构建一个镜像(2/3)">
+                <i class="fa fa-chevron-left"></i> 不正宗 Docker 入门教程-构建一个镜像(2/3)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.jpeg"
+               alt="GPF" />
+          <p class="site-author-name" itemprop="name">GPF</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">122</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://cn.vuejs.org/" title="vuejs中文网" target="_blank">vuejs中文网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laravel-china.org/" title="laravelChina" target="_blank">laravelChina</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://laravelacademy.org/" title="laravel学院" target="_blank">laravel学院</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-compose-是做什么的"><span class="nav-number">1.</span> <span class="nav-text">docker-compose 是做什么的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置-docker-compose"><span class="nav-number">2.</span> <span class="nav-text">配置 docker-compose</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#version"><span class="nav-number">2.1.</span> <span class="nav-text">version</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#network"><span class="nav-number">2.2.</span> <span class="nav-text">network</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#volume"><span class="nav-number">2.3.</span> <span class="nav-text">volume</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#service"><span class="nav-number">2.4.</span> <span class="nav-text">service</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动docker-compse"><span class="nav-number">3.</span> <span class="nav-text">启动docker-compse</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GPF</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mzMO8q019pF781zrR1LLJbxK-gzGzoHsz", "oz8n0eDpPQJrcD8KD4FHf9Xd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
