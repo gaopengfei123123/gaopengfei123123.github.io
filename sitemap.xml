@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
+    
+    <lastmod>2018-07-23T09:44:49.808Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2018/07/08/docker-step-2/</loc>
     
     <lastmod>2018-07-20T06:19:58.048Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://blog.justwe.site/2018/06/23/git-sshcommand/</loc>
     
     <lastmod>2018-06-23T15:44:09.323Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
-    
-    <lastmod>2018-06-22T08:44:22.169Z</lastmod>
     
   </url>
   

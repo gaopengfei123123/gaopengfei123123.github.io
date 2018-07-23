@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="这里做一些备注,以防再次碰到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-22T08:44:22.169Z">
+<meta property="og:updated_time" content="2018-07-23T09:44:49.808Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Php开发过程中不常碰到的error">
 <meta name="twitter:description" content="这里做一些备注,以防再次碰到">
@@ -477,6 +477,12 @@
 <li><p>使用 mysql 之前需要 mysql_ping() 一下, 如果出现断开的错误就启动重连机制</p>
 </li>
 </ol>
+<h3 id="js-和-php-交互传中文参数的编解码问题"><a href="#js-和-php-交互传中文参数的编解码问题" class="headerlink" title="js 和 php 交互传中文参数的编解码问题"></a>js 和 php 交互传中文参数的编解码问题</h3><p>之前碰到了问题是:<br>在 php 端 urlencode 的值为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orderid%3D21111111110001954%26pid%3D257742%26reason%3D%E4%B8%AA%E4%BA%BA%E6%96%B9%E9%9D%A2%E5%8E%9F%E5%9B%A0_%E4%BD%BF%E7%94%A8%E7%BA%A2%E5%8C%85%E9%87%8D%E6%96%B0%E4%B8%8B%E5%8D%95%26token%3D041d9e5575f480b7bfd58b09bd14ab1c7ee9e9594f2fcdb9f0e3e39fc634b48f</span><br></pre></td></tr></table></figure></p>
+<p>需要 urldecode 一次</p>
+<p>而在 js 端的结果是:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orderid%3D21111111110002170%26pid%3D257742%26reason%3D%25E4%25B8%25AA%25E4%25BA%25BA%25E6%2596%25B9%25E9%259D%25A2%25E5%258E%259F%25E5%259B%25A0_%25E4%25B8%25AA%25E4%25BA%25BA%25E8%25BA%25AB%25E4%25BD%2593%25E5%258E%259F%25E5%259B%25A0%26token%3D041d9e5575f480b7bfd58b09bd14ab1c7ee9e9594f2fcdb9f0e3e39fc634b48f</span><br></pre></td></tr></table></figure></p>
+<p>需要 urldecode 两次</p>
+<p>查阅资料后:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在后端是PHP程序的情况下，保持前端Javascript和PHP之间传值的统一编码可以使用以下函数进行处理：</span><br><span class="line"> </span><br><span class="line">WEB前端JavaScript</span><br><span class="line"> </span><br><span class="line">编码：escape(encodeURI(string))</span><br><span class="line"> </span><br><span class="line">解码：unescape(decodeURI(string))</span><br><span class="line"> </span><br><span class="line">WEB后端Php</span><br><span class="line"> </span><br><span class="line">编码：urlencode(string)</span><br><span class="line"> </span><br><span class="line">解码：urldecode(urldecode(string))</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://bbs.csdn.net/topics/330072196" target="_blank" rel="noopener">为什么要encodeURI(url)两次才不会出现乱码？</a></p>
 
       
     </div>
@@ -684,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890"><span class="nav-number">1.</span> <span class="nav-text">url 当中的参数有 &amp;timestamp=1234567890这样的字段会被转义成xtamp=1234567890</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version"><span class="nav-number">2.</span> <span class="nav-text">Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception-‘yii-db-Exception’-with-message-‘SQLSTATE-HY000-2002-No-such-file-or-directory’"><span class="nav-number">3.</span> <span class="nav-text">Exception ‘yii\db\Exception’ with message ‘SQLSTATE[HY000] [2002] No such file or directory’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常驻内存时发生的事情"><span class="nav-number">4.</span> <span class="nav-text">常驻内存时发生的事情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-has-gone-away"><span class="nav-number">5.</span> <span class="nav-text">mysql has gone away</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#url-当中的参数有-amp-timestamp-1234567890这样的字段会被转义成xtamp-1234567890"><span class="nav-number">1.</span> <span class="nav-text">url 当中的参数有 &amp;timestamp=1234567890这样的字段会被转义成xtamp=1234567890</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Automatically-populating-HTTP-RAW-POST-DATA-is-deprecated-and-will-be-removed-in-a-future-version"><span class="nav-number">2.</span> <span class="nav-text">Automatically populating $HTTP_RAW_POST_DATA is deprecated and will be removed in a future version.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exception-‘yii-db-Exception’-with-message-‘SQLSTATE-HY000-2002-No-such-file-or-directory’"><span class="nav-number">3.</span> <span class="nav-text">Exception ‘yii\db\Exception’ with message ‘SQLSTATE[HY000] [2002] No such file or directory’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常驻内存时发生的事情"><span class="nav-number">4.</span> <span class="nav-text">常驻内存时发生的事情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql-has-gone-away"><span class="nav-number">5.</span> <span class="nav-text">mysql has gone away</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js-和-php-交互传中文参数的编解码问题"><span class="nav-number">6.</span> <span class="nav-text">js 和 php 交互传中文参数的编解码问题</span></a></li></ol></div>
             
 
           </div>
