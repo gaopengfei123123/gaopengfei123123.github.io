@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.justwe.site/2017/05/27/git-workflow/</loc>
+    
+    <lastmod>2018-08-02T03:15:54.333Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
     
     <lastmod>2018-07-23T09:44:49.808Z</lastmod>
@@ -362,13 +369,6 @@
     <loc>http://blog.justwe.site/2017/06/17/git-fork-upstream/</loc>
     
     <lastmod>2017-06-17T06:39:21.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2017/05/27/git-workflow/</loc>
-    
-    <lastmod>2017-05-29T14:52:38.000Z</lastmod>
     
   </url>
   

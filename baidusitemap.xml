@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2017/05/27/git-workflow/</loc>
+    <lastmod>2018-08-02T03:15:54.333Z</lastmod>
+    <data>
+        <display>
+        <title>关于使用 Git 的操作流程</title>
+        <pubTime>2017-05-27T05:24:32.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>workflow</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
     <lastmod>2018-07-23T09:44:49.808Z</lastmod>
     <data>
@@ -1059,28 +1081,6 @@
         <tag>git</tag>
          
         <tag>fork</tag>
-         
-         
-           
-             
-              <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/05/27/git-workflow/</loc>
-    <lastmod>2017-05-29T14:52:38.000Z</lastmod>
-    <data>
-        <display>
-        <title>关于使用 Git 的操作流程</title>
-        <pubTime>2017-05-27T05:24:32.000Z</pubTime>
-        
-        <tag>git</tag>
-         
-        <tag>workflow</tag>
          
          
            
