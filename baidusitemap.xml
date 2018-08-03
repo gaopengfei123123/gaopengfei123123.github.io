@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2018/08/03/git-merge-conflict/</loc>
+    <lastmod>2018-08-03T11:03:18.903Z</lastmod>
+    <data>
+        <display>
+        <title>搞定 Git 合并冲突</title>
+        <pubTime>2018-08-03T10:40:25.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>merge-conflict</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2017/05/27/git-workflow/</loc>
     <lastmod>2018-08-02T03:15:54.333Z</lastmod>
     <data>
@@ -1625,6 +1647,24 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2016/12/13/win-node-npm/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Windows构建node,npm,gulp工具(测试可用)</title>
+        <pubTime>2016-12-13T02:04:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2016/11/15/mysql57-config/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -1643,18 +1683,15 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/08/go-info/</loc>
+    <loc>http://blog.justwe.site/2017/03/22/install/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Go语言了解(1)</title>
-        <pubTime>2017-03-07T22:42:24.000Z</pubTime>
+        <title>使用Hexo构建博客</title>
+        <pubTime>2017-03-22T07:31:55.000Z</pubTime>
         
          
            
-             
-              <breadCrumb title="go" url="http://blog.justwe.site/categories/go/"/>
-          
         </display>
     </data>
     </url>
@@ -1679,68 +1716,17 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
+    <loc>http://blog.justwe.site/2016/11/15/lumen-dd/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>使用Redis—geo Api实现搜索附近的人，自己写的一个composer包</title>
-        <pubTime>2017-03-11T04:11:00.000Z</pubTime>
+        <title>lumen5.3正常使用dd()函数</title>
+        <pubTime>2016-11-14T22:58:00.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/04/06/hello-world/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2017-04-06T04:17:40.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/03/22/hexo-blog/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>使用Hexo和github-Pages发布博客</title>
-        <pubTime>2017-03-22T02:18:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/03/01/contentos-docker/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Centos65安装docker遇到的坑</title>
-        <pubTime>2017-02-28T21:55:27.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
+              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
           
         </display>
     </data>
@@ -1765,6 +1751,56 @@
     </url>
 
     
+  <url>
+    <loc>http://blog.justwe.site/2016/06/01/laravel-session/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Laravel-Session</title>
+        <pubTime>2016-06-01T12:56:16.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/03/22/hexo-blog/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>使用Hexo和github-Pages发布博客</title>
+        <pubTime>2017-03-22T02:18:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/04/06/hello-world/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World</title>
+        <pubTime>2017-04-06T04:17:40.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
     
   <url>
     <loc>http://blog.justwe.site/2016/12/10/php-swoole/</loc>
@@ -1773,6 +1809,24 @@
         <display>
         <title>安装Swoole的记录</title>
         <pubTime>2016-12-09T21:43:14.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2016/10/07/hello-world%202/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World</title>
+        <pubTime>2016-10-07T03:37:00.000Z</pubTime>
         
          
            
@@ -1818,12 +1872,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/02/13/composer-debug/</loc>
+    <loc>http://blog.justwe.site/2017/03/10/redis-geohash-lbs/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Composer的一个小毛病</title>
-        <pubTime>2017-02-13T07:15:24.000Z</pubTime>
+        <title>LBS使用redis的解决方案--GEOHASH</title>
+        <pubTime>2017-03-10T02:53:00.000Z</pubTime>
         
          
            
@@ -1836,32 +1890,17 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/22/install/</loc>
+    <loc>http://blog.justwe.site/2017/03/19/go-workflow/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>使用Hexo构建博客</title>
-        <pubTime>2017-03-22T07:31:55.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/03/10/redis-geohash-lbs/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>LBS使用redis的解决方案--GEOHASH</title>
-        <pubTime>2017-03-10T02:53:00.000Z</pubTime>
+        <title>Go语言了解(3) 工作流程</title>
+        <pubTime>2017-03-19T07:58:05.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
+              <breadCrumb title="go" url="http://blog.justwe.site/categories/go/"/>
           
         </display>
     </data>
@@ -1887,23 +1926,6 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>自己封装一个Composer包玩玩</title>
-        <pubTime>2017-01-10T22:40:00.000Z</pubTime>
-        
-        <tag>composer</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.justwe.site/2017/03/23/symfony-router/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -1911,79 +1933,6 @@
         <title>Symfony-路由</title>
         <pubTime>2017-03-23T03:25:49.000Z</pubTime>
         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/10/09/vue-1/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Vue的初识</title>
-        <pubTime>2016-10-09T07:02:46.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="front-end" url="http://blog.justwe.site/categories/front-end/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/12/03/centos-install-git/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>centos上安装git2.2</title>
-        <pubTime>2016-12-03T06:24:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/03/07/go-doc/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Go安装godoc</title>
-        <pubTime>2017-03-07T03:07:54.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/03/30/webconfig/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Hexo-Next 的一些配置</title>
-        <pubTime>2017-03-30T13:06:50.000Z</pubTime>
-        
-        <tag>hexo-next</tag>
-         
-        <tag>config</tag>
-         
          
            
         </display>
@@ -2010,18 +1959,109 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/19/go-workflow/</loc>
+    <loc>http://blog.justwe.site/2016/10/09/vue-1/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Go语言了解(3) 工作流程</title>
-        <pubTime>2017-03-19T07:58:05.000Z</pubTime>
+        <title>Vue的初识</title>
+        <pubTime>2016-10-09T07:02:46.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="front-end" url="http://blog.justwe.site/categories/front-end/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-stmp/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>laravel5.1使用stmp邮箱服务</title>
+        <pubTime>2016-10-09T06:51:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-cron/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Laravel的定时任务</title>
+        <pubTime>2016-10-09T07:22:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2016/04/01/laravel-repository/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Laravel-Repository</title>
+        <pubTime>2016-04-01T12:53:01.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/03/08/go-info/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Go语言了解(1)</title>
+        <pubTime>2017-03-07T22:42:24.000Z</pubTime>
         
          
            
              
               <breadCrumb title="go" url="http://blog.justwe.site/categories/go/"/>
           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/03/30/webconfig/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo-Next 的一些配置</title>
+        <pubTime>2017-03-30T13:06:50.000Z</pubTime>
+        
+        <tag>hexo-next</tag>
+         
+        <tag>config</tag>
+         
+         
+           
         </display>
     </data>
     </url>
@@ -2046,30 +2086,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/12/13/win-node-npm/</loc>
+    <loc>http://blog.justwe.site/2016/10/10/js-href/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Windows构建node,npm,gulp工具(测试可用)</title>
-        <pubTime>2016-12-13T02:04:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/10/08/fuck-ie/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>唉~被Ie坑了一次又一次</title>
-        <pubTime>2016-10-08T06:39:00.000Z</pubTime>
+        <title>Js获取地址信息</title>
+        <pubTime>2016-10-10T05:43:44.000Z</pubTime>
         
          
            
@@ -2099,17 +2121,17 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/02/28/yii-csrf/</loc>
+    <loc>http://blog.justwe.site/2016/11/07/wxcx-2/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>局部关闭Csrf验证</title>
-        <pubTime>2017-02-27T23:40:44.000Z</pubTime>
+        <title>小程序(2)</title>
+        <pubTime>2016-11-07T07:55:22.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="Yii2" url="http://blog.justwe.site/categories/Yii2/"/>
+              <breadCrumb title="wx" url="http://blog.justwe.site/categories/wx/"/>
           
         </display>
     </data>
@@ -2135,17 +2157,17 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/11/07/wxcx-2/</loc>
+    <loc>http://blog.justwe.site/2017/02/28/yii-csrf/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>小程序(2)</title>
-        <pubTime>2016-11-07T07:55:22.000Z</pubTime>
+        <title>局部关闭Csrf验证</title>
+        <pubTime>2017-02-27T23:40:44.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="wx" url="http://blog.justwe.site/categories/wx/"/>
+              <breadCrumb title="Yii2" url="http://blog.justwe.site/categories/Yii2/"/>
           
         </display>
     </data>
@@ -2153,71 +2175,17 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/10/07/hello-world%202/</loc>
+    <loc>http://blog.justwe.site/2017/03/07/go-doc/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Hello World</title>
-        <pubTime>2016-10-07T03:37:00.000Z</pubTime>
+        <title>Go安装godoc</title>
+        <pubTime>2017-03-07T03:07:54.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-cron/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Laravel的定时任务</title>
-        <pubTime>2016-10-09T07:22:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/04/01/laravel-error-log/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Laravel-Error-Log</title>
-        <pubTime>2017-04-01T12:51:06.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-error/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Laravel的报错处理</title>
-        <pubTime>2016-10-09T07:10:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
+              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
           
         </display>
     </data>
@@ -2260,24 +2228,6 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/04/01/laravel-auth/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Laravel-Auth</title>
-        <pubTime>2017-04-01T12:57:12.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.justwe.site/2016/12/26/laravel-lazy-load/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -2296,12 +2246,66 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/04/01/laravel-repository/</loc>
+    <loc>http://blog.justwe.site/2016/10/08/fuck-ie/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Laravel-Repository</title>
-        <pubTime>2016-04-01T12:53:01.000Z</pubTime>
+        <title>唉~被Ie坑了一次又一次</title>
+        <pubTime>2016-10-08T06:39:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="front-end" url="http://blog.justwe.site/categories/front-end/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/03/01/contentos-docker/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Centos65安装docker遇到的坑</title>
+        <pubTime>2017-02-28T21:55:27.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>使用Redis—geo Api实现搜索附近的人，自己写的一个composer包</title>
+        <pubTime>2017-03-11T04:11:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/04/01/laravel-auth/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Laravel-Auth</title>
+        <pubTime>2017-04-01T12:57:12.000Z</pubTime>
         
          
            
@@ -2314,12 +2318,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/06/01/laravel-session/</loc>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-error/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Laravel-Session</title>
-        <pubTime>2016-06-01T12:56:16.000Z</pubTime>
+        <title>Laravel的报错处理</title>
+        <pubTime>2016-10-09T07:10:00.000Z</pubTime>
         
          
            
@@ -2332,17 +2336,52 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/11/15/lumen-dd/</loc>
+    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>lumen5.3正常使用dd()函数</title>
-        <pubTime>2016-11-14T22:58:00.000Z</pubTime>
+        <title>自己封装一个Composer包玩玩</title>
+        <pubTime>2017-01-10T22:40:00.000Z</pubTime>
+        
+        <tag>composer</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/02/13/composer-debug/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Composer的一个小毛病</title>
+        <pubTime>2017-02-13T07:15:24.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
+              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2016/12/03/centos-install-git/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>centos上安装git2.2</title>
+        <pubTime>2016-12-03T06:24:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
           
         </display>
     </data>
@@ -2370,12 +2409,12 @@
     
     
   <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-stmp/</loc>
+    <loc>http://blog.justwe.site/2017/04/01/laravel-error-log/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>laravel5.1使用stmp邮箱服务</title>
-        <pubTime>2016-10-09T06:51:00.000Z</pubTime>
+        <title>Laravel-Error-Log</title>
+        <pubTime>2017-04-01T12:51:06.000Z</pubTime>
         
          
            
@@ -2391,21 +2430,4 @@
     
     
     
-  <url>
-    <loc>http://blog.justwe.site/2016/10/10/js-href/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Js获取地址信息</title>
-        <pubTime>2016-10-10T05:43:44.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="front-end" url="http://blog.justwe.site/categories/front-end/"/>
-          
-        </display>
-    </data>
-    </url>
-
 </urlset>
