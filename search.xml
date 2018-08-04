@@ -56,8 +56,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>docker-composer</tag>
+        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
