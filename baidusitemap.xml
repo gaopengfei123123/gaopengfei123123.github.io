@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2018/08/26/php-unsual-mistakes/</loc>
+    <lastmod>2018-08-07T08:05:58.490Z</lastmod>
+    <data>
+        <display>
+        <title>Php开发过程中不常碰到的error (8.7更新)</title>
+        <pubTime>2018-08-26T02:30:23.000Z</pubTime>
+        
+        <tag>php</tag>
+         
+        <tag>debug</tag>
+         
+         
+           
+             
+              <breadCrumb title="php" url="http://blog.justwe.site/categories/php/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2018/08/03/git-merge-conflict/</loc>
     <lastmod>2018-08-03T11:03:18.903Z</lastmod>
     <data>
@@ -41,28 +63,6 @@
            
              
               <breadCrumb title="git" url="http://blog.justwe.site/categories/git/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2018/04/26/php-unsual-mistakes/</loc>
-    <lastmod>2018-07-23T09:44:49.808Z</lastmod>
-    <data>
-        <display>
-        <title>Php开发过程中不常碰到的error</title>
-        <pubTime>2018-04-26T02:30:23.000Z</pubTime>
-        
-        <tag>php</tag>
-         
-        <tag>debug</tag>
-         
-         
-           
-             
-              <breadCrumb title="php" url="http://blog.justwe.site/categories/php/"/>
           
         </display>
     </data>
