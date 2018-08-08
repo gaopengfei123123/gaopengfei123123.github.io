@@ -108,10 +108,12 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="这里做一些备注,以防再次碰到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-07T08:05:58.490Z">
+<meta property="og:image" content="http://blog-image.onlyoneip.com/urlencode.jpeg">
+<meta property="og:updated_time" content="2018-08-08T07:47:33.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Php开发过程中不常碰到的error (8.7更新)">
 <meta name="twitter:description" content="这里做一些备注,以防再次碰到">
+<meta name="twitter:image" content="http://blog-image.onlyoneip.com/urlencode.jpeg">
 
 
 
@@ -488,9 +490,11 @@
 <p>样例<br>source:<br>超级无敌的人sadha sajdh数据样本sdls fhejrthcxzb.file.jpeg </p>
 <p>PHP urlencode:<br>%E8%B6%85%E7%BA%A7%E6%97%A0%E6%95%8C%E7%9A%84%E4%BA%BAsadha+sajdh%E6%95%B0%E6%8D%AE%E6%A0%B7%E6%9C%ACsdls+fhejrthcxzb.file.jpeg </p>
 <p>PHP rawurlencode:<br>%E8%B6%85%E7%BA%A7%E6%97%A0%E6%95%8C%E7%9A%84%E4%BA%BAsadha%20sajdh%E6%95%B0%E6%8D%AE%E6%A0%B7%E6%9C%ACsdls%20fhejrthcxzb.file.jpeg</p>
-<p>Javascript encodeURI:<br>%E8%B6%85%E7%BA%A7%E6%97%A0%E6%95%8C%E7%9A%84%E4%BA%BAsadha%20sajdh%E6%95%B0%E6%8D%AE%E6%A0%B7%E6%9C%ACsdls%20fhejrthcxzb.file.jpeg </p>
+<p>Javascript encodeURI|encodeURIComponent:<br>%E8%B6%85%E7%BA%A7%E6%97%A0%E6%95%8C%E7%9A%84%E4%BA%BAsadha%20sajdh%E6%95%B0%E6%8D%AE%E6%A0%B7%E6%9C%ACsdls%20fhejrthcxzb.file.jpeg </p>
 <p>Javascript escape:<br>%u8D85%u7EA7%u65E0%u654C%u7684%u4EBAsadha%20sajdh%u6570%u636E%u6837%u672Csdls%20fhejrthcxzb.file.jpeg</p>
 <p><a href="https://blog.csdn.net/suofiya2008/article/details/6397168" target="_blank" rel="noopener">帖子原文</a></p>
+<p>在前端还有个问题就是, js 的 <code>encodeURIComponent</code> 和 <code>encodeURI</code> 都不会转换 <code>_-.!~*&#39;()#</code> 这些保留字符, 而在后端的<code>rawurlencode</code> 则是会转换的, 因此需要前端单独把这几个给拎出来, 如下:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"*"</span>.charCodeAt(<span class="number">0</span>) <span class="comment">// 42</span></span><br><span class="line"><span class="built_in">String</span>.fromCharCode(<span class="number">42</span>) <span class="comment">// *</span></span><br></pre></td></tr></table></figure></p>
+<p>这里有张图说的很明白<br><img src="http://blog-image.onlyoneip.com/urlencode.jpeg" alt=""><br><a href="https://www.zhihu.com/question/21861899/answer/91279362" target="_blank" rel="noopener">图片来源</a></p>
 
       
     </div>
