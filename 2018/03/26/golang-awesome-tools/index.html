@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="就是平时用到的一些工具">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-09T10:06:44.158Z">
+<meta property="og:updated_time" content="2018-08-29T02:38:16.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go 开发过程中一些不错的工具(不定期更新)">
 <meta name="twitter:description" content="就是平时用到的一些工具">
@@ -459,6 +459,7 @@
 <h1 id="kafka-go"><a href="#kafka-go" class="headerlink" title="kafka-go"></a>kafka-go</h1><p>和 kafka 相关的库很少,不过我个人使用的话这个库已经能满足我的需求, 我这里也有一个<a href="https://github.com/gaopengfei123123/go_study/tree/master/src/kafka_demo" target="_blank" rel="noopener">demo示例</a><br><a href="https://github.com/segmentio/kafka-go" target="_blank" rel="noopener">segmentio/kafka-go</a></p>
 <h1 id="go-redis-redis"><a href="#go-redis-redis" class="headerlink" title="go-redis/redis"></a>go-redis/redis</h1><p>redis 的依赖包还是很简单的,这里推荐一个 star 不少的库<br><a href="https://github.com/go-redis/redis" target="_blank" rel="noopener">go-redis/redis</a></p>
 <h1 id="amqp"><a href="#amqp" class="headerlink" title="amqp"></a>amqp</h1><p>如果用 rabbitmq 就肯定用这个拉,官方出品的肯定有保证啊,可惜 kafka 还没出官方包<br><a href="https://github.com/streadway/amqp" target="_blank" rel="noopener">amqp</a></p>
+<h1 id="viper"><a href="#viper" class="headerlink" title="viper"></a>viper</h1><p>一个很不错的 config 文件使用工具<br><a href="https://github.com/spf13/viper" target="_blank" rel="noopener">viper</a></p>
 
       
     </div>
@@ -578,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">124</span>
+                <span class="site-state-item-count">125</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -589,7 +590,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -600,7 +601,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -664,7 +665,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fswatch"><span class="nav-number">1.</span> <span class="nav-text">fswatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bee"><span class="nav-number">2.</span> <span class="nav-text">bee</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#govendor"><span class="nav-number">3.</span> <span class="nav-text">govendor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gin"><span class="nav-number">4.</span> <span class="nav-text">Gin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mux"><span class="nav-number">5.</span> <span class="nav-text">mux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego"><span class="nav-number">6.</span> <span class="nav-text">beego</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego-log"><span class="nav-number">7.</span> <span class="nav-text">beego-log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka-go"><span class="nav-number">8.</span> <span class="nav-text">kafka-go</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go-redis-redis"><span class="nav-number">9.</span> <span class="nav-text">go-redis/redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#amqp"><span class="nav-number">10.</span> <span class="nav-text">amqp</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fswatch"><span class="nav-number">1.</span> <span class="nav-text">fswatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bee"><span class="nav-number">2.</span> <span class="nav-text">bee</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#govendor"><span class="nav-number">3.</span> <span class="nav-text">govendor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gin"><span class="nav-number">4.</span> <span class="nav-text">Gin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mux"><span class="nav-number">5.</span> <span class="nav-text">mux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego"><span class="nav-number">6.</span> <span class="nav-text">beego</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#beego-log"><span class="nav-number">7.</span> <span class="nav-text">beego-log</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka-go"><span class="nav-number">8.</span> <span class="nav-text">kafka-go</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go-redis-redis"><span class="nav-number">9.</span> <span class="nav-text">go-redis/redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#amqp"><span class="nav-number">10.</span> <span class="nav-text">amqp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#viper"><span class="nav-number">11.</span> <span class="nav-text">viper</span></a></li></ol></div>
             
 
           </div>

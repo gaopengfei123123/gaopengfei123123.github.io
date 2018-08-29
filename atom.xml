@@ -41,6 +41,34 @@
   </entry>
   
   <entry>
+    <title>转 在 Mac 上搭建 Kubenetes</title>
+    <link href="http://blog.justwe.site/2018/08/23/k8s-for-mac-quick-begin/"/>
+    <id>http://blog.justwe.site/2018/08/23/k8s-for-mac-quick-begin/</id>
+    <published>2018-08-23T08:42:24.000Z</published>
+    <updated>2018-08-23T09:40:10.702Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>首先检测 mac 环境支持</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -a | grep machdep.cpu.features | grep VMX</span><br></pre></td></tr></table></figure><p>有输出就说明没问题</p><ol><li>安装相关软件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew update &amp;&amp; brew install kubectl &amp;&amp; brew cask install docker minikube virtualbox</span><br></pre></td></tr></table></figure></li></ol><p>通过 <code>brew cask</code> 装软件可能会慢, 也可以直接下载对应的 app 来安装</p><ul><li><a href="https://docs.docker.com/docker-for-mac/install/" target="_blank" rel="noopener">docker for mac</a></li><li><a href="https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube" target="_blank" rel="noopener">minikube</a></li><li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">virtualbox</a></li></ul><p>如果 brew 出现 <code>Permission denied</code> 这类的问题就改一下文件所属人<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) /usr/<span class="built_in">local</span>/share/</span><br></pre></td></tr></table></figure></p><ol><li><p>检测一下版本(基本选最新的是没问题的)</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker --version</span><br><span class="line">Docker version 18.06.0-ce, build 0ffa825</span><br><span class="line">➜  ~ docker-compose --version</span><br><span class="line">docker-compose version 1.22.0, build f46880f</span><br><span class="line">➜  ~ docker-machine --version</span><br><span class="line">docker-machine version 0.15.0, build b48dc28d</span><br><span class="line">➜  ~ minikube version</span><br><span class="line">minikube version: v0.28.2</span><br><span class="line">➜  ~ kubectl version --client</span><br><span class="line">Client Version: version.Info&#123;Major:<span class="string">"1"</span>, Minor:<span class="string">"11"</span>, GitVersion:<span class="string">"v1.11.2"</span>, GitCommit:<span class="string">"bb9ffb1654d4a729bb4cec18ff088eacc153c239"</span>, GitTreeState:<span class="string">"clean"</span>, BuildDate:<span class="string">"2018-08-08T16:31:10Z"</span>, GoVersion:<span class="string">"go1.10.3"</span>, Compiler:<span class="string">"gc"</span>, Platform:<span class="string">"darwin/amd64"</span>&#125;</span><br></pre></td></tr></table></figure></li><li><p>启动 kubernetes 集群</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start --bootstrapper=localkube</span><br></pre></td></tr></table></figure></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Starting <span class="built_in">local</span> Kubernetes v1.10.0 cluster...</span><br><span class="line">Starting VM...</span><br><span class="line">Downloading Minikube ISO</span><br><span class="line"> 160.27 MB / 160.27 MB [============================================] 100.00% 0s</span><br><span class="line">Getting VM IP address...</span><br><span class="line">WARNING: The localkube bootstrapper is now deprecated and support <span class="keyword">for</span> it</span><br><span class="line">will be removed <span class="keyword">in</span> a future release. Please consider switching to the kubeadm bootstrapper, <span class="built_in">which</span></span><br><span class="line">is intended to replace the localkube bootstrapper. To <span class="built_in">disable</span> this message, run</span><br><span class="line">[minikube config <span class="built_in">set</span> ShowBootstrapperDeprecationNotification <span class="literal">false</span>]</span><br><span class="line">Moving files into cluster...</span><br><span class="line">Downloading localkube binary</span><br><span class="line"> 173.54 MB / 173.54 MB [============================================] 100.00% 0s</span><br><span class="line"> 0 B / 65 B [----------------------------------------------------------]   0.00%</span><br><span class="line"> 65 B / 65 B [======================================================] 100.00% 0sSetting up certs...</span><br><span class="line">Connecting to cluster...</span><br><span class="line">Setting up kubeconfig...</span><br><span class="line">Starting cluster components...</span><br><span class="line">Kubectl is now configured to use the cluster.</span><br><span class="line">Loading cached images from config file.</span><br></pre></td></tr></table></figure><ol><li>查看节点信息<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ kubectl get nodes</span><br><span class="line">NAME       STATUS    ROLES     AGE       VERSION</span><br><span class="line">minikube   Ready     &lt;none&gt;    15m       v1.10.0</span><br></pre></td></tr></table></figure></li></ol><p><a href="https://www.jianshu.com/p/74957f08646b" target="_blank" rel="noopener">文章原文</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;首先检测 mac 环境支持&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/t
+      
+    
+    </summary>
+    
+      <category term="k8s" scheme="http://blog.justwe.site/categories/k8s/"/>
+    
+    
+      <category term="k8s" scheme="http://blog.justwe.site/tags/k8s/"/>
+    
+  </entry>
+  
+  <entry>
     <title>通过 Docker-Compose 搭建一个 Elk</title>
     <link href="http://blog.justwe.site/2018/08/20/docker-elk/"/>
     <id>http://blog.justwe.site/2018/08/20/docker-elk/</id>
@@ -198,9 +226,9 @@
       <category term="docker" scheme="http://blog.justwe.site/categories/docker/"/>
     
     
-      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
-    
       <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
+    
+      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
     
   </entry>
   
@@ -327,9 +355,9 @@
     <link href="http://blog.justwe.site/2018/03/26/golang-awesome-tools/"/>
     <id>http://blog.justwe.site/2018/03/26/golang-awesome-tools/</id>
     <published>2018-03-26T12:20:00.000Z</published>
-    <updated>2018-05-09T10:06:44.158Z</updated>
+    <updated>2018-08-29T02:38:16.912Z</updated>
     
-    <content type="html"><![CDATA[<p>就是平时用到的一些工具<br><a id="more"></a></p><h1 id="fswatch"><a href="#fswatch" class="headerlink" title="fswatch"></a>fswatch</h1><p>用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 <code>go run</code> 之类的, 这个使用 go 写的</p><p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="noopener">codeskyblue/fswatch</a></p><p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="noopener">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p><h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p><h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="noopener">kardianos/govendor</a></p><h1 id="Gin"><a href="#Gin" class="headerlink" title="Gin"></a>Gin</h1><p>一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 <code>Martini</code>的api 很像,但是更快,适合用来做 restful 的 API<br><a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">gin-gonic/gin</a></p><h1 id="mux"><a href="#mux" class="headerlink" title="mux"></a>mux</h1><p>一个独立的路由包, 支持 restful,轻量,而且支持go的<code>net/http</code> 的接口<br><a href="https://github.com/gorilla/mux" target="_blank" rel="noopener">gorilla/mux</a></p><h1 id="beego"><a href="#beego" class="headerlink" title="beego"></a>beego</h1><p>国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p><h1 id="beego-log"><a href="#beego-log" class="headerlink" title="beego-log"></a>beego-log</h1><p>如果不想全部引用 beego 的内容,可以引进它的模块啊,它的 log 模块就是一个很不错的选择<br><a href="https://beego.me/docs/module/logs.md" target="_blank" rel="noopener">beego-log 的中文档</a></p><h1 id="kafka-go"><a href="#kafka-go" class="headerlink" title="kafka-go"></a>kafka-go</h1><p>和 kafka 相关的库很少,不过我个人使用的话这个库已经能满足我的需求, 我这里也有一个<a href="https://github.com/gaopengfei123123/go_study/tree/master/src/kafka_demo" target="_blank" rel="noopener">demo示例</a><br><a href="https://github.com/segmentio/kafka-go" target="_blank" rel="noopener">segmentio/kafka-go</a></p><h1 id="go-redis-redis"><a href="#go-redis-redis" class="headerlink" title="go-redis/redis"></a>go-redis/redis</h1><p>redis 的依赖包还是很简单的,这里推荐一个 star 不少的库<br><a href="https://github.com/go-redis/redis" target="_blank" rel="noopener">go-redis/redis</a></p><h1 id="amqp"><a href="#amqp" class="headerlink" title="amqp"></a>amqp</h1><p>如果用 rabbitmq 就肯定用这个拉,官方出品的肯定有保证啊,可惜 kafka 还没出官方包<br><a href="https://github.com/streadway/amqp" target="_blank" rel="noopener">amqp</a></p>]]></content>
+    <content type="html"><![CDATA[<p>就是平时用到的一些工具<br><a id="more"></a></p><h1 id="fswatch"><a href="#fswatch" class="headerlink" title="fswatch"></a>fswatch</h1><p>用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 <code>go run</code> 之类的, 这个使用 go 写的</p><p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="noopener">codeskyblue/fswatch</a></p><p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="noopener">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p><h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p><h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="noopener">kardianos/govendor</a></p><h1 id="Gin"><a href="#Gin" class="headerlink" title="Gin"></a>Gin</h1><p>一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 <code>Martini</code>的api 很像,但是更快,适合用来做 restful 的 API<br><a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">gin-gonic/gin</a></p><h1 id="mux"><a href="#mux" class="headerlink" title="mux"></a>mux</h1><p>一个独立的路由包, 支持 restful,轻量,而且支持go的<code>net/http</code> 的接口<br><a href="https://github.com/gorilla/mux" target="_blank" rel="noopener">gorilla/mux</a></p><h1 id="beego"><a href="#beego" class="headerlink" title="beego"></a>beego</h1><p>国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p><h1 id="beego-log"><a href="#beego-log" class="headerlink" title="beego-log"></a>beego-log</h1><p>如果不想全部引用 beego 的内容,可以引进它的模块啊,它的 log 模块就是一个很不错的选择<br><a href="https://beego.me/docs/module/logs.md" target="_blank" rel="noopener">beego-log 的中文档</a></p><h1 id="kafka-go"><a href="#kafka-go" class="headerlink" title="kafka-go"></a>kafka-go</h1><p>和 kafka 相关的库很少,不过我个人使用的话这个库已经能满足我的需求, 我这里也有一个<a href="https://github.com/gaopengfei123123/go_study/tree/master/src/kafka_demo" target="_blank" rel="noopener">demo示例</a><br><a href="https://github.com/segmentio/kafka-go" target="_blank" rel="noopener">segmentio/kafka-go</a></p><h1 id="go-redis-redis"><a href="#go-redis-redis" class="headerlink" title="go-redis/redis"></a>go-redis/redis</h1><p>redis 的依赖包还是很简单的,这里推荐一个 star 不少的库<br><a href="https://github.com/go-redis/redis" target="_blank" rel="noopener">go-redis/redis</a></p><h1 id="amqp"><a href="#amqp" class="headerlink" title="amqp"></a>amqp</h1><p>如果用 rabbitmq 就肯定用这个拉,官方出品的肯定有保证啊,可惜 kafka 还没出官方包<br><a href="https://github.com/streadway/amqp" target="_blank" rel="noopener">amqp</a></p><h1 id="viper"><a href="#viper" class="headerlink" title="viper"></a>viper</h1><p>一个很不错的 config 文件使用工具<br><a href="https://github.com/spf13/viper" target="_blank" rel="noopener">viper</a></p>]]></content>
     
     <summary type="html">
     
@@ -386,9 +414,9 @@
       <category term="docker" scheme="http://blog.justwe.site/categories/docker/"/>
     
     
-      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
-    
       <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
+    
+      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
     
   </entry>
   
@@ -463,28 +491,6 @@
       <category term="js" scheme="http://blog.justwe.site/tags/js/"/>
     
       <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于 Chrome 浏览器会强制跳转到 Https 的问题</title>
-    <link href="http://blog.justwe.site/2017/12/19/chrome-redirection-https/"/>
-    <id>http://blog.justwe.site/2017/12/19/chrome-redirection-https/</id>
-    <published>2017-12-19T02:34:25.000Z</published>
-    <updated>2018-01-29T10:16:29.715Z</updated>
-    
-    <content type="html"><![CDATA[<p>我在本地使用的是 <code>*.app</code> 的域名开发的,某一天发现使用谷歌的时候会强制跳转到 <code>https</code>,改成<code>http</code>都不管用<br><a id="more"></a></p><p>询问了一下万能的404网站,查询的结果大多是:</p><blockquote><p>chrome浏览器地址栏输入：chrome://net-internals/#hsts<br>在该页面中搜索：Query HSTS/PKP domain<br>在其下方的 Domain 后面的输入框中输入自己无法访问的域名，比如：domain.app，点击Query进行查询，如果有类似下面的结果，说明该域名后缀无法使用http前缀。</p></blockquote><p>这样式儿的结果,结果试了以后没有解决都我目前的问题,后来根据这篇文章的描述 <a href="https://laravel-china.org/articles/7035/chrome-forcibly-converts-thedev-domain-name-to-https-as-of-the-v63-version#reply10" target="_blank" rel="noopener">Chrome 于 V63 版本起会将 .dev 域名强制转换为 HTTPS</a><br>说 <code>.dev</code> 的域名就是会强制跳转,看来我用的<code>.app</code>的域名估计也是同样的问题,解决方法也简单.<br>根据 <a href="https://iyware.com/dont-use-dev-for-development/" target="_blank" rel="noopener">Don’t Use .dev For Development</a>建议使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.localhost</span><br><span class="line">.invalid</span><br><span class="line">.text</span><br><span class="line">.example</span><br></pre></td></tr></table></figure></p><p>作为本地开发的模拟域名,如果用的不爽的话,换火狐啊 :)</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我在本地使用的是 &lt;code&gt;*.app&lt;/code&gt; 的域名开发的,某一天发现使用谷歌的时候会强制跳转到 &lt;code&gt;https&lt;/code&gt;,改成&lt;code&gt;http&lt;/code&gt;都不管用&lt;br&gt;
-    
-    </summary>
-    
-      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
-    
-    
-      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
     
   </entry>
   
