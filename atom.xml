@@ -41,34 +41,6 @@
   </entry>
   
   <entry>
-    <title>转 在 Mac 上搭建 Kubenetes</title>
-    <link href="http://blog.justwe.site/2018/08/23/k8s-for-mac-quick-begin/"/>
-    <id>http://blog.justwe.site/2018/08/23/k8s-for-mac-quick-begin/</id>
-    <published>2018-08-23T08:42:24.000Z</published>
-    <updated>2018-08-23T09:40:10.702Z</updated>
-    
-    <content type="html"><![CDATA[<ol><li>首先检测 mac 环境支持</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -a | grep machdep.cpu.features | grep VMX</span><br></pre></td></tr></table></figure><p>有输出就说明没问题</p><ol><li>安装相关软件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew update &amp;&amp; brew install kubectl &amp;&amp; brew cask install docker minikube virtualbox</span><br></pre></td></tr></table></figure></li></ol><p>通过 <code>brew cask</code> 装软件可能会慢, 也可以直接下载对应的 app 来安装</p><ul><li><a href="https://docs.docker.com/docker-for-mac/install/" target="_blank" rel="noopener">docker for mac</a></li><li><a href="https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube" target="_blank" rel="noopener">minikube</a></li><li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">virtualbox</a></li></ul><p>如果 brew 出现 <code>Permission denied</code> 这类的问题就改一下文件所属人<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) /usr/<span class="built_in">local</span>/share/</span><br></pre></td></tr></table></figure></p><ol><li><p>检测一下版本(基本选最新的是没问题的)</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker --version</span><br><span class="line">Docker version 18.06.0-ce, build 0ffa825</span><br><span class="line">➜  ~ docker-compose --version</span><br><span class="line">docker-compose version 1.22.0, build f46880f</span><br><span class="line">➜  ~ docker-machine --version</span><br><span class="line">docker-machine version 0.15.0, build b48dc28d</span><br><span class="line">➜  ~ minikube version</span><br><span class="line">minikube version: v0.28.2</span><br><span class="line">➜  ~ kubectl version --client</span><br><span class="line">Client Version: version.Info&#123;Major:<span class="string">"1"</span>, Minor:<span class="string">"11"</span>, GitVersion:<span class="string">"v1.11.2"</span>, GitCommit:<span class="string">"bb9ffb1654d4a729bb4cec18ff088eacc153c239"</span>, GitTreeState:<span class="string">"clean"</span>, BuildDate:<span class="string">"2018-08-08T16:31:10Z"</span>, GoVersion:<span class="string">"go1.10.3"</span>, Compiler:<span class="string">"gc"</span>, Platform:<span class="string">"darwin/amd64"</span>&#125;</span><br></pre></td></tr></table></figure></li><li><p>启动 kubernetes 集群</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start --bootstrapper=localkube</span><br></pre></td></tr></table></figure></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Starting <span class="built_in">local</span> Kubernetes v1.10.0 cluster...</span><br><span class="line">Starting VM...</span><br><span class="line">Downloading Minikube ISO</span><br><span class="line"> 160.27 MB / 160.27 MB [============================================] 100.00% 0s</span><br><span class="line">Getting VM IP address...</span><br><span class="line">WARNING: The localkube bootstrapper is now deprecated and support <span class="keyword">for</span> it</span><br><span class="line">will be removed <span class="keyword">in</span> a future release. Please consider switching to the kubeadm bootstrapper, <span class="built_in">which</span></span><br><span class="line">is intended to replace the localkube bootstrapper. To <span class="built_in">disable</span> this message, run</span><br><span class="line">[minikube config <span class="built_in">set</span> ShowBootstrapperDeprecationNotification <span class="literal">false</span>]</span><br><span class="line">Moving files into cluster...</span><br><span class="line">Downloading localkube binary</span><br><span class="line"> 173.54 MB / 173.54 MB [============================================] 100.00% 0s</span><br><span class="line"> 0 B / 65 B [----------------------------------------------------------]   0.00%</span><br><span class="line"> 65 B / 65 B [======================================================] 100.00% 0sSetting up certs...</span><br><span class="line">Connecting to cluster...</span><br><span class="line">Setting up kubeconfig...</span><br><span class="line">Starting cluster components...</span><br><span class="line">Kubectl is now configured to use the cluster.</span><br><span class="line">Loading cached images from config file.</span><br></pre></td></tr></table></figure><ol><li>查看节点信息<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ kubectl get nodes</span><br><span class="line">NAME       STATUS    ROLES     AGE       VERSION</span><br><span class="line">minikube   Ready     &lt;none&gt;    15m       v1.10.0</span><br></pre></td></tr></table></figure></li></ol><p><a href="https://www.jianshu.com/p/74957f08646b" target="_blank" rel="noopener">文章原文</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ol&gt;
-&lt;li&gt;首先检测 mac 环境支持&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/t
-      
-    
-    </summary>
-    
-      <category term="k8s" scheme="http://blog.justwe.site/categories/k8s/"/>
-    
-    
-      <category term="k8s" scheme="http://blog.justwe.site/tags/k8s/"/>
-    
-  </entry>
-  
-  <entry>
     <title>通过 Docker-Compose 搭建一个 Elk</title>
     <link href="http://blog.justwe.site/2018/08/20/docker-elk/"/>
     <id>http://blog.justwe.site/2018/08/20/docker-elk/</id>
@@ -491,6 +463,28 @@
       <category term="js" scheme="http://blog.justwe.site/tags/js/"/>
     
       <category term="vue" scheme="http://blog.justwe.site/tags/vue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于 Chrome 浏览器会强制跳转到 Https 的问题</title>
+    <link href="http://blog.justwe.site/2017/12/19/chrome-redirection-https/"/>
+    <id>http://blog.justwe.site/2017/12/19/chrome-redirection-https/</id>
+    <published>2017-12-19T02:34:25.000Z</published>
+    <updated>2018-01-29T10:16:29.715Z</updated>
+    
+    <content type="html"><![CDATA[<p>我在本地使用的是 <code>*.app</code> 的域名开发的,某一天发现使用谷歌的时候会强制跳转到 <code>https</code>,改成<code>http</code>都不管用<br><a id="more"></a></p><p>询问了一下万能的404网站,查询的结果大多是:</p><blockquote><p>chrome浏览器地址栏输入：chrome://net-internals/#hsts<br>在该页面中搜索：Query HSTS/PKP domain<br>在其下方的 Domain 后面的输入框中输入自己无法访问的域名，比如：domain.app，点击Query进行查询，如果有类似下面的结果，说明该域名后缀无法使用http前缀。</p></blockquote><p>这样式儿的结果,结果试了以后没有解决都我目前的问题,后来根据这篇文章的描述 <a href="https://laravel-china.org/articles/7035/chrome-forcibly-converts-thedev-domain-name-to-https-as-of-the-v63-version#reply10" target="_blank" rel="noopener">Chrome 于 V63 版本起会将 .dev 域名强制转换为 HTTPS</a><br>说 <code>.dev</code> 的域名就是会强制跳转,看来我用的<code>.app</code>的域名估计也是同样的问题,解决方法也简单.<br>根据 <a href="https://iyware.com/dont-use-dev-for-development/" target="_blank" rel="noopener">Don’t Use .dev For Development</a>建议使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.localhost</span><br><span class="line">.invalid</span><br><span class="line">.text</span><br><span class="line">.example</span><br></pre></td></tr></table></figure></p><p>作为本地开发的模拟域名,如果用的不爽的话,换火狐啊 :)</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我在本地使用的是 &lt;code&gt;*.app&lt;/code&gt; 的域名开发的,某一天发现使用谷歌的时候会强制跳转到 &lt;code&gt;https&lt;/code&gt;,改成&lt;code&gt;http&lt;/code&gt;都不管用&lt;br&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
     
   </entry>
   

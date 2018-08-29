@@ -503,188 +503,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/08/23/k8s-for-mac-quick-begin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GPF">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/logo.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="<hello-world/>">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/23/k8s-for-mac-quick-begin/" itemprop="url">转 在 Mac 上搭建 Kubenetes</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-23T16:42:24+08:00">
-                2018-08-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/k8s/" itemprop="url" rel="index">
-                    <span itemprop="name">k8s</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/08/23/k8s-for-mac-quick-begin/" class="leancloud_visitors" data-flag-title="转 在 Mac 上搭建 Kubenetes">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>首先检测 mac 环境支持</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -a | grep machdep.cpu.features | grep VMX</span><br></pre></td></tr></table></figure>
-<p>有输出就说明没问题</p>
-<ol>
-<li>安装相关软件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew update &amp;&amp; brew install kubectl &amp;&amp; brew cask install docker minikube virtualbox</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>通过 <code>brew cask</code> 装软件可能会慢, 也可以直接下载对应的 app 来安装</p>
-<ul>
-<li><a href="https://docs.docker.com/docker-for-mac/install/" target="_blank" rel="noopener">docker for mac</a></li>
-<li><a href="https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube" target="_blank" rel="noopener">minikube</a></li>
-<li><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">virtualbox</a></li>
-</ul>
-<p>如果 brew 出现 <code>Permission denied</code> 这类的问题就改一下文件所属人<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami) /usr/<span class="built_in">local</span>/share/</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>检测一下版本(基本选最新的是没问题的)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker --version</span><br><span class="line">Docker version 18.06.0-ce, build 0ffa825</span><br><span class="line">➜  ~ docker-compose --version</span><br><span class="line">docker-compose version 1.22.0, build f46880f</span><br><span class="line">➜  ~ docker-machine --version</span><br><span class="line">docker-machine version 0.15.0, build b48dc28d</span><br><span class="line">➜  ~ minikube version</span><br><span class="line">minikube version: v0.28.2</span><br><span class="line">➜  ~ kubectl version --client</span><br><span class="line">Client Version: version.Info&#123;Major:<span class="string">"1"</span>, Minor:<span class="string">"11"</span>, GitVersion:<span class="string">"v1.11.2"</span>, GitCommit:<span class="string">"bb9ffb1654d4a729bb4cec18ff088eacc153c239"</span>, GitTreeState:<span class="string">"clean"</span>, BuildDate:<span class="string">"2018-08-08T16:31:10Z"</span>, GoVersion:<span class="string">"go1.10.3"</span>, Compiler:<span class="string">"gc"</span>, Platform:<span class="string">"darwin/amd64"</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动 kubernetes 集群</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start --bootstrapper=localkube</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Starting <span class="built_in">local</span> Kubernetes v1.10.0 cluster...</span><br><span class="line">Starting VM...</span><br><span class="line">Downloading Minikube ISO</span><br><span class="line"> 160.27 MB / 160.27 MB [============================================] 100.00% 0s</span><br><span class="line">Getting VM IP address...</span><br><span class="line">WARNING: The localkube bootstrapper is now deprecated and support <span class="keyword">for</span> it</span><br><span class="line">will be removed <span class="keyword">in</span> a future release. Please consider switching to the kubeadm bootstrapper, <span class="built_in">which</span></span><br><span class="line">is intended to replace the localkube bootstrapper. To <span class="built_in">disable</span> this message, run</span><br><span class="line">[minikube config <span class="built_in">set</span> ShowBootstrapperDeprecationNotification <span class="literal">false</span>]</span><br><span class="line">Moving files into cluster...</span><br><span class="line">Downloading localkube binary</span><br><span class="line"> 173.54 MB / 173.54 MB [============================================] 100.00% 0s</span><br><span class="line"> 0 B / 65 B [----------------------------------------------------------]   0.00%</span><br><span class="line"> 65 B / 65 B [======================================================] 100.00% 0sSetting up certs...</span><br><span class="line">Connecting to cluster...</span><br><span class="line">Setting up kubeconfig...</span><br><span class="line">Starting cluster components...</span><br><span class="line">Kubectl is now configured to use the cluster.</span><br><span class="line">Loading cached images from config file.</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查看节点信息<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ kubectl get nodes</span><br><span class="line">NAME       STATUS    ROLES     AGE       VERSION</span><br><span class="line">minikube   Ready     &lt;none&gt;    15m       v1.10.0</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><a href="https://www.jianshu.com/p/74957f08646b" target="_blank" rel="noopener">文章原文</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/08/20/docker-elk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1870,6 +1688,163 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/05/23/yii-gii/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GPF">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<hello-world/>">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/23/yii-gii/" itemprop="url">自定义 Gii 模板</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T14:15:12+08:00">
+                2018-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/23/yii-gii/" class="leancloud_visitors" data-flag-title="自定义 Gii 模板">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>开发是需要用到 gii,但是 gii 并不是完全符合自己的开发需求,所以需要对他做一点改造</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/23/yii-gii/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1920,7 +1895,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">125</span>
+                <span class="site-state-item-count">124</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
