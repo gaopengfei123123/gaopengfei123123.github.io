@@ -82,7 +82,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="等一个人, blog, laravel, php, js, vuejs, yii2.0" />
+  <meta name="keywords" content="go,interface," />
 
 
 
@@ -100,17 +100,18 @@
 
 
 
-<meta name="description" content="在国内的云服务商提供的镜像内核都是2.6.*的，不能满足docker需要的3.1.*，因此首先需要升级一下内核">
+<meta name="description" content="对 interface 赋值变量的时候经常出的问题">
+<meta name="keywords" content="go,interface">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos65安装docker遇到的坑">
-<meta property="og:url" content="http://blog.justwe.site/2017/03/01/contentos-docker/index.html">
+<meta property="og:title" content="Go Interface 的机制">
+<meta property="og:url" content="http://blog.justwe.site/2018/09/12/go-interface-tip/index.html">
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
-<meta property="og:description" content="在国内的云服务商提供的镜像内核都是2.6.*的，不能满足docker需要的3.1.*，因此首先需要升级一下内核">
+<meta property="og:description" content="对 interface 赋值变量的时候经常出的问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-04-06T04:17:40.000Z">
+<meta property="og:updated_time" content="2018-09-12T07:07:37.407Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos65安装docker遇到的坑">
-<meta name="twitter:description" content="在国内的云服务商提供的镜像内核都是2.6.*的，不能满足docker需要的3.1.*，因此首先需要升级一下内核">
+<meta name="twitter:title" content="Go Interface 的机制">
+<meta name="twitter:description" content="对 interface 赋值变量的时候经常出的问题">
 
 
 
@@ -139,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/2017/03/01/contentos-docker/"/>
+  <link rel="canonical" href="http://blog.justwe.site/2018/09/12/go-interface-tip/"/>
 
 
 
 
 
-  <title>Centos65安装docker遇到的坑 | <hello-world/></title>
+  <title>Go Interface 的机制 | <hello-world/></title>
   
 
 
@@ -345,7 +346,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/03/01/contentos-docker/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/09/12/go-interface-tip/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="GPF">
@@ -362,7 +363,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Centos65安装docker遇到的坑</h2>
+          <h2 class="post-title" itemprop="name headline">Go Interface 的机制</h2>
         
 
         <div class="post-meta">
@@ -374,8 +375,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-01T05:55:27+08:00">
-                2017-03-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-12T14:53:03+08:00">
+                2018-09-12
               </time>
             
 
@@ -397,8 +398,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index">
-                    <span itemprop="name">tools</span>
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
                   </a>
                 </span>
 
@@ -414,7 +415,7 @@
 
           
           
-             <span id="/2017/03/01/contentos-docker/" class="leancloud_visitors" data-flag-title="Centos65安装docker遇到的坑">
+             <span id="/2018/09/12/go-interface-tip/" class="leancloud_visitors" data-flag-title="Go Interface 的机制">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -445,23 +446,19 @@
       
 
       
-        <p>在国内的云服务商提供的镜像内核都是<code>2.6.*</code>的，不能满足docker需要的<code>3.1.*</code>，因此首先需要升级一下内核</p>
+        <p>对 interface 赋值变量的时候经常出的问题</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#导入public key</span><br><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line"></span><br><span class="line">#安装elrepo到内核为2.6.32的CentOS中</span><br><span class="line">rpm -Uvh http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm</span><br><span class="line"></span><br><span class="line">#安装kernel-lt(long term support)长期支持版本</span><br><span class="line">yum --enablerepo=elrepo-kernel install kernel-lt -y</span><br></pre></td></tr></table></figure>
-<p>如果yum安装的慢，可以通过rpm安装<code>kernel-lt</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">访问http://elrepo.org/linux/kernel/el6/x86_64/RPMS/下载对应的rpm包，通过rpm方式安装：</span><br><span class="line">rpm -ivh kernel-lt-3.10.93-1.el6.elrepo.x86_64.rpm</span><br></pre></td></tr></table></figure></p>
-<p>安装完毕后编辑配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/grub.conf</span><br><span class="line"></span><br><span class="line"># grub.conf generated by anaconda</span><br><span class="line">#</span><br><span class="line"># Note that you do not have to rerun grub after making changes to this file</span><br><span class="line"># NOTICE:  You do not have a /boot partition.  This means that</span><br><span class="line">#          all kernel and initrd paths are relative to /, eg.</span><br><span class="line">#          root (hd0,0)</span><br><span class="line">#          kernel /boot/vmlinuz-version ro root=/dev/xvda1</span><br><span class="line">#          initrd /boot/initrd-[generic-]version.img</span><br><span class="line">#boot=/dev/xvda</span><br><span class="line">default=0</span><br><span class="line">timeout=5</span><br><span class="line">splashimage=(hd0,0)/boot/grub/splash.xpm.gz</span><br><span class="line">hiddenmenu</span><br><span class="line">title CentOS (3.10.105-1.el6.elrepo.x86_64)</span><br><span class="line">        root (hd0,0)</span><br><span class="line">        kernel /boot/vmlinuz-3.10.105-1.el6.elrepo.x86_64 ro root=UUID=94e4e384-0ace-437f-bc96-057dd64f42ee rd_NO_LUKS rd_NO_LVM LANG=en_US.UTF-8 rd_NO_MD SYSFONT=latarcyrheb-sun16 crashkernel=auto  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet</span><br><span class="line">        initrd /boot/initramfs-3.10.105-1.el6.elrepo.x86_64.img</span><br><span class="line">title CentOS (2.6.32-573.22.1.el6.x86_64)</span><br><span class="line">        root (hd0,0)</span><br><span class="line">        kernel /boot/vmlinuz-2.6.32-573.22.1.el6.x86_64 ro root=UUID=94e4e384-0ace-437f-bc96-057dd64f42ee rd_NO_LUKS rd_NO_LVM LANG=en_US.UTF-8 rd_NO_MD SYSFONT=latarcyrheb-sun16 crashkernel=auto  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet</span><br><span class="line">        initrd /boot/initramfs-2.6.32-573.22.1.el6.x86_64.img</span><br><span class="line">title CentOS (2.6.32-431.23.3.el6.x86_64)</span><br></pre></td></tr></table></figure></p>
-<p>我们用的 <code>CentOS (3.10.105-1.el6.elrepo.x86_64)</code>就排在第一个，因此改成 <code>default=0</code></p>
-<p>保存后重启系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line">Linux iZm5eib1msf1eaxvrvhp60Z 3.10.105-1.el6.elrepo.x86_64 #1 SMP Fri Feb 10 10:48:08 EST 2017 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure></p>
-<h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装<code>docker</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y docker-engine</span><br><span class="line">service docker start</span><br><span class="line">sudo docker version</span><br></pre></td></tr></table></figure>
-<p>如果出现 <code>Cannot connect to the Docker daemon. Is &#39;docker -d&#39; running on this host?</code> 这种提示，按以下解决步骤：</p>
-<ol>
-<li>执行 <code>service docker start</code></li>
-<li>加上 <code>sudo</code></li>
-<li>执行 <code>yum upgrade device-mapper</code></li>
-</ol>
-<p>我是执行到第三步就可以正常运行了，如果还没解决问题的话就自己找去吧</p>
-<p><a href="https://www.xiaohuai.com/4164" target="_blank" rel="noopener">资料1-centos安装docker升级内核到3.10</a></p>
-<p><a href="https://github.com/docker/docker/issues/11356" target="_blank" rel="noopener">资料2-github/docker/issues/11356</a></p>
+<p>日常开发时有个这样的例子:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Human <span class="keyword">interface</span> &#123;</span><br><span class="line">	Run()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Boy <span class="keyword">struct</span> &#123;</span><br><span class="line">	Name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *Boy)</span> <span class="title">Run</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"my name is "</span> + b.Name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	xiaoming := Boy&#123;Name: <span class="string">"xiao ming"</span>&#125;</span><br><span class="line">	<span class="keyword">var</span> h Human</span><br><span class="line">	<span class="comment">// h = xiaoming // #1 会报错, Boy does not implement Human (Run method has pointer receiver)</span></span><br><span class="line">	h = &amp;xiaoming</span><br><span class="line">	h.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果用 <code>#1</code> 这行代码时会出现以下错误:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># command-line-arguments</span></span><br><span class="line">./main.go:23:4: cannot use xiaoming (<span class="built_in">type</span> Boy) as <span class="built_in">type</span> Human <span class="keyword">in</span> assignment:</span><br><span class="line">        Boy does not implement Human (Run method has pointer receiver)</span><br></pre></td></tr></table></figure></p>
+<p>然而用下面的 <code>h = &amp;xiaoming</code> 是正常的</p>
+<p>这个问题，首先得先了解一下Golang 中 方法的集合的概念，一个struct虽然可以通过值类型和引用类型两种方式定义方法，但是不通的对象类型对应了不同的方法集：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Values                    Methods Receivers</span><br><span class="line">-----------------------------------------------</span><br><span class="line"> T                        (t T)</span><br><span class="line">*T                        (t T) and (t *T)</span><br></pre></td></tr></table></figure>
+<p>值类型的对象只有（t T) 结构的方法，虽然值类型的对象也可以调用(t *T) 方法，但这实际上是Golang编译器自动转化成了&amp;t的形式来调用方法，并不是表明值类型的对象拥有该方法。</p>
+<p>换一个维度来看上面的表格可能更加直观：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Methods Receivers         Values</span><br><span class="line">-----------------------------------------------</span><br><span class="line">(t T)                     T and *T</span><br><span class="line"></span><br><span class="line">(t *T)                    *T</span><br></pre></td></tr></table></figure>
+<p>这就意味着指针类型的receiver 方法实现接口时，只有指针类型的对象实现了该接口。</p>
+<p>对应上面的例子来说，只有&amp;user实现了notifier接口，而user根本没有实现该接口。所以上面代码会报出这样的异常。</p>
 
       
     </div>
@@ -477,6 +474,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+            <a href="/tags/interface/" rel="tag"># interface</a>
+          
+        </div>
+      
 
       
       
@@ -486,8 +491,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/28/yii-beforeaction/" rel="next" title="beforeAction的一个示例">
-                <i class="fa fa-chevron-left"></i> beforeAction的一个示例
+              <a href="/2018/09/12/go-why/" rel="next" title="身为 Phper 为什么我选择 Go 语言?">
+                <i class="fa fa-chevron-left"></i> 身为 Phper 为什么我选择 Go 语言?
               </a>
             
           </div>
@@ -495,10 +500,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/06/html5-ajax-process/" rel="prev" title="转 HTML5上传文件显示进度">
-                转 HTML5上传文件显示进度 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -550,17 +551,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/logo.jpeg"
@@ -651,22 +643,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装docker"><span class="nav-number">1.</span> <span class="nav-text">安装docker</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
