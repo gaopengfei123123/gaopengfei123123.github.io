@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Golang 的测试文件]]></title>
+    <url>%2F2018%2F09%2F20%2Fgo-test%2F</url>
+    <content type="text"><![CDATA[一些函数没有连续的会话状态是可以写出来顺便就写一个测试脚本了比如: 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253// redis.gopackage toolsimport ( "github.com/gomodule/redigo/redis" "time" "user-server/config")var ( redisClient *redis.Pool REDIS_HOST string REDIS_DB int REDIS_AUTH string MAX_ACTIVE int MAX_IDLE int IDLE_TIMEOUT int64)func init() &#123; REDIS_HOST = config.Conf.Redis.Host REDIS_DB = 0 REDIS_AUTH = "abc" MAX_ACTIVE = 10 MAX_IDLE = 1 /** *@MaxIdle 最大空闲链接 *@MaxActive 最大活跃链接 *@IdleTimeout 自动超时时间 */ redisClient = &amp;redis.Pool&#123; MaxIdle: MAX_IDLE, MaxActive: MAX_ACTIVE, IdleTimeout: 30 * time.Second, Dial: func() (redis.Conn, error) &#123; c, err := redis.Dial("tcp", REDIS_HOST) if err != nil &#123; return nil, err &#125; if REDIS_AUTH != "" &#123; c.Do("AUTH", REDIS_AUTH) &#125; c.Do("SELECT", REDIS_DB) return c, nil &#125;, &#125;&#125;func GetRedis() redis.Conn &#123; return redisClient.Get()&#125; 对应的测试文件 在同目录创建一个 redis_test.go 123456789101112package toolsimport ( "testing")func TestGetRedis(t *testing.T) &#123; co := GetRedis() defer co.Close() co.Do("SET", "test_redis_key", "test_redis_value")&#125; 测试脚本的标准格式是: 文件名为 xxx_test.go 作为测试文件标记 引入 testing 包 要测试的函数名为 TestXXXX(t *testing.T) 输出结果通过 t.Logf() t.Error() 这类的测试包提供的函数来调用 写完代码, 在目录下运行:123456# 运行当前目录所有测试文件并输出结果go test -v# 运行指定测试文件, 需要把被测试文件也带上go test -v redis.go redis_test.go# 运行指定的测试方法go test -v --test.run TestGetRedis]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go Interface 的机制]]></title>
     <url>%2F2018%2F09%2F12%2Fgo-interface-tip%2F</url>
     <content type="text"><![CDATA[对 interface 赋值变量的时候经常出的问题 日常开发时有个这样的例子: 123456789101112131415161718192021222324package mainimport "fmt"type Human interface &#123; Run()&#125;type Boy struct &#123; Name string&#125;func (b *Boy) Run() &#123; fmt.Println("my name is " + b.Name)&#125;func main() &#123; xiaoming := Boy&#123;Name: "xiao ming"&#125; var h Human // h = xiaoming // #1 会报错, Boy does not implement Human (Run method has pointer receiver) h = &amp;xiaoming h.Run()&#125; 如果用 #1 这行代码时会出现以下错误:123# command-line-arguments./main.go:23:4: cannot use xiaoming (type Boy) as type Human in assignment: Boy does not implement Human (Run method has pointer receiver) 然而用下面的 h = &amp;xiaoming 是正常的 这个问题，首先得先了解一下Golang 中 方法的集合的概念，一个struct虽然可以通过值类型和引用类型两种方式定义方法，但是不通的对象类型对应了不同的方法集： 1234Values Methods Receivers----------------------------------------------- T (t T)*T (t T) and (t *T) 值类型的对象只有（t T) 结构的方法，虽然值类型的对象也可以调用(t *T) 方法，但这实际上是Golang编译器自动转化成了&amp;t的形式来调用方法，并不是表明值类型的对象拥有该方法。 换一个维度来看上面的表格可能更加直观： 12345Methods Receivers Values-----------------------------------------------(t T) T and *T(t *T) *T 这就意味着指针类型的receiver 方法实现接口时，只有指针类型的对象实现了该接口。 对应上面的例子来说，只有&amp;user实现了notifier接口，而user根本没有实现该接口。所以上面代码会报出这样的异常。]]></content>
@@ -93,18 +104,6 @@
       <tags>
         <tag>docker</tag>
         <tag>centos6</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Docker中 Arg 和 Env 的区别]]></title>
-    <url>%2F2018%2F06%2F28%2Fdocker-arg-env%2F</url>
-    <content type="text"><![CDATA[在使用 docker-compoe 构建镜像的时候会感觉 ARG 和 ENV 的作用很相似, 但是这两个存在就肯定有它的原因 它们起作用的时机 arg 是在 build 的时候存在的, 可以在 Dockerfile 中当做变量来使用 env 是容器构建好之后的环境变量, 不能在 Dockerfile 中当参数使用 从这里可以看出来 ARG 就是专门为构建镜像而生的 拿一个具体的例子12345678910111213# DockerfileFROM redis:3.2-alpineLABEL maintainer="GPF &lt;5173180@qq.com&gt;"ARG REDIS_SET_PASSWORD=developerENV REDIS_PASSWORD $&#123;REDIS_SET_PASSWORD&#125;VOLUME /dataEXPOSE 6379CMD ["sh", "-c", "exec redis-server --requirepass \"$REDIS_PASSWORD\""] 这是一个构建 redis 的文件, 中间有这么一句12ARG REDIS_SET_PASSWORD=developerENV REDIS_PASSWORD $&#123;REDIS_SET_PASSWORD&#125; 它是为1CMD ["sh", "-c", "exec redis-server --requirepass \"$REDIS_PASSWORD\""] 这一句服务的, 这句就是在启动 redis 的时候设置密码, 因为当执行 CMD 的时候,说明容器已经构建成功运行了起来,此时 CMD是在容器中执行容器中的命令, 因此 CMD 中的变量是用的环境变量而不是在 Dockerfile 中的变量,因此需要把 ARG 中的值在构建的时候赋值给 ENV 另一个使用 ARG 的例子1234567891011121314151617181920212223FROM nginx:1.13.1-alpineLABEL maintainer="GPF &lt;5173180@qq.com&gt;"#https://yeasy.gitbooks.io/docker_practice/content/image/build.htmlRUN mkdir -p /etc/nginx/cert \ &amp;&amp; mkdir -p /etc/nginx/conf.d \ &amp;&amp; mkdir -p /etc/nginx/sitesCOPY ./nginx.conf /etc/ngixn/nginx.confCOPY ./conf.d/ /etc/nginx/conf.d/COPY ./cert/ /etc/nginx/cert/COPY ./sites /etc/nginx/sites/ARG PHP_UPSTREAM_CONTAINER=php-fpmARG PHP_UPSTREAM_PORT=9000RUN echo "upstream php-upstream &#123; server $&#123;PHP_UPSTREAM_CONTAINER&#125;:$&#123;PHP_UPSTREAM_PORT&#125;; &#125;" &gt; /etc/nginx/conf.d/upstream.confVOLUME ["/var/log/nginx", "/var/www"]WORKDIR /usr/share/nginx/html 这里就只是用了ARG123ARG PHP_UPSTREAM_CONTAINER=php-fpmARG PHP_UPSTREAM_PORT=9000RUN echo "upstream php-upstream &#123; server $&#123;PHP_UPSTREAM_CONTAINER&#125;:$&#123;PHP_UPSTREAM_PORT&#125;; &#125;" &gt; /etc/nginx/conf.d/upstream.conf 这里的变量用的就是 ARG 而不是 ENV了,因为这条命令运行在 Dockerfile 当中的, 像这种临时使用一下的变量没必要存环境变量的值就很适合使用 ARG]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker-composer</tag>
-        <tag>docker</tag>
       </tags>
   </entry>
 </search>
