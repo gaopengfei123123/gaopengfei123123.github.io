@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-10-16T07:59:17.477Z</updated>
+  <updated>2018-10-25T09:17:03.714Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记一次 Git Revert 的经历</title>
+    <link href="http://blog.justwe.site/2018/10/25/git-revert/"/>
+    <id>http://blog.justwe.site/2018/10/25/git-revert/</id>
+    <published>2018-10-25T08:27:06.000Z</published>
+    <updated>2018-10-25T09:17:03.714Z</updated>
+    
+    <content type="html"><![CDATA[<p>合作开发经常会提<code>merge request</code>嘛, 然后就提了一个不该提的, 还手抖给合并了….</p><a id="more"></a><p>返现问题以后准备回退, 然后抬眼一看各分支的合并情况….<br><img src="http://blog-image.onlyoneip.com/git-merge-line.png" alt=""></p><p>哇脑壳痛, 这就用不了平时最喜欢的 <code>reset</code> 了, 查了查资料, 想<strong>取消某一次 merge request</strong>用 <code>revert</code> 是最合适的</p><p>接下来分三步,先找到要回退的那次 mr, 通常是这样的:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> </span><br><span class="line"></span><br><span class="line">commit 365ea982c24f2c60150df6159734ab73b74515bc (origin/master, origin/HEAD)</span><br><span class="line">Merge: 465fbfb8 f15b39ae</span><br><span class="line">Author: xxx &lt;xxx&gt;</span><br><span class="line">Date:   Thu Oct 25 15:41:10 2018 +0800</span><br><span class="line"></span><br><span class="line">    Merge branch <span class="string">'master'</span> of xxxxxxxxxxxxxxx</span><br><span class="line"></span><br><span class="line">commit 465fbfb8084089f9d08516b4d75ba51ae5dcd5ce</span><br><span class="line">Author: xxx &lt;xxx&gt;</span><br><span class="line">Date:   Thu Oct 25 15:41:03 2018 +0800</span><br><span class="line"></span><br><span class="line">    merge</span><br><span class="line"></span><br><span class="line">commit 1e309ff40fd02d1c9c6e604c2649d8a94086a573</span><br><span class="line">Author: xxx &lt;zhangkaixuan&gt;</span><br><span class="line">Date:   Thu Oct 25 15:40:37 2018 +0800</span><br><span class="line"></span><br><span class="line">    merge</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>这样的, 这只是 log 的中间的一部分, 假设 mr 之后后续又有很多 mr 已经合并了, 那么先找到我们要回退的 <code>commit id</code>, 这里就假设一个叫 <code>c76627674dedf4fc067cb0c5b2afbc123fd9c053</code></p><ol><li><p>执行 <code>git revert -m 1 c76627674dedf4fc067cb0c5b2afbc123fd9c053</code></p><p> 通常执行这一步之后没什么冲突就可以了, 然后有冲突了, 就和正常的 merger conflicts 处理一样</p></li><li><p>解决完冲突, 执行 <code>git revert --continue</code> 这就算合并了</p><p> 那么回滚到一半不想做了, 也好说, 执行 <code>git revert --abort</code> 以后, 大家就当无事发生过</p></li></ol><p>关于 <code>git revert -m 1</code> 这个<code>1</code>指的是 <code>mainline</code>, 1 代表着 master 这条线<br><a href="https://stackoverflow.com/a/5971033/9561528" target="_blank" rel="noopener">资料参考: Why does git revert complain about a missing -m option?</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;合作开发经常会提&lt;code&gt;merge request&lt;/code&gt;嘛, 然后就提了一个不该提的, 还手抖给合并了….&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="git" scheme="http://blog.justwe.site/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>转 Vscode 设置终端字体</title>
@@ -58,9 +80,9 @@
     
       <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
     
-      <category term="switch" scheme="http://blog.justwe.site/tags/switch/"/>
-    
       <category term="json" scheme="http://blog.justwe.site/tags/json/"/>
+    
+      <category term="switch" scheme="http://blog.justwe.site/tags/switch/"/>
     
   </entry>
   
@@ -459,28 +481,6 @@
       <category term="php" scheme="http://blog.justwe.site/tags/php/"/>
     
       <category term="restful" scheme="http://blog.justwe.site/tags/restful/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go 开发过程中一些不错的工具(不定期更新)</title>
-    <link href="http://blog.justwe.site/2018/03/26/golang-awesome-tools/"/>
-    <id>http://blog.justwe.site/2018/03/26/golang-awesome-tools/</id>
-    <published>2018-03-26T12:20:00.000Z</published>
-    <updated>2018-08-29T02:41:07.606Z</updated>
-    
-    <content type="html"><![CDATA[<p>就是平时用到的一些工具<br><a id="more"></a></p><h1 id="fswatch"><a href="#fswatch" class="headerlink" title="fswatch"></a>fswatch</h1><p>用于监听目录文件的修改,一旦发生修改将自动执行系统指令,比如保存后自动 <code>go run</code> 之类的, 这个使用 go 写的</p><p><a href="https://github.com/codeskyblue/fswatch" target="_blank" rel="noopener">codeskyblue/fswatch</a></p><p>还有个跨平台的命令行工具,同样的名字 start 更多 <a href="https://github.com/emcrisostomo/fswatch" target="_blank" rel="noopener">emcrisostomo/fswatch</a> 不过图方便用 go 这个就行</p><h1 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h1><p>属于 beego 的附属开发工具, <code>bee run [project-name]</code> 的执行效果也是自动监听文件改动执行编译命令, 感觉不如<code>fswatch</code>方便,当然用 beego 开发的另说<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p><h1 id="govendor"><a href="#govendor" class="headerlink" title="govendor"></a>govendor</h1><p>是 go 开发的包管理工具, 虽然依赖的<code>package</code>都在 <code>gopath</code>当中,但是代码换一个环境就要重新<code>go get</code>一堆东西实在不方便,而且还有一个值得吐槽的依赖包版本问题<br><code>govendor</code>工具就是解决这类的问题,通过 hash 来保证开发和线上使用的依赖库一样<br><a href="https://github.com/kardianos/govendor" target="_blank" rel="noopener">kardianos/govendor</a></p><h1 id="Gin"><a href="#Gin" class="headerlink" title="Gin"></a>Gin</h1><p>一个很不错的 web 开发框架,github 上已经有 14711个 star(截止到18/02/05), 和 <code>Martini</code>的api 很像,但是更快,适合用来做 restful 的 API<br><a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">gin-gonic/gin</a></p><h1 id="mux"><a href="#mux" class="headerlink" title="mux"></a>mux</h1><p>一个独立的路由包, 支持 restful,轻量,而且支持go的<code>net/http</code> 的接口<br><a href="https://github.com/gorilla/mux" target="_blank" rel="noopener">gorilla/mux</a></p><h1 id="beego"><a href="#beego" class="headerlink" title="beego"></a>beego</h1><p>国人开发的go web框架, 特点是大而全,方便入门,和 php 的框架思路很像,有不少人在吐槽它的笨重, 如果公司想转成 go 做 web 业务它是一个不错的选择,因为它能快速出东西啊,个人感觉有点头疼的是源码很多很多…<br><a href="https://github.com/astaxie/beego" target="_blank" rel="noopener">astaxie/beego</a></p><h1 id="beego-log"><a href="#beego-log" class="headerlink" title="beego-log"></a>beego-log</h1><p>如果不想全部引用 beego 的内容,可以引进它的模块啊,它的 log 模块就是一个很不错的选择<br><a href="https://beego.me/docs/module/logs.md" target="_blank" rel="noopener">beego-log 的中文档</a></p><h1 id="kafka-go"><a href="#kafka-go" class="headerlink" title="kafka-go"></a>kafka-go</h1><p>和 kafka 相关的库很少,不过我个人使用的话这个库已经能满足我的需求, 我这里也有一个<a href="https://github.com/gaopengfei123123/go_study/tree/master/src/kafka_demo" target="_blank" rel="noopener">demo示例</a><br><a href="https://github.com/segmentio/kafka-go" target="_blank" rel="noopener">segmentio/kafka-go</a></p><h1 id="go-redis-redis"><a href="#go-redis-redis" class="headerlink" title="go-redis/redis"></a>go-redis/redis</h1><p>redis 的依赖包还是很简单的,这里推荐一个 star 不少的库<br><a href="https://github.com/go-redis/redis" target="_blank" rel="noopener">go-redis/redis</a></p><h1 id="amqp"><a href="#amqp" class="headerlink" title="amqp"></a>amqp</h1><p>如果用 rabbitmq 就肯定用这个拉,官方出品的肯定有保证啊,可惜 kafka 还没出官方包<br><a href="https://github.com/streadway/amqp" target="_blank" rel="noopener">amqp</a></p><h1 id="viper"><a href="#viper" class="headerlink" title="viper"></a>viper</h1><p>一个很不错的 config 文件管理工具<br><a href="https://github.com/spf13/viper" target="_blank" rel="noopener">viper</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;就是平时用到的一些工具&lt;br&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
-    
-    
-      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
     
   </entry>
   
