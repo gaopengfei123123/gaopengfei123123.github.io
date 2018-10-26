@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Git-Diff]]></title>
+    <url>%2F2018%2F10%2F26%2Fgit-diff%2F</url>
+    <content type="text"><![CDATA[git 对比文件差异 通常 git diff COMMIT_ID_1 COMMIT_DI_2 查看 只查看更改过的文件目录 git diff --name-only COMMIT_ID_1 COMMIT_DI_2 快捷用法就是: git diff --name-only HEAD HEAD^ 对比和上次提交时的改动]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[记一次 Git Revert 的经历]]></title>
     <url>%2F2018%2F10%2F25%2Fgit-revert%2F</url>
     <content type="text"><![CDATA[合作开发经常会提merge request嘛, 然后就提了一个不该提的, 还手抖给合并了…. 返现问题以后准备回退, 然后抬眼一看各分支的合并情况…. 哇脑壳痛, 这就用不了平时最喜欢的 reset 了, 查了查资料, 想取消某一次 merge request用 revert 是最合适的 接下来分三步,先找到要回退的那次 mr, 通常是这样的: 12345678910111213141516171819202122git log commit 365ea982c24f2c60150df6159734ab73b74515bc (origin/master, origin/HEAD)Merge: 465fbfb8 f15b39aeAuthor: xxx &lt;xxx&gt;Date: Thu Oct 25 15:41:10 2018 +0800 Merge branch 'master' of xxxxxxxxxxxxxxxcommit 465fbfb8084089f9d08516b4d75ba51ae5dcd5ceAuthor: xxx &lt;xxx&gt;Date: Thu Oct 25 15:41:03 2018 +0800 mergecommit 1e309ff40fd02d1c9c6e604c2649d8a94086a573Author: xxx &lt;zhangkaixuan&gt;Date: Thu Oct 25 15:40:37 2018 +0800 merge... 这样的, 这只是 log 的中间的一部分, 假设 mr 之后后续又有很多 mr 已经合并了, 那么先找到我们要回退的 commit id, 这里就假设一个叫 c76627674dedf4fc067cb0c5b2afbc123fd9c053 执行 git revert -m 1 c76627674dedf4fc067cb0c5b2afbc123fd9c053 通常执行这一步之后没什么冲突就可以了, 然后有冲突了, 就和正常的 merger conflicts 处理一样 解决完冲突, 执行 git revert --continue 这就算合并了 那么回滚到一半不想做了, 也好说, 执行 git revert --abort 以后, 大家就当无事发生过 关于 git revert -m 1 这个1指的是 mainline, 1 代表着 master 这条线资料参考: Why does git revert complain about a missing -m option?]]></content>
@@ -31,8 +42,8 @@
       </categories>
       <tags>
         <tag>go</tag>
-        <tag>json</tag>
         <tag>switch</tag>
+        <tag>json</tag>
       </tags>
   </entry>
   <entry>
@@ -102,18 +113,6 @@
       <tags>
         <tag>docker</tag>
         <tag>elk</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[搞定 Git 合并冲突]]></title>
-    <url>%2F2018%2F08%2F03%2Fgit-merge-conflict%2F</url>
-    <content type="text"><![CDATA[这次说一下通过命令行去批量解决文件冲突的问题, 这个方法适用你清楚的知道自己需要保留哪一个分支, 而不是两个分支里的改动都要一点 关键命令checkout 是个好方法, 能粗暴的解决很多问题 针对冲突文件保留自己的分支1git checkout --ours path/to/conflict_file 想保留别人的分支1git checkout --theirs path/to/conflict_file 批量的解决: 1grep -lr '&lt;&lt;&lt;&lt;&lt;&lt;&lt;' . | xargs git checkout --ours 一个鲜活的例子…123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566➜ test mkdir merge-demo➜ test cd merge-demo➜ merge-demo ls➜ merge-demo echo 'first commit' &gt; index.txt➜ merge-demo cat index.txtfirst commit➜ merge-demo git initInitialized empty Git repository in /Users/gpf/Documents/test/merge-demo/.git/➜ merge-demo git:(master) ✗ git add -A➜ merge-demo git:(master) ✗ git commit -m 'init'[master (root-commit) e9f17b3] init 1 file changed, 1 insertion(+) create mode 100644 index.txt➜ merge-demo git:(master) git checkout -b testSwitched to a new branch 'test'➜ merge-demo git:(test) echo 'second commit by test' &gt; index.txt➜ merge-demo git:(test) ✗ git add -A &amp;&amp; git commit -m 'second commit'[test 4d20ff3] second commit 1 file changed, 1 insertion(+), 1 deletion(-)➜ merge-demo git:(test) cat index.txtsecond commit by test➜ merge-demo git:(test) git checkout masterSwitched to branch 'master'➜ merge-demo git:(master) echo 'third commit by master' &gt; index.txt➜ merge-demo git:(master) ✗ git add -A &amp;&amp; git commit -m 'third commit'[master 85e520e] third commit 1 file changed, 1 insertion(+), 1 deletion(-)➜ merge-demo git:(master) git merge testAuto-merging index.txtCONFLICT (content): Merge conflict in index.txtAutomatic merge failed; fix conflicts and then commit the result.➜ merge-demo git:(master) ✗ git statusOn branch masterYou have unmerged paths. (fix conflicts and run "git commit") (use "git merge --abort" to abort the merge)Unmerged paths: (use "git add &lt;file&gt;..." to mark resolution) both modified: index.txtno changes added to commit (use "git add" and/or "git commit -a")➜ merge-demo git:(master) ✗ cat index.txt&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEADthird commit by master=======second commit by test&gt;&gt;&gt;&gt;&gt;&gt;&gt; test➜ merge-demo git:(master) ✗ git checkout --ours index.txt➜ merge-demo git:(master) ✗ cat index.txtthird commit by master➜ merge-demo git:(master) ✗ git statusOn branch masterYou have unmerged paths. (fix conflicts and run "git commit") (use "git merge --abort" to abort the merge)Unmerged paths: (use "git add &lt;file&gt;..." to mark resolution) both modified: index.txtno changes added to commit (use "git add" and/or "git commit -a")➜ merge-demo git:(master) ✗ git add -A &amp;&amp; git commit -m 'done'[master d2d2057] done]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-        <tag>merge-conflict</tag>
       </tags>
   </entry>
 </search>
