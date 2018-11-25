@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-11-25T07:38:45.761Z</updated>
+  <updated>2018-11-25T07:52:38.746Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx转发到go服务当中</title>
+    <link href="http://blog.justwe.site/2018/11/25/go-nginx-docker/"/>
+    <id>http://blog.justwe.site/2018/11/25/go-nginx-docker/</id>
+    <published>2018-11-25T07:39:36.000Z</published>
+    <updated>2018-11-25T07:52:38.746Z</updated>
+    
+    <content type="html"><![CDATA[<p>通过docker-compose编排的容器总是有一些奇怪的问题</p><a id="more"></a><p>问题核心就是go-server和nginx所属不同的容器, 需要外界能访问到go的服务就需要进行转发了</p><p>如果是在同一个容器中只需要:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  .a.com;</span><br><span class="line"></span><br><span class="line">    charset utf-8;</span><br><span class="line">    access_log  /home/a.com.access.log;</span><br><span class="line"></span><br><span class="line">    location /(css|js|fonts|img)/ &#123;</span><br><span class="line">        access_log off;</span><br><span class="line">        expires 1d;</span><br><span class="line"></span><br><span class="line">        root &quot;/path/to/app_a/static&quot;;</span><br><span class="line">        try_files $uri @backend;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files /_not_exists_ @backend;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location @backend &#123;</span><br><span class="line">        proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">        proxy_set_header Host            $http_host;</span><br><span class="line"></span><br><span class="line">        proxy_pass http://127.0.0.1:8080;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><a href="https://beego.me/docs/deploy/nginx.md" target="_blank" rel="noopener">beego-nginx部署</a></p><p>那么如果是两个容器当中呢? 基于上面的例子, 我们需要用到<code>upstream</code>, </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">upstream go_server_proxy &#123;</span><br><span class="line">    # 这里的server 需要用到 容器名:端口 的形式</span><br><span class="line">    server go_server:9090;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line">    root /var/www;</span><br><span class="line">    index index.html;</span><br><span class="line"></span><br><span class="line">    charset utf-8;</span><br><span class="line">    access_log  /var/log/nginx/def.access.log;</span><br><span class="line"></span><br><span class="line">    location /(css|js|fonts|img)/ &#123;</span><br><span class="line">        access_log off;</span><br><span class="line">        expires 1d;</span><br><span class="line"></span><br><span class="line">        root &quot;/var/www/static&quot;;</span><br><span class="line">        try_files $uri @backend;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files /_not_exists_ @backend;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location @backend &#123;</span><br><span class="line">        proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">        proxy_set_header Host            $http_host;</span><br><span class="line">        proxy_pass  http://go_server_proxy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这样做的原因是容器之间的ip并不固定, 使用容器名做host地址是更简单的选择</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;通过docker-compose编排的容器总是有一些奇怪的问题&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
+    
+    
+      <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
+    
+      <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
+    
+      <category term="nginx" scheme="http://blog.justwe.site/tags/nginx/"/>
+    
+  </entry>
   
   <entry>
     <title>Go 火焰图分析</title>
@@ -460,28 +486,6 @@
       <category term="gii" scheme="http://blog.justwe.site/tags/gii/"/>
     
       <category term="yii" scheme="http://blog.justwe.site/tags/yii/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>十进制与二进制,八进制,十六进制的换算</title>
-    <link href="http://blog.justwe.site/2018/05/23/conversion-calculation/"/>
-    <id>http://blog.justwe.site/2018/05/23/conversion-calculation/</id>
-    <published>2018-05-23T02:58:29.000Z</published>
-    <updated>2018-05-23T03:16:16.339Z</updated>
-    
-    <content type="html"><![CDATA[<p>复习一下二进制,八进制,十六进制之间的互相转换和怎么用十进制去转换它们</p><a id="more"></a><p>首先做一个定义： B(Binary)表示二进制，O(Octal)表示八进制，D(Decimal)或不加表示十进制，H(Hexadecimal)表示十六进制，比如：(101011)B=(53)O=(43)D=(2B)H</p><h3 id="十进制转换成二进制"><a href="#十进制转换成二进制" class="headerlink" title="十进制转换成二进制"></a>十进制转换成二进制</h3><h4 id="除二取余法"><a href="#除二取余法" class="headerlink" title="除二取余法"></a>除二取余法</h4><p>二进制说白了就是 0 和 1 啊，在十进制的时候就是2的次方</p><p>以十进制的(43)D为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">43/2=21%1</span><br><span class="line">21/2=10%1</span><br><span class="line">10/2=5 %0</span><br><span class="line">5 /2=2 %1</span><br><span class="line">2 /2=1 %0</span><br><span class="line">1 /2=0 %1</span><br><span class="line">以上把余数倒着排就是二进制的结果了，即101011</span><br></pre></td></tr></table></figure></p><h4 id="阶段相减法（适合低次方的速算）"><a href="#阶段相减法（适合低次方的速算）" class="headerlink" title="阶段相减法（适合低次方的速算）"></a>阶段相减法（适合低次方的速算）</h4><p>每次都减去最大的值，还是拿(42)D举例：42-32-8-2-1=0， 对应以下的表格为：</p><table><thead><tr><th style="text-align:center">64</th><th style="text-align:center">32</th><th style="text-align:center">16</th><th style="text-align:center">8</th><th style="text-align:center">4</th><th style="text-align:center">2</th><th style="text-align:center">1</th></tr></thead><tbody><tr><td style="text-align:center">2^6</td><td style="text-align:center">2^5</td><td style="text-align:center">2^4</td><td style="text-align:center">2^3</td><td style="text-align:center">2^2</td><td style="text-align:center">2^1</td><td style="text-align:center">2^0</td></tr><tr><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">1</td></tr></tbody></table><p>结果就是： 101011</p><h3 id="十进制转二进制"><a href="#十进制转二进制" class="headerlink" title="十进制转二进制"></a>十进制转二进制</h3><p>以 (101011)B 举例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1*2^0 + 1*2^1 + 1*2^3 + 1*2^5 = 43</span><br></pre></td></tr></table></figure></p><h3 id="十进制转八进制和十六进制"><a href="#十进制转八进制和十六进制" class="headerlink" title="十进制转八进制和十六进制"></a>十进制转八进制和十六进制</h3><p>都是用的除8或16取余法，不做赘述了，有点区别就是16进制的9以后就是abcd…代替的<br>这等式就自己进行一下验算好了: (101011)B=(53)O=(43)D=(2B)H</p><h3 id="二进制转八进制、十六进制"><a href="#二进制转八进制、十六进制" class="headerlink" title="二进制转八进制、十六进制"></a>二进制转八进制、十六进制</h3><p>先复习一个等式: <code>2^0 * 2^1 * 2^2 = 2^3</code>， 那么二进制转八进制就是将二进制的数三个为一组合并一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">101|011 =&gt; 53</span><br></pre></td></tr></table></figure></p><p>同理， 二进制转16进制就是按四个为一组合并一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0010|1011 =&gt; 2b</span><br></pre></td></tr></table></figure></p><h3 id="十六进制和八进制之间转换"><a href="#十六进制和八进制之间转换" class="headerlink" title="十六进制和八进制之间转换"></a>十六进制和八进制之间转换</h3><p>都是先转换成二进制，然后再转成想要的进制</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;复习一下二进制,八进制,十六进制之间的互相转换和怎么用十进制去转换它们&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="default" scheme="http://blog.justwe.site/categories/default/"/>
-    
-    
-      <category term="binary" scheme="http://blog.justwe.site/tags/binary/"/>
     
   </entry>
   
