@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2018-12-04T06:26:24.991Z</updated>
+  <updated>2018-12-11T03:21:59.706Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Crontab 设置一小时执行一次</title>
+    <link href="http://blog.justwe.site/2018/12/11/linux-crontab/"/>
+    <id>http://blog.justwe.site/2018/12/11/linux-crontab/</id>
+    <published>2018-12-11T02:55:47.000Z</published>
+    <updated>2018-12-11T03:21:59.706Z</updated>
+    
+    <content type="html"><![CDATA[<p>如果主管给你个任务, 让你每小时执行一次脚本, 是不是就是这样:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* */1 * * * xxxxx.bash</span><br></pre></td></tr></table></figure></p><p>这样就错了呦~</p><a id="more"></a><p>以上产生的结果是每分钟执行一次, 因为从匹配角度来看每分钟都符合规则, 继而执行命令</p><p>因此对于整点定时任务有两种写法:</p><p>每<strong>整点</strong>执行一次:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 */1 * * * xxxxx.bash</span><br></pre></td></tr></table></figure></p><p>每<strong>隔60分钟</strong>执行一次:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/60 * * * * xxxxx.bash</span><br></pre></td></tr></table></figure></p><p>注意我的描述啊, 整点和隔60分钟其实是两个东西, 根据具体业务要求去使用它</p><p><img src="/images/crontab.png" alt=""></p><p>关于定时器这里有三个示例:</p><ol><li><p>在上午8点到11点的第3和第15分钟执行 </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3,15 8-11 * * * <span class="built_in">command</span></span><br></pre></td></tr></table></figure></li><li><p>每隔两天的上午8点到11点的第3和第15分钟执行 </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3,15 8-11 */2 * * <span class="built_in">command</span></span><br></pre></td></tr></table></figure></li><li><p>每个星期一的上午8点到11点的第3和第15分钟执行 </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3,15 8-11 * * 1 <span class="built_in">command</span></span><br></pre></td></tr></table></figure></li></ol><p>详细的crontab操作可以参考这篇博客:<br><a href="https://blog.csdn.net/u014726937/article/details/51182666" target="_blank" rel="noopener">crontab–定时器命令</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如果主管给你个任务, 让你每小时执行一次脚本, 是不是就是这样:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;* */1 * * * xxxxx.bash&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这样就错了呦~&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="linux" scheme="http://blog.justwe.site/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>通过Channel控制并发数量</title>
@@ -177,9 +200,9 @@
     
       <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
     
-      <category term="switch" scheme="http://blog.justwe.site/tags/switch/"/>
-    
       <category term="json" scheme="http://blog.justwe.site/tags/json/"/>
+    
+      <category term="switch" scheme="http://blog.justwe.site/tags/switch/"/>
     
   </entry>
   
@@ -460,28 +483,6 @@
       <category term="docker-composer" scheme="http://blog.justwe.site/tags/docker-composer/"/>
     
       <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git调整 Ssh 登录参数</title>
-    <link href="http://blog.justwe.site/2018/06/23/git-sshcommand/"/>
-    <id>http://blog.justwe.site/2018/06/23/git-sshcommand/</id>
-    <published>2018-06-23T15:39:17.000Z</published>
-    <updated>2018-06-23T15:44:09.323Z</updated>
-    
-    <content type="html"><![CDATA[<p>指定 ssh 命令使用时的签名文件<br><a id="more"></a><br>进入 app的.git/config 文件下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> Engine:</span><br><span class="line">[core]</span><br><span class="line">        repositoryformatversion = 0</span><br><span class="line">        filemode = <span class="literal">true</span></span><br><span class="line">        bare = <span class="literal">false</span></span><br><span class="line">        logallrefupdates = <span class="literal">true</span></span><br><span class="line">        ignorecase = <span class="literal">true</span></span><br><span class="line">        precomposeunicode = <span class="literal">true</span></span><br><span class="line">        <span class="comment"># 添加一行这个就行</span></span><br><span class="line">        sshCommand = ssh -i ~/.ssh/id_rsa_gayhuber</span><br><span class="line">[remote <span class="string">"origin"</span>]</span><br><span class="line">        url = git@github.com:gayhuber/php-fpm.git</span><br><span class="line">        fetch = +refs/heads/*:refs/remotes/origin/*</span><br><span class="line">[branch <span class="string">"master"</span>]</span><br><span class="line">        remote = origin</span><br><span class="line">        merge = refs/heads/master</span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;指定 ssh 命令使用时的签名文件&lt;br&gt;
-    
-    </summary>
-    
-      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
-    
-    
-      <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
     
   </entry>
   

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Crontab 设置一小时执行一次]]></title>
+    <url>%2F2018%2F12%2F11%2Flinux-crontab%2F</url>
+    <content type="text"><![CDATA[如果主管给你个任务, 让你每小时执行一次脚本, 是不是就是这样:1* */1 * * * xxxxx.bash 这样就错了呦~ 以上产生的结果是每分钟执行一次, 因为从匹配角度来看每分钟都符合规则, 继而执行命令 因此对于整点定时任务有两种写法: 每整点执行一次:10 */1 * * * xxxxx.bash 每隔60分钟执行一次:1*/60 * * * * xxxxx.bash 注意我的描述啊, 整点和隔60分钟其实是两个东西, 根据具体业务要求去使用它 关于定时器这里有三个示例: 在上午8点到11点的第3和第15分钟执行 13,15 8-11 * * * command 每隔两天的上午8点到11点的第3和第15分钟执行 13,15 8-11 */2 * * command 每个星期一的上午8点到11点的第3和第15分钟执行 13,15 8-11 * * 1 command 详细的crontab操作可以参考这篇博客:crontab–定时器命令]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[通过Channel控制并发数量]]></title>
     <url>%2F2018%2F12%2F04%2Fgo-channel-waitgroup%2F</url>
     <content type="text"><![CDATA[使用 go 关键字有时候需要控制一下并发的数量, 但不至于去修改 runtime.GOMAXPROCS 这个数值, 这里就用到了缓冲channel的特性 demo: 12345678910111213141516171819202122232425262728293031323334353637383940414243444546package poolimport ( "sync")// WaitGroup 一个异步结构体type WaitGroup struct &#123; workChan chan int wg sync.WaitGroup&#125;// NewPool 生成一个工作池, coreNum 限制func NewPool(coreNum int) *WaitGroup &#123; ch := make(chan int, coreNum) return &amp;WaitGroup&#123; workChan: ch, wg: sync.WaitGroup&#123;&#125;, &#125;&#125;// Add 添加func (ap *WaitGroup) Add(num int) &#123; for i := 0; i &lt; num; i++ &#123; ap.workChan &lt;- i ap.wg.Add(1) &#125;&#125;// Done 完结func (ap *WaitGroup) Done() &#123;LOOP: for &#123; select &#123; case &lt;-ap.workChan: break LOOP &#125; &#125; ap.wg.Done()&#125;// Wait 等待func (ap *WaitGroup) Wait() &#123; ap.wg.Wait()&#125; test: 123456789101112131415161718192021222324252627package poolimport ( "fmt" "testing" "time")func TestRun(t *testing.T) &#123; work := NewPool(4) for i := 0; i &lt; 50; i++ &#123; work.Add(1) go testFunc(i, work) &#125; fmt.Println("waiting...") work.Wait() t.Log("done")&#125;func testFunc(i int, wg *WaitGroup) &#123; defer wg.Done() fmt.Println(time.Now().Format("2006-01-02T15:04:05Z07:00"), "output: ", i) time.Sleep(time.Second * 1) fmt.Println(time.Now().Format("2006-01-02T15:04:05Z07:00"), "output: ", i, "done")&#125; 输出: 12345678910111213141516172018-12-04T14:22:27+08:00 output: 32018-12-04T14:22:27+08:00 output: 12018-12-04T14:22:27+08:00 output: 02018-12-04T14:22:27+08:00 output: 22018-12-04T14:22:28+08:00 output: 3 done2018-12-04T14:22:28+08:00 output: 0 done2018-12-04T14:22:28+08:00 output: 1 done2018-12-04T14:22:28+08:00 output: 52018-12-04T14:22:28+08:00 output: 62018-12-04T14:22:28+08:00 output: 2 done2018-12-04T14:22:28+08:00 output: 72018-12-04T14:22:28+08:00 output: 42018-12-04T14:22:29+08:00 output: 4 done2018-12-04T14:22:29+08:00 output: 82018-12-04T14:22:29+08:00 output: 7 done2018-12-04T14:22:29+08:00 output: 6 done..... 这里还是要带上 sync.WaitGroup, 保证最后一次循环时携程不会过早退出]]></content>
@@ -78,8 +89,8 @@
       </categories>
       <tags>
         <tag>go</tag>
-        <tag>switch</tag>
         <tag>json</tag>
+        <tag>switch</tag>
       </tags>
   </entry>
   <entry>
@@ -102,18 +113,6 @@
       </categories>
       <tags>
         <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Go Interface 的机制]]></title>
-    <url>%2F2018%2F09%2F12%2Fgo-interface-tip%2F</url>
-    <content type="text"><![CDATA[对 interface 赋值变量的时候经常出的问题 日常开发时有个这样的例子: 123456789101112131415161718192021222324package mainimport "fmt"type Human interface &#123; Run()&#125;type Boy struct &#123; Name string&#125;func (b *Boy) Run() &#123; fmt.Println("my name is " + b.Name)&#125;func main() &#123; xiaoming := Boy&#123;Name: "xiao ming"&#125; var h Human // h = xiaoming // #1 会报错, Boy does not implement Human (Run method has pointer receiver) h = &amp;xiaoming h.Run()&#125; 如果用 #1 这行代码时会出现以下错误:123# command-line-arguments./main.go:23:4: cannot use xiaoming (type Boy) as type Human in assignment: Boy does not implement Human (Run method has pointer receiver) 然而用下面的 h = &amp;xiaoming 是正常的 这个问题，首先得先了解一下Golang 中 方法的集合的概念，一个struct虽然可以通过值类型和引用类型两种方式定义方法，但是不通的对象类型对应了不同的方法集： 1234Values Methods Receivers----------------------------------------------- T (t T)*T (t T) and (t *T) 值类型的对象只有（t T) 结构的方法，虽然值类型的对象也可以调用(t *T) 方法，但这实际上是Golang编译器自动转化成了&amp;t的形式来调用方法，并不是表明值类型的对象拥有该方法。 换一个维度来看上面的表格可能更加直观： 12345Methods Receivers Values-----------------------------------------------(t T) T and *T(t *T) *T 这就意味着指针类型的receiver 方法实现接口时，只有指针类型的对象实现了该接口。 对应上面的例子来说，只有&amp;user实现了notifier接口，而user根本没有实现该接口。所以上面代码会报出这样的异常。]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-        <tag>interface</tag>
       </tags>
   </entry>
 </search>
