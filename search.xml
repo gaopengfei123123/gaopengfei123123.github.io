@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go里的点点点语法]]></title>
+    <url>%2F2018%2F12%2F14%2Fgo-dotdotdot%2F</url>
+    <content type="text"><![CDATA[golang 代码里面有时会出现 ... 这个操作, 初次看到也是摸不到头脑,其实他是用来做数组的析构用的 举个例子就明白了: 123456789101112131415161718192021package mainimport "fmt"func main() &#123; pm := []string&#123;"a", "b", "c"&#125; test("abc", pm...) // 相当于 test("abc", "a", "b", "c") ap := []string&#123;"f", "g"&#125; rs := append(pm, ap...) // 相当于 append(pm, ap[0], ap[1], 以此类推) fmt.Println("rs:", rs)&#125;func test(name string, pms ...string) &#123; fmt.Println("output name:", name) for k, v := range pms &#123; fmt.Printf("k: %v, v: %v \n", k, v) &#125; return&#125; 输出: 12345output name: abck: 0, v: ak: 1, v: bk: 2, v: crs: [a b c f g] 这里做了两个示例: 在func中的 ... eg: func test(name string, pms ...string)代表着不限参数数量, 而多出的参数都放在了 var pms []string 这个数组当中, 在go中典型的使用例子就是 fmt.Print 这一系列的方法 在传参的时候使用... 是用来表示将数组中每个元素单独传入函数中较长用的就是出现数组合并的时候, 使用append() 方法时:这样写正确 12ap := []string&#123;"f", "g"&#125; rs := append(pm, ap...) // 相当于 append(pm, ap[0], ap[1], 以此类推) 这样写就报错12ap := []string&#123;"f", "g"&#125;rs := append(pm, ap)]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Crontab 设置一小时执行一次]]></title>
     <url>%2F2018%2F12%2F11%2Flinux-crontab%2F</url>
     <content type="text"><![CDATA[如果主管给你个任务, 让你每小时执行一次脚本, 是不是就是这样:1* */1 * * * xxxxx.bash 这样就错了呦~ 以上产生的结果是每分钟执行一次, 因为从匹配角度来看每分钟都符合规则, 继而执行命令 因此对于整点定时任务有两种写法: 每整点执行一次:10 */1 * * * xxxxx.bash 每隔60分钟执行一次:1*/60 * * * * xxxxx.bash 注意我的描述啊, 整点和隔60分钟其实是两个东西, 根据具体业务要求去使用它 关于定时器这里有三个示例: 在上午8点到11点的第3和第15分钟执行 13,15 8-11 * * * command 每隔两天的上午8点到11点的第3和第15分钟执行 13,15 8-11 */2 * * command 每个星期一的上午8点到11点的第3和第15分钟执行 13,15 8-11 * * 1 command 详细的crontab操作可以参考这篇博客:crontab–定时器命令]]></content>
@@ -97,17 +108,6 @@
     <title><![CDATA[Go 开发时的一些初级问题]]></title>
     <url>%2F2018%2F09%2F25%2Fgo-primary-mistakes%2F</url>
     <content type="text"><![CDATA[平时碰到的一些小问题, 记一下 assignment to entry in nil map, map 赋值问题1234567891011121314151617181920212223242526272829303132333435363738394041424344// ServiceMap 可用服务列表type ServiceMap struct &#123; handlers map[string]BaseClient RWLock sync.RWMutex BaseService&#125;var ServiceMp *ServiceMapfunc init() &#123; // #1 ServiceMp = &amp;ServiceMap&#123;&#125; // #2.1 ServiceMp.handlers = make(map[string]BaseClient) ServiceMp.AddMethod("XyToken", BaseClient&#123; Module: "System", Class: "XyToken", Func: "getXyOpenKey", &#125;) log.Println("get method:", ServiceMp.handlers)&#125;// AddMethod 添加方法func (serv *ServiceMap) AddMethod(key string, body BaseClient) (err error) &#123; defer func() &#123; if err := recover(); err != nil &#123; log.Println("AddMethod error:", err) &#125; &#125;() if _, ok := serv.handlers[key]; !ok &#123; serv.RWLock.Lock() // #2.2 serv.handlers[key] = body serv.RWLock.Unlock() &#125; return nil&#125; #1 当文件里有一个全局的变量时, 需要先初始化 ServiceMp = &amp;ServiceMap{} 一个实体出来 #2 在 ServiceMap.handlers这个值添加方法的时候, 不能直接 serv.handlers[key] = body, 而是要先给它赋值一个空的切片,才能往里面加东西, 参考 #2.1 和 #2.2 interface conversion: interface {} is float64, not int通常json 转成 map[string]interface{} 时,数字类型就是float64的, 比如:想把它转成int类型使用就要auth.Sys = int(sys.(float64))这样(sys 就是一个 interface{} 类型的数字), 而不是auth.Sys = sys.(int), 后一种写法会有 painc 错误 xxx.(type) 只能用在 switch 当中, 不想这么写就用 reflect.Typeof(xxx)]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Golang 的测试文件]]></title>
-    <url>%2F2018%2F09%2F20%2Fgo-test%2F</url>
-    <content type="text"><![CDATA[一些函数没有连续的会话状态是可以写出来顺便就写一个测试脚本了比如: 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253// redis.gopackage toolsimport ( "github.com/gomodule/redigo/redis" "time" "user-server/config")var ( redisClient *redis.Pool REDIS_HOST string REDIS_DB int REDIS_AUTH string MAX_ACTIVE int MAX_IDLE int IDLE_TIMEOUT int64)func init() &#123; REDIS_HOST = config.Conf.Redis.Host REDIS_DB = 0 REDIS_AUTH = "abc" MAX_ACTIVE = 10 MAX_IDLE = 1 /** *@MaxIdle 最大空闲链接 *@MaxActive 最大活跃链接 *@IdleTimeout 自动超时时间 */ redisClient = &amp;redis.Pool&#123; MaxIdle: MAX_IDLE, MaxActive: MAX_ACTIVE, IdleTimeout: 30 * time.Second, Dial: func() (redis.Conn, error) &#123; c, err := redis.Dial("tcp", REDIS_HOST) if err != nil &#123; return nil, err &#125; if REDIS_AUTH != "" &#123; c.Do("AUTH", REDIS_AUTH) &#125; c.Do("SELECT", REDIS_DB) return c, nil &#125;, &#125;&#125;func GetRedis() redis.Conn &#123; return redisClient.Get()&#125; 对应的测试文件 在同目录创建一个 redis_test.go 123456789101112package toolsimport ( "testing")func TestGetRedis(t *testing.T) &#123; co := GetRedis() defer co.Close() co.Do("SET", "test_redis_key", "test_redis_value")&#125; 测试脚本的标准格式是: 文件名为 xxx_test.go 作为测试文件标记 引入 testing 包 要测试的函数名为 TestXXXX(t *testing.T) 输出结果通过 t.Logf() t.Error() 这类的测试包提供的函数来调用 写完代码, 在目录下运行:123456# 运行当前目录所有测试文件并输出结果go test -v# 运行指定测试文件, 需要把被测试文件也带上go test -v redis.go redis_test.go# 运行指定的测试方法go test -v --test.run TestGetRedis]]></content>
       <categories>
         <category>go</category>
       </categories>
