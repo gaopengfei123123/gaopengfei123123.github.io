@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Go Mysql数据库连接池的使用]]></title>
+    <url>%2F2018%2F12%2F17%2Fgo-mysql-pool%2F</url>
+    <content type="text"><![CDATA[建立一个mysql连接池将极大的缩短应用的响应时间, 减少频繁的io开销以及gc, 这在golang里面也是很容易就实现的 示例代码: 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105// main.gopackage mainimport ( "database/sql" "fmt" _ "github.com/GO-SQL-Driver/MySQL" "net/http" "time")var db *sql.DBfunc init() &#123; db, _ = sql.Open("mysql", "root:123123@tcp(localhost:33060)/go?charset=utf8") // 设置最大连接数 db.SetMaxOpenConns(300) // 设置最大空闲连接数 db.SetMaxIdleConns(100) // 设置每个链接的过期时间 db.SetConnMaxLifetime(time.Second * 5) err := db.Ping() checkErr(err)&#125;func main() &#123; startServer(":9999")&#125;func startServer(port string) &#123; http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) &#123; record := doSomething() fmt.Fprintln(w, record) &#125;) fmt.Printf("listening http://localhost%s\n", port) err := http.ListenAndServe(port, nil) checkErr(err)&#125;func doSomething() map[string]string &#123; rows, err := db.Query("SELECT * FROM test LIMIT 1") checkErr(err) defer rows.Close() columns, _ := rows.Columns() scanArgs := make([]interface&#123;&#125;, len(columns)) values := make([]interface&#123;&#125;, len(columns)) for j := range values &#123; scanArgs[j] = &amp;values[j] &#125; record := make(map[string]string) for rows.Next() &#123; //将行数据保存到record字典 err = rows.Scan(scanArgs...) for i, col := range values &#123; if col != nil &#123; record[columns[i]] = string(col.([]byte)) &#125; &#125; &#125; // fmt.Println(record) return record&#125;func doSomething2() map[string]string &#123; dbConn, _ := sql.Open("mysql", "root:123123@tcp(localhost:33060)/go?charset=utf8") defer dbConn.Close() rows, err := dbConn.Query("SELECT * FROM test LIMIT 1") checkErr(err) defer rows.Close() columns, _ := rows.Columns() scanArgs := make([]interface&#123;&#125;, len(columns)) values := make([]interface&#123;&#125;, len(columns)) for j := range values &#123; scanArgs[j] = &amp;values[j] &#125; record := make(map[string]string) for rows.Next() &#123; //将行数据保存到record字典 err = rows.Scan(scanArgs...) for i, col := range values &#123; if col != nil &#123; record[columns[i]] = string(col.([]byte)) &#125; &#125; &#125; // fmt.Println(record) return record&#125;func checkErr(err error) &#123; if err != nil &#123; panic(err) &#125;&#125; 测试代码: 123456789101112131415161718192021222324// main_test.gopackage mainimport ( "testing")func TestDoSomething(t *testing.T) &#123; record := doSomething() t.Log(record)&#125;func BenchmarkDoSomething(b *testing.B) &#123; for i := 0; i &lt; b.N; i++ &#123; doSomething() &#125;&#125;func BenchmarkDoSomethingWithoutPoll(b *testing.B) &#123; for i := 0; i &lt; b.N; i++ &#123; doSomething2() &#125;&#125; 测试输出对比:12345678$ go test --bench=.goos: darwingoarch: amd64BenchmarkDoSomething-4 20000 64147 ns/opBenchmarkDoSomethingWithoutPoll-4 1000 8259274 ns/opPASSok _/Users/gpf/Documents/go/code/mysql_curd/pool 10.360s 关键就是这几个方法:1234567db, _ = sql.Open("mysql", "root:123123@tcp(localhost:33060)/go?charset=utf8")// 设置最大连接数db.SetMaxOpenConns(300)// 设置最大空闲连接数db.SetMaxIdleConns(100)// 设置每个链接的过期时间db.SetConnMaxLifetime(time.Second * 5) 设置超时时间很有必要, 避免出现server端主动关闭的情况 mysql has gone away... 代码来源]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Go里的点点点语法]]></title>
     <url>%2F2018%2F12%2F14%2Fgo-dotdotdot%2F</url>
     <content type="text"><![CDATA[golang 代码里面有时会出现 ... 这个操作, 初次看到也是摸不到头脑,其实他是用来做数组的析构用的 举个例子就明白了: 123456789101112131415161718192021package mainimport "fmt"func main() &#123; pm := []string&#123;"a", "b", "c"&#125; test("abc", pm...) // 相当于 test("abc", "a", "b", "c") ap := []string&#123;"f", "g"&#125; rs := append(pm, ap...) // 相当于 append(pm, ap[0], ap[1], 以此类推) fmt.Println("rs:", rs)&#125;func test(name string, pms ...string) &#123; fmt.Println("output name:", name) for k, v := range pms &#123; fmt.Printf("k: %v, v: %v \n", k, v) &#125; return&#125; 输出: 12345output name: abck: 0, v: ak: 1, v: bk: 2, v: crs: [a b c f g] 这里做了两个示例: 在func中的 ... eg: func test(name string, pms ...string)代表着不限参数数量, 而多出的参数都放在了 var pms []string 这个数组当中, 在go中典型的使用例子就是 fmt.Print 这一系列的方法 在传参的时候使用... 是用来表示将数组中每个元素单独传入函数中较长用的就是出现数组合并的时候, 使用append() 方法时:这样写正确 12ap := []string&#123;"f", "g"&#125; rs := append(pm, ap...) // 相当于 append(pm, ap[0], ap[1], 以此类推) 这样写就报错12ap := []string&#123;"f", "g"&#125;rs := append(pm, ap)]]></content>
@@ -102,17 +114,6 @@
         <tag>go</tag>
         <tag>json</tag>
         <tag>switch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Go 开发时的一些初级问题]]></title>
-    <url>%2F2018%2F09%2F25%2Fgo-primary-mistakes%2F</url>
-    <content type="text"><![CDATA[平时碰到的一些小问题, 记一下 assignment to entry in nil map, map 赋值问题1234567891011121314151617181920212223242526272829303132333435363738394041424344// ServiceMap 可用服务列表type ServiceMap struct &#123; handlers map[string]BaseClient RWLock sync.RWMutex BaseService&#125;var ServiceMp *ServiceMapfunc init() &#123; // #1 ServiceMp = &amp;ServiceMap&#123;&#125; // #2.1 ServiceMp.handlers = make(map[string]BaseClient) ServiceMp.AddMethod("XyToken", BaseClient&#123; Module: "System", Class: "XyToken", Func: "getXyOpenKey", &#125;) log.Println("get method:", ServiceMp.handlers)&#125;// AddMethod 添加方法func (serv *ServiceMap) AddMethod(key string, body BaseClient) (err error) &#123; defer func() &#123; if err := recover(); err != nil &#123; log.Println("AddMethod error:", err) &#125; &#125;() if _, ok := serv.handlers[key]; !ok &#123; serv.RWLock.Lock() // #2.2 serv.handlers[key] = body serv.RWLock.Unlock() &#125; return nil&#125; #1 当文件里有一个全局的变量时, 需要先初始化 ServiceMp = &amp;ServiceMap{} 一个实体出来 #2 在 ServiceMap.handlers这个值添加方法的时候, 不能直接 serv.handlers[key] = body, 而是要先给它赋值一个空的切片,才能往里面加东西, 参考 #2.1 和 #2.2 interface conversion: interface {} is float64, not int通常json 转成 map[string]interface{} 时,数字类型就是float64的, 比如:想把它转成int类型使用就要auth.Sys = int(sys.(float64))这样(sys 就是一个 interface{} 类型的数字), 而不是auth.Sys = sys.(int), 后一种写法会有 painc 错误 xxx.(type) 只能用在 switch 当中, 不想这么写就用 reflect.Typeof(xxx)]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
       </tags>
   </entry>
 </search>
