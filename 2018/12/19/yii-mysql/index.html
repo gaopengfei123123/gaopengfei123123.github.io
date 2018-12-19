@@ -82,7 +82,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="等一个人, blog, laravel, php, js, vuejs, yii2.0" />
+  <meta name="keywords" content="yii2," />
 
 
 
@@ -100,17 +100,18 @@
 
 
 
-<meta name="description" content="上一章是了解了怎么创建一个容器，现在我们来把它做成我们自己的库，类似git那样的">
+<meta name="description" content="yii2 + swoole 的模式下因为使用swoole做的常驻内存服务, 那么之前的设计思路会有一点偏差, 不是第一眼能看到的就是 mysql has gone away的问题 目前解决思路就是当sql命令报错mysql has gone away的时候就断开重连再重新执行一次">
+<meta name="keywords" content="yii2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker(2) 创建属于自己的库">
-<meta property="og:url" content="http://blog.justwe.site/2017/02/19/docker-repo/index.html">
+<meta property="og:title" content="转 Yii2 断线重连问题">
+<meta property="og:url" content="http://blog.justwe.site/2018/12/19/yii-mysql/index.html">
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
-<meta property="og:description" content="上一章是了解了怎么创建一个容器，现在我们来把它做成我们自己的库，类似git那样的">
+<meta property="og:description" content="yii2 + swoole 的模式下因为使用swoole做的常驻内存服务, 那么之前的设计思路会有一点偏差, 不是第一眼能看到的就是 mysql has gone away的问题 目前解决思路就是当sql命令报错mysql has gone away的时候就断开重连再重新执行一次">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-06-26T10:20:29.000Z">
+<meta property="og:updated_time" content="2018-12-19T03:40:02.627Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker(2) 创建属于自己的库">
-<meta name="twitter:description" content="上一章是了解了怎么创建一个容器，现在我们来把它做成我们自己的库，类似git那样的">
+<meta name="twitter:title" content="转 Yii2 断线重连问题">
+<meta name="twitter:description" content="yii2 + swoole 的模式下因为使用swoole做的常驻内存服务, 那么之前的设计思路会有一点偏差, 不是第一眼能看到的就是 mysql has gone away的问题 目前解决思路就是当sql命令报错mysql has gone away的时候就断开重连再重新执行一次">
 
 
 
@@ -139,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justwe.site/2017/02/19/docker-repo/"/>
+  <link rel="canonical" href="http://blog.justwe.site/2018/12/19/yii-mysql/"/>
 
 
 
 
 
-  <title>Docker(2) 创建属于自己的库 | <hello-world/></title>
+  <title>转 Yii2 断线重连问题 | <hello-world/></title>
   
 
 
@@ -345,7 +346,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2017/02/19/docker-repo/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2018/12/19/yii-mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="GPF">
@@ -362,7 +363,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Docker(2) 创建属于自己的库</h2>
+          <h2 class="post-title" itemprop="name headline">转 Yii2 断线重连问题</h2>
         
 
         <div class="post-meta">
@@ -374,8 +375,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-19T09:48:00+08:00">
-                2017-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-19T11:31:00+08:00">
+                2018-12-19
               </time>
             
 
@@ -397,8 +398,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
+                  <a href="/categories/yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">yii2</span>
                   </a>
                 </span>
 
@@ -414,7 +415,7 @@
 
           
           
-             <span id="/2017/02/19/docker-repo/" class="leancloud_visitors" data-flag-title="Docker(2) 创建属于自己的库">
+             <span id="/2018/12/19/yii-mysql/" class="leancloud_visitors" data-flag-title="转 Yii2 断线重连问题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -445,21 +446,14 @@
       
 
       
-        <p>上一章是了解了怎么创建一个容器，现在我们来把它做成我们自己的库，类似git那样的<br><a id="more"></a><br>首先查看下自己的库有哪些<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE                   COMMAND             CREATED             STATUS                      PORTS               NAMES</span><br><span class="line">4cd577624dd2        ubuntu                  &quot;/bin/bash&quot;         2 days ago          Exited (127) 16 hours ago                       little_cat</span><br><span class="line">80ac1b1ba419        ubuntu                  &quot;/bin/bash&quot;         2 days ago          Exited (0) 2 days ago                           determined_bhaskara</span><br><span class="line">ce5104ceef1f        ubuntu                  &quot;/bin/bash&quot;         4 days ago          Exited (0) 4 days ago                           small_hugle</span><br></pre></td></tr></table></figure></p>
-<p>我们上次创建并操作的容器就是名字是<code>little_cat</code> 而且它的容器id为<code>4cd577624dd2</code> 正是我们需要的</p>
-<p>接下来就是在<a href="https://hub.docker.com" target="_blank" rel="noopener">docker官网</a>上注册一个账号，过程也很简单，填个账户，邮箱，密码 邮箱再验证一下就好</p>
-<p>本地我们登陆一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker ps -a</span><br></pre></td></tr></table></figure></p>
-<p>输入<em>有效</em>的账户信息就行，他会在 $HOME/.docker/config.json 文件中生成一条 auth 信息</p>
-<p>登陆成功后，我们把指定的容器做成我们自己的库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docket commit 4cd577624dd2 gaofeifiy/ubuntu-base</span><br></pre></td></tr></table></figure></p>
-<p>这条命令的作用就是把 containerId 为 4cd577624dd2 (也就是 little_cat) 提交给 gaofeifiy/ubuntu-base 这个库，<br>注意，这里commit的时候要用到id而不是容器的name，我自己试的时候就出现提交为none的情况，也许以后的版本会补上</p>
-<p>这个有什么作用呢？ 我们查看一下images</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker images</span><br><span class="line">REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">gaofeifiy/ubuntu-base   latest              6f8cfa1871b0        40 minutes ago      227 MB</span><br><span class="line">ubuntu                  16.04               f49eec89601e        4 weeks ago         129.5 MB</span><br><span class="line">ubuntu                  latest              f49eec89601e        4 weeks ago         129.5 MB</span><br></pre></td></tr></table></figure>
-<p>我们最早的 little_cat 已经在本地被做成一个基础的images了</p>
-<p>直接用它创建一个容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker run -t -i --name big_cat gaofeifiy/ubuntu-base /bin/bash</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">➜  ~ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE                   COMMAND             CREATED             STATUS                      PORTS               NAMES</span><br><span class="line">10ea9940c6d2        gaofeifiy/ubuntu-base   &quot;/bin/bash&quot;         48 seconds ago      Exited (0) 39 seconds ago                       big_cat</span><br></pre></td></tr></table></figure></p>
-<p>我们用刚才新建的image为基础创建了 big_cat 这个容器</p>
-<p>要删除的话也是很简单，这里有两个命令 <code>docker rm</code> 和 <code>docker rmi</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker rm 10ea9940c6d2 这是用来删除容器(CONTAINER)的</span><br><span class="line">docker rmi 6f8cfa1871b0 这是用来删除镜像的(IMAGE) 的</span><br></pre></td></tr></table></figure>
-<p>有一点需要注意的就是如果要删除的image是有container在使用的话需要先把container给删除再删除image</p>
+        <p>yii2 + swoole 的模式下因为使用swoole做的常驻内存服务, 那么之前的设计思路会有一点偏差, 不是第一眼能看到的就是 <code>mysql has gone away</code>的问题</p>
+<p>目前解决思路就是当sql命令报错<code>mysql has gone away</code>的时候就断开重连再重新执行一次</p>
+<a id="more"></a>
+<p>参考 <a href="https://www.yiichina.com/topic/7296" target="_blank" rel="noopener">Yii2实现mysql断线重连</a></p>
+<p>重写一个command类</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">namespace</span> <span class="title">common</span>\<span class="title">components</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">use</span> <span class="title">Yii</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 新增加执行sql时断开重连</span></span><br><span class="line"><span class="comment">     * 数据库连接断开异常</span></span><br><span class="line"><span class="comment">     * errorInfo = [''HY000',2006,'错误信息']</span></span><br><span class="line"><span class="comment">     * Class Command</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@package</span> common\components</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Command</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">Command</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> EVENT_DISCONNECT = <span class="string">'disconnect'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 处理修改类型sql的断线重连问题</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> int</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@throws</span> \Exception</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@throws</span> \yii\db\Exception</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">parent</span>::execute();</span><br><span class="line">            &#125;<span class="keyword">catch</span>(\<span class="keyword">Exception</span> $e)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;handleException($e))</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">parent</span>::execute();</span><br><span class="line">                <span class="keyword">throw</span> $e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 处理查询类sql断线重连问题</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> string $method</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> null $fetchMode</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> mixed</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@throws</span> \Exception</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@throws</span> \yii\db\Exception</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">queryInternal</span><span class="params">($method, $fetchMode = null)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">parent</span>::queryInternal($method, $fetchMode);</span><br><span class="line">            &#125;<span class="keyword">catch</span>(\<span class="keyword">Exception</span> $e)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;handleException($e))</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">parent</span>::queryInternal($method, $fetchMode);</span><br><span class="line">                <span class="keyword">throw</span> $e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 处理执行sql时捕获的异常信息</span></span><br><span class="line"><span class="comment">         * 并且根据异常信息来决定是否需要重新连接数据库</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> \Exception $e</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> bool true: 需要重新执行sql false: 不需要重新执行sql</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">handleException</span><span class="params">(\Exception $e)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="comment">//如果不是yii\db\Exception异常抛出该异常或者不是MySQL server has gone away</span></span><br><span class="line">            $offset = stripos($e-&gt;getMessage(),<span class="string">'MySQL server has gone away'</span>);</span><br><span class="line">            <span class="keyword">if</span>(($e <span class="keyword">instanceof</span> \yii\db\<span class="keyword">Exception</span>) == <span class="keyword">false</span> <span class="keyword">OR</span> $offset === <span class="keyword">false</span>)</span><br><span class="line">                <span class="comment">//OR $e-&gt;errorInfo[0] != 'HY000' OR $e-&gt;errorInfo[1] != 2006)</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">$this</span>-&gt;trigger(<span class="keyword">static</span>::EVENT_DISCONNECT);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//将pdo设置从null</span></span><br><span class="line">            <span class="keyword">$this</span>-&gt;pdoStatement = <span class="keyword">NULL</span>;</span><br><span class="line">            <span class="comment">//$this-&gt;db-&gt;resetPdo();</span></span><br><span class="line">            <span class="keyword">$this</span>-&gt;db-&gt;close();</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在配置文件中关于db的配置给加上指定的class<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="keyword">return</span> [</span><br><span class="line">        <span class="string">'components'</span> =&gt; [</span><br><span class="line">            <span class="string">'db'</span> =&gt; [</span><br><span class="line">                <span class="string">'class'</span>   =&gt; <span class="string">'yii\db\Connection'</span>,</span><br><span class="line">                <span class="string">'commandClass'</span> =&gt; <span class="string">'common\components\Command'</span>,<span class="comment">// 加上这个</span></span><br><span class="line">                <span class="string">'username'</span> =&gt; <span class="string">'XXX'</span>,</span><br><span class="line">                <span class="string">'password'</span> =&gt; <span class="string">'XXX'</span>,</span><br><span class="line">                <span class="string">'dsn'</span> =&gt; <span class="string">'mysql:host=XXX;dbname=XXX;port=3306'</span>,</span><br><span class="line">            ],</span><br><span class="line">        ],</span><br><span class="line">    ];</span><br></pre></td></tr></table></figure></p>
+<p>相关文章:<br><a href="https://www.yiichina.com/topic/7296" target="_blank" rel="noopener">Yii2实现mysql断线重连</a><br><a href="https://blog.csdn.net/cenfei78325747/article/details/7854611" target="_blank" rel="noopener">在mysql中connection设置和wait-timeout的设置</a><br><a href="https://blog.csdn.net/csCrazybing/article/details/53303807" target="_blank" rel="noopener">查看mysql连接情况，以及连接超时时间设置</a><br><a href="https://blog.csdn.net/cor_twi/article/details/53098740" target="_blank" rel="noopener">源码剖析Yii错误 Invalid parameter number: no parameters were bound</a><br><a href="https://blog.csdn.net/cor_twi/article/details/52884730" target="_blank" rel="noopener">Yii 数据库重连告别General error: 2006 MySQL server has gone away</a></p>
 
       
     </div>
@@ -475,6 +469,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/yii2/" rel="tag"># yii2</a>
+          
+        </div>
+      
 
       
       
@@ -484,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/16/docker-info/" rel="next" title="Docker(1)入门">
-                <i class="fa fa-chevron-left"></i> Docker(1)入门
+              <a href="/2018/12/17/go-mysql-pool/" rel="next" title="Go Mysql数据库连接池的使用">
+                <i class="fa fa-chevron-left"></i> Go Mysql数据库连接池的使用
               </a>
             
           </div>
@@ -493,10 +493,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/28/yii-csrf/" rel="prev" title="局部关闭Csrf验证">
-                局部关闭Csrf验证 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
