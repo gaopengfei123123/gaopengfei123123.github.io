@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2018/09/12/go-why/</loc>
+    <lastmod>2018-12-28T06:27:46.572Z</lastmod>
+    <data>
+        <display>
+        <title>身为 Phper 为什么我选择 Go 语言?</title>
+        <pubTime>2018-09-12T06:45:50.000Z</pubTime>
+        
+        <tag>go</tag>
+         
+         
+           
+             
+              <breadCrumb title="go" url="http://blog.justwe.site/categories/go/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2018/12/19/yii-mysql/</loc>
     <lastmod>2018-12-19T03:40:02.627Z</lastmod>
     <data>
@@ -347,26 +367,6 @@
         <tag>go</tag>
          
         <tag>interface</tag>
-         
-         
-           
-             
-              <breadCrumb title="go" url="http://blog.justwe.site/categories/go/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2018/09/12/go-why/</loc>
-    <lastmod>2018-09-12T06:51:01.550Z</lastmod>
-    <data>
-        <display>
-        <title>身为 Phper 为什么我选择 Go 语言?</title>
-        <pubTime>2018-09-12T06:45:50.000Z</pubTime>
-        
-        <tag>go</tag>
          
          
            

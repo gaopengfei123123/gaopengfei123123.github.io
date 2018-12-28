@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.justwe.site/2018/09/12/go-why/</loc>
+    
+    <lastmod>2018-12-28T06:27:46.572Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2018/12/19/yii-mysql/</loc>
     
     <lastmod>2018-12-19T03:40:02.627Z</lastmod>
@@ -117,13 +124,6 @@
     <loc>http://blog.justwe.site/2018/09/12/go-interface-tip/</loc>
     
     <lastmod>2018-09-12T07:07:37.407Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2018/09/12/go-why/</loc>
-    
-    <lastmod>2018-09-12T06:51:01.550Z</lastmod>
     
   </url>
   
