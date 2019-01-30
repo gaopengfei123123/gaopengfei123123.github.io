@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[关于 Go 的 for Range 上的一个坑]]></title>
+    <url>%2F2019%2F01%2F30%2Fgo-for-range-error%2F</url>
+    <content type="text"><![CDATA[range作为go的一个语法糖在进行迭代的时候是很方便的, 但6是传址赋值的时候需要小心一点 出现问题直接上代码: 12345678910111213141516171819202122232425262728293031package mainimport "fmt"func main() &#123; slice := []int&#123;0, 1, 2, 3&#125; myMap := make(map[int]*int) for index, value := range slice &#123; fmt.Printf("value's memery address: %v | value's value: %v \n", &amp;value, value) myMap[index] = &amp;value &#125; fmt.Println("=====new map by range=====") fmt.Printf("result: %v \n", myMap) prtMap(myMap) myMap2 := make(map[int]*int) for i := 0; i &lt; len(slice); i++ &#123; myMap2[i] = &amp;slice[i] &#125; fmt.Println("=====new map by for=====") fmt.Printf("result: %v \n", myMap2) prtMap(myMap2)&#125;func prtMap(myMap map[int]*int) &#123; for key, value := range myMap &#123; fmt.Printf("map[%v]=%v\n", key, *value) &#125;&#125; 输出:1234567891011121314151617181920value's memery address: 0xc0000160a8 | value's value: 0value's memery address: 0xc0000160a8 | value's value: 1value's memery address: 0xc0000160a8 | value's value: 2value's memery address: 0xc0000160a8 | value's value: 3=====new map by range=====result: map[0:0xc0000160a8 1:0xc0000160a8 2:0xc0000160a8 3:0xc0000160a8]map[1]=3map[2]=3map[3]=3map[0]=3i's memery address: 0xc000016120 | value: 0i's memery address: 0xc000016120 | value: 1i's memery address: 0xc000016120 | value: 2i's memery address: 0xc000016120 | value: 3=====new map by for=====result: map[2:0xc00001c110 3:0xc00001c118 0:0xc00001c100 1:0xc00001c108]map[2]=2map[3]=3map[0]=0map[1]=1 猜测原因range 和 for 进行赋值操作只执行了一次, 因此在上面那个例子中 value和i的内存地址在循环的时候都没变过, 在进行值拷贝的时候是没问题的, 但是一旦加上 &amp; 的时候就变得很危险了, 造成的结果就是上面那个例子中的问题, 新数组存的都是同一个内存地址, 在 for 循环的时候因为只是利用的索引, 没有直接用到切片的值而不会引发这些问题, 在 range 的时候会出现 key,value 同时出现,那么就要小心处理了, 因为这里的value并不是切片中的原值, 而是一个拷贝出来的 Go Range 内部实现go语言坑之for range 类似的问题123456789101112131415161718package mainimport ( "fmt" "sync")func main() &#123; wg := sync.WaitGroup&#123;&#125; for i := 0; i &lt; 4; i++ &#123; wg.Add(1) go func() &#123; fmt.Printf("i is %d \n", i) wg.Done() &#125;() &#125; wg.Wait()&#125; 1输出 4,4,4,4 这个和上一个的问题还不一样, 这个就是闭包的执行顺序以及变量作用域的问题, 在执行闭包的时候for循环已经执行完毕,此时i=4, 接下来才会执行闭包内的函数, 规避这个问题也简单, 把变量的作用域改一下就行, 还有就是函数参数的值拷贝特点1234567for i := 0; i &lt; 4; i++ &#123; wg.Add(1) go func(i int) &#123; fmt.Printf("i is %d \n", i) wg.Done() &#125;(i) &#125; 闭包和变量作用域]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>range</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[转 Mac上一些好玩的命令行工具]]></title>
     <url>%2F2019%2F01%2F18%2Ftool-mac-terminal-awesome%2F</url>
     <content type="text"><![CDATA[mac上一些有意思的命令行小工具 asciinema 和 svg-termassiiname 是用来命令行录屏的, svg-term 将文件转换成svg动图, 这个做截屏很方便 安装:12brew install asciinemanpm install -g svg-term 使用方式:12asciinema rec cast.json // 开始录制, 数据保存在cast.json, 按 ctrl+d 保存cat cast.json | svg-term-cli //输出svg文件 比如下图缺点就是如果文件特别大帧率受到严重的影响 sl 和 cmatrix 小特效玩具安装12brew install slbrew install cmatrix 平时装哔用的 bat安装1brew install bat 替代 cat 命令, 支持代码高亮 ncdu 清理磁盘如标题, 清理磁盘, 直接运行就行 安装1brew install ncdu 收藏链接:优秀的命令行工具整理（一）优秀的命令行工具整理（二）]]></content>
@@ -104,17 +115,6 @@
       <tags>
         <tag>go</tag>
         <tag>flame-graph</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Git-Diff]]></title>
-    <url>%2F2018%2F10%2F26%2Fgit-diff%2F</url>
-    <content type="text"><![CDATA[git 对比文件差异 通常 git diff COMMIT_ID_1 COMMIT_DI_2 查看 只查看更改过的文件目录 git diff --name-only COMMIT_ID_1 COMMIT_DI_2 快捷用法就是: git diff --name-only HEAD HEAD^ 对比和上次提交时的改动]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
       </tags>
   </entry>
 </search>
