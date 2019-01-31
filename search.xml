@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[转 Golang 需要避免踩的 50 个坑]]></title>
+    <url>%2F2019%2F01%2F31%2Fgo-50-tips%2F</url>
+    <content type="text"><![CDATA[Golang 需要避免踩的 50 个坑（一）Golang 需要避免踩的 50 个坑（二）Golang 需要避免踩的 50 个坑（三）大体看了一遍, 看时的想法是: 原来还有这样的?]]></content>
+      <categories>
+        <category>精选转载</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[关于 Go 的 for Range 上的一个坑]]></title>
     <url>%2F2019%2F01%2F30%2Fgo-for-range-error%2F</url>
     <content type="text"><![CDATA[range作为go的一个语法糖在进行迭代的时候是很方便的, 但6是传址赋值的时候需要小心一点 出现问题直接上代码: 12345678910111213141516171819202122232425262728293031package mainimport "fmt"func main() &#123; slice := []int&#123;0, 1, 2, 3&#125; myMap := make(map[int]*int) for index, value := range slice &#123; fmt.Printf("value's memery address: %v | value's value: %v \n", &amp;value, value) myMap[index] = &amp;value &#125; fmt.Println("=====new map by range=====") fmt.Printf("result: %v \n", myMap) prtMap(myMap) myMap2 := make(map[int]*int) for i := 0; i &lt; len(slice); i++ &#123; myMap2[i] = &amp;slice[i] &#125; fmt.Println("=====new map by for=====") fmt.Printf("result: %v \n", myMap2) prtMap(myMap2)&#125;func prtMap(myMap map[int]*int) &#123; for key, value := range myMap &#123; fmt.Printf("map[%v]=%v\n", key, *value) &#125;&#125; 输出:1234567891011121314151617181920value's memery address: 0xc0000160a8 | value's value: 0value's memery address: 0xc0000160a8 | value's value: 1value's memery address: 0xc0000160a8 | value's value: 2value's memery address: 0xc0000160a8 | value's value: 3=====new map by range=====result: map[0:0xc0000160a8 1:0xc0000160a8 2:0xc0000160a8 3:0xc0000160a8]map[1]=3map[2]=3map[3]=3map[0]=3i's memery address: 0xc000016120 | value: 0i's memery address: 0xc000016120 | value: 1i's memery address: 0xc000016120 | value: 2i's memery address: 0xc000016120 | value: 3=====new map by for=====result: map[2:0xc00001c110 3:0xc00001c118 0:0xc00001c100 1:0xc00001c108]map[2]=2map[3]=3map[0]=0map[1]=1 猜测原因range 和 for 进行赋值操作只执行了一次, 因此在上面那个例子中 value和i的内存地址在循环的时候都没变过, 在进行值拷贝的时候是没问题的, 但是一旦加上 &amp; 的时候就变得很危险了, 造成的结果就是上面那个例子中的问题, 新数组存的都是同一个内存地址, 在 for 循环的时候因为只是利用的索引, 没有直接用到切片的值而不会引发这些问题, 在 range 的时候会出现 key,value 同时出现,那么就要小心处理了, 因为这里的value并不是切片中的原值, 而是一个拷贝出来的 Go Range 内部实现go语言坑之for range 类似的问题123456789101112131415161718package mainimport ( "fmt" "sync")func main() &#123; wg := sync.WaitGroup&#123;&#125; for i := 0; i &lt; 4; i++ &#123; wg.Add(1) go func() &#123; fmt.Printf("i is %d \n", i) wg.Done() &#125;() &#125; wg.Wait()&#125; 1输出 4,4,4,4 这个和上一个的问题还不一样, 这个就是闭包的执行顺序以及变量作用域的问题, 在执行闭包的时候for循环已经执行完毕,此时i=4, 接下来才会执行闭包内的函数, 规避这个问题也简单, 把变量的作用域改一下就行, 还有就是函数参数的值拷贝特点1234567for i := 0; i &lt; 4; i++ &#123; wg.Add(1) go func(i int) &#123; fmt.Printf("i is %d \n", i) wg.Done() &#125;(i) &#125; 闭包和变量作用域]]></content>
@@ -103,18 +114,6 @@
         <tag>go</tag>
         <tag>docker</tag>
         <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Go 火焰图分析]]></title>
-    <url>%2F2018%2F11%2F01%2Fgo-flame-graph%2F</url>
-    <content type="text"><![CDATA[go version go1.11.1 darwin/amd64 安装:123$ go get github.com/uber/go-torch$ cd $GOPATH/src/github.com/uber/go-torch$ git clone https://github.com/brendangregg/FlameGraph.git 安装测试工具123$ go get github.com/Masterminds/glide$ cd $GOPATH/src/github.com/uber/go-torch$ glide install 性能分析工具 glide install如果出现 Update failed for golang.org/x/sys: Cannot detect VCS 这种报错, 可以执行1$ glide mirror set https://golang.org/x/sys https://github.com/golang/sys 改变 $HOME/.gilde/mirrors.yaml 的镜像链接即可 运行时完成后输入 web12345678910$ go tool pprof --seconds 25 http://localhost:9090/debug/pprof/profileFetching profile over HTTP from http://localhost:9090/debug/pprof/profile?seconds=25Please wait... (25s)Saved profile in /Users/gpf/pprof/pprof.samples.cpu.002.pb.gzType: cpuTime: Nov 2, 2018 at 11:46am (CST)Duration: 25s, Total samples = 2.17s ( 8.68%)Entering interactive mode (type "help" for commands, "o" for options)(pprof) webFailed to execute dot. Is Graphviz installed? Error: exec: "dot": executable file not found in $PATH 出现 Failed to execute dot. Is Graphviz installed? Error: exec: &quot;dot&quot;: executable file not found in $PATH 报错, 需要安装 graphviz 在 mac 上就直接 brew install graphviz 即可]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-        <tag>flame-graph</tag>
       </tags>
   </entry>
 </search>
