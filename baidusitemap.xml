@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2019/02/18/2019-goal/</loc>
+    <lastmod>2019-02-18T10:04:51.888Z</lastmod>
+    <data>
+        <display>
+        <title>2019 目标</title>
+        <pubTime>2019-02-18T09:44:29.000Z</pubTime>
+        
+        <tag>default</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2019/01/31/go-50-tips/</loc>
     <lastmod>2019-01-31T02:51:52.195Z</lastmod>
     <data>
@@ -388,9 +405,9 @@
         
         <tag>go</tag>
          
-        <tag>switch</tag>
-         
         <tag>json</tag>
+         
+        <tag>switch</tag>
          
          
            
@@ -1921,9 +1938,9 @@
         
         <tag>go</tag>
          
-        <tag>comma-ok</tag>
-         
         <tag>switch</tag>
+         
+        <tag>comma-ok</tag>
          
          
            
@@ -2127,12 +2144,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
+    <loc>http://blog.justwe.site/2017/03/01/contentos-docker/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>使用Redis—geo Api实现搜索附近的人，自己写的一个composer包</title>
-        <pubTime>2017-03-11T04:11:00.000Z</pubTime>
+        <title>Centos65安装docker遇到的坑</title>
+        <pubTime>2017-02-28T21:55:27.000Z</pubTime>
         
          
            
@@ -2145,12 +2162,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/01/contentos-docker/</loc>
+    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Centos65安装docker遇到的坑</title>
-        <pubTime>2017-02-28T21:55:27.000Z</pubTime>
+        <title>使用Redis—geo Api实现搜索附近的人，自己写的一个composer包</title>
+        <pubTime>2017-03-11T04:11:00.000Z</pubTime>
         
          
            
@@ -2355,6 +2372,24 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2017/04/01/laravel-error-log/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Laravel-Error-Log</title>
+        <pubTime>2017-04-01T12:51:06.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2016/10/09/laravel-cron/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -2373,12 +2408,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/04/01/laravel-error-log/</loc>
+    <loc>http://blog.justwe.site/2016/12/19/laravel-facade/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Laravel-Error-Log</title>
-        <pubTime>2017-04-01T12:51:06.000Z</pubTime>
+        <title>再来个Facade吧</title>
+        <pubTime>2016-12-19T07:48:00.000Z</pubTime>
         
          
            
@@ -2409,12 +2444,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/12/19/laravel-facade/</loc>
+    <loc>http://blog.justwe.site/2016/04/01/laravel-repository/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>再来个Facade吧</title>
-        <pubTime>2016-12-19T07:48:00.000Z</pubTime>
+        <title>Laravel-Repository</title>
+        <pubTime>2016-04-01T12:53:01.000Z</pubTime>
         
          
            
@@ -2456,24 +2491,6 @@
          
          
            
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/04/01/laravel-repository/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Laravel-Repository</title>
-        <pubTime>2016-04-01T12:53:01.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="laravel" url="http://blog.justwe.site/categories/laravel/"/>
-          
         </display>
     </data>
     </url>
@@ -2763,23 +2780,6 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>小程序初次接触(1)</title>
-        <pubTime>2016-10-24T07:28:00.000Z</pubTime>
-        
-        <tag>xcx</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.justwe.site/2017/02/28/yii-beforeaction/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -2792,6 +2792,23 @@
              
               <breadCrumb title="Yii2" url="http://blog.justwe.site/categories/Yii2/"/>
           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>小程序初次接触(1)</title>
+        <pubTime>2016-10-24T07:28:00.000Z</pubTime>
+        
+        <tag>xcx</tag>
+         
+         
+           
         </display>
     </data>
     </url>

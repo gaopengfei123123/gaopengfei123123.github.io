@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[2019 目标]]></title>
+    <url>%2F2019%2F02%2F18%2F2019-goal%2F</url>
+    <content type="text"><![CDATA[以前是没钱没时间, 现在我想做个有规划的人: 去一趟加拿大见一个人 拿驾照 看5本技术书, 达到理解80%的程度, 笔记跟上 健身, 最低目标30分钟5公里 过200道leetcode, hard难度以下需要想出次优解, hard 难度能做到理解最优解 以上能完成的话就接下来: 自己搞一个基于k8s的微服务架构 这些目标截止到 2020-2-18号 吧]]></content>
+      <tags>
+        <tag>default</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[转 Golang 需要避免踩的 50 个坑]]></title>
     <url>%2F2019%2F01%2F31%2Fgo-50-tips%2F</url>
     <content type="text"><![CDATA[Golang 需要避免踩的 50 个坑]]></content>
@@ -101,19 +109,6 @@
       </categories>
       <tags>
         <tag>go</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Nginx转发到go服务当中]]></title>
-    <url>%2F2018%2F11%2F25%2Fgo-nginx-docker%2F</url>
-    <content type="text"><![CDATA[通过docker-compose编排的容器总是有一些奇怪的问题 问题核心就是go-server和nginx所属不同的容器, 需要外界能访问到go的服务就需要进行转发了 如果是在同一个容器中只需要: 1234567891011121314151617181920212223242526server &#123; listen 80; server_name .a.com; charset utf-8; access_log /home/a.com.access.log; location /(css|js|fonts|img)/ &#123; access_log off; expires 1d; root &quot;/path/to/app_a/static&quot;; try_files $uri @backend; &#125; location / &#123; try_files /_not_exists_ @backend; &#125; location @backend &#123; proxy_set_header X-Forwarded-For $remote_addr; proxy_set_header Host $http_host; proxy_pass http://127.0.0.1:8080; &#125;&#125; beego-nginx部署 那么如果是两个容器当中呢? 基于上面的例子, 我们需要用到upstream, 123456789101112131415161718192021222324252627282930313233upstream go_server_proxy &#123; # 这里的server 需要用到 容器名:端口 的形式 server go_server:9090;&#125;server &#123; listen 80; server_name localhost; root /var/www; index index.html; charset utf-8; access_log /var/log/nginx/def.access.log; location /(css|js|fonts|img)/ &#123; access_log off; expires 1d; root &quot;/var/www/static&quot;; try_files $uri @backend; &#125; location / &#123; try_files /_not_exists_ @backend; &#125; location @backend &#123; proxy_set_header X-Forwarded-For $remote_addr; proxy_set_header Host $http_host; proxy_pass http://go_server_proxy; &#125;&#125; 这样做的原因是容器之间的ip并不固定, 使用容器名做host地址是更简单的选择]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
-        <tag>docker</tag>
-        <tag>nginx</tag>
       </tags>
   </entry>
 </search>
