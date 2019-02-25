@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.justwe.site/2019/02/25/php-unsual-mistakes/</loc>
+    
+    <lastmod>2019-02-25T03:11:40.951Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2019/02/18/2019-goal/</loc>
     
     <lastmod>2019-02-18T10:04:51.888Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://blog.justwe.site/2019/01/30/go-for-range-error/</loc>
     
     <lastmod>2019-01-30T10:12:38.839Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2018/08/26/php-unsual-mistakes/</loc>
-    
-    <lastmod>2019-01-23T10:50:05.949Z</lastmod>
     
   </url>
   
