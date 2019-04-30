@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2019-02-28T06:25:49.384Z</updated>
+  <updated>2019-04-30T10:35:17.847Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Jmeter 对Tcp进行压测</title>
+    <link href="http://blog.justwe.site/2019/04/30/tools-jmeter/"/>
+    <id>http://blog.justwe.site/2019/04/30/tools-jmeter/</id>
+    <published>2019-04-30T09:45:59.000Z</published>
+    <updated>2019-04-30T10:35:17.847Z</updated>
+    
+    <content type="html"><![CDATA[<p>jmeter是个好工具, 跨平台, 有GUI, 简单易用, 扩展多</p><a id="more"></a><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>本地环境为macOS Mojave 10.14.4</p><p><strong>本地需要安装java8</strong><br><a href="https://jmeter.apache.org/download_jmeter.cgi" target="_blank" rel="noopener">jmeter官方下载地址</a><br><a href="https://jmeter-plugins.org/install/Install/" target="_blank" rel="noopener">jmeter插件下载</a></p><p>当前下载的jmeter版本为 5.1.1<br>解压下载之后, 运行命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/Downloads/apache-jmeter-5.1.1/bin/jmeter</span><br></pre></td></tr></table></figure></p><p>就运行起来了</p><h4 id="进行tcp压测"><a href="#进行tcp压测" class="headerlink" title="进行tcp压测"></a>进行tcp压测</h4><h5 id="首先创建Thread-Group"><a href="#首先创建Thread-Group" class="headerlink" title="首先创建Thread Group"></a>首先创建Thread Group</h5><p><img src="/images/jmeter/jmeter_1.jpg" alt="img"></p><p>注意几个关键点:</p><ul><li>Number of Threads (users)     创建进程组, 相当于多少并发</li><li>Ramp-Up Period (in seconds)   设定的并发值在多少秒内到达预期, 模拟自然流量</li><li>Loop Count   每个进程组循环多少次             </li></ul><p><code>Loop Count</code> * <code>Number of Threads</code> 就是整体请求数量了</p><h5 id="创建tcp-Sampler"><a href="#创建tcp-Sampler" class="headerlink" title="创建tcp Sampler"></a>创建tcp Sampler</h5><p><img src="/images/jmeter/jmeter_2.jpg" alt="img"></p><p>这篇文章是使用最基本的文字tcp传输</p><p><img src="/images/jmeter/jmeter_3.jpg" alt="img"></p><p>看图说话, TCP classname默认为: <code>org.apache.jmeter.protocol.tcp.sampler.TCPClientImpl</code>, 可以直接从 <code>Text to send</code> 中传入文本<br>传文本的时候<strong>一定</strong>要输入之后加一个回车,写<code>\n</code>都不管用, <strong>必须</strong> 是回车, 它是自动转换的, 不然会造成数据找不到终止断点</p><p>如果使用 <code>org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl</code> 则需要在 <code>End of line byte value</code> 里面传值, 通常是<code>10</code><br>且  <code>Text to send</code> 传的是16进制数据</p><h4 id="创建-summary-report"><a href="#创建-summary-report" class="headerlink" title="创建 summary report"></a>创建 summary report</h4><p><img src="/images/jmeter/jmeter_4.jpg" alt="img"></p><p>用于做统计表格</p><h4 id="创建-view-results-tree"><a href="#创建-view-results-tree" class="headerlink" title="创建 view results tree"></a>创建 view results tree</h4><p><img src="/images/jmeter/jmeter_5.jpg" alt="img"></p><p>用于查看请求数据返回数据</p><h4 id="安装cpu-内存监控插件"><a href="#安装cpu-内存监控插件" class="headerlink" title="安装cpu/内存监控插件"></a>安装cpu/内存监控插件</h4><p>5.1.1 版本的和之前搜的有些不一样, 现在有了一个内置的扩展商店</p><p><a href="https://jmeter-plugins.org/install/Install/" target="_blank" rel="noopener">扩展下载地址</a></p><p><code>Download plugins-manager.jar and put it into lib/ext directory, then restart JMeter.</code></p><p>看到这句话没?  点就行了, 然后把它放到jmeter目录 <code>lib/ext</code>下,重启jmeter就能看到了</p><p><img src="/images/jmeter/jmeter_6.jpg" alt="img"></p><ol><li>点进去搜索 <code>PerfMon</code> ,就是我们要找的了, 点击安装 , 从插件简介里也能看到<a href="https://jmeter-plugins.org/wiki/PerfMon/" target="_blank" rel="noopener">文档地址</a></li><li>在文档中找到 <code>Server Agent</code>的<a href="https://github.com/undera/perfmon-agent/blob/master/README.md" target="_blank" rel="noopener">下载地址</a></li><li>在被测服务器中安装 Server Agent , linux 直接运行 <code>serverAgent.sh</code> 默认端口为 4444</li></ol><p>添加监控:<br><img src="/images/jmeter/jmeter_7.jpg" alt="img"><br>点 <code>Add Row</code> 添加目标服务器的ip和端口就行, 端口默认4444</p><p>以上就是一套简单的tcp压测测试了</p><p><a href="/2019/04/30/tools-jmeter/">原文地址</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;jmeter是个好工具, 跨平台, 有GUI, 简单易用, 扩展多&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="jmeter" scheme="http://blog.justwe.site/tags/jmeter/"/>
+    
+  </entry>
   
   <entry>
     <title>Php开发过程中不常碰到的error (2.28更新)</title>
@@ -424,9 +446,9 @@
     
       <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
     
-      <category term="json" scheme="http://blog.justwe.site/tags/json/"/>
-    
       <category term="switch" scheme="http://blog.justwe.site/tags/switch/"/>
+    
+      <category term="json" scheme="http://blog.justwe.site/tags/json/"/>
     
   </entry>
   
@@ -471,30 +493,6 @@
     
     
       <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go Interface 的机制</title>
-    <link href="http://blog.justwe.site/2018/09/12/go-interface-tip/"/>
-    <id>http://blog.justwe.site/2018/09/12/go-interface-tip/</id>
-    <published>2018-09-12T06:53:03.000Z</published>
-    <updated>2018-09-12T07:07:37.407Z</updated>
-    
-    <content type="html"><![CDATA[<p>对 interface 赋值变量的时候经常出的问题</p><a id="more"></a><p>日常开发时有个这样的例子:</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Human <span class="keyword">interface</span> &#123;</span><br><span class="line">Run()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Boy <span class="keyword">struct</span> &#123;</span><br><span class="line">Name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(b *Boy)</span> <span class="title">Run</span><span class="params">()</span></span> &#123;</span><br><span class="line">fmt.Println(<span class="string">"my name is "</span> + b.Name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">xiaoming := Boy&#123;Name: <span class="string">"xiao ming"</span>&#125;</span><br><span class="line"><span class="keyword">var</span> h Human</span><br><span class="line"><span class="comment">// h = xiaoming // #1 会报错, Boy does not implement Human (Run method has pointer receiver)</span></span><br><span class="line">h = &amp;xiaoming</span><br><span class="line">h.Run()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果用 <code>#1</code> 这行代码时会出现以下错误:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># command-line-arguments</span></span><br><span class="line">./main.go:23:4: cannot use xiaoming (<span class="built_in">type</span> Boy) as <span class="built_in">type</span> Human <span class="keyword">in</span> assignment:</span><br><span class="line">        Boy does not implement Human (Run method has pointer receiver)</span><br></pre></td></tr></table></figure></p><p>然而用下面的 <code>h = &amp;xiaoming</code> 是正常的</p><p>这个问题，首先得先了解一下Golang 中 方法的集合的概念，一个struct虽然可以通过值类型和引用类型两种方式定义方法，但是不通的对象类型对应了不同的方法集：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Values                    Methods Receivers</span><br><span class="line">-----------------------------------------------</span><br><span class="line"> T                        (t T)</span><br><span class="line">*T                        (t T) and (t *T)</span><br></pre></td></tr></table></figure><p>值类型的对象只有（t T) 结构的方法，虽然值类型的对象也可以调用(t *T) 方法，但这实际上是Golang编译器自动转化成了&amp;t的形式来调用方法，并不是表明值类型的对象拥有该方法。</p><p>换一个维度来看上面的表格可能更加直观：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Methods Receivers         Values</span><br><span class="line">-----------------------------------------------</span><br><span class="line">(t T)                     T and *T</span><br><span class="line"></span><br><span class="line">(t *T)                    *T</span><br></pre></td></tr></table></figure><p>这就意味着指针类型的receiver 方法实现接口时，只有指针类型的对象实现了该接口。</p><p>对应上面的例子来说，只有&amp;user实现了notifier接口，而user根本没有实现该接口。所以上面代码会报出这样的异常。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;对 interface 赋值变量的时候经常出的问题&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
-    
-      <category term="interface" scheme="http://blog.justwe.site/tags/interface/"/>
     
   </entry>
   

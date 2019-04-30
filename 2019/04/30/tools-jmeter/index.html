@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VvMRi2mvr2-coUGzBvV70mi473YMTjSnsTdBaMjUnCA" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jmeter," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="<hello-world/>" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="jmeter是个好工具, 跨平台, 有GUI, 简单易用, 扩展多">
+<meta name="keywords" content="jmeter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jmeter 对Tcp进行压测">
+<meta property="og:url" content="http://blog.justwe.site/2019/04/30/tools-jmeter/index.html">
+<meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
+<meta property="og:description" content="jmeter是个好工具, 跨平台, 有GUI, 简单易用, 扩展多">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.justwe.site/images/jmeter/jmeter_1.jpg">
+<meta property="og:image" content="http://blog.justwe.site/images/jmeter/jmeter_2.jpg">
+<meta property="og:image" content="http://blog.justwe.site/images/jmeter/jmeter_3.jpg">
+<meta property="og:image" content="http://blog.justwe.site/images/jmeter/jmeter_4.jpg">
+<meta property="og:image" content="http://blog.justwe.site/images/jmeter/jmeter_5.jpg">
+<meta property="og:image" content="http://blog.justwe.site/images/jmeter/jmeter_6.jpg">
+<meta property="og:image" content="http://blog.justwe.site/images/jmeter/jmeter_7.jpg">
+<meta property="og:updated_time" content="2019-04-30T10:35:17.847Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jmeter 对Tcp进行压测">
+<meta name="twitter:description" content="jmeter是个好工具, 跨平台, 有GUI, 简单易用, 扩展多">
+<meta name="twitter:image" content="http://blog.justwe.site/images/jmeter/jmeter_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '00JE2O0YE7',
+      apiKey: 'b50cd11f02da1e59a119d03842e8cb36',
+      indexName: 'hexo-index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"查找站点文章","hits_empty":"没有找到相关文章: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justwe.site/2019/04/30/tools-jmeter/"/>
+
+
+
+
+
+  <title>Jmeter 对Tcp进行压测 | <hello-world/></title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-92777740-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7c9c1ba6fc08944ab44a0d401f1721fe";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">&lt;hello-world/&gt;</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">代码改变世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2019/04/30/tools-jmeter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GPF">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<hello-world/>">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Jmeter 对Tcp进行压测</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-30T17:45:59+08:00">
+                2019-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/30/tools-jmeter/" class="leancloud_visitors" data-flag-title="Jmeter 对Tcp进行压测">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>jmeter是个好工具, 跨平台, 有GUI, 简单易用, 扩展多</p>
+<a id="more"></a>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>本地环境为macOS Mojave 10.14.4</p>
+<p><strong>本地需要安装java8</strong><br><a href="https://jmeter.apache.org/download_jmeter.cgi" target="_blank" rel="noopener">jmeter官方下载地址</a><br><a href="https://jmeter-plugins.org/install/Install/" target="_blank" rel="noopener">jmeter插件下载</a></p>
+<p>当前下载的jmeter版本为 5.1.1<br>解压下载之后, 运行命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh ~/Downloads/apache-jmeter-5.1.1/bin/jmeter</span><br></pre></td></tr></table></figure></p>
+<p>就运行起来了</p>
+<h4 id="进行tcp压测"><a href="#进行tcp压测" class="headerlink" title="进行tcp压测"></a>进行tcp压测</h4><h5 id="首先创建Thread-Group"><a href="#首先创建Thread-Group" class="headerlink" title="首先创建Thread Group"></a>首先创建Thread Group</h5><p><img src="/images/jmeter/jmeter_1.jpg" alt="img"></p>
+<p>注意几个关键点:</p>
+<ul>
+<li>Number of Threads (users)     创建进程组, 相当于多少并发</li>
+<li>Ramp-Up Period (in seconds)   设定的并发值在多少秒内到达预期, 模拟自然流量</li>
+<li>Loop Count   每个进程组循环多少次             </li>
+</ul>
+<p><code>Loop Count</code> * <code>Number of Threads</code> 就是整体请求数量了</p>
+<h5 id="创建tcp-Sampler"><a href="#创建tcp-Sampler" class="headerlink" title="创建tcp Sampler"></a>创建tcp Sampler</h5><p><img src="/images/jmeter/jmeter_2.jpg" alt="img"></p>
+<p>这篇文章是使用最基本的文字tcp传输</p>
+<p><img src="/images/jmeter/jmeter_3.jpg" alt="img"></p>
+<p>看图说话, TCP classname默认为: <code>org.apache.jmeter.protocol.tcp.sampler.TCPClientImpl</code>, 可以直接从 <code>Text to send</code> 中传入文本<br>传文本的时候<strong>一定</strong>要输入之后加一个回车,写<code>\n</code>都不管用, <strong>必须</strong> 是回车, 它是自动转换的, 不然会造成数据找不到终止断点</p>
+<p>如果使用 <code>org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl</code> 则需要在 <code>End of line byte value</code> 里面传值, 通常是<code>10</code><br>且  <code>Text to send</code> 传的是16进制数据</p>
+<h4 id="创建-summary-report"><a href="#创建-summary-report" class="headerlink" title="创建 summary report"></a>创建 summary report</h4><p><img src="/images/jmeter/jmeter_4.jpg" alt="img"></p>
+<p>用于做统计表格</p>
+<h4 id="创建-view-results-tree"><a href="#创建-view-results-tree" class="headerlink" title="创建 view results tree"></a>创建 view results tree</h4><p><img src="/images/jmeter/jmeter_5.jpg" alt="img"></p>
+<p>用于查看请求数据返回数据</p>
+<h4 id="安装cpu-内存监控插件"><a href="#安装cpu-内存监控插件" class="headerlink" title="安装cpu/内存监控插件"></a>安装cpu/内存监控插件</h4><p>5.1.1 版本的和之前搜的有些不一样, 现在有了一个内置的扩展商店</p>
+<p><a href="https://jmeter-plugins.org/install/Install/" target="_blank" rel="noopener">扩展下载地址</a></p>
+<p><code>Download plugins-manager.jar and put it into lib/ext directory, then restart JMeter.</code></p>
+<p>看到这句话没?  点就行了, 然后把它放到jmeter目录 <code>lib/ext</code>下,重启jmeter就能看到了</p>
+<p><img src="/images/jmeter/jmeter_6.jpg" alt="img"></p>
+<ol>
+<li>点进去搜索 <code>PerfMon</code> ,就是我们要找的了, 点击安装 , 从插件简介里也能看到<a href="https://jmeter-plugins.org/wiki/PerfMon/" target="_blank" rel="noopener">文档地址</a></li>
+<li>在文档中找到 <code>Server Agent</code>的<a href="https://github.com/undera/perfmon-agent/blob/master/README.md" target="_blank" rel="noopener">下载地址</a></li>
+<li>在被测服务器中安装 Server Agent , linux 直接运行 <code>serverAgent.sh</code> 默认端口为 4444</li>
+</ol>
+<p>添加监控:<br><img src="/images/jmeter/jmeter_7.jpg" alt="img"><br>点 <code>Add Row</code> 添加目标服务器的ip和端口就行, 端口默认4444</p>
+<p>以上就是一套简单的tcp压测测试了</p>
+<p><a href="/2019/04/30/tools-jmeter/">原文地址</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jmeter/" rel="tag"># jmeter</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/28/php-unsual-mistakes/" rel="next" title="Php开发过程中不常碰到的error (2.28更新)">
+                <i class="fa fa-chevron-left"></i> Php开发过程中不常碰到的error (2.28更新)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.jpeg"
+               alt="GPF" />
+          <p class="site-author-name" itemprop="name">GPF</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">145</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://cn.vuejs.org/" title="vuejs中文网" target="_blank">vuejs中文网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laravel-china.org/" title="laravelChina" target="_blank">laravelChina</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://laravelacademy.org/" title="laravel学院" target="_blank">laravel学院</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进行tcp压测"><span class="nav-number">2.</span> <span class="nav-text">进行tcp压测</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#首先创建Thread-Group"><span class="nav-number">2.1.</span> <span class="nav-text">首先创建Thread Group</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建tcp-Sampler"><span class="nav-number">2.2.</span> <span class="nav-text">创建tcp Sampler</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-summary-report"><span class="nav-number">3.</span> <span class="nav-text">创建 summary report</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-view-results-tree"><span class="nav-number">4.</span> <span class="nav-text">创建 view results tree</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装cpu-内存监控插件"><span class="nav-number">5.</span> <span class="nav-text">安装cpu/内存监控插件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GPF</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mzMO8q019pF781zrR1LLJbxK-gzGzoHsz", "oz8n0eDpPQJrcD8KD4FHf9Xd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
