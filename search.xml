@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Docker for Mac 部署 Kubernetes]]></title>
+    <url>%2F2019%2F05%2F06%2Fk8s-install-docker%2F</url>
+    <content type="text"><![CDATA[docker for mac 安装kubernetes本来是很方便的, 但是国内玩家要折腾一下, 因为 gcr.io 这个域被墙了… 目前来看前辈们已经把坑给淌的差不多了, 我老早的时候也被折腾的头秃, 这里就做个总结 通过代理翻墙下载镜像这个方法相对来说一劳永逸, 缺点是每个月有vpn的花费, 我代理用的shadowsockets, 就拿这个来举例: 首先安装1brew install privoxy 添加配置: 1vi /usr/local/etc/privoxy/config 配置内容:12listen-address 0.0.0.0:8118forward-socks5 / localhost:1080 . 监听本地8118端口, 转发到 localhost:1080, 这也是ss的客户端的转发端口 启动:1brew services start privoxy 转发部分完成, 接下来在 docker for mac配置 docker for mac &gt; preferences &gt; Proxies &gt; 点击 Manual proxy configuration Web Server(HTTP) 和 Secure Web Server (HTTPS) 都填入 http://{你机器IP}:8118 比如: ‘http://192.168.110.203:8118&#39; 不能用 127.0.0.1, 因为 docker for mac 启动后, docker 是运行在一个虚拟机中,而不是macOS下, 因此这个地址代表的意义不一样 点保存, 这样就能正常安装k8s了, 可以通过活动监视器看一下他们的流量是否正常 教程来源 自己预先加载一套镜像来找个目录, 新建 images.properties12345678910k8s.gcr.io/pause-amd64:3.1=registry.cn-hangzhou.aliyuncs.com/google_containers/pause-amd64:3.1k8s.gcr.io/kube-controller-manager-amd64:v1.10.3=registry.cn-hangzhou.aliyuncs.com/google_containers/kube-controller-manager-amd64:v1.10.3k8s.gcr.io/kube-scheduler-amd64:v1.10.3=registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler-amd64:v1.10.3k8s.gcr.io/kube-proxy-amd64:v1.10.3=registry.cn-hangzhou.aliyuncs.com/google_containers/kube-proxy-amd64:v1.10.3k8s.gcr.io/kube-apiserver-amd64:v1.10.3=registry.cn-hangzhou.aliyuncs.com/google_containers/kube-apiserver-amd64:v1.10.3k8s.gcr.io/etcd-amd64:3.1.12=registry.cn-hangzhou.aliyuncs.com/google_containers/etcd-amd64:3.1.12k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.8=registry.cn-hangzhou.aliyuncs.com/google_containers/k8s-dns-sidecar-amd64:1.14.8k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.8=registry.cn-hangzhou.aliyuncs.com/google_containers/k8s-dns-kube-dns-amd64:1.14.8k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.8=registry.cn-hangzhou.aliyuncs.com/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.8k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3=registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.8.3 新建脚本: kubernetes.sh12345678910111213141516171819#/bin/bashfile="./images.properties"if [ -f "$file" ]then echo "$file found." while IFS='=' read -r key value do #echo "$&#123;key&#125;=$&#123;value&#125;" docker pull $&#123;value&#125; docker tag $&#123;value&#125; $&#123;key&#125; docker rmi $&#123;value&#125; done &lt; "$file"else echo "$file not found."fi 运行就行 教程来源k8s-docker-for-mac 找个gcr.io的国内镜像这个是利用了dockerHub 因为都是国外的, 先让dockerHub给build一下, 然后直接拉dockerHub的镜像来迂回一下 Google Container Registry(gcr.io) 中国可用镜像(长期维护)gcr.io_mirror基于Docker for macOS的Kubernetes本地环境搭建与应用部署]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>tools</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Jmeter 对Tcp进行压测]]></title>
     <url>%2F2019%2F04%2F30%2Ftools-jmeter%2F</url>
     <content type="text"><![CDATA[jmeter是个好工具, 跨平台, 有GUI, 简单易用, 扩展多 安装本地环境为macOS Mojave 10.14.4 本地需要安装java8jmeter官方下载地址jmeter插件下载 当前下载的jmeter版本为 5.1.1解压下载之后, 运行命令:1sh ~/Downloads/apache-jmeter-5.1.1/bin/jmeter 就运行起来了 进行tcp压测首先创建Thread Group 注意几个关键点: Number of Threads (users) 创建进程组, 相当于多少并发 Ramp-Up Period (in seconds) 设定的并发值在多少秒内到达预期, 模拟自然流量 Loop Count 每个进程组循环多少次 Loop Count * Number of Threads 就是整体请求数量了 创建tcp Sampler 这篇文章是使用最基本的文字tcp传输 看图说话, TCP classname默认为: org.apache.jmeter.protocol.tcp.sampler.TCPClientImpl, 可以直接从 Text to send 中传入文本传文本的时候一定要输入之后加一个回车,写\n都不管用, 必须 是回车, 它是自动转换的, 不然会造成数据找不到终止断点 如果使用 org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl 则需要在 End of line byte value 里面传值, 通常是10且 Text to send 传的是16进制数据 创建 summary report 用于做统计表格 创建 view results tree 用于查看请求数据返回数据 安装cpu/内存监控插件5.1.1 版本的和之前搜的有些不一样, 现在有了一个内置的扩展商店 扩展下载地址 Download plugins-manager.jar and put it into lib/ext directory, then restart JMeter. 看到这句话没? 点就行了, 然后把它放到jmeter目录 lib/ext下,重启jmeter就能看到了 点进去搜索 PerfMon ,就是我们要找的了, 点击安装 , 从插件简介里也能看到文档地址 在文档中找到 Server Agent的下载地址 在被测服务器中安装 Server Agent , linux 直接运行 serverAgent.sh 默认端口为 4444 添加监控:点 Add Row 添加目标服务器的ip和端口就行, 端口默认4444 以上就是一套简单的tcp压测测试了 原文地址]]></content>
@@ -99,17 +110,6 @@
       <tags>
         <tag>go</tag>
         <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Go里的点点点语法]]></title>
-    <url>%2F2018%2F12%2F14%2Fgo-dotdotdot%2F</url>
-    <content type="text"><![CDATA[golang 代码里面有时会出现 ... 这个操作, 初次看到也是摸不到头脑,其实他是用来做数组的析构用的 举个例子就明白了: 123456789101112131415161718192021package mainimport "fmt"func main() &#123; pm := []string&#123;"a", "b", "c"&#125; test("abc", pm...) // 相当于 test("abc", "a", "b", "c") ap := []string&#123;"f", "g"&#125; rs := append(pm, ap...) // 相当于 append(pm, ap[0], ap[1], 以此类推) fmt.Println("rs:", rs)&#125;func test(name string, pms ...string) &#123; fmt.Println("output name:", name) for k, v := range pms &#123; fmt.Printf("k: %v, v: %v \n", k, v) &#125; return&#125; 输出: 12345output name: abck: 0, v: ak: 1, v: bk: 2, v: crs: [a b c f g] 这里做了两个示例: 在func中的 ... eg: func test(name string, pms ...string)代表着不限参数数量, 而多出的参数都放在了 var pms []string 这个数组当中, 在go中典型的使用例子就是 fmt.Print 这一系列的方法 在传参的时候使用... 是用来表示将数组中每个元素单独传入函数中较长用的就是出现数组合并的时候, 使用append() 方法时:这样写正确 12ap := []string&#123;"f", "g"&#125; rs := append(pm, ap...) // 相当于 append(pm, ap[0], ap[1], 以此类推) 这样写就报错12ap := []string&#123;"f", "g"&#125;rs := append(pm, ap)]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
       </tags>
   </entry>
 </search>
