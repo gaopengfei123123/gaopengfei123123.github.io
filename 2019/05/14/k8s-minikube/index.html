@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="VvMRi2mvr2-coUGzBvV70mi473YMTjSnsTdBaMjUnCA" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="k8s," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="<hello-world/>" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="本地快速装一个微型的kubernetes环境, 翻墙的苦谁能懂?">
+<meta name="keywords" content="k8s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s 安装 Minikube">
+<meta property="og:url" content="http://blog.justwe.site/2019/05/14/k8s-minikube/index.html">
+<meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
+<meta property="og:description" content="本地快速装一个微型的kubernetes环境, 翻墙的苦谁能懂?">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-14T03:07:30.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K8s 安装 Minikube">
+<meta name="twitter:description" content="本地快速装一个微型的kubernetes环境, 翻墙的苦谁能懂?">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '00JE2O0YE7',
+      apiKey: 'b50cd11f02da1e59a119d03842e8cb36',
+      indexName: 'hexo-index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"查找站点文章","hits_empty":"没有找到相关文章: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justwe.site/2019/05/14/k8s-minikube/"/>
+
+
+
+
+
+  <title>K8s 安装 Minikube | <hello-world/></title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-92777740-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7c9c1ba6fc08944ab44a0d401f1721fe";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">&lt;hello-world/&gt;</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">代码改变世界</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.justwe.site/2019/05/14/k8s-minikube/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="GPF">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<hello-world/>">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">K8s 安装 Minikube</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T11:04:46+08:00">
+                2019-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/14/k8s-minikube/" class="leancloud_visitors" data-flag-title="K8s 安装 Minikube">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本地快速装一个微型的kubernetes环境, 翻墙的苦谁能懂?</p>
+<a id="more"></a>
+<h4 id="mac-本地安装minikube环境"><a href="#mac-本地安装minikube环境" class="headerlink" title="mac 本地安装minikube环境"></a>mac 本地安装minikube环境</h4><p>环境需求:</p>
+<ul>
+<li>kubectl       本地做命令行控制用, 所有的命令操作都是通过它</li>
+<li>vittualBox    v5.1 +  更新到最新版本就对了</li>
+<li>minikube      在本地搭建测试环境</li>
+</ul>
+<p>翻墙有困难的可以参考一下这个 <a href="https://yq.aliyun.com/articles/221687" target="_blank" rel="noopener">https://yq.aliyun.com/articles/221687</a></p>
+<p>安装 <code>kubectl</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜   brew install kubectl</span><br></pre></td></tr></table></figure></p>
+<p>下载最新 <code>minikube</code> 不建议使用brew安装,  首先版本不会是最新, 再者会出现莫名其妙的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 &amp;&amp; \</span><br><span class="line">  chmod +x minikube &amp;&amp; \</span><br><span class="line">  sudo mv minikube /usr/local/bin/</span><br></pre></td></tr></table></figure></p>
+<p>默认 start 时运行的virtualBox 去官网下个最新的就行</p>
+<p>启动, 最好把docker镜像指定到国内<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ minikube start --registry-mirror=https://registry.docker-cn.com</span><br><span class="line">😄  minikube v1.0.1 on darwin (amd64)</span><br><span class="line">💿  Downloading Minikube ISO ...</span><br><span class="line"> 142.88 MB / 142.88 MB [============================================] 100.00% 0s</span><br><span class="line">🤹  Downloading Kubernetes v1.14.1 images in the background ...</span><br><span class="line">🔥  Creating virtualbox VM (CPUs=2, Memory=2048MB, Disk=20000MB) ...</span><br><span class="line">📶  &quot;minikube&quot; IP address is 192.168.99.103</span><br><span class="line">🐳  Configuring Docker as the container runtime ...</span><br><span class="line">🐳  Version of container runtime is 18.06.3-ce</span><br><span class="line">⌛  Waiting for image downloads to complete ...</span><br><span class="line">✨  Preparing Kubernetes environment ...</span><br><span class="line">💾  Downloading kubeadm v1.14.1</span><br><span class="line">💾  Downloading kubelet v1.14.1</span><br><span class="line">🚜  Pulling images required by Kubernetes v1.14.1 ...</span><br><span class="line">🚀  Launching Kubernetes v1.14.1 using kubeadm ...</span><br><span class="line">⌛  Waiting for pods: apiserver proxy etcd scheduler controller dns</span><br><span class="line">🔑  Configuring cluster permissions ...</span><br><span class="line">🤔  Verifying component health .....</span><br><span class="line">💗  kubectl is now configured to use &quot;minikube&quot;</span><br><span class="line">🏄  Done! Thank you for using minikube!</span><br><span class="line">➜  ~ kubectl cluster-info</span><br><span class="line">Kubernetes master is running at https://192.168.99.103:8443</span><br><span class="line">KubeDNS is running at https://192.168.99.103:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</span><br><span class="line"></span><br><span class="line">To further debug and diagnose cluster problems, use &apos;kubectl cluster-info dump&apos;.</span><br></pre></td></tr></table></figure></p>
+<p>如果<code>Minikube ISO</code>存在墙的问题, 就把iso下载后放到 <code>~/.minikube/cache/iso/</code>下</p>
+<p>这时Mac上的docker不能用docker for Mac提供的了, 而是宿主机里面的docker, 切换命令为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜   eval $(minikube docker-env)</span><br></pre></td></tr></table></figure></p>
+<p>撤销更改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜   eval $(minikube docker-env -u)</span><br></pre></td></tr></table></figure></p>
+<p>加载后台控制面板, 稍等一会, 自动打卡后台界面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜   minikube dashboard</span><br></pre></td></tr></table></figure></p>
+<h4 id="部署第一个应用"><a href="#部署第一个应用" class="headerlink" title="部署第一个应用"></a>部署第一个应用</h4><h5 id="命令行部署"><a href="#命令行部署" class="headerlink" title="命令行部署"></a>命令行部署</h5><h6 id="创建node-js-应用"><a href="#创建node-js-应用" class="headerlink" title="创建node.js 应用"></a>创建node.js 应用</h6><p>创建文件 <code>server.js</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> handleRequest = <span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Received request for URL: '</span> + request.url);</span><br><span class="line">  response.writeHead(<span class="number">200</span>);</span><br><span class="line">  response.end(<span class="string">'Hello World! V1'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> www = http.createServer(handleRequest);</span><br><span class="line">www.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js   // 访问地址  http://localhost:3000</span><br></pre></td></tr></table></figure></p>
+<h6 id="创建docker镜像"><a href="#创建docker镜像" class="headerlink" title="创建docker镜像"></a>创建docker镜像</h6><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">8.10</span>.<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> server.js .</span></span><br><span class="line"><span class="bash">CMD [<span class="string">"node"</span>, <span class="string">"server.js"</span>]</span></span><br></pre></td></tr></table></figure>
+<p>构建镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜ docker build -t hello-node:v1 .</span><br></pre></td></tr></table></figure></p>
+<p>如果出现<code>Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?</code> 说明你忘了执行 <code>eval $(minikube docker-env)</code><br><strong>kube用的 docker 和你本地用的 docker 是两个位置, kube的在虚拟机里运行</strong></p>
+<h6 id="创建-deployment"><a href="#创建-deployment" class="headerlink" title="创建 deployment"></a>创建 deployment</h6><p>有了镜像就具备创建pod的条件, 通常来说不用直接创建 <code>pod</code>, 而是创建 <code>deployment</code> 或者 <code>replication controller</code>, 由他们来负责管理服务的运行, 规模缩放, 自动重启等等这些操作, 就单个<code>pod</code>来说是可以随时被销毁的, 不能作为稳定服务的保证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl run hello-node --image=hello-node:v1 --port=3000</span><br><span class="line">或</span><br><span class="line">➜ kubectl create deployment hello-node --image=hello-node:v1</span><br></pre></td></tr></table></figure>
+<p>查看当前<code>deployment</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl get deployments </span><br><span class="line">NAME           READY   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">hello-node     1/1     1            1           8m8s</span><br></pre></td></tr></table></figure></p>
+<p><code>ready 1/1</code> 说明已经准备就绪了 </p>
+<p>查看 <code>pod</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  hellonode git:(master) ✗ kubectl get pods</span><br><span class="line">NAME                            READY   STATUS    RESTARTS   AGE</span><br><span class="line">hello-node-5c58cb6dd4-h65fx     1/1     Running   0          8m40s</span><br></pre></td></tr></table></figure></p>
+<p>从这两条信息就能看出来, 每个pod都是带随机字符串的, 并不打算给人去操作, 我们主要专注在<code>deployment</code>和 <code>service</code> 的搭建</p>
+<p>查看 <code>deployment</code> 描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl describe deployments/hello-node</span><br><span class="line"></span><br><span class="line">Name:                   hello-node</span><br><span class="line">Namespace:              default</span><br><span class="line">CreationTimestamp:      Mon, 13 May 2019 14:17:03 +0800</span><br><span class="line">Labels:                 run=hello-node</span><br><span class="line">Annotations:            deployment.kubernetes.io/revision: 1</span><br><span class="line">Selector:               run=hello-node</span><br><span class="line">Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable</span><br><span class="line">StrategyType:           RollingUpdate</span><br><span class="line">MinReadySeconds:        0</span><br><span class="line">RollingUpdateStrategy:  25% max unavailable, 25% max surge</span><br><span class="line">Pod Template:</span><br><span class="line">  Labels:  run=hello-node</span><br><span class="line">  Containers:</span><br><span class="line">   hello-node:</span><br><span class="line">    Image:        hello-node:v1</span><br><span class="line">    Port:         3000/TCP</span><br><span class="line">    Host Port:    0/TCP</span><br><span class="line">    Environment:  &lt;none&gt;</span><br><span class="line">    Mounts:       &lt;none&gt;</span><br><span class="line">  Volumes:        &lt;none&gt;</span><br><span class="line">Conditions:</span><br><span class="line">  Type           Status  Reason</span><br><span class="line">  ----           ------  ------</span><br><span class="line">  Available      True    MinimumReplicasAvailable</span><br><span class="line">  Progressing    True    NewReplicaSetAvailable</span><br><span class="line">OldReplicaSets:  &lt;none&gt;</span><br><span class="line">NewReplicaSet:   hello-node-5c58cb6dd4 (1/1 replicas created)</span><br><span class="line">Events:</span><br><span class="line">  Type    Reason             Age   From                   Message</span><br><span class="line">  ----    ------             ----  ----                   -------</span><br><span class="line">  Normal  ScalingReplicaSet  11m   deployment-controller  Scaled up replica set hello-node-5c58cb6dd4 to 1</span><br></pre></td></tr></table></figure></p>
+<p>这里是对<code>deployment</code>的概览, <code>Pod Template:</code> 下就是每个pods的配置, 之后对部署的扩容都是基于这个去复制</p>
+<p>到目前为止我们创建了<code>deployment</code> 而且也自动生成<code>pod</code>了, 可是服务并不能被访问到, 为什么? 因为端口没有对外暴露出来, 所以有了下一步</p>
+<h6 id="创建service"><a href="#创建service" class="headerlink" title="创建service"></a>创建service</h6><p><code>service</code> 就是用来对我暴露服务的东西, 所有的 <code>pod</code> 都是在内网通信, 外部访问就得让 <code>service</code> 这层代理去转发过去, <code>--type=LoadBalancer</code> 就是指定转发为负载均衡模式, <code>kubectl create service -h</code> 查看更多, 这里不细讲</p>
+<p>创建service<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl expose deployment hello-node --type=LoadBalancer</span><br><span class="line">或</span><br><span class="line">➜ kubectl expose deployment hello-node --type=LoadBalancer --port=3000 // 这里指定端口</span><br></pre></td></tr></table></figure></p>
+<p>查看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl get service                                     </span><br><span class="line">NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE</span><br><span class="line">hello-node   LoadBalancer   10.111.18.151   &lt;pending&gt;     3000:31349/TCP   3s</span><br><span class="line">kubernetes   ClusterIP      10.96.0.1       &lt;none&gt;        443/TCP          3d</span><br></pre></td></tr></table></figure></p>
+<p>详细信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl describe services hello-node </span><br><span class="line">Name:                     hello-node</span><br><span class="line">Namespace:                default</span><br><span class="line">Labels:                   run=hello-node</span><br><span class="line">Annotations:              &lt;none&gt;</span><br><span class="line">Selector:                 run=hello-node</span><br><span class="line">Type:                     LoadBalancer</span><br><span class="line">IP:                       10.111.18.151</span><br><span class="line">Port:                     &lt;unset&gt;  3000/TCP</span><br><span class="line">TargetPort:               3000/TCP</span><br><span class="line">NodePort:                 &lt;unset&gt;  31349/TCP</span><br><span class="line">Endpoints:                172.17.0.7:3000</span><br><span class="line">Session Affinity:         None</span><br><span class="line">External Traffic Policy:  Cluster</span><br><span class="line">Events:                   &lt;none&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>NodePort</code> 就是绑定在节点的那个端口上, 直接访问节点ip就行, 也可以用minikube命令 <code>minikube service hello-node</code> 自动帮你打开本地地址</p>
+<h6 id="扩展示例"><a href="#扩展示例" class="headerlink" title="扩展示例"></a>扩展示例</h6><p>线上肯定是有这种动态扩容的情况, 而且多实例之间滚动升级也不会停止服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl scale deployments/hello-node --replicas=4</span><br><span class="line">deployment.extensions/hello-node scaled</span><br><span class="line">➜  hellonode git:(master) ✗ kubectl get pods</span><br><span class="line">NAME                          READY   STATUS    RESTARTS   AGE</span><br><span class="line">hello-node-5c58cb6dd4-d2qq9   1/1     Running   0          18s</span><br><span class="line">hello-node-5c58cb6dd4-h65fx   1/1     Running   0          51m</span><br><span class="line">hello-node-5c58cb6dd4-jlzjw   1/1     Running   0          18s</span><br><span class="line">hello-node-5c58cb6dd4-vmx4f   1/1     Running   0          18s</span><br></pre></td></tr></table></figure></p>
+<h6 id="更新应用"><a href="#更新应用" class="headerlink" title="更新应用"></a>更新应用</h6><p>重新构建一个node的镜像<br>service.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> handleRequest = <span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Received request for URL: '</span> + request.url);</span><br><span class="line">  response.writeHead(<span class="number">200</span>);</span><br><span class="line">  response.end(<span class="string">'Hello World! V2'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> www = http.createServer(handleRequest);</span><br><span class="line">www.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜ docker build -t hello-node:v2 .</span><br></pre></td></tr></table></figure>
+<p>设置 <code>deployment</code> 使用新镜像<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl set image deployment/hello-node hello-node=hello-node:v2</span><br></pre></td></tr></table></figure></p>
+<p>查看每个pod的具体情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl describe pods</span><br></pre></td></tr></table></figure></p>
+<p>再访问刚才的地址就能看到改变了</p>
+<h6 id="清除资源"><a href="#清除资源" class="headerlink" title="清除资源"></a>清除资源</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl delete service hello-node</span><br><span class="line">➜ kubectl delete deployments hello-node</span><br></pre></td></tr></table></figure>
+<p>经过上面一套操作下来, 应该也对k8s有了一个大致的印象了, 毕竟光看实践才是检验真理的唯一标准, 但是如果部署一个服务这样一个命令一个命令的敲是很要命的, 而且服务器这玩意, 轻易不会动, 时间一长就容易忘, 因此用配置文件去启动更加合理</p>
+<h5 id="通过-yaml-启动"><a href="#通过-yaml-启动" class="headerlink" title="通过 yaml 启动"></a>通过 yaml 启动</h5><p>如下: test-service.yaml<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span> </span><br><span class="line"><span class="attr">  name:</span> <span class="string">test-service</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    version:</span> <span class="string">v2</span></span><br><span class="line"><span class="attr">    run:</span> <span class="string">hello-node</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">test-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">LoadBalancer</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - port:</span> <span class="number">3001</span></span><br><span class="line"><span class="attr">    targetPort:</span> <span class="number">3000</span></span><br><span class="line"><span class="attr">    protocol:</span> <span class="string">TCP</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">test-service</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">test-service</span></span><br><span class="line"><span class="attr">  labels:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">test-service</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      app:</span> <span class="string">test-service</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">test-service</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">node-pod</span></span><br><span class="line"><span class="attr">        image:</span> <span class="attr">hello-node:v2</span></span><br><span class="line"><span class="attr">        imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line"><span class="attr">        ports:</span> </span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">3000</span></span><br></pre></td></tr></table></figure></p>
+<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜ kubectl create -f test-service.yaml</span><br><span class="line">➜ minikube service test-service</span><br></pre></td></tr></table></figure></p>
+<p>这样通过配置文件就能启动了, 配置文件里里的字段后续我们再详细的讲一下</p>
+<p>删除<code>kubectl delete -f test-service.yaml</code></p>
+<p><a href="https://github.com/gaopengfei123123/k8s_study/tree/master/demo/hellonode" target="_blank" rel="noopener">代码地址</a></p>
+<h4 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h4><p><a href="https://segmentfault.com/a/1190000014116698#articleHeader16" target="_blank" rel="noopener">带你理解Kubernetes，部署一个Node应用</a><br><a href="http://dockone.io/article/4884" target="_blank" rel="noopener">Kubernetes的三种外部访问方式：NodePort、LoadBalancer 和 Ingress</a><br><a href="https://yq.aliyun.com/articles/221687" target="_blank" rel="noopener">Minikube - Kubernetes本地实验环境</a><br><a href="https://blog.csdn.net/cc1949/article/details/78842291" target="_blank" rel="noopener">Kubernetes之kubectl常用命令</a><br><a href="https://www.cnblogs.com/boshen-hzb/p/7097811.html" target="_blank" rel="noopener">replication controller与deployment的区别</a><br><a href="https://blog.csdn.net/weixin_33979203/article/details/89613400" target="_blank" rel="noopener">Kubenetes里pod和service绑定的实现方式</a><br><a href="https://www.jianshu.com/p/bf3fb3a6e688" target="_blank" rel="noopener">Kubernetes创建资源对象yaml文件例子</a><br><a href="https://github.com/kubernetes/minikube" target="_blank" rel="noopener">kubernetes/minikube github</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/06/k8s-install-docker/" rel="next" title="Docker for Mac 部署 Kubernetes">
+                <i class="fa fa-chevron-left"></i> Docker for Mac 部署 Kubernetes
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.jpeg"
+               alt="GPF" />
+          <p class="site-author-name" itemprop="name">GPF</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">147</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://cn.vuejs.org/" title="vuejs中文网" target="_blank">vuejs中文网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laravel-china.org/" title="laravelChina" target="_blank">laravelChina</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://laravelacademy.org/" title="laravel学院" target="_blank">laravel学院</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#mac-本地安装minikube环境"><span class="nav-number">1.</span> <span class="nav-text">mac 本地安装minikube环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#部署第一个应用"><span class="nav-number">2.</span> <span class="nav-text">部署第一个应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令行部署"><span class="nav-number">2.1.</span> <span class="nav-text">命令行部署</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#创建node-js-应用"><span class="nav-number">2.1.1.</span> <span class="nav-text">创建node.js 应用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建docker镜像"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建docker镜像</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建-deployment"><span class="nav-number">2.1.3.</span> <span class="nav-text">创建 deployment</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建service"><span class="nav-number">2.1.4.</span> <span class="nav-text">创建service</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#扩展示例"><span class="nav-number">2.1.5.</span> <span class="nav-text">扩展示例</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#更新应用"><span class="nav-number">2.1.6.</span> <span class="nav-text">更新应用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#清除资源"><span class="nav-number">2.1.7.</span> <span class="nav-text">清除资源</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#通过-yaml-启动"><span class="nav-number">2.2.</span> <span class="nav-text">通过 yaml 启动</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#相关资料"><span class="nav-number">3.</span> <span class="nav-text">相关资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GPF</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mzMO8q019pF781zrR1LLJbxK-gzGzoHsz", "oz8n0eDpPQJrcD8KD4FHf9Xd");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

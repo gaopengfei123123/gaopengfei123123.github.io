@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.justwe.site/2019/05/14/k8s-minikube/</loc>
+    
+    <lastmod>2019-05-14T03:07:30.227Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2019/05/06/k8s-install-docker/</loc>
     
-    <lastmod>2019-05-06T08:30:40.657Z</lastmod>
+    <lastmod>2019-05-14T03:06:11.150Z</lastmod>
     
   </url>
   
@@ -730,13 +737,6 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.justwe.site/2017/02/13/composer-debug/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
@@ -744,7 +744,7 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
+    <loc>http://blog.justwe.site/2017/01/11/composer-package/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -752,6 +752,13 @@
   
   <url>
     <loc>http://blog.justwe.site/2017/03/01/contentos-docker/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -835,13 +842,6 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-cron/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.justwe.site/2017/04/01/laravel-error-log/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
@@ -849,7 +849,7 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-error/</loc>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-cron/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -870,6 +870,13 @@
   </url>
   
   <url>
+    <loc>http://blog.justwe.site/2016/04/01/laravel-repository/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2016/12/19/laravel-facade/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
@@ -884,14 +891,14 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-stmp/</loc>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-error/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/04/01/laravel-repository/</loc>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-stmp/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
@@ -989,20 +996,6 @@
   </url>
   
   <url>
-    <loc>http://blog.justwe.site/2016/11/07/wxcx-2/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
-    
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.justwe.site/2017/02/28/yii-beforeaction/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
@@ -1010,7 +1003,21 @@
   </url>
   
   <url>
+    <loc>http://blog.justwe.site/2016/11/07/wxcx-2/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.justwe.site/2017/02/28/yii-csrf/</loc>
+    
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
     
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     
