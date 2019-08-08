@@ -57,14 +57,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[2019 目标]]></title>
-    <url>%2F2019%2F02%2F18%2F2019-goal%2F</url>
-    <content type="text"><![CDATA[以前是没钱没时间, 现在我想做个有规划的人: 去一趟加拿大见一个人 拿驾照 看5本技术书, 达到理解80%的程度, 笔记跟上 健身, 最低目标30分钟5公里 过200道leetcode, hard难度以下需要想出次优解, hard 难度能做到理解最优解 以上能完成的话就接下来: 自己搞一个基于k8s的微服务架构 这些目标截止到 2020-2-18号 吧]]></content>
-      <tags>
-        <tag>default</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[转 Golang 需要避免踩的 50 个坑]]></title>
     <url>%2F2019%2F01%2F31%2Fgo-50-tips%2F</url>
     <content type="text"><![CDATA[Golang 需要避免踩的 50 个坑]]></content>
@@ -109,6 +101,17 @@
       <tags>
         <tag>go</tag>
         <tag>websocket</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[转 Yii2 断线重连问题]]></title>
+    <url>%2F2018%2F12%2F19%2Fyii-mysql%2F</url>
+    <content type="text"><![CDATA[yii2 + swoole 的模式下因为使用swoole做的常驻内存服务, 那么之前的设计思路会有一点偏差, 不是第一眼能看到的就是 mysql has gone away的问题 目前解决思路就是当sql命令报错mysql has gone away的时候就断开重连再重新执行一次 参考 Yii2实现mysql断线重连 重写一个command类 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475&lt;?php namespace common\components; use Yii; /** * 新增加执行sql时断开重连 * 数据库连接断开异常 * errorInfo = [''HY000',2006,'错误信息'] * Class Command * @package common\components */ class Command extends \yii\db\Command &#123; const EVENT_DISCONNECT = 'disconnect'; /** * 处理修改类型sql的断线重连问题 * @return int * @throws \Exception * @throws \yii\db\Exception */ public function execute() &#123; try&#123; return parent::execute(); &#125;catch(\Exception $e)&#123; if($this-&gt;handleException($e)) return parent::execute(); throw $e; &#125; &#125; /** * 处理查询类sql断线重连问题 * @param string $method * @param null $fetchMode * @return mixed * @throws \Exception * @throws \yii\db\Exception */ protected function queryInternal($method, $fetchMode = null) &#123; try&#123; return parent::queryInternal($method, $fetchMode); &#125;catch(\Exception $e)&#123; if($this-&gt;handleException($e)) return parent::queryInternal($method, $fetchMode); throw $e; &#125; &#125; /** * 处理执行sql时捕获的异常信息 * 并且根据异常信息来决定是否需要重新连接数据库 * @param \Exception $e * @return bool true: 需要重新执行sql false: 不需要重新执行sql */ private function handleException(\Exception $e) &#123; //如果不是yii\db\Exception异常抛出该异常或者不是MySQL server has gone away $offset = stripos($e-&gt;getMessage(),'MySQL server has gone away'); if(($e instanceof \yii\db\Exception) == false OR $offset === false) //OR $e-&gt;errorInfo[0] != 'HY000' OR $e-&gt;errorInfo[1] != 2006) return false; $this-&gt;trigger(static::EVENT_DISCONNECT); //将pdo设置从null $this-&gt;pdoStatement = NULL; //$this-&gt;db-&gt;resetPdo(); $this-&gt;db-&gt;close(); return true; &#125; &#125; 在配置文件中关于db的配置给加上指定的class123456789101112&lt;?php return [ 'components' =&gt; [ 'db' =&gt; [ 'class' =&gt; 'yii\db\Connection', 'commandClass' =&gt; 'common\components\Command',// 加上这个 'username' =&gt; 'XXX', 'password' =&gt; 'XXX', 'dsn' =&gt; 'mysql:host=XXX;dbname=XXX;port=3306', ], ], ]; 相关文章:Yii2实现mysql断线重连在mysql中connection设置和wait-timeout的设置查看mysql连接情况，以及连接超时时间设置源码剖析Yii错误 Invalid parameter number: no parameters were boundYii 数据库重连告别General error: 2006 MySQL server has gone away]]></content>
+      <categories>
+        <category>yii2</category>
+      </categories>
+      <tags>
+        <tag>yii2</tag>
       </tags>
   </entry>
 </search>
