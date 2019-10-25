@@ -108,7 +108,7 @@
 <meta property="og:site_name" content="&lt;hello-world&#x2F;&gt;">
 <meta property="og:description" content="golang 里出现多 goroutine 的场景很常见, 最常用的两种方式就是 WaitGroup 和 Context, 今天我们了解一下 Context 的应用场景">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-25T08:32:42.887Z">
+<meta property="og:updated_time" content="2019-10-25T08:35:31.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Golang 通过 Context 控制并发的应用场景">
 <meta name="twitter:description" content="golang 里出现多 goroutine 的场景很常见, 最常用的两种方式就是 WaitGroup 和 Context, 今天我们了解一下 Context 的应用场景">
@@ -474,13 +474,6 @@
 <li><p><code>WithValue</code> 继承父类ctx时顺便带上一个值</p>
 </li>
 </ul>
-<h4 id="context-使用原则"><a href="#context-使用原则" class="headerlink" title="context 使用原则"></a>context 使用原则</h4><ol>
-<li>不要把Context放在结构体中，要以参数的方式传递</li>
-<li>以Context作为参数的函数方法，应该把Context作为第一个参数，放在第一位。</li>
-<li>给一个函数方法传递Context的时候，不要传递nil，如果不知道传递什么，就使用context.TODO</li>
-<li>Context的Value相关方法应该传递必须的数据，不要什么数据都使用这个传递</li>
-<li>Context是线程安全的，可以放心的在多个goroutine中传递</li>
-</ol>
 
       
     </div>
@@ -684,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">1.</span> <span class="nav-text">使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#场景一-多goroutine执行超时通知"><span class="nav-number">1.1.</span> <span class="nav-text">场景一: 多goroutine执行超时通知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#场景二-类似web服务器中的session"><span class="nav-number">1.2.</span> <span class="nav-text">场景二: 类似web服务器中的session</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context-相关-func-和接口"><span class="nav-number">2.</span> <span class="nav-text">Context 相关 func 和接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#context-使用原则"><span class="nav-number">2.1.</span> <span class="nav-text">context 使用原则</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">1.</span> <span class="nav-text">使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#场景一-多goroutine执行超时通知"><span class="nav-number">1.1.</span> <span class="nav-text">场景一: 多goroutine执行超时通知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#场景二-类似web服务器中的session"><span class="nav-number">1.2.</span> <span class="nav-text">场景二: 类似web服务器中的session</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context-相关-func-和接口"><span class="nav-number">2.</span> <span class="nav-text">Context 相关 func 和接口</span></a></li></ol></div>
             
 
           </div>
