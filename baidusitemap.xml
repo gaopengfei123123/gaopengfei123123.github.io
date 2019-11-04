@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2019/11/04/go-http-grace-restart/</loc>
+    <lastmod>2019-11-04T09:15:40.920Z</lastmod>
+    <data>
+        <display>
+        <title>转 Golang Http平滑重启实现</title>
+        <pubTime>2019-11-04T09:11:54.000Z</pubTime>
+        
+        <tag>go</tag>
+         
+        <tag>http</tag>
+         
+        <tag>grace</tag>
+         
+         
+           
+             
+              <breadCrumb title="go" url="http://blog.justwe.site/categories/go/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2019/10/25/go-context/</loc>
     <lastmod>2019-10-25T08:35:31.912Z</lastmod>
     <data>
@@ -2198,24 +2222,6 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/02/13/composer-debug/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Composer的一个小毛病</title>
-        <pubTime>2017-02-13T07:15:24.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.justwe.site/2016/12/03/centos-install-git/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -2234,17 +2240,17 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
+    <loc>http://blog.justwe.site/2017/02/13/composer-debug/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>使用Redis—geo Api实现搜索附近的人，自己写的一个composer包</title>
-        <pubTime>2017-03-11T04:11:00.000Z</pubTime>
+        <title>Composer的一个小毛病</title>
+        <pubTime>2017-02-13T07:15:24.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
+              <breadCrumb title="default" url="http://blog.justwe.site/categories/default/"/>
           
         </display>
     </data>
@@ -2263,6 +2269,24 @@
          
          
            
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.justwe.site/2017/03/11/composer-redis-lbs/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>使用Redis—geo Api实现搜索附近的人，自己写的一个composer包</title>
+        <pubTime>2017-03-11T04:11:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="tools" url="http://blog.justwe.site/categories/tools/"/>
+          
         </display>
     </data>
     </url>
@@ -2533,12 +2557,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/10/09/laravel-error/</loc>
+    <loc>http://blog.justwe.site/2016/12/26/laravel-lazy-load/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Laravel的报错处理</title>
-        <pubTime>2016-10-09T07:10:00.000Z</pubTime>
+        <title>Laravel服务容器延迟加载</title>
+        <pubTime>2016-12-25T23:45:35.000Z</pubTime>
         
          
            
@@ -2551,12 +2575,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2016/12/26/laravel-lazy-load/</loc>
+    <loc>http://blog.justwe.site/2016/10/09/laravel-error/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Laravel服务容器延迟加载</title>
-        <pubTime>2016-12-25T23:45:35.000Z</pubTime>
+        <title>Laravel的报错处理</title>
+        <pubTime>2016-10-09T07:10:00.000Z</pubTime>
         
          
            
@@ -2694,6 +2718,21 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2017/04/01/pip/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>Pip</title>
+        <pubTime>2017-04-01T12:32:13.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2016/11/12/qiniujs-demo/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -2712,27 +2751,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/04/01/pip/</loc>
+    <loc>http://blog.justwe.site/2017/03/10/redis-geohash-lbs/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>Pip</title>
-        <pubTime>2017-04-01T12:32:13.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2017/02/09/shadowssocks/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>科学上网Shadowsocks</title>
-        <pubTime>2017-02-08T23:56:00.000Z</pubTime>
+        <title>LBS使用redis的解决方案--GEOHASH</title>
+        <pubTime>2017-03-10T02:53:00.000Z</pubTime>
         
          
            
@@ -2745,12 +2769,12 @@
 
     
   <url>
-    <loc>http://blog.justwe.site/2017/03/10/redis-geohash-lbs/</loc>
+    <loc>http://blog.justwe.site/2017/02/09/shadowssocks/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
         <display>
-        <title>LBS使用redis的解决方案--GEOHASH</title>
-        <pubTime>2017-03-10T02:53:00.000Z</pubTime>
+        <title>科学上网Shadowsocks</title>
+        <pubTime>2017-02-08T23:56:00.000Z</pubTime>
         
          
            
@@ -2869,6 +2893,23 @@
 
     
   <url>
+    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
+    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
+    <data>
+        <display>
+        <title>小程序初次接触(1)</title>
+        <pubTime>2016-10-24T07:28:00.000Z</pubTime>
+        
+        <tag>xcx</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.justwe.site/2017/02/28/yii-beforeaction/</loc>
     <lastmod>2017-04-06T04:17:40.000Z</lastmod>
     <data>
@@ -2881,23 +2922,6 @@
              
               <breadCrumb title="Yii2" url="http://blog.justwe.site/categories/Yii2/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.justwe.site/2016/10/24/wxcx/</loc>
-    <lastmod>2017-04-06T04:17:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>小程序初次接触(1)</title>
-        <pubTime>2016-10-24T07:28:00.000Z</pubTime>
-        
-        <tag>xcx</tag>
-         
-         
-           
         </display>
     </data>
     </url>
