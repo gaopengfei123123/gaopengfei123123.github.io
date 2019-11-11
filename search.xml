@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[是用脚本分割Csv文件]]></title>
+    <url>%2F2019%2F11%2F11%2Fpython-csv-split%2F</url>
+    <content type="text"><![CDATA[首先安装panda 1pip install pandas 创建脚本:1234import pandas as pd rows = pd.read_csv("csvfile.csv", chunksize=5000000) # 每个文件的尺寸, 以及导入文件名for i, chuck in enumerate(rows): chuck.to_csv('out&#123;&#125;.csv'.format(i)) # 输出文件名 运行1python demo.py py挽救了我半小时的摸鱼时光生命]]></content>
+      <categories>
+        <category>tools</category>
+      </categories>
+      <tags>
+        <tag>csv</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[转 Golang Http平滑重启实现]]></title>
     <url>%2F2019%2F11%2F04%2Fgo-http-grace-restart%2F</url>
     <content type="text"><![CDATA[服务端代码经常需要升级，对于线上系统的升级常用的做法是，通过前端的负载均衡（如nginx）来保证升级时至少有一个服务可用，依次（灰度）升级。 而另一种更方便的方法是在应用上做热重启，直接升级应用而不停服务。 主流程 监听信号（USR2） 收到信号时fork子进程（使用相同的启动命令），将服务监听的socket文件描述符传递给子进程 子进程监听父进程的socket，这个时候父进程和子进程都可以接收请求 子进程启动成功之后，父进程停止接收新的连接，等待旧连接处理完成（或超时） 父进程退出，升级完成 关键点 父进程将socket文件描述符传递给子进程可以通过命令行，或者环境变量等 子进程启动时使用和父进程一样的命令行，对于golang来说用更新的可执行程序覆盖旧程序 server.Shutdown()优雅关闭方法是go1.8的新特性 server.Serve(l)方法在Shutdown时立即返回，Shutdown方法则阻塞至context完成，所以Shutdown的方法要写在主goroutine中 代码实现123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109package mainimport ( "context" "errors" "flag" "log" "net" "net/http" "os" "os/exec" "os/signal" "syscall" "time")var ( server *http.Server listener net.Listener graceful = flag.Bool("graceful", false, "listen on fd open 3 (internal use only)"))func handler(w http.ResponseWriter, r *http.Request) &#123; time.Sleep(20 * time.Second) w.Write([]byte("hello world233333!!!!"))&#125;func main() &#123; flag.Parse() http.HandleFunc("/hello", handler) server = &amp;http.Server&#123;Addr: ":9999"&#125; var err error if *graceful &#123; log.Print("main: Listening to existing file descriptor 3.") // cmd.ExtraFiles: If non-nil, entry i becomes file descriptor 3+i. // when we put socket FD at the first entry, it will always be 3(0+3) f := os.NewFile(3, "") listener, err = net.FileListener(f) &#125; else &#123; log.Print("main: Listening on a new file descriptor.") listener, err = net.Listen("tcp", server.Addr) &#125; if err != nil &#123; log.Fatalf("listener error: %v", err) &#125; go func() &#123; // server.Shutdown() stops Serve() immediately, thus server.Serve() should not be in main goroutine err = server.Serve(listener) log.Printf("server.Serve err: %v\n", err) &#125;() signalHandler() log.Printf("signal end")&#125;func reload() error &#123; tl, ok := listener.(*net.TCPListener) if !ok &#123; return errors.New("listener is not tcp listener") &#125; f, err := tl.File() if err != nil &#123; return err &#125; args := []string&#123;"-graceful"&#125; log.Printf("exec Command: %s %v", os.Args[0], args) cmd := exec.Command(os.Args[0], args...) cmd.Stdout = os.Stdout cmd.Stderr = os.Stderr // put socket FD at the first entry cmd.ExtraFiles = []*os.File&#123;f&#125; return cmd.Start()&#125;func signalHandler() &#123; ch := make(chan os.Signal, 1) signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR2) for &#123; sig := &lt;-ch log.Printf("signal: %v", sig) // timeout context for shutdown ctx, _ := context.WithTimeout(context.Background(), 20*time.Second) switch sig &#123; case syscall.SIGINT, syscall.SIGTERM: // stop log.Printf("stop") signal.Stop(ch) server.Shutdown(ctx) log.Printf("graceful shutdown") return case syscall.SIGUSR2: // reload log.Printf("reload") err := reload() if err != nil &#123; log.Fatalf("graceful restart error: %v", err) &#125; server.Shutdown(ctx) log.Printf("graceful reload") return &#125; &#125;&#125; 文章原文]]></content>
@@ -101,19 +112,6 @@
       </categories>
       <tags>
         <tag>range</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[转 Mac上一些好玩的命令行工具]]></title>
-    <url>%2F2019%2F01%2F18%2Ftool-mac-terminal-awesome%2F</url>
-    <content type="text"><![CDATA[mac上一些有意思的命令行小工具 asciinema 和 svg-termassiiname 是用来命令行录屏的, svg-term 将文件转换成svg动图, 这个做截屏很方便 安装:12brew install asciinemanpm install -g svg-term 使用方式:12asciinema rec cast.json // 开始录制, 数据保存在cast.json, 按 ctrl+d 保存cat cast.json | svg-term-cli //输出svg文件 比如下图缺点就是如果文件特别大帧率受到严重的影响 sl 和 cmatrix 小特效玩具安装12brew install slbrew install cmatrix 平时装哔用的 bat安装1brew install bat 替代 cat 命令, 支持代码高亮 ncdu 清理磁盘如标题, 清理磁盘, 直接运行就行 安装1brew install ncdu 收藏链接:优秀的命令行工具整理（一）优秀的命令行工具整理（二）]]></content>
-      <categories>
-        <category>tools</category>
-      </categories>
-      <tags>
-        <tag>tools</tag>
-        <tag>mac</tag>
-        <tag>terminal</tag>
       </tags>
   </entry>
 </search>

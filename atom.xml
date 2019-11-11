@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2019-11-04T09:15:40.920Z</updated>
+  <updated>2019-11-11T08:35:07.044Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>是用脚本分割Csv文件</title>
+    <link href="http://blog.justwe.site/2019/11/11/python-csv-split/"/>
+    <id>http://blog.justwe.site/2019/11/11/python-csv-split/</id>
+    <published>2019-11-11T08:28:55.000Z</published>
+    <updated>2019-11-11T08:35:07.044Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先安装panda</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure><p>创建脚本:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">rows = pd.read_csv(<span class="string">"csvfile.csv"</span>, chunksize=<span class="number">5000000</span>) <span class="comment"># 每个文件的尺寸, 以及导入文件名</span></span><br><span class="line"><span class="keyword">for</span> i, chuck <span class="keyword">in</span> enumerate(rows): </span><br><span class="line">    chuck.to_csv(<span class="string">'out&#123;&#125;.csv'</span>.format(i)) <span class="comment"># 输出文件名</span></span><br></pre></td></tr></table></figure></p><p>运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python demo.py</span><br></pre></td></tr></table></figure></p><p>py挽救了我半小时的<del>摸鱼时光</del>生命</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;首先安装panda&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;cod
+      
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="csv" scheme="http://blog.justwe.site/tags/csv/"/>
+    
+  </entry>
   
   <entry>
     <title>转 Golang Http平滑重启实现</title>
@@ -461,28 +487,6 @@
     <summary type="html">
     
       &lt;p&gt;git 对比文件差异&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="git" scheme="http://blog.justwe.site/categories/git/"/>
-    
-    
-      <category term="git" scheme="http://blog.justwe.site/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>记一次 Git Revert 的经历</title>
-    <link href="http://blog.justwe.site/2018/10/25/git-revert/"/>
-    <id>http://blog.justwe.site/2018/10/25/git-revert/</id>
-    <published>2018-10-25T08:27:06.000Z</published>
-    <updated>2018-10-25T09:17:03.714Z</updated>
-    
-    <content type="html"><![CDATA[<p>合作开发经常会提<code>merge request</code>嘛, 然后就提了一个不该提的, 还手抖给合并了….</p><a id="more"></a><p>返现问题以后准备回退, 然后抬眼一看各分支的合并情况….<br><img src="http://blog-image.onlyoneip.com/git-merge-line.png" alt=""></p><p>哇脑壳痛, 这就用不了平时最喜欢的 <code>reset</code> 了, 查了查资料, 想<strong>取消某一次 merge request</strong>用 <code>revert</code> 是最合适的</p><p>接下来分三步,先找到要回退的那次 mr, 通常是这样的:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> </span><br><span class="line"></span><br><span class="line">commit 365ea982c24f2c60150df6159734ab73b74515bc (origin/master, origin/HEAD)</span><br><span class="line">Merge: 465fbfb8 f15b39ae</span><br><span class="line">Author: xxx &lt;xxx&gt;</span><br><span class="line">Date:   Thu Oct 25 15:41:10 2018 +0800</span><br><span class="line"></span><br><span class="line">    Merge branch <span class="string">'master'</span> of xxxxxxxxxxxxxxx</span><br><span class="line"></span><br><span class="line">commit 465fbfb8084089f9d08516b4d75ba51ae5dcd5ce</span><br><span class="line">Author: xxx &lt;xxx&gt;</span><br><span class="line">Date:   Thu Oct 25 15:41:03 2018 +0800</span><br><span class="line"></span><br><span class="line">    merge</span><br><span class="line"></span><br><span class="line">commit 1e309ff40fd02d1c9c6e604c2649d8a94086a573</span><br><span class="line">Author: xxx &lt;zhangkaixuan&gt;</span><br><span class="line">Date:   Thu Oct 25 15:40:37 2018 +0800</span><br><span class="line"></span><br><span class="line">    merge</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>这样的, 这只是 log 的中间的一部分, 假设 mr 之后后续又有很多 mr 已经合并了, 那么先找到我们要回退的 <code>commit id</code>, 这里就假设一个叫 <code>c76627674dedf4fc067cb0c5b2afbc123fd9c053</code></p><ol><li><p>执行 <code>git revert -m 1 c76627674dedf4fc067cb0c5b2afbc123fd9c053</code></p><p> 通常执行这一步之后没什么冲突就可以了, 然后有冲突了, 就和正常的 merger conflicts 处理一样</p></li><li><p>解决完冲突, 执行 <code>git revert --continue</code> 这就算合并了</p><p> 那么回滚到一半不想做了, 也好说, 执行 <code>git revert --abort</code> 以后, 大家就当无事发生过</p></li></ol><p>关于 <code>git revert -m 1</code> 这个<code>1</code>指的是 <code>mainline</code>, 1 代表着 master 这条线<br><a href="https://stackoverflow.com/a/5971033/9561528" target="_blank" rel="noopener">资料参考: Why does git revert complain about a missing -m option?</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;合作开发经常会提&lt;code&gt;merge request&lt;/code&gt;嘛, 然后就提了一个不该提的, 还手抖给合并了….&lt;/p&gt;
     
     </summary>
     
