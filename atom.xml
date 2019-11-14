@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.justwe.site/"/>
-  <updated>2019-11-14T03:41:25.668Z</updated>
+  <updated>2019-11-14T08:48:02.000Z</updated>
   <id>http://blog.justwe.site/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Github-Webhook 小工具</title>
+    <link href="http://blog.justwe.site/2019/11/14/tool-github-webhook/"/>
+    <id>http://blog.justwe.site/2019/11/14/tool-github-webhook/</id>
+    <published>2019-11-14T08:44:42.000Z</published>
+    <updated>2019-11-14T08:48:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近写了一个小工具, 用来接收github webhook消息, 以在服务器上自动执行脚本</p><p><a href="https://github.com/gaopengfei123123/hook" target="_blank" rel="noopener">gaopengfei123123/hook</a></p><a id="more"></a><h2 id="github-hook-server"><a href="#github-hook-server" class="headerlink" title="github hook server"></a>github hook server</h2><p>一个用来接收webhook的server</p><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>golang v1.11+ (因为用到了go mod)</p><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>执行:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/gaopengfei123123/hook</span><br></pre></td></tr></table></figure></p><p>创建文件 <code>main.go</code><br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"github.com/gaopengfei123123/hook"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    hook.Execute()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>执行命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go build -o app main.go</span><br></pre></td></tr></table></figure></p><p><code>app</code> 这个二进制文件就是本体了, 放到合适的地方, 执行:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./app start -d</span><br></pre></td></tr></table></figure></p><p>后台启动, app 同目录下会创建 <code>scripts</code>, <code>logs</code> 两个目录, 和一个 <code>hook.pid</code> 保存pid</p><p>检测是否启动:<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@xxx]# curl localhost:<span class="number">8080</span>/<span class="built_in">ping</span></span><br><span class="line">&#123;"message":"pong v5"&#125;</span><br></pre></td></tr></table></figure></p><p>说明服务已经启动成功, 服务地址为<code>0.0.0.0:8080</code></p><h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><ul><li><code>0.0.0.0:8080/ping</code>   检测接口</li><li><code>0.0.0.0:8080/push</code>   接受github webhook请求, 根据 Repository.Name 去判断执行什么脚本</li></ul><h3 id="可用指令"><a href="#可用指令" class="headerlink" title="可用指令"></a>可用指令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">reload      重新加载日志, 以及平滑重启</span><br><span class="line">start       启动命令, -d 后台运行</span><br><span class="line">stop        终止命令</span><br><span class="line">version     程序版本</span><br></pre></td></tr></table></figure><h3 id="目录功能"><a href="#目录功能" class="headerlink" title="目录功能:"></a>目录功能:</h3><ul><li>logs 存放请求日志</li><li>scripts 存放hook脚本, 当有对应库名的请求进来, 将执行配置好的脚本</li><li>hook.pid 存放进程pid</li></ul><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "github_hook": &#123;        // 以请求消息中的 repository.name 字段来做key</span><br><span class="line">        "secret": "xxxxxx", // 如果设置了secret则会用这个进行验证, 为空则不验证</span><br><span class="line">        "script_path": "",  // 脚本所在绝对目录, 为空就是当前的script目录</span><br><span class="line">        "event": &#123;</span><br><span class="line">            "push": "test"  // 推送事件执行的脚本</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul><li>一键初始化</li><li>平滑重启, 信号通信</li><li>支持secret验证</li><li>异步执行脚本</li><li>规避重放</li><li>脚本传递参数(TODO)</li><li>事件钩子(TODO)</li></ul><h3 id="依赖组件"><a href="#依赖组件" class="headerlink" title="依赖组件"></a>依赖组件</h3><ul><li>http框架 <a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">gin</a></li><li>日志组件 <a href="https://github.com/sirupsen/logrus" target="_blank" rel="noopener">logrus</a></li><li>命令行组件 <a href="https://github.com/spf13/cobra" target="_blank" rel="noopener">cobra</a></li></ul><h3 id="github地址"><a href="#github地址" class="headerlink" title="github地址"></a>github地址</h3><p><a href="https://github.com/gaopengfei123123/hook" target="_blank" rel="noopener">gaopengfei123123/hook</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近写了一个小工具, 用来接收github webhook消息, 以在服务器上自动执行脚本&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/gaopengfei123123/hook&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;gaopengfei123123/hook&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="tools" scheme="http://blog.justwe.site/categories/tools/"/>
+    
+    
+      <category term="tools" scheme="http://blog.justwe.site/tags/tools/"/>
+    
+      <category term="github" scheme="http://blog.justwe.site/tags/github/"/>
+    
+      <category term="hook" scheme="http://blog.justwe.site/tags/hook/"/>
+    
+  </entry>
   
   <entry>
     <title>转 Go 模仿Unix 管道操作</title>
@@ -469,33 +496,6 @@
       <category term="docker" scheme="http://blog.justwe.site/tags/docker/"/>
     
       <category term="nginx" scheme="http://blog.justwe.site/tags/nginx/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Go 火焰图分析</title>
-    <link href="http://blog.justwe.site/2018/11/01/go-flame-graph/"/>
-    <id>http://blog.justwe.site/2018/11/01/go-flame-graph/</id>
-    <published>2018-11-01T09:03:33.000Z</published>
-    <updated>2018-11-25T07:38:45.761Z</updated>
-    
-    <content type="html"><![CDATA[<p>go version go1.11.1 darwin/amd64</p><p>安装:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ go get github.com/uber/go-torch</span><br><span class="line">$ <span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/uber/go-torch</span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/brendangregg/FlameGraph.git</span><br></pre></td></tr></table></figure></p><p>安装测试工具<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ go get github.com/Masterminds/glide</span><br><span class="line">$ <span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/uber/go-torch</span><br><span class="line">$ glide install</span><br></pre></td></tr></table></figure></p><p>性能分析工具</p><a id="more"></a><p><code>glide install</code>如果出现  <code>Update failed for golang.org/x/sys: Cannot detect VCS</code> 这种报错, 可以执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ glide mirror <span class="built_in">set</span> https://golang.org/x/sys https://github.com/golang/sys</span><br></pre></td></tr></table></figure></p><p>改变 <code>$HOME/.gilde/mirrors.yaml</code> 的镜像链接即可</p><p>运行时完成后输入 web<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ go tool pprof --seconds 25 http://localhost:9090/debug/pprof/profile</span><br><span class="line">Fetching profile over HTTP from http://localhost:9090/debug/pprof/profile?seconds=25</span><br><span class="line">Please <span class="built_in">wait</span>... (25s)</span><br><span class="line">Saved profile <span class="keyword">in</span> /Users/gpf/pprof/pprof.samples.cpu.002.pb.gz</span><br><span class="line">Type: cpu</span><br><span class="line">Time: Nov 2, 2018 at 11:46am (CST)</span><br><span class="line">Duration: 25s, Total samples = 2.17s ( 8.68%)</span><br><span class="line">Entering interactive mode (<span class="built_in">type</span> <span class="string">"help"</span> <span class="keyword">for</span> commands, <span class="string">"o"</span> <span class="keyword">for</span> options)</span><br><span class="line">(pprof) web</span><br><span class="line">Failed to execute dot. Is Graphviz installed? Error: <span class="built_in">exec</span>: <span class="string">"dot"</span>: executable file not found <span class="keyword">in</span> <span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p><p>出现 <code>Failed to execute dot. Is Graphviz installed? Error: exec: &quot;dot&quot;: executable file not found in $PATH</code> 报错, 需要安装 <code>graphviz</code>  在 mac 上就直接 <code>brew install graphviz</code> 即可</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;go version go1.11.1 darwin/amd64&lt;/p&gt;
-&lt;p&gt;安装:&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ go get github.com/uber/go-torch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$GOPATH&lt;/span&gt;/src/github.com/uber/go-torch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://github.com/brendangregg/FlameGraph.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;安装测试工具&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ go get github.com/Masterminds/glide&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$GOPATH&lt;/span&gt;/src/github.com/uber/go-torch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ glide install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;性能分析工具&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="go" scheme="http://blog.justwe.site/categories/go/"/>
-    
-    
-      <category term="go" scheme="http://blog.justwe.site/tags/go/"/>
-    
-      <category term="flame-graph" scheme="http://blog.justwe.site/tags/flame-graph/"/>
     
   </entry>
   
